@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: MIT
+# Optional display panels + touch input. NOT on the AGX Orin/Thor devkits (their
+# devicetrees have no panel or touch controller), so this is NOT in the default
+# build — add to KERNEL_FEATURES for a SKU that carries a panel/touch display.
+define KFEATURE_DESCRIPTION "Optional display panels + touch"
+
+kconf hardware cfg/display-panels.cfg
+include features/input/touchscreen.scc

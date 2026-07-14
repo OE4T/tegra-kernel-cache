@@ -1,0 +1,45 @@
+# Queue manifest for the shared Tegra kmeta patch queues (all tegra machines).
+#
+# Two queues, applied in do_patch order (platform first, then alpha):
+#   platform - NVIDIA's blessed linux/patches/<ver>
+#   sauce    - NVIDIA SAUCE from the <ver> integration branch, reference-filtered
+#
+# Only refresh-from-nvidia.sh reads nvidia_branch / reference / *_candidates;
+# refresh.sh uses just version_suffix, yocto_base_ref, and the queue list.
+
+# version_suffix is the single source of truth: "{version}" placeholders in
+# yocto_base_ref and nvidia_branch are substituted at load time (manifest.py).
+version_suffix: "6.18"
+yocto_base_ref: "origin/v{version}/standard/base"
+nvidia_remote_name: "nvidia"
+
+# Reference Change-Id filter (refresh-from-nvidia.sh only).
+# The sauce queue keeps a commit only if its Change-Id appears in the delta of
+# this reference branch (merge-base(ref, yocto_base)..ref). Commits with no
+# Change-Id are dropped. remote_url defaults to the nvidia remote URL when
+# the reference and nvidia remotes point at the same repo. Remove this block
+# to disable filtering.
+reference:
+  remote: nvidia
+  ref: dev-main-nvidia-linux-7.1
+
+linux_yocto_upstream_url: "https://git.yoctoproject.org/linux-yocto"
+linux_yocto_candidates:
+  - ".linux-yocto-mirror"
+
+patches_scc: "features/tegra/tegra-patches.scc"
+patches_kconf: "cfg/tegra.cfg"
+
+queues:
+  - name: platform
+    nvidia_branch: "nvidia/linux/patches/{version}"
+    scc: "features/tegra/platform.scc"
+    description: "NVIDIA linux/patches/<ver>"
+    enable_in_bsp: true
+
+  - name: sauce
+    nvidia_branch: "nvidia/linux/integration/all/{version}"
+    scc: "features/tegra/sauce.scc"
+    description: "All other Tegra SAUCE from the integration branch"
+    reference_filter: true
+    enable_in_bsp: true

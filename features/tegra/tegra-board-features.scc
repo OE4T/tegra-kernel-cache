@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+# Common board features for every tegra machine (included by each BSP, so the
+# machines can't drift apart). SoC config is cfg/tegra.cfg; devkit peripherals
+# are features/tegra/jetson-devkit.scc.
+define KFEATURE_DESCRIPTION "Tegra common board features"
+
+include features/media/media.scc
+include features/media/media-platform.scc
+include features/usb/serial.scc
+include features/usb/usb-raw-gadget.scc

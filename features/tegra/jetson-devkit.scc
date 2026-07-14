@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: MIT
+# Jetson devkit board peripherals — attached to the devkit MACHINES via
+# KERNEL_FEATURES, NOT the shared SoC config, so a custom carrier on the same
+# SoC does not inherit them. Contents verified against the board devicetree
+# (ti,ina3221/ina219/tmp451, realtek,rt5640) and the built .config.
+define KFEATURE_DESCRIPTION "Jetson devkit board peripherals"
+
+kconf hardware cfg/jetson-devkit.cfg
+
+# Realtek Wi-Fi/BT combo → the full Bluetooth stack lives here, not the SoC config.
+include features/bluetooth/bluetooth.scc
+include features/bluetooth/bluetooth-usb.scc
+
+# Generic USB Video Class cameras (plug-in webcams). The on-board CSI camera
+# modules (IMX/OV via DT overlays) are driven by the OUT-OF-TREE NVIDIA camera
+# stack, so they need no in-tree config here.
+include features/media/media-usb-webcams.scc

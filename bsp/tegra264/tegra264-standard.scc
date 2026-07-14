@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: MIT
+#
+# BSP entry point for Tegra264 (Thor). Discovered when KMACHINE=tegra264.
+# Config/policy only — vendor patches come via KERNEL_FEATURES
+# (features/tegra/tegra-patches.scc), not the BSP tree.
+# See: https://docs.yoctoproject.org/kernel-dev/advanced.html#using-kernel-metadata-in-a-recipe
+#
+define KMACHINE tegra264
+define KTYPE standard
+define KARCH arm64
+
+include ktypes/standard/standard.scc
+
+# base settings from genericarm64-standard
+branch genericarm64
+include bsp/genericarm64/genericarm64.scc
+include features/profiling/profiling.scc
+
+include features/tegra/tegra-board-features.scc
+
+# Machine config overlay, on top of the shared cfg/tegra.cfg the patch queues pull in.
+kconf hardware cfg/tegra264.cfg

@@ -1,0 +1,4 @@
+.refresh-worktree/
+.linux-yocto-mirror/
+**/patches.tmp/
+__pycache__
