@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Prathamesh Shete <pshete@nvidia.com>
+Date: Thu, 13 Mar 2025 09:09:44 +0000
+Subject: [PATCH 189/254] NVIDIA: SAUCE: gpio-tegra: add is_tegra_hypervisor
+ check
+
+Dynamic pinmuxing is not needed on HV+L
+Add is_tegra_hypervisor before mapping pinctrl and GPIO
+
+This change is being merged to unblock pcie test transition on K6.8
+This change will be reverted once the driver is updated to do this from DT
+and this is being tracked in Bug 5506929
+
+Bug 5196824
+Bug 5480750
+
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Change-Id: Ia1d43976939ac4deeb6c264538952978565d33c9
+(cherry picked from commit e138d30df95054cf9bbab13b6ac95c15919432c7)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3446979
+Tested-by: mobile promotions <svcmobile_promotions@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: mobile promotions <svcmobile_promotions@nvidia.com>
+Reviewed-by: Bibek Basu <bbasu@nvidia.com>
+(cherry picked from commit 1d3fdf3fc619b9ce12f3dac7b8afc3e3b49f385d)
+
+diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
+index 2e2c1240206a2..43f4eba80e29f 100644
+--- a/drivers/gpio/gpio-tegra186.c
++++ b/drivers/gpio/gpio-tegra186.c
+@@ -16,6 +16,11 @@
+ #include <linux/property.h>
+ #include <linux/seq_file.h>
+ #include <asm/delay.h>
++#include <linux/delay.h>
++
++#if IS_ENABLED(CONFIG_TEGRA_HV_DRIVER)
++#include <soc/tegra/virt/hv-ivc.h>
++#endif
+ 
+ #include <dt-bindings/gpio/tegra186-gpio.h>
+ #include <dt-bindings/gpio/tegra194-gpio.h>
+@@ -465,6 +470,11 @@ static int tegra186_gpio_add_pin_ranges(struct gpio_chip *chip)
+ 	unsigned int i, j;
+ 	int err;
+ 
++#if IS_ENABLED(CONFIG_TEGRA_HV_DRIVER)
++	if (is_tegra_hypervisor_mode())
++		return 0;
++#endif
++
+ 	if (!gpio->soc->pinmux || gpio->soc->num_pin_ranges == 0)
+ 		return 0;
+ 
+-- 
+2.43.0
+

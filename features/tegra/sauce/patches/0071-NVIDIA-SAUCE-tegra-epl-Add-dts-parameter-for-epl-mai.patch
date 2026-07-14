@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Hiteshkumar Patel <hiteshkumarg@nvidia.com>
+Date: Fri, 5 Dec 2025 13:52:21 -0800
+Subject: [PATCH 071/254] NVIDIA: SAUCE: tegra-epl: Add dts parameter for epl
+ mailbox timeout
+
+EPL mailbox timeout is different for L4T. So added dts parameter to
+pass epl timeout. If do not pass the dts parameter then it will take
+default timeout as 5ms.
+
+Bug 4774805
+
+Change-Id: I7766354e84513368a10770bc5f984ceb9856faa2
+Signed-off-by: Hiteshkumar Patel <hiteshkumarg@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3506055
+(cherry picked from commit ff289494d471b2ca3b6bc0a0dd579c8230bba2fe)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3507396
+Reviewed-by: Prashant Kumar Shaw <pshaw@nvidia.com>
+Reviewed-by: Bibek Basu <bbasu@nvidia.com>
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 47b4f2a7edf2d3dc4a1adc0d279656e2c436394b)
+
+diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
+index 4dee455d2f58c..7787a99310669 100644
+--- a/drivers/platform/tegra/tegra-epl.c
++++ b/drivers/platform/tegra/tegra-epl.c
+@@ -181,14 +181,25 @@ static void tegra_hsp_tx_empty_notify(struct mbox_client *cl,
+ static int tegra_hsp_mb_init(struct device *dev)
+ {
+ 	int err;
++	u32 timeout_ms = TIMEOUT;
++	int prop_ret = -EINVAL;
+ 
+ 	epl_hsp_v = devm_kzalloc(dev, sizeof(*epl_hsp_v), GFP_KERNEL);
+ 	if (!epl_hsp_v)
+ 		return -ENOMEM;
+ 
++	/* Allow DT to override mailbox TX timeout (in ms) */
++	if (dev->of_node) {
++		prop_ret = of_property_read_u32(dev->of_node, "nvidia,tx-timeout-ms", &timeout_ms);
++		if (!prop_ret)
++			dev_info(dev, "tegra-epl: mailbox tx timeout set to %u ms from DT\n", timeout_ms);
++		else
++			dev_info(dev, "tegra-epl: mailbox tx timeout not provided; using default %u ms\n", timeout_ms);
++	}
++
+ 	epl_hsp_v->tx.client.dev = dev;
+ 	epl_hsp_v->tx.client.tx_block = true;
+-	epl_hsp_v->tx.client.tx_tout = TIMEOUT;
++	epl_hsp_v->tx.client.tx_tout = timeout_ms;
+ 	epl_hsp_v->tx.client.tx_done = tegra_hsp_tx_empty_notify;
+ 
+ 	epl_hsp_v->tx.chan = mbox_request_channel_byname(&epl_hsp_v->tx.client,
+-- 
+2.43.0
+

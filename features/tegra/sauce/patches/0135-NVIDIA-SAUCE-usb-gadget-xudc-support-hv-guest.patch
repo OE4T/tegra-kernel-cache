@@ -1,0 +1,94 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Henry Lin <henryl@nvidia.com>
+Date: Thu, 7 Mar 2024 20:41:09 +0000
+Subject: [PATCH 135/254] NVIDIA: SAUCE: usb: gadget: xudc: support hv guest
+
+In hypervisor environment, xudc driver cannot access clock, reset,
+and power domain directly.
+
+http://nvbugs/3840188
+
+Change-Id: I410d082a2b0661d080da60e89645b65277fbcda1
+Signed-off-by: Henry Lin <henryl@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3132353
+(cherry picked from commit 2f0506ae8317766f5473b5d35895950eec54ff98)
+Signed-off-by: Bodla Rakesh Babu <rbodla@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3178752
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+(cherry picked from commit 986c15c5bb7ea1ef2436d88f50050258032d3d03)
+
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index 739f13d4de6e0..f90672c9d042c 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -2,7 +2,7 @@
+ /*
+  * NVIDIA Tegra XUSB device mode controller
+  *
+- * Copyright (c) 2013-2023, NVIDIA CORPORATION.  All rights reserved.
++ * SPDX-FileCopyrightText: Copyright (c) 2013-2024, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+  * Copyright (c) 2015, Google Inc.
+  */
+ 
+@@ -560,6 +560,7 @@ struct tegra_xudc_soc {
+ 	bool port_speed_quirk;
+ 	bool has_ipfs;
+ 	bool has_pg_support;
++	bool is_hv_guest;
+ };
+ 
+ static inline u32 fpci_readl(struct tegra_xudc *xudc, unsigned int offset)
+@@ -3700,6 +3701,19 @@ static struct tegra_xudc_soc tegra234_xudc_soc_data = {
+ 	.has_pg_support = true,
+ };
+ 
++static struct tegra_xudc_soc tegra234_hv_xudc_soc_data = {
++	.num_phys = 4,
++	.u1_enable = true,
++	.u2_enable = true,
++	.lpm_enable = true,
++	.invalid_seq_num = false,
++	.pls_quirk = false,
++	.port_reset_quirk = false,
++	.has_ipfs = false,
++	.has_pg_support = true,
++	.is_hv_guest = true,
++};
++
+ static const struct of_device_id tegra_xudc_of_match[] = {
+ 	{
+ 		.compatible = "nvidia,tegra210-xudc",
+@@ -3717,12 +3731,19 @@ static const struct of_device_id tegra_xudc_of_match[] = {
+ 		.compatible = "nvidia,tegra234-xudc",
+ 		.data = &tegra234_xudc_soc_data
+ 	},
++	{
++		.compatible = "nvidia,tegra234-hv-xudc",
++		.data = &tegra234_hv_xudc_soc_data
++	},
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, tegra_xudc_of_match);
+ 
+ static void tegra_xudc_powerdomain_remove(struct tegra_xudc *xudc)
+ {
++	if (xudc->soc->is_hv_guest)
++		return;
++
+ 	if (xudc->genpd_dl_ss)
+ 		device_link_del(xudc->genpd_dl_ss);
+ 	if (xudc->genpd_dl_device)
+@@ -3738,6 +3759,9 @@ static int tegra_xudc_powerdomain_init(struct tegra_xudc *xudc)
+ 	struct device *dev = xudc->dev;
+ 	int err;
+ 
++	if (xudc->soc->is_hv_guest)
++		return 0;
++
+ 	xudc->genpd_dev_device = dev_pm_domain_attach_by_name(dev, "dev");
+ 	if (IS_ERR(xudc->genpd_dev_device)) {
+ 		err = PTR_ERR(xudc->genpd_dev_device);
+-- 
+2.43.0
+

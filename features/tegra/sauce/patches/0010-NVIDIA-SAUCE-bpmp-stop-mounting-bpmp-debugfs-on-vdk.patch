@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Sat, 9 Sep 2023 07:06:56 +0000
+Subject: [PATCH 010/254] NVIDIA: SAUCE: bpmp: stop mounting bpmp debugfs on
+ vdk
+
+Bug 4199271
+
+Change-Id: I5f97df2f3350878a1f87e3ecaf20d16134c43ca4
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2977506
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Reviewed-by: Sandeep Trasi <strasi@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2996545
+Tested-by: Kartik Rajput <kkartik@nvidia.com>
+Reviewed-by: Kartik Rajput <kkartik@nvidia.com>
+
+diff --git a/drivers/firmware/tegra/bpmp.c b/drivers/firmware/tegra/bpmp.c
+index e74bba7ccc443..af1144619acc4 100644
+--- a/drivers/firmware/tegra/bpmp.c
++++ b/drivers/firmware/tegra/bpmp.c
+@@ -17,6 +17,7 @@
+ #include <soc/tegra/bpmp.h>
+ #include <soc/tegra/bpmp-abi.h>
+ #include <soc/tegra/ivc.h>
++#include <soc/tegra/fuse.h>
+ 
+ #include "bpmp-private.h"
+ 
+@@ -793,9 +794,11 @@ static int tegra_bpmp_probe(struct platform_device *pdev)
+ 			goto free_mrq;
+ 	}
+ 
+-	err = tegra_bpmp_init_debugfs(bpmp);
+-	if (err < 0)
+-		dev_err(&pdev->dev, "debugfs initialization failed: %d\n", err);
++	if (tegra_sku_info.platform != TEGRA_PLATFORM_VDK) {
++		err = tegra_bpmp_init_debugfs(bpmp);
++		if (err < 0)
++			dev_err(&pdev->dev, "debugfs initialization failed: %d\n", err);
++	}
+ 
+ 	return 0;
+ 
+-- 
+2.43.0
+

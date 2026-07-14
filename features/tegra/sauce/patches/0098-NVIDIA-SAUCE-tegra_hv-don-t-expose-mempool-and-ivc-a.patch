@@ -1,0 +1,64 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Fri, 13 Jun 2025 04:29:08 +0000
+Subject: [PATCH 098/254] NVIDIA: SAUCE: tegra_hv: don't expose mempool and ivc
+ address in logs
+
+Jira ESLC-8672
+DOS70-REQ-287
+
+Change-Id: I1c57c8fc840fb29325419e938a3fe66bd50c6cdb
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3427617
+Reviewed-by: svcacv <svcacv@nvidia.com>
+Reviewed-by: svc-mobile-coverity <svc-mobile-coverity@nvidia.com>
+Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 65efa5a44a61f61deb16b0db6380e3b3b35056f8)
+
+diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
+index 38863277b0c6d..a0bfee3792247 100644
+--- a/drivers/virt/tegra/tegra_hv.c
++++ b/drivers/virt/tegra/tegra_hv.c
+@@ -324,8 +324,6 @@ static int tegra_hv_add_ivc(struct tegra_hv_data *hvd,
+ 			return -EINVAL;
+ 	}
+ 
+-	INFO("adding ivc%u: rx_base=%lx tx_base = %lx size=%x irq = %d (%lu)\n",
+-			qd->id, (uintptr_t)rx_map.vaddr, (uintptr_t)tx_map.vaddr, qd->size, ivc->irq, d->hwirq);
+ 	ret = tegra_ivc_init(&ivc->ivc, NULL, &rx_map, 0, &tx_map, 0, qd->nframes,
+ 			qd->frame_size, ivc_raise_irq, ivc);
+ 	if (ret != 0) {
+@@ -536,9 +534,6 @@ static int tegra_hv_setup(struct tegra_hv_data *hvd)
+ 	ivc_notify.trap_region_base_ipa = hvd->info->trap_region_base_ipa;
+ 	ivc_notify.trap_region_size = hvd->info->trap_region_size;
+ 	if (ivc_notify.trap_region_size != 0UL) {
+-		INFO("trap_region_base_ipa %lx: trap_region_size=%llx\n",
+-			ivc_notify.trap_region_base_ipa,
+-			ivc_notify.trap_region_size);
+ 		if (WARN_ON(ivc_notify.trap_region_base_ipa == 0UL))
+ 			return -EINVAL;
+ 		if (WARN_ON(ivc_notify.trap_region_base_va != 0UL))
+@@ -562,9 +557,6 @@ static int tegra_hv_setup(struct tegra_hv_data *hvd)
+ 	ivc_notify.msi_region_base_ipa = hvd->info->msi_region_base_ipa;
+ 	ivc_notify.msi_region_size = hvd->info->msi_region_size;
+ 	if (ivc_notify.msi_region_size != 0UL) {
+-		INFO("msi_region_base_ipa %lx: msi_region_size=%llx\n",
+-			ivc_notify.msi_region_base_ipa,
+-			ivc_notify.msi_region_size);
+ 		if (WARN_ON(ivc_notify.msi_region_base_ipa == 0UL))
+ 			return -EINVAL;
+ 		if (WARN_ON(ivc_notify.msi_region_base_va != 0UL))
+@@ -693,9 +685,6 @@ static int tegra_hv_setup(struct tegra_hv_data *hvd)
+ 		}
+ 
+ 		BUG_ON(mpsize < mpd->size);
+-
+-		INFO("added mempool %u: ipa=%llx size=%llx peer=%u\n",
+-				mpd->id, mpd->pa, mpd->size, mpd->peer_vmid);
+ 	}
+ 
+ 	INFO("Memory usage: ivc:0x%llx mempool=0x%llx\n", ivcsize, mpsize);
+-- 
+2.43.0
+

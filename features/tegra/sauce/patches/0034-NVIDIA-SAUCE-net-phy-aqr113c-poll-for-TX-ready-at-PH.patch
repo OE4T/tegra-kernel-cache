@@ -1,0 +1,89 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: ruppala <ruppala@nvidia.com>
+Date: Thu, 18 Aug 2022 06:38:08 +0000
+Subject: [PATCH 034/254] NVIDIA: SAUCE: net: phy: aqr113c: poll for TX ready
+ at PHY system side
+
+Issue: In case of Interface down and up, TX/RX
+lane bringup failures are seen while configuring
+speed settings.
+
+Fix: Poll until PHY system interface gets ready
+before configuring the interface settings.
+
+Bug 3447132
+
+Change-Id: Ic796b3c2d5ad9df2ac36fb3794fada776818c267
+Signed-off-by: Revanth Kumar Uppala <ruppala@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2909750
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/net/phy/aquantia/aquantia.h b/drivers/net/phy/aquantia/aquantia.h
+index 31427ee343e36..89655b6e40048 100644
+--- a/drivers/net/phy/aquantia/aquantia.h
++++ b/drivers/net/phy/aquantia/aquantia.h
+@@ -230,6 +230,7 @@ struct aqr107_priv {
+ 	unsigned long leds_active_high;
+ 	bool wait_on_global_cfg;
+ 	struct aqr_global_syscfg global_cfg[AQR_NUM_GLOBAL_CFG];
++	int wol_status;
+ };
+ 
+ #if IS_REACHABLE(CONFIG_HWMON)
+diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
+index 7ee9eb6cbc4bb..96aee6a22b5f3 100644
+--- a/drivers/net/phy/aquantia/aquantia_main.c
++++ b/drivers/net/phy/aquantia/aquantia_main.c
+@@ -54,6 +54,7 @@
+ #define MDIO_PHYXS_VEND_IF_STATUS_TYPE_RXAUI	7
+ #define MDIO_PHYXS_VEND_IF_STATUS_TYPE_OFF	9
+ #define MDIO_PHYXS_VEND_IF_STATUS_TYPE_OCSGMII	10
++#define MDIO_PHYXS_VEND_IF_STATUS_TX_READY	BIT(12)
+ 
+ #define MDIO_AN_VEND_PROV			0xc400
+ #define MDIO_AN_VEND_PROV_1000BASET_FULL	BIT(15)
+@@ -399,6 +400,7 @@ static irqreturn_t aqr_handle_interrupt(struct phy_device *phydev)
+ 	int reg, val, ret;
+ 	int irq_status;
+ 
++	struct aqr107_priv *priv = phydev->priv;
+ 	reg = phy_read_mmd(phydev, MDIO_MMD_C22EXT, MDIO_C22EXT_GBE_PHY_SGMII_TX_ALARM1);
+ 	if ((reg & MDIO_C22EXT_SGMII0_MAGIC_PKT_FRAME_MASK) ==
+ 	    MDIO_C22EXT_SGMII0_MAGIC_PKT_FRAME_MASK) {
+@@ -419,6 +421,7 @@ static irqreturn_t aqr_handle_interrupt(struct phy_device *phydev)
+ 		if (ret < 0)
+ 			return IRQ_NONE;
+ 		/* restart auto-negotiation */
++		priv->wol_status = 0;
+ 		return genphy_c45_restart_aneg(phydev);
+ 	}
+ 
+@@ -1352,6 +1355,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
+ {
+ 	u16 val;
+ 	int ret = 0;
++	struct aqr107_priv *priv = phydev->priv;
+ 
+ 	if (enable) {
+ 		/* Disables all advertised speeds except for the WoL
+@@ -1427,6 +1431,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
+ 
+ 		/* restart auto-negotiation */
+ 		genphy_c45_restart_aneg(phydev);
++		priv->wol_status = 1;
+ 	} else {
+ 		/* Disable the WoL enable bit */
+ 		val = phy_read_mmd(phydev, MDIO_MMD_AN, MDIO_AN_RESVD_VEND_PROV);
+@@ -1447,6 +1452,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
+ 
+ 		/* restart auto-negotiation */
+ 		genphy_c45_restart_aneg(phydev);
++		priv->wol_status = 0;
+ 	}
+ 	return ret;
+ }
+-- 
+2.43.0
+

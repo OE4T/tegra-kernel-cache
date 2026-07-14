@@ -1,0 +1,49 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Sing-Han Chen <singhanc@nvidia.com>
+Date: Thu, 6 Apr 2023 16:51:06 +0800
+Subject: [PATCH 086/254] NVIDIA: SAUCE: usb: xhci-tegra: don't assign port
+ role by default
+
+For OTG port, don't set data role to host by default.
+The data role will be decided later.
+
+Bug 3994759
+
+Change-Id: I6786f5544084645af122f8b36e565547a90ad4da
+Signed-off-by: Sing-Han Chen <singhanc@nvidia.com>
+Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
+Tested-by: Bitan Biswas <bbiswas@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2883741
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
+index b0dcdede1fc8e..22c51c0ca5bae 100644
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -2,7 +2,7 @@
+ /*
+  * NVIDIA Tegra xHCI host controller driver
+  *
+- * Copyright (c) 2014-2020, NVIDIA CORPORATION. All rights reserved.
++ * Copyright (c) 2014-2023, NVIDIA CORPORATION. All rights reserved.
+  * Copyright (C) 2014 Google, Inc.
+  */
+ 
+@@ -1523,10 +1523,9 @@ static int tegra_xusb_init_usb_phy(struct tegra_xusb *tegra)
+ 		tegra->usbphy[i] = devm_usb_get_phy_by_node(tegra->dev,
+ 							phy->dev.of_node,
+ 							&tegra->id_nb);
+-		if (!IS_ERR(tegra->usbphy[i])) {
++		if (!IS_ERR(tegra->usbphy[i]))
+ 			dev_dbg(tegra->dev, "usbphy-%d registered", i);
+-			otg_set_host(tegra->usbphy[i]->otg, &tegra->hcd->self);
+-		} else {
++		else {
+ 			/*
+ 			 * usb-phy is optional, continue if its not available.
+ 			 */
+-- 
+2.43.0
+

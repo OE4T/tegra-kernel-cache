@@ -1,0 +1,78 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nagarjuna Kristam <nkristam@nvidia.com>
+Date: Thu, 9 Feb 2023 15:54:47 +0530
+Subject: [PATCH 224/254] NVIDIA: SAUCE: PCI: tegra194: Add ASPM L1 entrance
+ latency config
+
+ASPM L1 latency configuration is needed for T234 EP mode. Add generic
+support for this configuration keeping POR values for non T234 EP mode
+and expected config value for T234 EP.
+
+Bug 3920798
+
+Change-Id: I309031c6a855ea2619f53cef8e86d2b92ecc6e06
+Signed-off-by: Nagarjuna Kristam <nkristam@nvidia.com>
+Reviewed-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Reviewed-by: Suresh Mangipudi <smangipudi@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2902773
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index a6bfe2aaf2103..304c0a9796b21 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -240,6 +240,8 @@ struct tegra_pcie_dw_of_data {
+ 	u32 cdm_chk_int_en_bit;
+ 	u32 gen4_preset_vec;
+ 	u8 n_fts[2];
++	/* L2 Latency entrance values(Rest/Prod) */
++	u32 aspm_l1_enter_lat;
+ };
+ 
+ struct tegra_pcie_dw {
+@@ -721,6 +723,8 @@ static void init_host_aspm(struct tegra_pcie_dw *pcie)
+ 	val = dw_pcie_readl_dbi(pci, PCIE_PORT_AFR);
+ 	val &= ~PORT_AFR_L0S_ENTRANCE_LAT_MASK;
+ 	val |= (pcie->aspm_l0s_enter_lat << PORT_AFR_L0S_ENTRANCE_LAT_SHIFT);
++	val &= ~PORT_AFR_L1_ENTRANCE_LAT_MASK;
++	val |= (pcie->of_data->aspm_l1_enter_lat << PORT_AFR_L1_ENTRANCE_LAT_SHIFT);
+ 	val |= PORT_AFR_ENTER_ASPM;
+ 	dw_pcie_writel_dbi(pci, PCIE_PORT_AFR, val);
+ }
+@@ -2648,6 +2652,7 @@ static const struct tegra_pcie_dw_of_data tegra194_pcie_dw_rc_of_data = {
+ 	/* Gen4 - 5, 6, 8 and 9 presets enabled */
+ 	.gen4_preset_vec = 0x360,
+ 	.n_fts = { 52, 52 },
++	.aspm_l1_enter_lat = 3,
+ };
+ 
+ static const struct tegra_pcie_dw_of_data tegra194_pcie_dw_ep_of_data = {
+@@ -2657,6 +2662,7 @@ static const struct tegra_pcie_dw_of_data tegra194_pcie_dw_ep_of_data = {
+ 	/* Gen4 - 5, 6, 8 and 9 presets enabled */
+ 	.gen4_preset_vec = 0x360,
+ 	.n_fts = { 52, 52 },
++	.aspm_l1_enter_lat = 3,
+ };
+ 
+ static const struct tegra_pcie_dw_of_data tegra234_pcie_dw_rc_of_data = {
+@@ -2669,6 +2675,7 @@ static const struct tegra_pcie_dw_of_data tegra234_pcie_dw_rc_of_data = {
+ 	/* Gen4 - 6, 8 and 9 presets enabled */
+ 	.gen4_preset_vec = 0x340,
+ 	.n_fts = { 52, 80 },
++	.aspm_l1_enter_lat = 4,
+ };
+ 
+ static const struct tegra_pcie_dw_of_data tegra234_pcie_dw_ep_of_data = {
+@@ -2681,6 +2688,7 @@ static const struct tegra_pcie_dw_of_data tegra234_pcie_dw_ep_of_data = {
+ 	/* Gen4 - 6, 8 and 9 presets enabled */
+ 	.gen4_preset_vec = 0x340,
+ 	.n_fts = { 52, 80 },
++	.aspm_l1_enter_lat = 5,
+ };
+ 
+ static const struct of_device_id tegra_pcie_dw_of_match[] = {
+-- 
+2.43.0
+

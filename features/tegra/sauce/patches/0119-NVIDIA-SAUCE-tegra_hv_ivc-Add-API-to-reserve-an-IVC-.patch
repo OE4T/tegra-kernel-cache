@@ -1,0 +1,161 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Daniel Jurgens <danielj@nvidia.com>
+Date: Sat, 10 Jan 2026 04:11:49 +0000
+Subject: [PATCH 119/254] NVIDIA: SAUCE: tegra_hv_ivc: Add API to reserve an
+ IVC queue
+
+There is a new driver to handle nvscicom queues. In order to prevent
+double reservation provide an API to allow that driver to make a queue
+as reserved when it's used for nvscicom.
+
+Bug 5628239
+
+Change-Id: I234e6144699c6be6eb0060ef0d06638cae61f8d3
+Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3532108
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Tested-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+Reviewed-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+(cherry picked from commit f3c52101af0762929bb8c454b2e87f6e71626c1f)
+
+diff --git a/drivers/virt/tegra/tegra_hv_ivc.c b/drivers/virt/tegra/tegra_hv_ivc.c
+index c43baee0603d8..b08e2620a5a30 100644
+--- a/drivers/virt/tegra/tegra_hv_ivc.c
++++ b/drivers/virt/tegra/tegra_hv_ivc.c
+@@ -57,9 +57,11 @@ struct hv_ivc {
+ 	/* This lock synchronizes the reserved flag. */
+ 	struct mutex		lock;
+ 	int			reserved;
++	int			reserved_by_external;
+ 
+ 	char			name[16];
+ 	int			irq;
++	uint32_t		queue_index;
+ };
+ 
+ #define cookie_to_ivc_dev(_cookie) \
+@@ -785,6 +787,52 @@ int tegra_hv_ivc_unreserve(struct tegra_hv_ivc_cookie *ivck)
+ }
+ EXPORT_SYMBOL(tegra_hv_ivc_unreserve);
+ 
++bool tegra_hv_ivc_reserve_id(uint32_t id)
++{
++	struct tegra_hv_data *hvd = tegra_hv_get_hvd();
++	struct hv_ivc *ivc;
++	bool reserved = false;
++
++	if (IS_ERR(hvd))
++		return false;
++
++	ivc = tegra_hv_ivc_device_by_id(hvd, id);
++	if (ivc == NULL)
++		return false;
++
++	mutex_lock(&ivc->lock);
++	if (!ivc->reserved) {
++		ivc->reserved = 1;
++		ivc->reserved_by_external = 1;
++		reserved = true;
++	}
++	mutex_unlock(&ivc->lock);
++
++	return reserved;
++}
++EXPORT_SYMBOL(tegra_hv_ivc_reserve_id);
++
++void tegra_hv_ivc_unreserve_id(uint32_t id)
++{
++	struct tegra_hv_data *hvd = tegra_hv_get_hvd();
++	struct hv_ivc *ivc;
++
++	if (IS_ERR(hvd))
++		return;
++
++	ivc = tegra_hv_ivc_device_by_id(hvd, id);
++	if (ivc == NULL)
++		return;
++
++	mutex_lock(&ivc->lock);
++	if (ivc->reserved_by_external) {
++		ivc->reserved = 0;
++		ivc->reserved_by_external = 0;
++	}
++	mutex_unlock(&ivc->lock);
++}
++EXPORT_SYMBOL(tegra_hv_ivc_unreserve_id);
++
+ int tegra_hv_ivc_write(struct tegra_hv_ivc_cookie *ivck, const void *buf,
+ 		int size)
+ {
+diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
+index 2825a39930c8c..035d2546d28d7 100644
+--- a/include/soc/tegra/virt/tegra_hv.h
++++ b/include/soc/tegra/virt/tegra_hv.h
+@@ -212,6 +212,62 @@ const struct ivc_info_page *tegra_hv_get_ivc_info(void);
+  */
+ int tegra_hv_get_vmid(void);
+ 
++/**
++ * @brief          Reserve an IVC queue by ID
++ * @param[in]      id Queue ID to reserve
++ *
++ * @retval         true If the queue was successfully reserved
++ * @retval         false If already reserved or if the queue doesn't exist
++ *
++ * @pre
++ *                 - Tegra hypervisor driver should have been initialized.
++ *                 - This API should be invoked on virtual/hypervisor environment only.
++ *
++ * @post
++ *                 - Queue will be marked reserved with reserved_by_external flag set
++ *
++ * @usage
++ *                 - Used by tegra_hv_nvscicom to prevent double reservation of queues.
++ *                 - Allowed context for the API call
++ *                   - Interrupt handler: No
++ *                   - Signal handler: N/A
++ *                   - Thread-safe: Yes
++ *                   - Async/Sync: Sync
++ *                   - Re-entrant: No
++ *                 - API Group
++ *                   - Init: No
++ *                   - Runtime: Yes
++ *                   - De-Init: No
++ */
++bool tegra_hv_ivc_reserve_id(uint32_t id);
++
++/**
++ * @brief          Unreserve an IVC queue by ID
++ * @param[in]      id Queue ID to unreserve
++ *
++ * @pre
++ *                 - Tegra hypervisor driver should have been initialized.
++ *                 - This API should be invoked on virtual/hypervisor environment only.
++ *                 - Queue should have been reserved via tegra_hv_ivc_reserve_id.
++ *
++ * @post
++ *                 - Queue reservation will be cleared if reserved_by_external flag was set
++ *
++ * @usage
++ *                 - Used by tegra_hv_nvscicom to release the reservation.
++ *                 - Allowed context for the API call
++ *                   - Interrupt handler: No
++ *                   - Signal handler: N/A
++ *                   - Thread-safe: Yes
++ *                   - Async/Sync: Sync
++ *                   - Re-entrant: No
++ *                 - API Group
++ *                   - Init: No
++ *                   - Runtime: Yes
++ *                   - De-Init: No
++ */
++void tegra_hv_ivc_unreserve_id(uint32_t id);
++
+ /**
+  * @brief          Initialize IVC layout structure
+  * @param[in,out]  layout Pointer to layout structure to initialize
+-- 
+2.43.0
+

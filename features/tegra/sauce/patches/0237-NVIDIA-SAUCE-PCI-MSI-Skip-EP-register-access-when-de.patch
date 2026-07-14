@@ -1,0 +1,106 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Pallavi Singh <palsing@nvidia.com>
+Date: Fri, 6 Mar 2026 19:47:59 +0000
+Subject: [PATCH 237/254] NVIDIA: SAUCE: PCI/MSI: Skip EP register access when
+ device is disconnected
+
+When a PCIe EP is disconnected (hot unplug or link down), the
+device is marked disconnected but teardown still runs and
+free_irq() is called. That triggers the IRQ chip mask path.
+
+pci_msi_update_mask(): Reached as free_irq() -> pci_msi_mask_irq()
+-> __pci_msi_mask_desc() -> pci_msi_mask() -> pci_msi_update_mask().
+Writes the MSI Mask register in config space. Add
+pci_dev_is_disconnected() to skip lock, in-memory mask update,
+and config write when the device is disconnected.
+
+pci_msix_mask() and pci_msix_unmask(): Reached as free_irq() ->
+pci_msi_mask_irq() -> __pci_msi_mask_desc() -> pci_msix_mask() or
+pci_msix_unmask(). They read/write the MSI-X vector table in PCIe
+BAR (MMIO space). Add pci_dev_is_disconnected() to skip MMIO
+access when the device is disconnected.
+
+__pci_restore_msi_state(): Called to restore MSI state (e.g.
+resume or error recovery). Writes config space and calls
+pci_msi_update_mask(). Add pci_dev_is_disconnected() next to
+msi_enabled check to skip restore when device is disconnected.
+
+__pci_restore_msix_state(): Called to restore MSI-X state. Writes
+config and MSI-X table MMIO. Add pci_dev_is_disconnected() next to
+msix_enabled check to skip restore when device is disconnected.
+
+Bug 5872237
+
+Change-Id: I6474063708290375e57647f7085d901f9645aa3e
+Signed-off-by: Pallavi Singh <palsingh@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3565773
+Tested-by: Zuyi Hu <zuyih@nvidia.com>
+Reviewed-by: Zuyi Hu <zuyih@nvidia.com>
+Reviewed-by: Bibek Basu <bbasu@nvidia.com>
+Reviewed-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+(cherry picked from commit 4275193791b643d6ef2ce8e96ff53ca48ea1af41)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3582755
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+APS-Inflight: svcenomis <svcenomis@nvidia.com>
+Tested-by: Prathamesh Shete <pshete@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
+(cherry picked from commit 82ecac18ee019d77d2118d4f951fe1e2ec4cac8d)
+
+diff --git a/drivers/pci/msi/msi.c b/drivers/pci/msi/msi.c
+index e010ecd9f90dd..2124ce0ffd08c 100644
+--- a/drivers/pci/msi/msi.c
++++ b/drivers/pci/msi/msi.c
+@@ -117,7 +117,8 @@ void pci_msi_update_mask(struct msi_desc *desc, u32 clear, u32 set)
+ 	raw_spinlock_t *lock = &dev->msi_lock;
+ 	unsigned long flags;
+ 
+-	if (!desc->pci.msi_attrib.can_mask)
++	if (!desc->pci.msi_attrib.can_mask ||
++	    unlikely(pci_dev_is_disconnected(msi_desc_to_pci_dev(desc))))
+ 		return;
+ 
+ 	raw_spin_lock_irqsave(lock, flags);
+@@ -508,7 +509,7 @@ void __pci_restore_msi_state(struct pci_dev *dev)
+ 	struct msi_desc *entry;
+ 	u16 control;
+ 
+-	if (!dev->msi_enabled)
++	if (!dev->msi_enabled || unlikely(pci_dev_is_disconnected(dev)))
+ 		return;
+ 
+ 	entry = irq_get_msi_desc(dev->irq);
+@@ -863,7 +864,7 @@ void __pci_restore_msix_state(struct pci_dev *dev)
+ 	struct msi_desc *entry;
+ 	bool write_msg;
+ 
+-	if (!dev->msix_enabled)
++	if (!dev->msix_enabled || unlikely(pci_dev_is_disconnected(dev)))
+ 		return;
+ 
+ 	/* route the table */
+diff --git a/drivers/pci/msi/msi.h b/drivers/pci/msi/msi.h
+index 0b420b319f50f..cbbbf38225bf4 100644
+--- a/drivers/pci/msi/msi.h
++++ b/drivers/pci/msi/msi.h
+@@ -42,6 +42,8 @@ static inline void pci_msix_write_vector_ctrl(struct msi_desc *desc, u32 ctrl)
+ 
+ static inline void pci_msix_mask(struct msi_desc *desc)
+ {
++	if (unlikely(pci_dev_is_disconnected(to_pci_dev(desc->dev))))
++		return;
+ 	desc->pci.msix_ctrl |= PCI_MSIX_ENTRY_CTRL_MASKBIT;
+ 	pci_msix_write_vector_ctrl(desc, desc->pci.msix_ctrl);
+ 	/* Flush write to device */
+@@ -50,6 +52,8 @@ static inline void pci_msix_mask(struct msi_desc *desc)
+ 
+ static inline void pci_msix_unmask(struct msi_desc *desc)
+ {
++	if (unlikely(pci_dev_is_disconnected(to_pci_dev(desc->dev))))
++		return;
+ 	desc->pci.msix_ctrl &= ~PCI_MSIX_ENTRY_CTRL_MASKBIT;
+ 	pci_msix_write_vector_ctrl(desc, desc->pci.msix_ctrl);
+ }
+-- 
+2.43.0
+

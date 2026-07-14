@@ -1,0 +1,149 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kartik Rajput <kkartik@nvidia.com>
+Date: Thu, 3 Jul 2025 16:34:15 +0530
+Subject: [PATCH 009/254] NVIDIA: SAUCE: clocksource: timer-tegra186: Enable
+ WDT at probe
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Currently, if the system crashes or hangs during kernel boot before
+userspace initializes and configures the watchdog timer, then the
+watchdog won’t be able to recover the system as it’s not running. This
+becomes crucial during an over-the-air update, where if the newly
+updated kernel crashes on boot, the watchdog is needed to reset the
+device and boot into an alternative system partition. If the watchdog
+is disabled in such scenarios, it can lead to the system getting
+bricked.
+
+Enable the WDT during driver probe to allow recovery from any crash/hang
+seen during early kernel boot. Also, disable interrupts once userspace
+starts pinging the watchdog.
+
+Bug 5391604
+Bug 5518050
+
+Change-Id: If9e85751d8a9efeff943607231170283f0acebdd
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3419907
+(cherry picked from commit fb925f9cecd452ecc78040ee8da7d2927ea2e968)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3482723
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit f1b86419ed688791d0c116a701319d288ab3e84c)
+
+diff --git a/drivers/clocksource/timer-tegra186.c b/drivers/clocksource/timer-tegra186.c
+index 966266b601d91..c0471f5aa7976 100644
+--- a/drivers/clocksource/timer-tegra186.c
++++ b/drivers/clocksource/timer-tegra186.c
+@@ -57,6 +57,8 @@
+ #define WDTUR 0x00c
+ #define  WDTUR_UNLOCK_PATTERN 0x0000c45a
+ 
++#define WDT_DEFAULT_TIMEOUT 120
++
+ struct tegra186_timer_soc {
+ 	unsigned int num_timers;
+ 	unsigned int num_wdts;
+@@ -74,6 +76,7 @@ struct tegra186_wdt {
+ 
+ 	void __iomem *regs;
+ 	unsigned int index;
++	bool enable_irq;
+ 	bool locked;
+ 
+ 	struct tegra186_tmr *tmr;
+@@ -174,6 +177,16 @@ static void tegra186_wdt_enable(struct tegra186_wdt *wdt)
+ 		value &= ~WDTCR_PERIOD_MASK;
+ 		value |= WDTCR_PERIOD(1);
+ 
++		/*
++		 * If enable_irq is set then enable the watchdog IRQ for kernel
++		 * petting, otherwise userspace is responsible for petting the
++		 * watchdog.
++		 */
++		if (wdt->enable_irq)
++			value |= WDTCR_LOCAL_INT_ENABLE;
++		else
++			value &= ~WDTCR_LOCAL_INT_ENABLE;
++
+ 		/* enable system POR reset */
+ 		value |= WDTCR_SYSTEM_POR_RESET_ENABLE;
+ 
+@@ -205,6 +218,10 @@ static int tegra186_wdt_ping(struct watchdog_device *wdd)
+ {
+ 	struct tegra186_wdt *wdt = to_tegra186_wdt(wdd);
+ 
++	/* Disable the watchdog IRQ now userspace is taking over. */
++	if (wdt->enable_irq)
++		wdt->enable_irq = false;
++
+ 	tegra186_wdt_disable(wdt);
+ 	tegra186_wdt_enable(wdt);
+ 
+@@ -320,6 +337,8 @@ static struct tegra186_wdt *tegra186_wdt_create(struct tegra186_timer *tegra,
+ 	if (value & WDTCR_LOCAL_INT_ENABLE)
+ 		wdt->locked = true;
+ 
++	wdt->enable_irq = true;
++
+ 	source = value & WDTCR_TIMER_SOURCE_MASK;
+ 
+ 	wdt->tmr = tegra186_tmr_create(tegra, source);
+@@ -419,10 +438,21 @@ static int tegra186_timer_usec_init(struct tegra186_timer *tegra)
+ 	return clocksource_register_hz(&tegra->usec, USEC_PER_SEC);
+ }
+ 
++static irqreturn_t tegra186_timer_irq(int irq, void *data)
++{
++	struct tegra186_timer *tegra = data;
++
++	tegra186_wdt_disable(tegra->wdt);
++	tegra186_wdt_enable(tegra->wdt);
++
++	return IRQ_HANDLED;
++}
++
+ static int tegra186_timer_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct tegra186_timer *tegra;
++	int irq;
+ 	int err;
+ 
+ 	tegra = devm_kzalloc(dev, sizeof(*tegra), GFP_KERNEL);
+@@ -441,6 +471,15 @@ static int tegra186_timer_probe(struct platform_device *pdev)
+ 	if (err < 0)
+ 		return err;
+ 
++	irq = err;
++
++	err = devm_request_irq(dev, irq, tegra186_timer_irq, 0,
++			       "tegra186-timer", tegra);
++	if (err < 0) {
++		dev_err(dev, "failed to request IRQ#%u: %d\n", irq, err);
++		return err;
++	}
++
+ 	/* create a watchdog using a preconfigured timer */
+ 	tegra->wdt = tegra186_wdt_create(tegra, 0);
+ 	if (IS_ERR(tegra->wdt)) {
+@@ -467,6 +506,13 @@ static int tegra186_timer_probe(struct platform_device *pdev)
+ 		goto unregister_osc;
+ 	}
+ 
++	/*
++	 * Start the watchdog to recover the system if it crashes before
++	 * userspace initialize the WDT.
++	 */
++	tegra186_wdt_set_timeout(&tegra->wdt->base, WDT_DEFAULT_TIMEOUT);
++	tegra186_wdt_start(&tegra->wdt->base);
++
+ 	return 0;
+ 
+ unregister_osc:
+-- 
+2.43.0
+

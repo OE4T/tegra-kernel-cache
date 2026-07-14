@@ -1,0 +1,62 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: sheetal <sheetal@nvidia.com>
+Date: Mon, 29 Sep 2025 16:29:27 +0530
+Subject: [PATCH 174/254] dt-bindings: dma: Update ADMA bindings for tegra264
+
+- Update ADMA device tree bindings for tegra264 to support up to 64
+  interrupt channels by setting 'interrupts' property maxItems to 64.
+- Also, update the 'allOf' conditional schema to ensure correct maxItems
+  for 'interrupts' based on compatible string, including tegra210 (22)
+  and tegra186 (32) ADMA controllers.
+
+Jira: TAS-3221
+
+Change-Id: Id598361cba3f3289231bb8ca19053195a37f1cc7
+Signed-off-by: sheetal <sheetal@nvidia.com>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20250929105930.1767294-2-sheetal@nvidia.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+(cherry-pick from commit 0b4f3aeee766fd3cc3bf254a26b9761d9b53818b)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3538595
+Reviewed-by: Sameer Pujar <spujar@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Mohan kumar <mkumard@nvidia.com>
+(cherry picked from commit 4f249ddc3a5ef486d688f8067658cb00e459b607)
+
+diff --git a/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml b/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml
+index da0235e451d68..269a1f7ebdbb0 100644
+--- a/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml
++++ b/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml
+@@ -46,7 +46,7 @@ properties:
+       Should contain all of the per-channel DMA interrupts in
+       ascending order with respect to the DMA channel index.
+     minItems: 1
+-    maxItems: 32
++    maxItems: 64
+ 
+   clocks:
+     description: Must contain one entry for the ADMA module clock
+@@ -86,6 +86,19 @@ allOf:
+         reg:
+           items:
+             - description: Full address space range of DMA registers.
++        interrupts:
++          maxItems: 22
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - nvidia,tegra186-adma
++    then:
++      properties:
++        interrupts:
++          maxItems: 32
+ 
+   - if:
+       properties:
+-- 
+2.43.0
+

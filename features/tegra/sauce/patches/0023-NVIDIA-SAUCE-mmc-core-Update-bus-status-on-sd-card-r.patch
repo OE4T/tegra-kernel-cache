@@ -1,0 +1,67 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aniruddha Tvs Rao <anrao@nvidia.com>
+Date: Tue, 3 Jul 2018 10:28:40 +0530
+Subject: [PATCH 023/254] NVIDIA: SAUCE: mmc: core: Update bus status on sd
+ card removal
+
+Update card status in mmc_bus_remove on card removal.
+
+Bug 200426887
+Bug 4452228
+
+Change-Id: I122522ca2ec026afc0e9d0f1d4d5b6ceb64ceb57
+Signed-off-by: Aniruddha Tvs Rao <anrao@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/1768775
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-jammy/+/3054276
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3060302
+(cherry picked from commit c445f9c070cbe8a7265a0f46adef20f06555cb9c)
+Signed-off-by: Satish Seelamsetti <sseelamsetti@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3108497
+Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/mmc/core/bus.c b/drivers/mmc/core/bus.c
+index e137f2123fdfc..070d373e0e2ca 100644
+--- a/drivers/mmc/core/bus.c
++++ b/drivers/mmc/core/bus.c
+@@ -134,12 +134,18 @@ static int mmc_bus_probe(struct device *dev)
+ {
+ 	struct mmc_driver *drv = to_mmc_driver(dev->driver);
+ 	struct mmc_card *card = mmc_dev_to_card(dev);
++	int card_id;
+ 
+ 	if (card_idx == MAX_CARDS_NUM) {
+ 		pr_err("Exceeded the total number of cards allowed");
+ 		return -EINVAL;
+ 	} else {
+-		mmc_cards[card_idx++] = card;
++		for (card_id = 0; card_id < MAX_CARDS_NUM; card_id++) {
++			if (!mmc_cards[card_id])
++				break;
++		}
++		mmc_cards[card_id] = card;
++		card_idx++;
+ 	}
+ 
+ 	return drv->probe(card);
+@@ -149,7 +155,16 @@ static void mmc_bus_remove(struct device *dev)
+ {
+ 	struct mmc_driver *drv = to_mmc_driver(dev->driver);
+ 	struct mmc_card *card = mmc_dev_to_card(dev);
++	int card_id;
+ 
++	for (card_id = 0; card_id < MAX_CARDS_NUM; card_id++) {
++		if (mmc_cards[card_id] == card)
++			break;
++	}
++	if (card_id == MAX_CARDS_NUM)
++		card_id--;
++	mmc_cards[card_id] = NULL;
++	card_idx--;
+ 	drv->remove(card);
+ }
+ 
+-- 
+2.43.0
+

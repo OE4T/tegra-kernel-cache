@@ -1,0 +1,136 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: EJ Hsu <ejh@nvidia.com>
+Date: Fri, 13 May 2022 04:02:49 -0700
+Subject: [PATCH 088/254] NVIDIA: SAUCE: xhci: tegra: avoid usb access after
+ shutdown
+
+During system shutdown, tegra_xusb_shutdown() will be called to
+halt the usb controller and powergate the power domain. Once it
+is done, any access to USB registers might cause CBB error.
+
+There might be a chance that hub receives an event which triggers
+its workqueue to run just before the tegra_xusb_shutdown(). In
+this case, the work thread might try to access USB registers after
+xusb shutdown process is done, which cause CBB error.
+
+In this change, we will set XHCI state to XHCI_STATE_DYING to avoid
+further access to XHCI registers, and wait until all current access
+are done.
+
+Bug 3566399
+Bug 4101838
+
+Change-Id: Ie8d63eaab841dd4b7aafc1a85a93c1b79a96bdbe
+Signed-off-by: EJ Hsu <ejh@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-5.10/+/2712118
+Signed-off-by: Henry Lin <henryl@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-jammy/+/2922503
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2970923
+(cherry picked from commit d62aeed378051d2cf1b2b25cb93345eadc2f3522)
+Signed-off-by: Satish Seelamsetti <sseelamsetti@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3096637
+Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
+index 22c51c0ca5bae..46ecdb7baf0c0 100644
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -2,7 +2,7 @@
+ /*
+  * NVIDIA Tegra xHCI host controller driver
+  *
+- * Copyright (c) 2014-2023, NVIDIA CORPORATION. All rights reserved.
++ * Copyright (c) 2014-2024 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+  * Copyright (C) 2014 Google, Inc.
+  */
+ 
+@@ -319,6 +319,7 @@ struct tegra_xusb {
+ 	struct tegra_xusb_context context;
+ 	u8 lp0_utmi_pad_mask;
+ 	int num_wakes;
++	atomic_t hub_ctrl_use_cnt;
+ };
+ 
+ static struct hc_driver __read_mostly tegra_xhci_hc_driver;
+@@ -2009,10 +2010,22 @@ static void tegra_xusb_remove(struct platform_device *pdev)
+ static void tegra_xusb_shutdown(struct platform_device *pdev)
+ {
+ 	struct tegra_xusb *tegra = platform_get_drvdata(pdev);
++	struct xhci_hcd *xhci = hcd_to_xhci(tegra->hcd);
++	unsigned long flags;
+ 
+ 	pm_runtime_get_sync(&pdev->dev);
+ 	disable_irq(tegra->xhci_irq);
+ 	xhci_shutdown(tegra->hcd);
++
++	/* avoid any further access to XHCI registers */
++	spin_lock_irqsave(&xhci->lock, flags);
++	xhci->xhc_state |= XHCI_STATE_DYING;
++	spin_unlock_irqrestore(&xhci->lock, flags);
++
++	/* wait until all current access are done if any */
++	while (atomic_read(&tegra->hub_ctrl_use_cnt) != 0)
++		msleep(20);
++
+ 	tegra_xusb_disable(tegra);
+ }
+ 
+@@ -2775,6 +2788,13 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
+ 	int ret;
+ 	struct phy *phy;
+ 
++	if (xhci->xhc_state & XHCI_STATE_DYING) {
++		dev_info(hcd->self.controller, "HCD shut down\n");
++		return -ENODEV;
++	}
++
++	atomic_inc(&tegra->hub_ctrl_use_cnt);
++
+ 	rhub = &xhci->usb2_rhub;
+ 	bus_state = &rhub->bus_state;
+ 	if (bus_state->resuming_ports && hcd->speed == HCD_USB2) {
+@@ -2793,13 +2813,17 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
+ 	if (hcd->speed == HCD_USB2) {
+ 		phy = tegra_xusb_get_phy(tegra, "usb2", port);
+ 		if ((type_req == ClearPortFeature) && (value == USB_PORT_FEAT_SUSPEND)) {
+-			if (!index || index > rhub->num_ports)
+-				return -EPIPE;
++			if (!index || index > rhub->num_ports) {
++				ret = -EPIPE;
++				goto out;
++			}
+ 			tegra_phy_xusb_utmi_pad_power_on(phy);
+ 		}
+ 		if ((type_req == SetPortFeature) && (value == USB_PORT_FEAT_RESET)) {
+-			if (!index || index > rhub->num_ports)
+-				return -EPIPE;
++			if (!index || index > rhub->num_ports) {
++				ret = -EPIPE;
++				goto out;
++			}
+ 			ports = rhub->ports;
+ 			portsc = readl(ports[port]->addr);
+ 			if (portsc & PORT_CONNECT)
+@@ -2809,7 +2833,7 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
+ 
+ 	ret = xhci_hub_control(hcd, type_req, value, index, buf, length);
+ 	if (ret < 0)
+-		return ret;
++		goto out;
+ 
+ 	if (hcd->speed == HCD_USB2) {
+ 		/* Use phy where we set previously */
+@@ -2833,6 +2857,9 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
+ 			tegra_phy_xusb_utmi_pad_power_on(phy);
+ 	}
+ 
++out:
++	atomic_dec(&tegra->hub_ctrl_use_cnt);
++
+ 	return ret;
+ }
+ 
+-- 
+2.43.0
+

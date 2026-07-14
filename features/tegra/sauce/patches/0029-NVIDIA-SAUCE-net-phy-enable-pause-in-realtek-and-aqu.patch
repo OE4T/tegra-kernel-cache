@@ -1,0 +1,75 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Narayan Reddy <narayanr@nvidia.com>
+Date: Tue, 7 Sep 2021 00:16:03 +0530
+Subject: [PATCH 029/254] NVIDIA: SAUCE: net: phy: enable pause in realtek and
+ aquantia PHY
+
+Enable flow control support in aquantia and
+realtek phy drivers
+
+Bug 200765586
+
+Change-Id: I1e09e641668bcdc08bd2ad5c2520ca06fdb4d587
+Signed-off-by: Narayan Reddy <narayanr@nvidia.com>
+Signed-off-by: Revanth Kumar Uppala <ruppala@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2909742
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
+index 6b7009e6d4ffa..d71758eb67e6b 100644
+--- a/drivers/net/phy/aquantia/aquantia_main.c
++++ b/drivers/net/phy/aquantia/aquantia_main.c
+@@ -35,6 +35,9 @@
+ #define PHY_ID_AQR115C	0x31c31c33
+ #define PHY_ID_AQR813	0x31c31cb2
+ 
++#define MDIO_AN_PAUSE                  BIT(10)
++#define MDIO_AN_ASYM_PAUSE             BIT(11)
++
+ #define MDIO_PHYXS_VEND_PROV2			0xc441
+ #define MDIO_PHYXS_VEND_PROV2_USX_AN		BIT(3)
+ 
+@@ -802,6 +805,16 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
+ 	u32 led_idx;
+ 	int ret;
+ 
++	/* Advertize flow control */
++	linkmode_set_bit(SUPPORTED_Pause, phydev->supported);
++	linkmode_set_bit(SUPPORTED_Asym_Pause, phydev->supported);
++	linkmode_copy(phydev->advertising, phydev->supported);
++
++	/* Configure flow control */
++	ret = phy_read_mmd(phydev, MDIO_MMD_AN, 0x10);
++	ret |= MDIO_AN_PAUSE | MDIO_AN_ASYM_PAUSE;
++	phy_write_mmd(phydev, MDIO_MMD_AN, 0x10, ret);
++
+ 	/* Check that the PHY interface type is compatible */
+ 	if (phydev->interface != PHY_INTERFACE_MODE_SGMII &&
+ 	    phydev->interface != PHY_INTERFACE_MODE_1000BASEKX &&
+diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
+index 7c3d277efaf07..6448631da1cf9 100644
+--- a/drivers/net/phy/realtek/realtek_main.c
++++ b/drivers/net/phy/realtek/realtek_main.c
+@@ -692,7 +692,16 @@ static int rtl8211f_config_init(struct phy_device *phydev)
+ 		return ret;
+ 	}
+ 
+-	return rtl8211f_config_phy_eee(phydev);
++	ret = rtl8211f_config_phy_eee(phydev);
++	if (ret)
++		return ret;
++
++	/* Advertise Flow Control */
++	linkmode_set_bit(SUPPORTED_Pause, phydev->supported);
++	linkmode_set_bit(SUPPORTED_Asym_Pause, phydev->supported);
++	linkmode_copy(phydev->advertising, phydev->supported);
++
++	return genphy_soft_reset(phydev);
+ }
+ 
+ static int rtl821x_suspend(struct phy_device *phydev)
+-- 
+2.43.0
+

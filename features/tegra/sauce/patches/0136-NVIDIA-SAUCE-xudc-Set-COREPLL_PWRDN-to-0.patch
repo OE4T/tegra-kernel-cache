@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: haotienh <haotienh@nvidia.com>
+Date: Tue, 30 Jul 2024 06:49:22 +0000
+Subject: [PATCH 136/254] NVIDIA: SAUCE: xudc: Set COREPLL_PWRDN to 0
+
+The COREPLL_PWRDN bit can be 1 only if the device port is in
+disconnected/low-power state or is disabled.
+We set it to 0 when resume and to 1 when suspend.
+
+http://nvbugs/4739271
+
+Change-Id: Ie10bc1f134b52f7b486e99cc187f376f2b4922cf
+Signed-off-by: haotienh <haotienh@nvidia.com>
+(cherry picked from commit c1f6957ff7955a5f2be26bee20961913e3a25616)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3201121
+Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index f90672c9d042c..f4c99d6368daf 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -4017,8 +4017,7 @@ tegra_xudc_lowpower_enter(struct tegra_xudc *xudc)
+ 
+ 	spin_unlock_irqrestore(&xudc->lock, flags);
+ 
+-	val = xudc_readl(xudc, BLCG);
+-	val |= BLCG_COREPLL_PWRDN;
++	val = xudc_readl(xudc, BLCG) | BLCG_COREPLL_PWRDN;
+ 	xudc_writel(xudc, val, BLCG);
+ 
+ 	clk_bulk_disable_unprepare(xudc->soc->num_clks, xudc->clks);
+-- 
+2.43.0
+

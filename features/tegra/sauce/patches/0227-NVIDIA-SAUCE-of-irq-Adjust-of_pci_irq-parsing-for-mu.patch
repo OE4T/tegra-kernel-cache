@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jeffy Chen <jeffy.chen@rock-chips.com>
+Date: Wed, 8 Feb 2023 16:46:42 +0530
+Subject: [PATCH 227/254] NVIDIA: SAUCE: of/irq: Adjust of_pci_irq parsing for
+ multiple interrupts
+
+Currently we are considering the first irq as the PCI interrupt pin,
+but a PCI device may have multiple interrupts(e.g. PCIe WAKE# pin).
+
+Only parse the PCI interrupt pin when the irq is unnamed or named as
+"pci".
+
+http://nvbugs/4478230
+
+Change-Id: Ie7f94d1f8969400ea8a8ae37accfdfd41cf3cabf
+(cherry-picked from https://patchwork.ozlabs.org/project/linux-pci/
+patch/20230208111645.3863534-3-mmaddireddy@nvidia.com)
+Signed-off-by: Jeffy Chen <jeffy.chen@rock-chips.com>
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Reviewed-by: Thierry Reding <treding@nvidia.com>
+(cherry picked from commit 63857d157b69b0b573d064e5fac2ec5c8558fea8)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3172169
+Tested-by: mobile promotions <svcmobile_promotions@nvidia.com>
+Reviewed-by: mobile promotions <svcmobile_promotions@nvidia.com>
+
+diff --git a/drivers/pci/of.c b/drivers/pci/of.c
+index 3579265f11984..52a3eedfe5638 100644
+--- a/drivers/pci/of.c
++++ b/drivers/pci/of.c
+@@ -474,9 +474,17 @@ static int of_irq_parse_pci(const struct pci_dev *pdev, struct of_phandle_args *
+ 	 */
+ 	dn = pci_device_to_OF_node(pdev);
+ 	if (dn) {
+-		rc = of_irq_parse_one(dn, 0, out_irq);
+-		if (!rc)
+-			return rc;
++		int index;
++
++		index = of_property_match_string(dn, "interrupt-names", "pci");
++		if (index == -EINVAL)	/* Property doesn't exist */
++			index = 0;
++
++		if (index >= 0) {
++			rc = of_irq_parse_one(dn, index, out_irq);
++			if (!rc)
++				return rc;
++		}
+ 	}
+ 
+ 	/*
+-- 
+2.43.0
+

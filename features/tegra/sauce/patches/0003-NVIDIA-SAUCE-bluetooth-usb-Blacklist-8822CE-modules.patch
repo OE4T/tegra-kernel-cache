@@ -1,0 +1,39 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Suresh Mangipudi <smangipudi@nvidia.com>
+Date: Wed, 7 Oct 2020 07:19:01 -0700
+Subject: [PATCH 003/254] NVIDIA: SAUCE: bluetooth: usb: Blacklist 8822CE
+ modules
+
+commit bafaa50aff2d8f547b05ef3eebd87fe71146c729 ("Black list 8822CE module
+from generic driver to use 8822CE BT driver")
+
+Bug 3750163
+
+Change-Id: I7a65fbbf52ea1ab6394ff2eb74190217526bc19b
+Signed-off-by: Suresh Mangipudi <smangipudi@nvidia.com>
+Signed-off-by: Revanth Kumar Uppala <ruppala@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2902843
+(cherry picked from commit 4134d9a38672506cf1b98eec505fa3e9d389266d)
+Signed-off-by: Satish Seelamsetti <sseelamsetti@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3096633
+Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 25236fd97aed5..c5d09bf7931d5 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -821,8 +821,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3548), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+-	{ USB_DEVICE(0x13d3, 0x3549), .driver_info = BTUSB_REALTEK |
+-						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0bda, 0xc822), .driver_info = BTUSB_IGNORE },
++	{ USB_DEVICE(0x13d3, 0x3549), .driver_info = BTUSB_IGNORE },
+ 	{ USB_DEVICE(0x13d3, 0x3553), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3555), .driver_info = BTUSB_REALTEK |
+-- 
+2.43.0
+

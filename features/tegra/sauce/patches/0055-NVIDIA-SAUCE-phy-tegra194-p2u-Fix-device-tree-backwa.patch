@@ -1,0 +1,97 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Wed, 24 May 2023 12:29:32 +0100
+Subject: [PATCH 055/254] NVIDIA: SAUCE: phy: tegra194-p2u: Fix device-tree
+ backward compatibility
+
+The change that added PHY lane margining support to the Tegra194 P2U
+PHY driver breaks device-tree backward compatibility. In other words,
+if you attempt to boot a kernel with the lane margining change and a
+device-tree that does not have the 'intr' interrupt node, required by
+this change, then the PHY driver fails to probe and the following errors
+are seen ...
+
+ tegra194-p2u 3e00000.phy: IRQ intr not found
+ tegra194-p2u 3e00000.phy: failed to request "intr" irq
+ tegra194-p2u: probe of 3e00000.phy failed with error -22
+
+Any updates to the device-tree bindings must be backward compatible so
+that you can boot with an older device-tree. Hence, whenever adding more
+features to existing device-tree bindings, we need to ensure that older
+bindings still work. Fix the PHY driver so that if the 'intr' interrupt
+is not present, then we do not fail to probe, but just disable lane
+margining, if supported.
+
+Bug 4131076
+
+Fixes: "UBUNTU: SAUCE: phy: tegra: p2u: Add lane margin support"
+Change-Id: I93f4ac2eb995bc39a62a17257af90c5ac2029d7d
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-jammy/+/2909831
+(cherry picked from commit 0294ee3767574274d6ebc1c9d28f843c1b107558)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-jammy/+/3092344
+(cherry picked from commit 63e8dbd89ef9680d5c8ecab249c4c56dc2fc60ff)
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3097413
+(cherry picked from commit 10ccdb4c849aca8f7eec8a522aa9e41ffcbd0297)
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3100726
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+
+diff --git a/drivers/phy/tegra/phy-tegra194-p2u.c b/drivers/phy/tegra/phy-tegra194-p2u.c
+index 480de32819e8a..5d347774ac3aa 100644
+--- a/drivers/phy/tegra/phy-tegra194-p2u.c
++++ b/drivers/phy/tegra/phy-tegra194-p2u.c
+@@ -155,7 +155,7 @@ static int tegra_p2u_power_on(struct phy *x)
+ 		p2u_writel(phy, val, P2U_DIR_SEARCH_CTRL);
+ 	}
+ 
+-	if (phy->of_data->lane_margin) {
++	if (phy->of_data->lane_margin && phy->bpmp) {
+ 		val = P2U_RX_MARGIN_SW_INT_EN_READINESS |
+ 		      P2U_RX_MARGIN_SW_INT_EN_MARGIN_START |
+ 		      P2U_RX_MARGIN_SW_INT_EN_MARGIN_CHANGE |
+@@ -385,8 +385,8 @@ static int tegra_p2u_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct phy *generic_phy;
+ 	struct tegra_p2u *phy;
++	int irq = -ENODEV;
+ 	int ret;
+-	u32 irq;
+ 
+ 	phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
+ 	if (!phy)
+@@ -420,16 +420,15 @@ static int tegra_p2u_probe(struct platform_device *pdev)
+ 	if (IS_ERR(phy_provider))
+ 		return PTR_ERR(phy_provider);
+ 
+-	if (phy->of_data->lane_margin) {
++	if (phy->of_data->lane_margin)
++		irq = platform_get_irq_byname(pdev, "intr");
++
++	if (irq < 0) {
++		dev_warn(dev, "Device tree update required to enable lane margining\n");
++	} else {
+ 		spin_lock_init(&phy->next_state_lock);
+ 		INIT_WORK(&phy->rx_margin_work, rx_margin_work_fn);
+ 
+-		irq = platform_get_irq_byname(pdev, "intr");
+-		if (!irq) {
+-			dev_err(dev, "failed to get intr interrupt\n");
+-			return irq;
+-		}
+-
+ 		ret = devm_request_irq(&pdev->dev, irq, tegra_p2u_irq_handler,
+ 				       0, "tegra-p2u-intr", phy);
+ 		if (ret) {
+@@ -456,7 +455,7 @@ static void tegra_p2u_remove(struct platform_device *pdev)
+ {
+ 	struct tegra_p2u *phy = platform_get_drvdata(pdev);
+ 
+-	if (phy->of_data->lane_margin)
++	if (phy->bpmp)
+ 		tegra_bpmp_put(phy->bpmp);
+ }
+ 
+-- 
+2.43.0
+

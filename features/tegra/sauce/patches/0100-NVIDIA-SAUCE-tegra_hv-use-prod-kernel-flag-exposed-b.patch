@@ -1,0 +1,103 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Sun, 3 Aug 2025 06:18:45 +0000
+Subject: [PATCH 100/254] NVIDIA: SAUCE: tegra_hv: use prod kernel flag exposed
+ by defconfig
+
+Bug 5424942
+
+Change-Id: I4045e5d67e9e3fa9e42ea526d2c734523981bdd5
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3427619
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
+Reviewed-by: svc-mobile-coverity <svc-mobile-coverity@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+(cherry picked from commit 7708801841e4456c0a039c6fee6967896eb39bac)
+
+diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
+index 43d5d8873d8ff..c130a91d96933 100644
+--- a/drivers/virt/tegra/tegra_hv.c
++++ b/drivers/virt/tegra/tegra_hv.c
+@@ -925,6 +925,7 @@ int tegra_hv_ivc_read_user(struct tegra_hv_ivc_cookie *ivck, void __user *buf, i
+ }
+ EXPORT_SYMBOL(tegra_hv_ivc_read_user);
+ 
++#ifndef CONFIG_KERNEL_BUILD_WITH_PROD_DEFCONFIG
+ int tegra_hv_ivc_read_peek(struct tegra_hv_ivc_cookie *ivck, void *buf,
+ 			   int off, int count)
+ {
+@@ -933,6 +934,7 @@ int tegra_hv_ivc_read_peek(struct tegra_hv_ivc_cookie *ivck, void *buf,
+ 	return tegra_ivc_read_peek(&ivc->ivc, NULL, buf, off, count);
+ }
+ EXPORT_SYMBOL(tegra_hv_ivc_read_peek);
++#endif
+ 
+ int tegra_hv_ivc_can_read(struct tegra_hv_ivc_cookie *ivck)
+ {
+@@ -958,6 +960,7 @@ int tegra_hv_ivc_tx_empty(struct tegra_hv_ivc_cookie *ivck)
+ }
+ EXPORT_SYMBOL(tegra_hv_ivc_tx_empty);
+ 
++#ifndef CONFIG_KERNEL_BUILD_WITH_PROD_DEFCONFIG
+ uint32_t tegra_hv_ivc_tx_frames_available(struct tegra_hv_ivc_cookie *ivck)
+ {
+ 	struct hv_ivc *ivc = cookie_to_ivc_dev(ivck);
+@@ -973,6 +976,7 @@ int tegra_hv_ivc_dump(struct tegra_hv_ivc_cookie *ivck)
+ 	return ivc_dump(ivc);
+ }
+ EXPORT_SYMBOL(tegra_hv_ivc_dump);
++#endif
+ 
+ void *tegra_hv_ivc_read_get_next_frame(struct tegra_hv_ivc_cookie *ivck)
+ {
+diff --git a/include/soc/tegra/virt/hv-ivc.h b/include/soc/tegra/virt/hv-ivc.h
+index 6eef871eaa1c6..dab9b26bc39a7 100644
+--- a/include/soc/tegra/virt/hv-ivc.h
++++ b/include/soc/tegra/virt/hv-ivc.h
+@@ -134,6 +134,17 @@ int tegra_hv_ivc_can_read(struct tegra_hv_ivc_cookie *ivck);
+  */
+ int tegra_hv_ivc_can_write(struct tegra_hv_ivc_cookie *ivck);
+ 
++/**
++ * ivc_hv_ivc_tx_empty - Test whether the tx queue is empty
++ * @ivck	IVC cookie of the queue
++ *
++ * Test whether the tx queue is completely empty
++ *
++ * Returns 1 if the queue is empty, zero otherwise
++ */
++int tegra_hv_ivc_tx_empty(struct tegra_hv_ivc_cookie *ivck);
++
++#ifndef CONFIG_KERNEL_BUILD_WITH_PROD_DEFCONFIG
+ /**
+  * tegra_ivc_tx_frames_available - gets number of free entries in tx queue
+  * @ivc/@ivck	IVC channel or cookie
+@@ -145,16 +156,6 @@ int tegra_hv_ivc_can_write(struct tegra_hv_ivc_cookie *ivck);
+  */
+ uint32_t tegra_hv_ivc_tx_frames_available(struct tegra_hv_ivc_cookie *ivck);
+ 
+-/**
+- * ivc_hv_ivc_tx_empty - Test whether the tx queue is empty
+- * @ivck	IVC cookie of the queue
+- *
+- * Test whether the tx queue is completely empty
+- *
+- * Returns 1 if the queue is empty, zero otherwise
+- */
+-int tegra_hv_ivc_tx_empty(struct tegra_hv_ivc_cookie *ivck);
+-
+ /**
+  * ivc_hv_ivc_loopback - Sets (or clears) loopback mode
+  * @ivck	IVC cookie of the queue
+@@ -187,6 +188,7 @@ int tegra_hv_ivc_dump(struct tegra_hv_ivc_cookie *ivck);
+  */
+ int tegra_hv_ivc_read_peek(struct tegra_hv_ivc_cookie *ivck,
+ 		void *buf, int off, int count);
++#endif
+ 
+ /**
+  * ivc_hv_ivc_read_get_next_frame - Peek at the next frame to receive
+-- 
+2.43.0
+

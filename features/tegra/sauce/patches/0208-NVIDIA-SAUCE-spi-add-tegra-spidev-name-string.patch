@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: gauthams <gauthams@nvidia.com>
+Date: Wed, 24 May 2023 17:22:20 +0000
+Subject: [PATCH 208/254] NVIDIA: SAUCE: spi: add "tegra-spidev" name string.
+
+Add "tegra-spidev" name string to load spidev.ko driver
+which allows user-space programs to access and communicate
+with SPI devices connected to the system.
+
+Bug 4130525
+
+Change-Id: I15fd9c3914e3461ffa39ac3d818d3d59d2584077
+Signed-off-by: Gautham Srinivasan <gauthams@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-jammy/+/2910068
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2965053
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
+Tested-by: Prathamesh Shete <pshete@nvidia.com>
+
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 769942ede87df..1675e86b4f069 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -700,6 +700,7 @@ static const struct spi_device_id spidev_spi_ids[] = {
+ 	{ .name = /* semtech */ "sx1301" },
+ 	{ .name = /* silabs */ "em3581" },
+ 	{ .name = /* silabs */ "si3210" },
++	{ .name = /* nvidia */ "tegra-spidev" },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(spi, spidev_spi_ids);
+-- 
+2.43.0
+

@@ -1,0 +1,440 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Akhil R <akhilrajeev@nvidia.com>
+Date: Tue, 27 Sep 2022 19:16:14 +0530
+Subject: [PATCH 001/254] NVIDIA: SAUCE: crypto: tcrypt: Changes to support
+ NVIDIA SE testing
+
+Changes in vectors and tests to support testing of NVIDIA Security
+Engine.
+
+Bug 3806870
+Bug 4111050
+Bug 4172338
+
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Change-Id: Ic23dafa14d3b9164997ac5698e56fda4db701cd7
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-jammy/+/2927980
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2901409
+Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Tested-by: Prathamesh Shete <pshete@nvidia.com>
+
+diff --git a/crypto/Kconfig b/crypto/Kconfig
+index a04595f9d0ca4..a6f4f086df73f 100644
+--- a/crypto/Kconfig
++++ b/crypto/Kconfig
+@@ -204,6 +204,12 @@ config CRYPTO_SELFTESTS_FULL
+ 
+ 	  All crypto code in the kernel is expected to pass the full tests.
+ 
++config CRYPTO_SUPPORT_TEGRA_TESTS
++	bool "Support CRYPTO_TEST on Tegra Security Engine module"
++	default y
++	help
++	  Update vectors and tests to support testing of Tegra SE driver
++
+ config CRYPTO_NULL
+ 	tristate "Null algorithms"
+ 	select CRYPTO_ALGAPI
+diff --git a/crypto/tcrypt.c b/crypto/tcrypt.c
+index d1d88debbd71e..e86d1470227cc 100644
+--- a/crypto/tcrypt.c
++++ b/crypto/tcrypt.c
+@@ -1523,8 +1523,10 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
+ 		ret = min(ret, tcrypt_test("lrw(aes)"));
+ 		ret = min(ret, tcrypt_test("xts(aes)"));
+ 		ret = min(ret, tcrypt_test("ctr(aes)"));
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		ret = min(ret, tcrypt_test("rfc3686(ctr(aes))"));
+ 		ret = min(ret, tcrypt_test("xctr(aes)"));
++#endif
+ 		break;
+ 
+ 	case 11:
+diff --git a/crypto/testmgr.c b/crypto/testmgr.c
+index 6a490aaa71b9a..1a48dd9750b76 100644
+--- a/crypto/testmgr.c
++++ b/crypto/testmgr.c
+@@ -58,7 +58,7 @@ MODULE_PARM_DESC(fuzz_iterations, "number of fuzz test iterations");
+ #define fuzz_iterations 0
+ #endif
+ 
+-#ifndef CONFIG_CRYPTO_SELFTESTS
++#if !defined(CONFIG_CRYPTO_SELFTESTS) && !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 
+ /* a perfect nop */
+ int alg_test(const char *driver, const char *alg, u32 type, u32 mask)
+@@ -4459,12 +4459,14 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.suite = {
+ 			.hash = __VECS(aes_cbcmac_tv_template)
+ 		}
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 	}, {
+ 		.alg = "cbcmac(sm4)",
+ 		.test = alg_test_hash,
+ 		.suite = {
+ 			.hash = __VECS(sm4_cbcmac_tv_template)
+ 		}
++#endif
+ 	}, {
+ 		.alg = "ccm(aes)",
+ 		.generic_driver = "ccm_base(ctr(aes-generic),cbcmac(aes-generic))",
+@@ -4476,6 +4478,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 				.einval_allowed = 1,
+ 			}
+ 		}
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 	}, {
+ 		.alg = "ccm(sm4)",
+ 		.generic_driver = "ccm_base(ctr(sm4-generic),cbcmac(sm4-generic))",
+@@ -4486,6 +4489,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 				.einval_allowed = 1,
+ 			}
+ 		}
++#endif
+ 	}, {
+ 		.alg = "chacha20",
+ 		.generic_driver = "chacha20-lib",
+@@ -4512,12 +4516,14 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.suite = {
+ 			.hash = __VECS(des3_ede_cmac64_tv_template)
+ 		}
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 	}, {
+ 		.alg = "cmac(sm4)",
+ 		.test = alg_test_hash,
+ 		.suite = {
+ 			.hash = __VECS(sm4_cmac128_tv_template)
+ 		}
++#endif
+ 	}, {
+ 		.alg = "crc32",
+ 		.generic_driver = "crc32-lib",
+@@ -4709,6 +4715,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.alg = "drbg_nopr_hmac_sha384",
+ 		.test = alg_test_null,
+ 		.fips_allowed = 1
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 	}, {
+ 		.alg = "drbg_nopr_hmac_sha512",
+ 		.test = alg_test_drbg,
+@@ -4716,6 +4723,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.suite = {
+ 			.drbg = __VECS(drbg_nopr_hmac_sha512_tv_template)
+ 		}
++#endif
+ 	}, {
+ 		.alg = "drbg_nopr_sha256",
+ 		.test = alg_test_drbg,
+@@ -4920,6 +4928,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		}
+ 	}, {
+ #endif
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.alg = "ecdh-nist-p192",
+ 		.test = alg_test_kpp,
+ 		.suite = {
+@@ -4960,6 +4969,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 			.sig = __VECS(ecdsa_nist_p384_tv_template)
+ 		}
+ 	}, {
++#endif
+ 		.alg = "ecdsa-nist-p521",
+ 		.test = alg_test_sig,
+ 		.fips_allowed = 1,
+@@ -5033,6 +5043,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.suite = {
+ 			.aead = __VECS(aes_gcm_tv_template)
+ 		}
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 	}, {
+ 		.alg = "gcm(aria)",
+ 		.generic_driver = "gcm_base(ctr(aria-generic),ghash-generic)",
+@@ -5047,6 +5058,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.suite = {
+ 			.aead = __VECS(sm4_gcm_tv_template)
+ 		}
++#endif
+ 	}, {
+ 		.alg = "ghash",
+ 		.test = alg_test_hash,
+diff --git a/crypto/testmgr.h b/crypto/testmgr.h
+index 2682312272824..7a74ab184d298 100644
+--- a/crypto/testmgr.h
++++ b/crypto/testmgr.h
+@@ -7,6 +7,7 @@
+  * Copyright (c) 2007 Nokia Siemens Networks
+  * Copyright (c) 2008 Herbert Xu <herbert@gondor.apana.org.au>
+  * Copyright (c) 2019 Google LLC
++ * Copyright (c) 2017-2021, NVIDIA Corporation. All Rights Reserved.
+  *
+  * Updated RFC4106 AES-GCM testing. Some test vectors were taken from
+  * http://csrc.nist.gov/groups/ST/toolkit/BCM/documents/proposedmodes/
+@@ -40,6 +41,7 @@ struct hash_testvec {
+ 	const char *key;
+ 	const char *plaintext;
+ 	const char *digest;
++	unsigned int dsize;
+ 	unsigned int psize;
+ 	unsigned short ksize;
+ 	int setkey_error;
+@@ -662,6 +664,7 @@ static const struct akcipher_testvec rsa_tv_template[] = {
+ 	0x##b8, 0x##b7, 0x##b6, 0x##b5, 0x##b4, 0x##b3, 0x##b2, 0x##b1
+ #endif
+ 
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ /*
+  * ECDSA test vectors.
+  */
+@@ -1185,6 +1188,7 @@ static const struct sig_testvec ecdsa_nist_p384_tv_template[] = {
+ 	.public_key_vec = true,
+ 	},
+ };
++#endif /* CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS */
+ 
+ static const struct sig_testvec ecdsa_nist_p521_tv_template[] = {
+ 	{
+@@ -6570,6 +6574,7 @@ static const struct hash_testvec hmac_sha224_tv_template[] = {
+ 			"\x8b\xbe\xa2\xa3\x9e\x61\x48\x00"
+ 			"\x8f\xd0\x5e\x44",
+ 		.fips_skip = 1,
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 	}, {
+ 		.key    = "\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
+ 			"\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
+@@ -6648,6 +6653,7 @@ static const struct hash_testvec hmac_sha224_tv_template[] = {
+ 			"\x3f\x54\xd5\x17\xd0\xb3\x9d\xbd"
+ 			"\x94\x67\x70\xdb\x9c\x2b\x95\xc9"
+ 			"\xf6\xf5\x65\xd1",
++#endif
+ 	},
+ };
+ 
+@@ -6729,6 +6735,7 @@ static const struct hash_testvec hmac_sha256_tv_template[] = {
+ 			  "\xe5\x49\xfe\x6c\xe9\xed\x7f\xdc"
+ 			  "\x43\x19\x1f\xbd\xe4\x5c\x30\xb0",
+ 	}, {
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.key	= "\x01\x02\x03\x04\x05\x06\x07\x08"
+ 			  "\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10"
+ 			  "\x11\x12\x13\x14\x15\x16\x17\x18"
+@@ -6745,6 +6752,7 @@ static const struct hash_testvec hmac_sha256_tv_template[] = {
+ 			  "\x6e\xc4\xaf\x55\xef\x07\x99\x85"
+ 			  "\x41\x46\x8e\xb4\x9b\xd2\xe9\x17",
+ 	}, {
++#endif /* CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS */
+ 		.key	= "\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c"
+ 			"\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c\x0c"
+ 			"\x0c\x0c\x0c\x0c\x0c\x0c",
+@@ -6755,6 +6763,7 @@ static const struct hash_testvec hmac_sha256_tv_template[] = {
+ 			  "\x1a\xb9\xc3\x74\x9a\x5f\x1c\x17"
+ 			  "\xd4\xf5\x89\x66\x8a\x58\x7b\x27"
+ 			  "\x00\xa9\xc9\x7c\x11\x93\xcf\x42",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 	}, {
+ 		.key	= "\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
+ 			"\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
+@@ -6786,11 +6795,13 @@ static const struct hash_testvec hmac_sha256_tv_template[] = {
+ 			  "\xc8\x48\x1a\x5c\xa4\x82\x5b\xc8"
+ 			  "\x84\xd3\xe7\xa1\xff\x98\xa2\xfc"
+ 			  "\x2a\xc7\xd8\xe0\x64\xc3\xb2\xe6",
++#endif /* CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS */
+ 	},
+ };
+ 
+ static const struct hash_testvec aes_cmac128_tv_template[] = {
+ 	{ /* From NIST Special Publication 800-38B, AES-128 */
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.key		= "\x2b\x7e\x15\x16\x28\xae\xd2\xa6"
+ 				  "\xab\xf7\x15\x88\x09\xcf\x4f\x3c",
+ 		.plaintext	= zeroed_string,
+@@ -6799,6 +6810,7 @@ static const struct hash_testvec aes_cmac128_tv_template[] = {
+ 		.psize		= 0,
+ 		.ksize		= 16,
+ 	}, {
++#endif /* CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS */
+ 		.key		= "\x2b\x7e\x15\x16\x28\xae\xd2\xa6"
+ 				  "\xab\xf7\x15\x88\x09\xcf\x4f\x3c",
+ 		.plaintext	= "\x6b\xc1\xbe\xe2\x2e\x40\x9f\x96"
+@@ -6835,6 +6847,7 @@ static const struct hash_testvec aes_cmac128_tv_template[] = {
+ 		.psize		= 64,
+ 		.ksize		= 16,
+ 	}, { /* From NIST Special Publication 800-38B, AES-256 */
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.key		= "\x60\x3d\xeb\x10\x15\xca\x71\xbe"
+ 				  "\x2b\x73\xae\xf0\x85\x7d\x77\x81"
+ 				  "\x1f\x35\x2c\x07\x3b\x61\x08\xd7"
+@@ -6845,6 +6858,7 @@ static const struct hash_testvec aes_cmac128_tv_template[] = {
+ 		.psize		= 0,
+ 		.ksize		= 32,
+ 	}, {
++#endif /* CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS */
+ 		.key		= "\x60\x3d\xeb\x10\x15\xca\x71\xbe"
+ 				  "\x2b\x73\xae\xf0\x85\x7d\x77\x81"
+ 				  "\x1f\x35\x2c\x07\x3b\x61\x08\xd7"
+@@ -7048,6 +7062,7 @@ static const struct hash_testvec hmac_sha384_tv_template[] = {
+ 			  "\x82\xaa\x03\x4c\x7c\xeb\xc5\x9c"
+ 			  "\xfa\xea\x9e\xa9\x07\x6e\xde\x7f"
+ 			  "\x4a\xf1\x52\xe8\xb2\xfa\x9c\xb6",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 	}, {
+ 		.key	= "Jefe",
+ 		.ksize	= 4,
+@@ -7124,6 +7139,7 @@ static const struct hash_testvec hmac_sha384_tv_template[] = {
+ 			  "\xdc\xce\xbb\x82\x46\x1e\x99\xc5"
+ 			  "\xa6\x78\xcc\x31\xe7\x99\x17\x6d"
+ 			  "\x38\x60\xe6\x11\x0c\x46\x52\x3e",
++#endif /* CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS */
+ 	},
+ };
+ 
+@@ -7161,6 +7177,7 @@ static const struct hash_testvec hmac_sha512_tv_template[] = {
+ 			  "\xca\xea\xb1\xa3\x4d\x4a\x6b\x4b"
+ 			  "\x63\x6e\x07\x0a\x38\xbc\xe7\x37",
+ 		.fips_skip = 1,
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 	}, {
+ 		.key	= "\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
+ 			  "\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
+@@ -7232,6 +7249,7 @@ static const struct hash_testvec hmac_sha512_tv_template[] = {
+ 			"\x0d\x5e\xeb\x55\xc3\xe4\xde\x15"
+ 			"\x13\x46\x76\xfb\x6d\xe0\x44\x60"
+ 			"\x65\xc9\x74\x40\xfa\x8c\x6a\x58",
++#endif
+ 	},
+ };
+ 
+@@ -15612,8 +15630,10 @@ static const struct cipher_testvec aes_cbc_tv_template[] = {
+ 		.klen   = 16,
+ 		.iv	= "\x3d\xaf\xba\x42\x9d\x9e\xb4\x30"
+ 			  "\xb4\x22\xda\x80\x2c\x9f\xac\x41",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.iv_out	= "\xe3\x53\x77\x9c\x10\x79\xae\xb8"
+ 			  "\x27\x08\x94\x2d\xbe\x77\x18\x1a",
++#endif
+ 		.ptext	= "Single block msg",
+ 		.ctext	= "\xe3\x53\x77\x9c\x10\x79\xae\xb8"
+ 			  "\x27\x08\x94\x2d\xbe\x77\x18\x1a",
+@@ -15624,8 +15644,10 @@ static const struct cipher_testvec aes_cbc_tv_template[] = {
+ 		.klen   = 16,
+ 		.iv     = "\x56\x2e\x17\x99\x6d\x09\x3d\x28"
+ 			  "\xdd\xb3\xba\x69\x5a\x2e\x6f\x58",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.iv_out	= "\x75\x86\x60\x2d\x25\x3c\xff\xf9"
+ 			  "\x1b\x82\x66\xbe\xa6\xd6\x1a\xb1",
++#endif
+ 		.ptext	= "\x00\x01\x02\x03\x04\x05\x06\x07"
+ 			  "\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f"
+ 			  "\x10\x11\x12\x13\x14\x15\x16\x17"
+@@ -15642,8 +15664,10 @@ static const struct cipher_testvec aes_cbc_tv_template[] = {
+ 		.klen	= 24,
+ 		.iv	= "\x00\x01\x02\x03\x04\x05\x06\x07"
+ 			  "\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.iv_out	= "\x08\xb0\xe2\x79\x88\x59\x88\x81"
+ 			  "\xd9\x20\xa9\xe6\x4f\x56\x15\xcd",
++#endif
+ 		.ptext	= "\x6b\xc1\xbe\xe2\x2e\x40\x9f\x96"
+ 			  "\xe9\x3d\x7e\x11\x73\x93\x17\x2a"
+ 			  "\xae\x2d\x8a\x57\x1e\x03\xac\x9c"
+@@ -15669,8 +15693,10 @@ static const struct cipher_testvec aes_cbc_tv_template[] = {
+ 		.klen	= 32,
+ 		.iv	= "\x00\x01\x02\x03\x04\x05\x06\x07"
+ 			  "\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.iv_out	= "\xb2\xeb\x05\xe2\xc3\x9b\xe9\xfc"
+ 			  "\xda\x6c\x19\x07\x8c\x6a\x9d\x1b",
++#endif
+ 		.ptext	= "\x6b\xc1\xbe\xe2\x2e\x40\x9f\x96"
+ 			  "\xe9\x3d\x7e\x11\x73\x93\x17\x2a"
+ 			  "\xae\x2d\x8a\x57\x1e\x03\xac\x9c"
+@@ -15696,8 +15722,10 @@ static const struct cipher_testvec aes_cbc_tv_template[] = {
+ 		.klen	= 32,
+ 		.iv	= "\xE7\x82\x1D\xB8\x53\x11\xAC\x47"
+ 			  "\xE2\x7D\x18\xD6\x71\x0C\xA7\x42",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.iv_out	= "\xE0\x1F\x91\xF8\x82\x96\x2D\x65"
+ 			  "\xA3\xAA\x13\xCC\x50\xFF\x7B\x02",
++#endif
+ 		.ptext	= "\x50\xB9\x22\xAE\x17\x80\x0C\x75"
+ 			  "\xDE\x47\xD3\x3C\xA5\x0E\x9A\x03"
+ 			  "\x6C\xF8\x61\xCA\x33\xBF\x28\x91"
+@@ -18046,8 +18074,10 @@ static const struct cipher_testvec aes_ctr_tv_template[] = {
+ 		.klen	= 16,
+ 		.iv	= "\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7"
+ 			  "\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.iv_out	= "\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7"
+ 			  "\xf8\xf9\xfa\xfb\xfc\xfd\xff\x03",
++#endif
+ 		.ptext	= "\x6b\xc1\xbe\xe2\x2e\x40\x9f\x96"
+ 			  "\xe9\x3d\x7e\x11\x73\x93\x17\x2a"
+ 			  "\xae\x2d\x8a\x57\x1e\x03\xac\x9c"
+@@ -18072,8 +18102,10 @@ static const struct cipher_testvec aes_ctr_tv_template[] = {
+ 		.klen	= 24,
+ 		.iv	= "\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7"
+ 			  "\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.iv_out	= "\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7"
+ 			  "\xf8\xf9\xfa\xfb\xfc\xfd\xff\x03",
++#endif
+ 		.ptext	= "\x6b\xc1\xbe\xe2\x2e\x40\x9f\x96"
+ 			  "\xe9\x3d\x7e\x11\x73\x93\x17\x2a"
+ 			  "\xae\x2d\x8a\x57\x1e\x03\xac\x9c"
+@@ -18099,8 +18131,10 @@ static const struct cipher_testvec aes_ctr_tv_template[] = {
+ 		.klen	= 32,
+ 		.iv	= "\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7"
+ 			  "\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.iv_out	= "\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7"
+ 			  "\xf8\xf9\xfa\xfb\xfc\xfd\xff\x03",
++#endif
+ 		.ptext	= "\x6b\xc1\xbe\xe2\x2e\x40\x9f\x96"
+ 			  "\xe9\x3d\x7e\x11\x73\x93\x17\x2a"
+ 			  "\xae\x2d\x8a\x57\x1e\x03\xac\x9c"
+@@ -18126,8 +18160,10 @@ static const struct cipher_testvec aes_ctr_tv_template[] = {
+ 		.klen	= 32,
+ 		.iv	= "\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"
+ 			  "\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFD",
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 		.iv_out	= "\x00\x00\x00\x00\x00\x00\x00\x00"
+ 			  "\x00\x00\x00\x00\x00\x00\x00\x1C",
++#endif
+ 		.ptext	= "\x50\xB9\x22\xAE\x17\x80\x0C\x75"
+ 			  "\xDE\x47\xD3\x3C\xA5\x0E\x9A\x03"
+ 			  "\x6C\xF8\x61\xCA\x33\xBF\x28\x91"
+@@ -18253,6 +18289,7 @@ static const struct cipher_testvec aes_ctr_tv_template[] = {
+ 			  "\xFA\x3A\x05\x4C\xFA\xD1\xFF\xFE"
+ 			  "\xF1\x4C\xE5\xB2\x91\x64\x0C\x51",
+ 		.len	= 496,
++#if !defined(CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS)
+ 	}, { /* Generated with Crypto++ */
+ 		.key	= "\xC9\x83\xA6\xC9\xEC\x0F\x32\x55"
+ 			  "\x0F\x32\x55\x78\x9B\xBE\x78\x9B"
+@@ -18390,6 +18427,7 @@ static const struct cipher_testvec aes_ctr_tv_template[] = {
+ 			  "\xD8\xFE\xC9\x5B\x5C\x25\xE5\x76"
+ 			  "\xFB\xF2\x3F",
+ 		.len	= 499,
++#endif /* CONFIG_CRYPTO_SUPPORT_TEGRA_TESTS */
+ 	},
+ };
+ 
+@@ -20732,6 +20770,7 @@ static const struct aead_testvec aes_ccm_tv_template[] = {
+ 			  "\x7c\xf9\xbe\xc2\x40\x88\x97\xc6"
+ 			  "\xba",
+ 		.clen	= 33,
++#ifndef DISABLE_CCM_FIPS_CAVS_TESTS
+ 	}, {
+ 		/* This is taken from FIPS CAVS. */
+ 		.key	= "\x83\xac\x54\x66\xc2\xeb\xe5\x05"
+@@ -21082,6 +21121,7 @@ static const struct aead_testvec aes_ccm_tv_template[] = {
+ 			  "\x7f\x44\x0a\x0c\x01\x18\x07\x92"
+ 			  "\xe1\xd3\x51\xce\x32\x6d\x0c\x5b",
+ 		.clen	= 48,
++#endif /* DISABLE_CCM_FIPS_CAVS_TESTS */
+ 	},
+ };
+ 
+-- 
+2.43.0
+

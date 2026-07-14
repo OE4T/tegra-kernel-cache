@@ -1,0 +1,79 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kartik Rajput <kkartik@nvidia.com>
+Date: Wed, 25 Feb 2026 12:29:12 +0530
+Subject: [PATCH 117/140] serial: amba-pl011: Introduce set_uartclk_rate vendor
+ flag
+
+The NVIDIA Tegra264 UART relies on configuring the UART clock rate
+directly to program the desired baud rate.
+
+Introduce the set_uartclk_rate vendor flag. When set, the driver
+uses clk_set_rate() to program the UART clock to the desired baud
+rate and clk_round_rate() to determine the maximum supported baud
+rate.
+
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Link: https://patch.msgid.link/20260225065915.341522-3-kkartik@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(cherry picked from commit 87df45b4a83f13952958e9916af1b2dd56d4cfc7)
+
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 79e1c937a6007..ad06dc4cdf6e5 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -115,6 +115,7 @@ struct vendor_data {
+ 	bool			always_enabled;
+ 	bool			fixed_options;
+ 	bool			skip_ibrd_fbrd;
++	bool			set_uartclk_rate;
+ 
+ 	unsigned int (*get_fifosize)(struct amba_device *dev);
+ };
+@@ -2096,6 +2097,7 @@ pl011_set_termios(struct uart_port *port, struct ktermios *termios,
+ 	unsigned int lcr_h, old_cr;
+ 	unsigned long flags;
+ 	unsigned int baud, quot, clkdiv;
++	unsigned int max_baud;
+ 	unsigned int bits;
+ 
+ 	if (uap->vendor->oversampling)
+@@ -2103,11 +2105,34 @@ pl011_set_termios(struct uart_port *port, struct ktermios *termios,
+ 	else
+ 		clkdiv = 16;
+ 
++	max_baud = port->uartclk / clkdiv;
++
++	if (uap->vendor->set_uartclk_rate) {
++		long max_clkrate = clk_round_rate(uap->clk, UINT_MAX);
++
++		/*
++		 * Clock is reprogrammable - determine max baud from the clock's
++		 * maximum rate, not the current uartclk.
++		 */
++		if (max_clkrate > 0)
++			max_baud = max_clkrate / clkdiv;
++	}
++
+ 	/*
+ 	 * Ask the core to calculate the divisor for us.
+ 	 */
+-	baud = uart_get_baud_rate(port, termios, old, 0,
+-				  port->uartclk / clkdiv);
++	baud = uart_get_baud_rate(port, termios, old, 0, max_baud);
++
++	if (uap->vendor->set_uartclk_rate) {
++		int err;
++
++		err = clk_set_rate(uap->clk, baud * clkdiv);
++		if (err) {
++			dev_err(port->dev, "Failed to set clock rate: %d\n", err);
++			return;
++		}
++	}
++
+ #ifdef CONFIG_DMA_ENGINE
+ 	/*
+ 	 * Adjust RX DMA polling rate with baud rate if not specified.
+-- 
+2.43.0
+

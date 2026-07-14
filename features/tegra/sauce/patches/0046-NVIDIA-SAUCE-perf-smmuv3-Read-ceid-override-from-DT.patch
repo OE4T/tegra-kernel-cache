@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ketan Patil <ketanp@nvidia.com>
+Date: Mon, 25 Mar 2024 08:27:31 +0000
+Subject: [PATCH 046/254] NVIDIA: SAUCE: perf: smmuv3: Read ceid-override from
+ DT
+
+A custom DT property ceid-override has been added to override value of
+SMMU_PMCG_CEID register for TBUs, as this register has not been
+implemented by HW team in T264. Add support in ARM SMMUv3 PMU driver to
+read this property from device tree instead of reading the register.
+
+http://nvbugs/4270693
+
+Change-Id: I8bc7aa29d7861d96d44e497c60d67c367a412f49
+Signed-off-by: Ketan Patil <ketanp@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3103564
+Reviewed-by: Pritesh Raithatha <praithatha@nvidia.com>
+(cherry picked from commit cd1aab38daf741198262e14ee101cc04832523c0)
+Signed-off-by: Bodla Rakesh Babu <rbodla@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3178742
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 28864b1a90ac68498a35e1452b31a1ffe36eaa51)
+
+diff --git a/drivers/perf/arm_smmuv3_pmu.c b/drivers/perf/arm_smmuv3_pmu.c
+index 621f02a7f43be..c48a9504dacd8 100644
+--- a/drivers/perf/arm_smmuv3_pmu.c
++++ b/drivers/perf/arm_smmuv3_pmu.c
+@@ -849,7 +849,7 @@ static int smmu_pmu_probe(struct platform_device *pdev)
+ 	struct smmu_pmu *smmu_pmu;
+ 	struct resource *res_0;
+ 	u32 cfgr, reg_size;
+-	u64 ceid_64[2];
++	u64 ceid_64[2], ceid;
+ 	int irq, err;
+ 	char *name;
+ 	struct device *dev = &pdev->dev;
+@@ -896,8 +896,14 @@ static int smmu_pmu_probe(struct platform_device *pdev)
+ 	if (irq > 0)
+ 		smmu_pmu->irq = irq;
+ 
+-	ceid_64[0] = readq_relaxed(smmu_pmu->reg_base + SMMU_PMCG_CEID0);
+-	ceid_64[1] = readq_relaxed(smmu_pmu->reg_base + SMMU_PMCG_CEID1);
++	if (!of_property_read_u64(dev->of_node, "ceid0-override", &ceid)) {
++		ceid_64[0] = ceid;
++		ceid_64[1] = 0;
++	} else {
++		ceid_64[0] = readq_relaxed(smmu_pmu->reg_base + SMMU_PMCG_CEID0);
++		ceid_64[1] = readq_relaxed(smmu_pmu->reg_base + SMMU_PMCG_CEID1);
++	}
++
+ 	bitmap_from_arr32(smmu_pmu->supported_events, (u32 *)ceid_64,
+ 			  SMMU_PMCG_ARCH_MAX_EVENTS);
+ 
+-- 
+2.43.0
+

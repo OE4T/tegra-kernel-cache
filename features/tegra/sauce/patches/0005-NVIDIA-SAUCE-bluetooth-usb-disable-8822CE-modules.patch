@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Shobek Attupurath <sattupurath@nvidia.com>
+Date: Wed, 8 Jan 2025 23:53:31 +0000
+Subject: [PATCH 005/254] NVIDIA: SAUCE: bluetooth: usb: disable 8822CE modules
+
+Disable Azurewave 8822CE modules from generic driver to use
+Realtek 8822CE BT driver
+
+Bug 5037464
+
+Change-Id: I3da2cac5f5068b4f8bbb4b390d2ca5cbb7f14a95
+Signed-off-by: Shobek Attupurath <sattupurath@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3280664
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Revanth Kumar Uppala <ruppala@nvidia.com>
+(cherry picked from commit f672a3817b827a131011dac4ed5ae6f6904eef90)
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 278ab236ebdab..fc19da66b3bc0 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -510,12 +510,10 @@ static const struct usb_device_id quirks_table[] = {
+ 	/* Realtek 8822CE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0xb00c), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+-	{ USB_DEVICE(0x0bda, 0xc822), .driver_info = BTUSB_REALTEK |
+-						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0bda, 0xc822), .driver_info = BTUSB_IGNORE },
+ 
+ 	/* Realtek 8822CU Bluetooth devices */
+-	{ USB_DEVICE(0x13d3, 0x3549), .driver_info = BTUSB_REALTEK |
+-						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3549), .driver_info = BTUSB_IGNORE },
+ 
+ 	/* Realtek 8851BE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0xb850), .driver_info = BTUSB_REALTEK },
+-- 
+2.43.0
+

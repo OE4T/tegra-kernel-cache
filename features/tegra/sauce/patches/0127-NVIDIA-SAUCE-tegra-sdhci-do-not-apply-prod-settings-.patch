@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ninad Malwade <nmalwade@nvidia.com>
+Date: Mon, 19 Aug 2024 15:52:55 +0800
+Subject: [PATCH 127/254] NVIDIA: SAUCE: tegra: sdhci: do not apply prod
+ settings during reset call
+
+Do not apply general "prod" during reset call
+Intermittant issues are seen and card is enumerating in HS mode
+on some specific SD card due to these prod settings.
+
+http://nvbugs/4677590
+http://nvbugs/4751166
+http://nvbugs/4683941
+http://nvbugs/4810668
+
+Change-Id: I06fa0a12b8b8b31f660fab1525ae1fff35c14935
+Signed-off-by: Ninad Malwade <nmalwade@nvidia.com>
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+(cherry picked from commit 31397572124eef5efb930c084b1f2db84caa32fc)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3201125
+Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+
+diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
+index cecfc691b8c7c..ce94d23ca00a4 100644
+--- a/drivers/mmc/host/sdhci-tegra.c
++++ b/drivers/mmc/host/sdhci-tegra.c
+@@ -436,9 +436,6 @@ static void tegra_sdhci_reset(struct sdhci_host *host, u8 mask)
+ 	if (!(mask & SDHCI_RESET_ALL))
+ 		return;
+ 
+-	if (tegra_get_platform() == TEGRA_PLATFORM_SILICON)
+-		tegra_sdhci_write_prod_settings(host, "prod");
+-
+ 	tegra_sdhci_set_tap(host, tegra_host->default_tap);
+ 
+ 	misc_ctrl = sdhci_readl(host, SDHCI_TEGRA_VENDOR_MISC_CTRL);
+-- 
+2.43.0
+

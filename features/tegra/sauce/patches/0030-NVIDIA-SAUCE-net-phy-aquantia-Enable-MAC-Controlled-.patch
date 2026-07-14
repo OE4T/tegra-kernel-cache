@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Narayan Reddy <narayanr@nvidia.com>
+Date: Wed, 22 Sep 2021 05:06:38 +0530
+Subject: [PATCH 030/254] NVIDIA: SAUCE: net: phy: aquantia: Enable MAC
+ Controlled EEE
+
+Enable MAC Controlled EEE to support EEE from
+MGBE IP.
+
+Bug 200764486
+
+Change-Id: I801b1229adab7616ca0b9cadec5002fe5ba92068
+Signed-off-by: Narayan Reddy <narayanr@nvidia.com>
+Signed-off-by: Revanth Kumar Uppala <ruppala@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2909743
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
+index d71758eb67e6b..a69bb0a16638e 100644
+--- a/drivers/net/phy/aquantia/aquantia_main.c
++++ b/drivers/net/phy/aquantia/aquantia_main.c
+@@ -121,6 +121,8 @@
+ #define AQR107_OP_IN_PROG_SLEEP		1000
+ #define AQR107_OP_IN_PROG_TIMEOUT	100000
+ 
++#define VEND1_SEC_INGRESS_CNTRL_REG1		0x7001
++
+ static int aqr107_get_sset_count(struct phy_device *phydev)
+ {
+ 	return AQR107_SGMII_STAT_SZ;
+@@ -812,8 +814,18 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
+ 
+ 	/* Configure flow control */
+ 	ret = phy_read_mmd(phydev, MDIO_MMD_AN, 0x10);
++	if (ret < 0)
++		return ret;
+ 	ret |= MDIO_AN_PAUSE | MDIO_AN_ASYM_PAUSE;
+-	phy_write_mmd(phydev, MDIO_MMD_AN, 0x10, ret);
++	err = phy_write_mmd(phydev, MDIO_MMD_AN, 0x10, ret);
++	if (err < 0)
++		return err;
++
++	/* Enable MAC Controlled EEE */
++	err = phy_write_mmd(phydev, MDIO_MMD_VEND1,
++			    VEND1_SEC_INGRESS_CNTRL_REG1, 0x1100);
++	if (err < 0)
++		return err;
+ 
+ 	/* Check that the PHY interface type is compatible */
+ 	if (phydev->interface != PHY_INTERFACE_MODE_SGMII &&
+-- 
+2.43.0
+

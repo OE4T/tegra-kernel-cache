@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Laxman Dewangan <ldewangan@nvidia.com>
+Date: Tue, 13 Aug 2024 14:12:45 +0000
+Subject: [PATCH 124/254] NVIDIA: SAUCE: kernel/script: depmod: Do not use exec
+ for depmod call
+
+Directly call the depmod instead of using the exec for
+executing this. Using the exec is exiting the script.
+
+Bug 4403549
+
+Change-Id: Ice85170e3e99b5e401b97132c33d7bfc57116511
+Signed-off-by: Laxman Dewangan <ldewangan@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3193255
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit e59c7dc35e2b6830c1deab4410aa37f478cd247a)
+
+diff --git a/scripts/depmod.sh b/scripts/depmod.sh
+index 179935291705a..8ae4f49a71114 100755
+--- a/scripts/depmod.sh
++++ b/scripts/depmod.sh
+@@ -37,7 +37,7 @@ do
+ 		config_file_name=$(basename -- "$config_file")
+ 		flavor=$(echo ${config_file_name} | cut -d'-' -f3)
+ 
+-		exec "$DEPMOD" "$@" "$KERNELRELEASE"  -C "$config_file"
++		"$DEPMOD" "$@" "$KERNELRELEASE"  -C "$config_file"
+ 
+ 		exit_status=$?
+ 		if [ "$exit_status" -ne 0 ]; then
+-- 
+2.43.0
+

@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Prathamesh Shete <pshete@nvidia.com>
+Date: Fri, 11 Nov 2022 10:58:35 +0000
+Subject: [PATCH 242/254] NVIDIA: SAUCE: gpio: tegra186: enable interrupt for
+ all routemap registers
+
+configure IRQ parent for all interrupts listed in GPIO DT
+
+Change-Id: Ib4d9d4329761b4e66540a7164d52cca3c5eec22d
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2892801
+
+diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
+index 24a45d383ff2d..e667e9f80bf6e 100644
+--- a/drivers/gpio/gpio-tegra186.c
++++ b/drivers/gpio/gpio-tegra186.c
+@@ -1007,27 +1007,8 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
+ 	irq->parent_handler_data = gpio;
+ 	irq->num_parents = gpio->num_irq;
+ 
+-	/*
+-	 * To simplify things, use a single interrupt per bank for now. Some
+-	 * chips support up to 8 interrupts per bank, which can be useful to
+-	 * distribute the load and decrease the processing latency for GPIOs
+-	 * but it also requires a more complicated interrupt routing than we
+-	 * currently program.
+-	 */
+-	if (gpio->num_irqs_per_bank > 1) {
+-		irq->parents = devm_kcalloc(&pdev->dev, gpio->num_banks,
+-					    sizeof(*irq->parents), GFP_KERNEL);
+-		if (!irq->parents)
+-			return -ENOMEM;
+-
+-		for (i = 0; i < gpio->num_banks; i++)
+-			irq->parents[i] = gpio->irq[i * gpio->num_irqs_per_bank];
+-
+-		irq->num_parents = gpio->num_banks;
+-	} else {
+-		irq->num_parents = gpio->num_irq;
+-		irq->parents = gpio->irq;
+-	}
++	irq->num_parents = gpio->num_irq;
++	irq->parents = gpio->irq;
+ 
+ 	if (gpio->soc->num_irqs_per_bank > 1)
+ 		tegra186_gpio_init_route_mapping(gpio);
+-- 
+2.43.0
+

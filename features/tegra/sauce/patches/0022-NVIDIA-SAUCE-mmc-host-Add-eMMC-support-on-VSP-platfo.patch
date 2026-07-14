@@ -1,0 +1,212 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aniruddha Tvs Rao <anrao@nvidia.com>
+Date: Mon, 7 Sep 2020 12:57:33 +0530
+Subject: [PATCH 022/254] NVIDIA: SAUCE: mmc: host: Add eMMC support on VSP
+ platform
+
+Add support in the driver to support eMMC model on
+the VSP platform. Use tegra_get_platform() from the
+fuse driver to identify the VSP platform.
+
+Bug 2849456
+Bug 4359070
+
+Change-Id: I1fe664e9f4ebde4b0bf80a564f2e02ad7e0cfde2
+Reviewed-on: https://git-master.nvidia.com/r/#/c/linux-4.14/+/2360137/
+"mmc: host: Add support to skip vendor reg access"
+aae78a1136b0ee0c70ed9b4503717994c2d29ef3:
+https: //git-master.nvidia.com/r/#/c/linux-4.14/+/2360136/)
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-5.9/+/2409623
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2935764
+(cherry picked from commit d470c78f2d0e4077c6dea5faedc35254ef875326)
+Signed-off-by: Satish Seelamsetti <sseelamsetti@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3100916
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
+index c69262b3cc662..dc540e2544801 100644
+--- a/drivers/mmc/host/sdhci-tegra.c
++++ b/drivers/mmc/host/sdhci-tegra.c
+@@ -28,6 +28,7 @@
+ #include <linux/reset.h>
+ 
+ #include <soc/tegra/common.h>
++#include <soc/tegra/fuse.h>
+ 
+ #include "sdhci-cqhci.h"
+ #include "sdhci-pltfm.h"
+@@ -192,6 +193,9 @@ static u16 tegra_sdhci_readw(struct sdhci_host *host, int reg)
+ 	struct sdhci_tegra *tegra_host = sdhci_pltfm_priv(pltfm_host);
+ 	const struct sdhci_tegra_soc_data *soc_data = tegra_host->soc_data;
+ 
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return 0;
++
+ 	if (unlikely((soc_data->nvquirks & NVQUIRK_FORCE_SDHCI_SPEC_200) &&
+ 			(reg == SDHCI_HOST_VERSION))) {
+ 		/* Erratum: Version register is invalid in HW. */
+@@ -205,6 +209,9 @@ static void tegra_sdhci_writew(struct sdhci_host *host, u16 val, int reg)
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return;
++
+ 	switch (reg) {
+ 	case SDHCI_TRANSFER_MODE:
+ 		/*
+@@ -228,6 +235,8 @@ static void tegra_sdhci_writel(struct sdhci_host *host, u32 val, int reg)
+ 	struct sdhci_tegra *tegra_host = sdhci_pltfm_priv(pltfm_host);
+ 	const struct sdhci_tegra_soc_data *soc_data = tegra_host->soc_data;
+ 
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return;
+ 	/* Seems like we're getting spurious timeout and crc errors, so
+ 	 * disable signalling of them. In case of real errors software
+ 	 * timers should take care of eventually detecting them.
+@@ -534,6 +543,8 @@ static void tegra_sdhci_pad_autocalib(struct sdhci_host *host)
+ 	u32 reg;
+ 	int ret;
+ 
++	if (tegra_get_platform() == TEGRA_PLATFORM_VSP)
++		return;
+ 	switch (ios->timing) {
+ 	case MMC_TIMING_UHS_SDR104:
+ 		pdpu = offsets.pull_down_sdr104 << 8 | offsets.pull_up_sdr104;
+@@ -1358,6 +1369,10 @@ static int tegra_sdhci_set_dma_mask(struct sdhci_host *host)
+ 	const struct sdhci_tegra_soc_data *soc = tegra->soc_data;
+ 	struct device *dev = mmc_dev(host->mmc);
+ 
++	if (host->quirks2 & SDHCI_QUIRK2_BROKEN_64_BIT_DMA) {
++		host->flags &= ~SDHCI_USE_64_BIT_DMA;
++		return dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
++	}
+ 	if (soc->dma_mask)
+ 		return dma_set_mask_and_coherent(dev, soc->dma_mask);
+ 
+@@ -1761,7 +1776,8 @@ static int sdhci_tegra_probe(struct platform_device *pdev)
+ 
+ 		tegra_host->tmclk = clk;
+ 	}
+-
++	if (tegra_get_platform() == TEGRA_PLATFORM_VSP)
++		host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
+ 	if (!tegra_host->skip_clk_rst) {
+ 		clk = devm_clk_get(mmc_dev(host->mmc), NULL);
+ 		if (IS_ERR(clk)) {
+diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
+index b6a571d866fa5..ea24ae91cb455 100644
+--- a/drivers/mmc/host/sdhci.h
++++ b/drivers/mmc/host/sdhci.h
+@@ -19,6 +19,8 @@
+ 
+ #include <linux/mmc/host.h>
+ 
++#include <soc/tegra/fuse.h>
++
+ /*
+  * Controller registers
+  */
+@@ -730,6 +732,8 @@ struct sdhci_ops {
+ 
+ static inline void sdhci_writel(struct sdhci_host *host, u32 val, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return;
+ 	if (unlikely(host->ops->write_l))
+ 		host->ops->write_l(host, val, reg);
+ 	else
+@@ -738,6 +742,8 @@ static inline void sdhci_writel(struct sdhci_host *host, u32 val, int reg)
+ 
+ static inline void sdhci_writew(struct sdhci_host *host, u16 val, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return;
+ 	if (unlikely(host->ops->write_w))
+ 		host->ops->write_w(host, val, reg);
+ 	else
+@@ -746,6 +752,8 @@ static inline void sdhci_writew(struct sdhci_host *host, u16 val, int reg)
+ 
+ static inline void sdhci_writeb(struct sdhci_host *host, u8 val, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return;
+ 	if (unlikely(host->ops->write_b))
+ 		host->ops->write_b(host, val, reg);
+ 	else
+@@ -754,6 +762,8 @@ static inline void sdhci_writeb(struct sdhci_host *host, u8 val, int reg)
+ 
+ static inline u32 sdhci_readl(struct sdhci_host *host, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return 0;
+ 	if (unlikely(host->ops->read_l))
+ 		return host->ops->read_l(host, reg);
+ 	else
+@@ -762,6 +772,8 @@ static inline u32 sdhci_readl(struct sdhci_host *host, int reg)
+ 
+ static inline u16 sdhci_readw(struct sdhci_host *host, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return 0;
+ 	if (unlikely(host->ops->read_w))
+ 		return host->ops->read_w(host, reg);
+ 	else
+@@ -770,6 +782,8 @@ static inline u16 sdhci_readw(struct sdhci_host *host, int reg)
+ 
+ static inline u8 sdhci_readb(struct sdhci_host *host, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return 0;
+ 	if (unlikely(host->ops->read_b))
+ 		return host->ops->read_b(host, reg);
+ 	else
+@@ -780,31 +794,43 @@ static inline u8 sdhci_readb(struct sdhci_host *host, int reg)
+ 
+ static inline void sdhci_writel(struct sdhci_host *host, u32 val, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return;
+ 	writel(val, host->ioaddr + reg);
+ }
+ 
+ static inline void sdhci_writew(struct sdhci_host *host, u16 val, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return;
+ 	writew(val, host->ioaddr + reg);
+ }
+ 
+ static inline void sdhci_writeb(struct sdhci_host *host, u8 val, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return;
+ 	writeb(val, host->ioaddr + reg);
+ }
+ 
+ static inline u32 sdhci_readl(struct sdhci_host *host, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return 0;
+ 	return readl(host->ioaddr + reg);
+ }
+ 
+ static inline u16 sdhci_readw(struct sdhci_host *host, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return 0;
+ 	return readw(host->ioaddr + reg);
+ }
+ 
+ static inline u8 sdhci_readb(struct sdhci_host *host, int reg)
+ {
++	if ((tegra_get_platform() == TEGRA_PLATFORM_VSP) && (reg > SDHCI_HOST_VERSION))
++		return 0;
+ 	return readb(host->ioaddr + reg);
+ }
+ 
+-- 
+2.43.0
+

@@ -1,0 +1,66 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Frank Chen <frankc@nvidia.com>
+Date: Tue, 29 Nov 2022 11:16:11 -0800
+Subject: [PATCH 018/254] NVIDIA: SAUCE: include/linux: Add new packed v4l2
+ pixel format
+
+Add pacekd 10-bit formats to v4l2 pixel formats list.
+X(Bayer)10 packs 3 pixels to 4 bytes with two MSB bits
+set to zero. All four corresponding phases are added.
+
+Snapshot of packing different bayer formats below:
+BGGR10 - X2B10G10B10 X2G10B10G10.. X2G10R10G10 X2R10G10R10..
+RGGB10 - X2R10G10R10 X2G10R10G10.. X2G10B10G10 X2B10G10B10..
+GRGB10 - X2G10R10G10 X2R10G10R10.. X2G10B10G10 X2B10G10B10..
+GBGR10 - X2G10B10G10 X2B10G10B10.. X2G10R10G10 X2R10G10R10..
+
+In general if the pixels are L0L1L2L3L4L5.., the packed
+32-bit integers would be X2L2L1L0 X2L5L4L3..
+
+Add corresponding MBUS formats to represent packed 10bit.
+
+Bug 200602400
+
+Change-Id: I88cd67af373b1f2a35247d05fdcc69ae9fea7dbc
+Signed-off-by: Frank Chen <frankc@nvidia.com>
+(cherry picked from 20396d14074a670bb22e85d877080ba87baa7148)
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2897714
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+
+diff --git a/include/uapi/linux/media-bus-format.h b/include/uapi/linux/media-bus-format.h
+index ff62056feed5b..61bee70cf74e5 100644
+--- a/include/uapi/linux/media-bus-format.h
++++ b/include/uapi/linux/media-bus-format.h
+@@ -156,6 +156,11 @@
+ #define MEDIA_BUS_FMT_SGBRG16_1X16		0x301e
+ #define MEDIA_BUS_FMT_SGRBG16_1X16		0x301f
+ #define MEDIA_BUS_FMT_SRGGB16_1X16		0x3020
++/* Maintain a higher offset untill upstreamed */
++#define MEDIA_BUS_FMT_XBGGR10P_3X10		0x3050
++#define MEDIA_BUS_FMT_XGBRG10P_3X10		0x3051
++#define MEDIA_BUS_FMT_XGRBG10P_3X10		0x3052
++#define MEDIA_BUS_FMT_XRGGB10P_3X10		0x3053
+ 
+ /* JPEG compressed formats - next is	0x4002 */
+ #define MEDIA_BUS_FMT_JPEG_1X8			0x4001
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index 95a5e76e8c268..e26a39d0e1cb6 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -707,6 +707,11 @@ struct v4l2_pix_format {
+ #define V4L2_PIX_FMT_SGBRG10 v4l2_fourcc('G', 'B', '1', '0') /* 10  GBGB.. RGRG.. */
+ #define V4L2_PIX_FMT_SGRBG10 v4l2_fourcc('B', 'A', '1', '0') /* 10  GRGR.. BGBG.. */
+ #define V4L2_PIX_FMT_SRGGB10 v4l2_fourcc('R', 'G', '1', '0') /* 10  RGRG.. GBGB.. */
++	/*10bit raw bayer packed, 4 bytes for every 3 pixels */
++#define V4L2_PIX_FMT_XBGGR10P   v4l2_fourcc('X', 'B', 'G', 'P') /* 32  BGGR Packed 10-10-10-2 */
++#define V4L2_PIX_FMT_XGBRG10P   v4l2_fourcc('X', 'G', 'B', 'P') /* 32  GBRG Packed 10-10-10-2 */
++#define V4L2_PIX_FMT_XGRBG10P   v4l2_fourcc('X', 'G', 'R', 'P') /* 32  GRBG Packed 10-10-10-2 */
++#define V4L2_PIX_FMT_XRGGB10P   v4l2_fourcc('X', 'R', 'G', 'P') /* 32  RGGB Packed 10-10-10-2 */
+ 	/* 10bit raw bayer packed, 5 bytes for every 4 pixels */
+ #define V4L2_PIX_FMT_SBGGR10P v4l2_fourcc('p', 'B', 'A', 'A')
+ #define V4L2_PIX_FMT_SGBRG10P v4l2_fourcc('p', 'G', 'A', 'A')
+-- 
+2.43.0
+

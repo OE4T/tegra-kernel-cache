@@ -1,0 +1,69 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arvind M <am@nvidia.com>
+Date: Tue, 24 Jan 2023 12:26:10 +0000
+Subject: [PATCH 075/254] NVIDIA: SAUCE: hsierrrptinj: add ID for DLA
+
+Jira DLA-6136
+Jira DLA-6594
+
+Change-Id: I8218fa20964d554b8a92cfdff604dfc235aec66f
+Signed-off-by: Arvind M <am@nvidia.com>
+Reviewed-by: Amit Sharma (SW-TEGRA) <amisharma@nvidia.com>
+Reviewed-by: Prasun Kumar <prasunk@nvidia.com>
+Reviewed-by: Ken Adams <kadams@nvidia.com>
+Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2907303
+
+diff --git a/drivers/platform/tegra/tegra-hsierrrptinj.c b/drivers/platform/tegra/tegra-hsierrrptinj.c
+index 7052e59582478..664e17263496e 100644
+--- a/drivers/platform/tegra/tegra-hsierrrptinj.c
++++ b/drivers/platform/tegra/tegra-hsierrrptinj.c
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
+-/* Copyright (c) 2021-2022, NVIDIA CORPORATION & AFFILIATES. All rights reserved.*/
++/* Copyright (c) 2021-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.*/
+ 
+ /**
+  * @file tegra-hsierrrptinj.c
+@@ -74,8 +74,9 @@ struct hsm_error_report_frame {
+  * TSEC  - 1
+  * THERM - 1
+  * SMMU  - 1
++ * DLA   - 2
+  */
+-static unsigned int ip_instances[NUM_IPS] = {1, 1, 1, 4, 11, 1, 10, 2, 2, 1, 1, 1};
++static unsigned int ip_instances[NUM_IPS] = {1, 1, 1, 4, 11, 1, 10, 2, 2, 1, 1, 1, 2};
+ 
+ /* This directory entry will point to `/sys/kernel/debug/tegra_hsierrrptinj`. */
+ static struct dentry *hsierrrptinj_debugfs_root;
+diff --git a/include/linux/tegra-hsierrrptinj.h b/include/linux/tegra-hsierrrptinj.h
+index e8ba5503af2a1..a31bb5abb48a6 100644
+--- a/include/linux/tegra-hsierrrptinj.h
++++ b/include/linux/tegra-hsierrrptinj.h
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
+-/* Copyright (c) 2021-2022, NVIDIA CORPORATION & AFFILIATES. All rights reserved.*/
++/* Copyright (c) 2021-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.*/
+ 
+ /**
+  * @file  tegra-hsierrrptinj.h
+@@ -18,7 +18,7 @@
+ 
+ /* ==================[Type Definitions]===================================== */
+ /* Number of registered IPs */
+-#define NUM_IPS 12U
++#define NUM_IPS 13U
+ 
+ /**
+  * @brief IP IDs
+@@ -38,6 +38,7 @@ IP_SDMMC = 0x0008,
+ IP_TSEC  = 0x0009,
+ IP_THERM = 0x000A,
+ IP_SMMU  = 0x000B,
++IP_DLA   = 0x000C,
+ 
+ IP_EC    = 0x00FC,
+ IP_SC7   = 0x00FD,
+-- 
+2.43.0
+

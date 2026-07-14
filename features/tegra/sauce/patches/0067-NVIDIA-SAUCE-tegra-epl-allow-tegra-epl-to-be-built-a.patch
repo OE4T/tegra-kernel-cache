@@ -1,0 +1,110 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Shubham Jain <shubhamj@nvidia.com>
+Date: Fri, 9 May 2025 13:19:57 +0000
+Subject: [PATCH 067/254] NVIDIA: SAUCE: tegra-epl: allow tegra-epl to be built
+ as module
+
+- updating kconfig file to allow tegra-epl to
+  be built as module.
+- Updating misc ec sw generic error index offset
+  depeding on Orin or Thor chip.
+
+Bug 5142445
+Bug 5119438
+Bug 5405209
+Bug 5415787
+
+Change-Id: Iea589710e1a90856550623543f9ac342854c2a2c
+Signed-off-by: Shubham Jain <shubhamj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3430974
+Tested-by: Rahul Shivaji Bedarkar <rabedarkar@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 2a56160a9c270b5b411a88f9e79865e5442581d3)
+
+diff --git a/drivers/platform/tegra/Kconfig b/drivers/platform/tegra/Kconfig
+index 404281dc1e6eb..344bf38dea5a5 100644
+--- a/drivers/platform/tegra/Kconfig
++++ b/drivers/platform/tegra/Kconfig
+@@ -16,7 +16,7 @@ menuconfig TEGRA_PLATFORM_DEVICES
+ if TEGRA_PLATFORM_DEVICES
+ 
+ config TEGRA_EPL
+-	bool "Tegra Error Propagation Layer Driver"
++	tristate "Tegra Error Propagation Layer Driver"
+ 	depends on MAILBOX
+ 	help
+ 	  The tegra-epl driver provides interface for reporting software detected
+diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
+index 49c8a94837a03..219dbc108f64f 100644
+--- a/drivers/platform/tegra/tegra-epl.c
++++ b/drivers/platform/tegra/tegra-epl.c
+@@ -22,9 +22,6 @@
+ /* Macro indicating total number of Misc Sw generic errors in Misc EC */
+ #define NUM_SW_GENERIC_ERR 5U
+ 
+-/* Error index offset in mission status register */
+-#define ERROR_INDEX_OFFSET	24U
+-
+ /* signature code for HSP pm notify data */
+ #define PM_STATE_UNI_CODE	0xFDEF
+ 
+@@ -60,6 +57,9 @@ struct epl_misc_sw_err_cfg {
+ 	const char *dev_configured;
+ };
+ 
++/* Error index offset in mission status register */
++static uint32_t error_index_offset = 3;
++
+ static int device_file_major_number;
+ static const char device_name[] = "epdaemon";
+ 
+@@ -153,7 +153,7 @@ int epl_get_misc_ec_err_status(struct device *dev, uint8_t err_number, bool *sta
+ 		if (strcmp(dev_str, miscerr_cfg[err_number].dev_configured) != 0)
+ 			return -EACCES;
+ 
+-		mask = (1U << ((ERROR_INDEX_OFFSET + err_number) % 32U));
++		mask = (1U << ((error_index_offset + err_number) % 32U));
+ 		mission_err_status = readl(mission_err_status_va);
+ 
+ 		if ((mission_err_status & mask) != 0U)
+@@ -277,6 +277,7 @@ static SIMPLE_DEV_PM_OPS(epl_client_pm, epl_client_suspend, epl_client_resume);
+ 
+ static const struct of_device_id epl_client_dt_match[] = {
+ 	{ .compatible = "nvidia,tegra234-epl-client"},
++	{ .compatible = "nvidia,tegra264-epl-client"},
+ 	{}
+ };
+ 
+@@ -377,6 +378,15 @@ static int epl_client_probe(struct platform_device *pdev)
+ 
+ 	dev_info(dev, "handshake-retry-count %u\n", handshake_retry_count);
+ 
++	if (of_device_is_compatible(np, "nvidia,tegra234-epl-client")) {
++		error_index_offset = 24;
++	} else if (of_device_is_compatible(np, "nvidia,tegra264-epl-client")) {
++		error_index_offset = 3;
++	} else {
++		pr_err("tegra-epl: valid dt compatible string not found\n");
++		ret = -1;
++	}
++
+ 	if (is_misc_ec_mapped == true) {
+ 		mission_err_status_va = devm_platform_ioremap_resource(pdev, NUM_SW_GENERIC_ERR * 2);
+ 		if (IS_ERR(mission_err_status_va)) {
+diff --git a/include/linux/tegra-epl.h b/include/linux/tegra-epl.h
+index cd0447be1f748..1038f56712fbc 100644
+--- a/include/linux/tegra-epl.h
++++ b/include/linux/tegra-epl.h
+@@ -25,7 +25,7 @@ struct epl_error_report_frame {
+ 	uint16_t reporter_id;
+ };
+ 
+-#ifdef CONFIG_TEGRA_EPL
++#if IS_ENABLED(CONFIG_TEGRA_EPL)
+ /**
+  * @brief API to check if SW error can be reported via Misc EC
+  *        by reading and checking Misc EC error status register value.
+-- 
+2.43.0
+

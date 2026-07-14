@@ -1,0 +1,778 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Sameer Pujar <spujar@nvidia.com>
+Date: Sat, 27 Jan 2024 05:48:06 +0000
+Subject: [PATCH 212/254] NVIDIA: SAUCE: ASoC: tegra: support codec2codec
+
+Following changes are made to support AHUB usage with codec2codec links:
+
+  - For codec2codec DAI links, the playback and capture streams of DAI
+    are swapped. Thus the DAPM routes for connecting multiple DAI links
+    in an audio path are different. The existing routes in the AHUB
+    module drivers assume back to back DPCM DAI link connections and
+    thus these routes don't work for codec2codec DAI links. Thus add
+    codec2codec routes to AHUB modules and users can choose these routes
+    based on a flag at card level.
+
+  - DSPK and DMIC DAP DAIs don't expose capture and playback streams
+    respectively and hence these modules can't be used in codec2codec
+    DAI links. Fix this by adding required DAI streams.
+
+  - The driver for I2S programs RX and TX CIFs based on the playback
+    direction. Since the stream direction is reversed, if I2S is part of
+    codec2codec DAI link, use "component_chaining" flag to identify
+    the DAI link type. Note that this flag is set for DPCM based audio
+    graph sound card driver.
+
+This commit is required to make sure legacy machine driver works with
+upstream AHUB drivers. Later when we plan to completely transition to
+the upstream machine driver, legacy codec2codec routes can be pushed
+to the upstream graph driver.
+
+Bug 4451662
+TAS-2251
+
+Change-Id: I33b5d87b1f7a9a9e812465800198c02fad795f41
+Signed-off-by: Sameer Pujar <spujar@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3079050
+Reviewed-by: Sharad Gupta <sharadg@nvidia.com>
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/sound/soc/tegra/tegra186_asrc.c b/sound/soc/tegra/tegra186_asrc.c
+index 2e0ffb75e052d..f4b24a42efb87 100644
+--- a/sound/soc/tegra/tegra186_asrc.c
++++ b/sound/soc/tegra/tegra186_asrc.c
+@@ -635,6 +635,44 @@ static const struct snd_soc_dapm_route tegra186_asrc_routes[] = {
+ 	ASRC_RATIO_ROUTE("Capture")
+ };
+ 
++static const struct snd_soc_dapm_route tegra186_asrc_c2c_routes[] = {
++	/* XBAR routes */
++	{ "TX1 XBAR-RX",	NULL,	"TX1 XBAR-Playback"},
++	{ "TX2 XBAR-RX",	NULL,	"TX2 XBAR-Playback"},
++	{ "TX3 XBAR-RX",	NULL,	"TX3 XBAR-Playback"},
++	{ "TX4 XBAR-RX",	NULL,	"TX4 XBAR-Playback"},
++	{ "TX5 XBAR-RX",	NULL,	"TX5 XBAR-Playback"},
++	{ "TX6 XBAR-RX",	NULL,	"TX6 XBAR-Playback"},
++	{ "RX1 XBAR-Capture",	NULL,	"RX1 XBAR-TX"},
++	{ "RX2 XBAR-Capture",	NULL,	"RX2 XBAR-TX"},
++	{ "RX3 XBAR-Capture",	NULL,	"RX3 XBAR-TX"},
++	{ "RX4 XBAR-Capture",	NULL,	"RX4 XBAR-TX"},
++	{ "RX5 XBAR-Capture",	NULL,	"RX5 XBAR-TX"},
++	{ "RX6 XBAR-Capture",	NULL,	"RX6 XBAR-TX"},
++	{ "RX7 XBAR-Capture",	NULL,	"RX7 XBAR-TX"},
++
++	/* ASRC routes */
++	{ "RX1",		NULL,	"RX1-CIF-Playback" },
++	{ "TX1",		NULL,	"RX1" },
++	{ "TX1-CIF-Capture",	NULL,	"TX1" },
++	{ "RX2",		NULL,	"RX2-CIF-Playback" },
++	{ "TX2",		NULL,	"RX2" },
++	{ "TX2-CIF-Capture",	NULL,	"TX2" },
++	{ "RX3",		NULL,	"RX3-CIF-Playback" },
++	{ "TX3",		NULL,	"RX3" },
++	{ "TX3-CIF-Capture",	NULL,	"TX3" },
++	{ "RX4",		NULL,	"RX4-CIF-Playback" },
++	{ "TX4",		NULL,	"RX4" },
++	{ "TX4-CIF-Capture",	NULL,	"TX4" },
++	{ "RX5",		NULL,	"RX5-CIF-Playback" },
++	{ "TX5",		NULL,	"RX5" },
++	{ "TX5-CIF-Capture",	NULL,	"TX5" },
++	{ "RX6",		NULL,	"RX6-CIF-Playback" },
++	{ "TX6",		NULL,	"RX6" },
++	{ "TX6-CIF-Capture",	NULL,	"TX6" },
++	{ "RX7",		NULL,	"RX7-CIF-Playback" },
++};
++
+ static const char * const tegra186_asrc_ratio_source_text[] = {
+ 	"ARAD",
+ 	"SW",
+@@ -865,11 +903,28 @@ static const struct snd_kcontrol_new tegra186_asrc_controls[] = {
+ 		       tegra186_asrc_put_output_threshold),
+ };
+ 
++static int tegra186_asrc_component_probe(struct snd_soc_component *component)
++{
++	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
++	struct snd_soc_card *card = component->card;
++	const struct snd_soc_dapm_route *route;
++	int num_route;
++
++	if (card->component_chaining) {
++		route = tegra186_asrc_routes;
++		num_route = ARRAY_SIZE(tegra186_asrc_routes);
++	} else {
++		route = tegra186_asrc_c2c_routes;
++		num_route = ARRAY_SIZE(tegra186_asrc_c2c_routes);
++	}
++
++	return snd_soc_dapm_add_routes(dapm, route, num_route);
++}
++
+ static const struct snd_soc_component_driver tegra186_asrc_cmpnt = {
++	.probe			= tegra186_asrc_component_probe,
+ 	.dapm_widgets		= tegra186_asrc_widgets,
+ 	.num_dapm_widgets	= ARRAY_SIZE(tegra186_asrc_widgets),
+-	.dapm_routes		= tegra186_asrc_routes,
+-	.num_dapm_routes	= ARRAY_SIZE(tegra186_asrc_routes),
+ 	.controls		= tegra186_asrc_controls,
+ 	.num_controls		= ARRAY_SIZE(tegra186_asrc_controls),
+ };
+diff --git a/sound/soc/tegra/tegra186_dspk.c b/sound/soc/tegra/tegra186_dspk.c
+index 4e8348b3177fd..d79485a217507 100644
+--- a/sound/soc/tegra/tegra186_dspk.c
++++ b/sound/soc/tegra/tegra186_dspk.c
+@@ -329,6 +329,15 @@ static struct snd_soc_dai_driver tegra186_dspk_dais[] = {
+ 			   SNDRV_PCM_FMTBIT_S24_LE |
+ 			   SNDRV_PCM_FMTBIT_S32_LE,
+ 	    },
++	    .capture = {
++		.stream_name = "DAP-Capture",
++		.channels_min = 1,
++		.channels_max = 2,
++		.rates = SNDRV_PCM_RATE_8000_48000,
++		.formats = SNDRV_PCM_FMTBIT_S16_LE |
++			   SNDRV_PCM_FMTBIT_S24_LE |
++			   SNDRV_PCM_FMTBIT_S32_LE,
++	    },
+ 	    .ops = &tegra186_dspk_dai_ops,
+ 	    .symmetric_rate = 1,
+ 	},
+@@ -347,6 +356,16 @@ static const struct snd_soc_dapm_route tegra186_dspk_routes[] = {
+ 	{ "SPK",		NULL,	"DAP-Playback" },
+ };
+ 
++static const struct snd_soc_dapm_route tegra186_dspk_c2c_routes[] = {
++	/* XBAR routes */
++	{ "XBAR-RX",		NULL,	"XBAR-Playback" },
++	{ "XBAR-Capture",	NULL,	"XBAR-TX" },
++
++	/* DSPK routes */
++	{ "RX",			NULL,	"CIF-Playback" },
++	{ "DAP-Capture",	NULL,	"RX" },
++};
++
+ static const char * const tegra186_dspk_ch_sel_text[] = {
+ 	"Left", "Right", "Stereo",
+ };
+@@ -407,11 +426,28 @@ static const struct snd_kcontrol_new tegrat186_dspk_controls[] = {
+ 		     tegra186_dspk_put_stereo_to_mono),
+ };
+ 
++static int tegra186_dspk_component_probe(struct snd_soc_component *component)
++{
++	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
++	struct snd_soc_card *card = component->card;
++	const struct snd_soc_dapm_route *route;
++	int num_route;
++
++	if (card->component_chaining) {
++		route = tegra186_dspk_routes;
++		num_route = ARRAY_SIZE(tegra186_dspk_routes);
++	} else {
++		route = tegra186_dspk_c2c_routes;
++		num_route = ARRAY_SIZE(tegra186_dspk_c2c_routes);
++	}
++
++	return snd_soc_dapm_add_routes(dapm, route, num_route);
++}
++
+ static const struct snd_soc_component_driver tegra186_dspk_cmpnt = {
++	.probe = tegra186_dspk_component_probe,
+ 	.dapm_widgets = tegra186_dspk_widgets,
+ 	.num_dapm_widgets = ARRAY_SIZE(tegra186_dspk_widgets),
+-	.dapm_routes = tegra186_dspk_routes,
+-	.num_dapm_routes = ARRAY_SIZE(tegra186_dspk_routes),
+ 	.controls = tegrat186_dspk_controls,
+ 	.num_controls = ARRAY_SIZE(tegrat186_dspk_controls),
+ };
+diff --git a/sound/soc/tegra/tegra210_adx.c b/sound/soc/tegra/tegra210_adx.c
+index 9945a2b98dead..095e3f39900a3 100644
+--- a/sound/soc/tegra/tegra210_adx.c
++++ b/sound/soc/tegra/tegra210_adx.c
+@@ -350,6 +350,26 @@ static const struct snd_soc_dapm_route tegra210_adx_routes[] = {
+ 	ADX_ROUTES(4),
+ };
+ 
++static const struct snd_soc_dapm_route tegra210_adx_c2c_routes[] = {
++	/* XBAR routes */
++	{ "XBAR-Capture",	NULL,	"XBAR-TX" },
++	{ "TX1 XBAR-RX",	NULL,	"TX1 XBAR-Playback" },
++	{ "TX2 XBAR-RX",	NULL,	"TX2 XBAR-Playback" },
++	{ "TX3 XBAR-RX",	NULL,	"TX3 XBAR-Playback" },
++	{ "TX4 XBAR-RX",	NULL,	"TX4 XBAR-Playback" },
++
++	/* ADX routes */
++	{ "RX",			NULL,	"RX-CIF-Playback" },
++	{ "TX1",		NULL,	"RX" },
++	{ "TX2",		NULL,	"RX" },
++	{ "TX3",		NULL,	"RX" },
++	{ "TX4",		NULL,	"RX" },
++	{ "TX1-CIF-Capture",	NULL,	"TX1" },
++	{ "TX2-CIF-Capture",	NULL,	"TX2" },
++	{ "TX3-CIF-Capture",	NULL,	"TX3" },
++	{ "TX4-CIF-Capture",	NULL,	"TX4" },
++};
++
+ #define TEGRA210_ADX_BYTE_MAP_CTRL(reg)			 \
+ 	SOC_SINGLE_EXT("Byte Map " #reg, reg, 0, 256, 0, \
+ 		       tegra210_adx_get_byte_map,	 \
+@@ -491,25 +511,36 @@ static struct snd_kcontrol_new tegra264_adx_controls[] = {
+ 
+ static int tegra210_adx_component_probe(struct snd_soc_component *component)
+ {
++	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
+ 	struct tegra210_adx *adx = snd_soc_component_get_drvdata(component);
+-	int err = 0;
++	struct snd_soc_card *card = component->card;
++	const struct snd_soc_dapm_route *route;
++	int num_route, err;
+ 
+ 	if (adx->soc_data->num_controls) {
+ 		err = snd_soc_add_component_controls(component, adx->soc_data->controls,
+ 						     adx->soc_data->num_controls);
+-		if (err)
++		if (err) {
+ 			dev_err(component->dev, "can't add ADX controls, err: %d\n", err);
++			return err;
++		}
++	}
++
++	if (card->component_chaining) {
++		route = tegra210_adx_routes;
++		num_route = ARRAY_SIZE(tegra210_adx_routes);
++	} else {
++		route = tegra210_adx_c2c_routes;
++		num_route = ARRAY_SIZE(tegra210_adx_c2c_routes);
+ 	}
+ 
+-	return err;
++	return snd_soc_dapm_add_routes(dapm, route, num_route);
+ }
+ 
+ static const struct snd_soc_component_driver tegra210_adx_cmpnt = {
+ 	.probe			= tegra210_adx_component_probe,
+ 	.dapm_widgets		= tegra210_adx_widgets,
+ 	.num_dapm_widgets	= ARRAY_SIZE(tegra210_adx_widgets),
+-	.dapm_routes		= tegra210_adx_routes,
+-	.num_dapm_routes	= ARRAY_SIZE(tegra210_adx_routes),
+ 	.controls		= tegra210_adx_controls,
+ 	.num_controls		= ARRAY_SIZE(tegra210_adx_controls),
+ };
+diff --git a/sound/soc/tegra/tegra210_amx.c b/sound/soc/tegra/tegra210_amx.c
+index f8b85f19c190b..5b911514c9312 100644
+--- a/sound/soc/tegra/tegra210_amx.c
++++ b/sound/soc/tegra/tegra210_amx.c
+@@ -361,6 +361,26 @@ static const struct snd_soc_dapm_route tegra210_amx_routes[] = {
+ 	AMX_ROUTES(4),
+ };
+ 
++static const struct snd_soc_dapm_route tegra210_amx_c2c_routes[] = {
++	/* XBAR routes */
++	{ "RX1 XBAR-Capture",	NULL,	"RX1 XBAR-TX" },
++	{ "RX2 XBAR-Capture",	NULL,	"RX2 XBAR-TX" },
++	{ "RX3 XBAR-Capture",	NULL,	"RX3 XBAR-TX" },
++	{ "RX4 XBAR-Capture",	NULL,	"RX4 XBAR-TX" },
++	{ "XBAR-RX",		NULL,	"XBAR-Playback" },
++
++	/* AMX routes */
++	{ "RX1",		NULL,	"RX1-CIF-Playback" },
++	{ "RX2",		NULL,	"RX2-CIF-Playback" },
++	{ "RX3",		NULL,	"RX3-CIF-Playback" },
++	{ "RX4",		NULL,	"RX4-CIF-Playback" },
++	{ "TX",			NULL,	"RX1" },
++	{ "TX",			NULL,	"RX2" },
++	{ "TX",			NULL,	"RX3" },
++	{ "TX",			NULL,	"RX4" },
++	{ "TX-CIF-Capture",	NULL,	"TX" },
++};
++
+ #define TEGRA210_AMX_BYTE_MAP_CTRL(reg)					\
+ 	SOC_SINGLE_EXT("Byte Map " #reg, reg, 0, 256, 0,		\
+ 		       tegra210_amx_get_byte_map,			\
+@@ -502,25 +522,36 @@ static struct snd_kcontrol_new tegra264_amx_controls[] = {
+ 
+ static int tegra210_amx_component_probe(struct snd_soc_component *component)
+ {
++	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
+ 	struct tegra210_amx *amx = snd_soc_component_get_drvdata(component);
+-	int err = 0;
++	struct snd_soc_card *card = component->card;
++	const struct snd_soc_dapm_route *route;
++	int num_route, err;
+ 
+ 	if (amx->soc_data->num_controls) {
+ 		err = snd_soc_add_component_controls(component, amx->soc_data->controls,
+ 						     amx->soc_data->num_controls);
+-		if (err)
++		if (err) {
+ 			dev_err(component->dev, "can't add AMX controls, err: %d\n", err);
++			return err;
++		}
++	}
++
++	if (card->component_chaining) {
++		route = tegra210_amx_routes;
++		num_route = ARRAY_SIZE(tegra210_amx_routes);
++	} else {
++		route = tegra210_amx_c2c_routes;
++		num_route = ARRAY_SIZE(tegra210_amx_c2c_routes);
+ 	}
+ 
+-	return err;
++	return snd_soc_dapm_add_routes(dapm, route, num_route);
+ }
+ 
+ static const struct snd_soc_component_driver tegra210_amx_cmpnt = {
+ 	.probe			= tegra210_amx_component_probe,
+ 	.dapm_widgets		= tegra210_amx_widgets,
+ 	.num_dapm_widgets	= ARRAY_SIZE(tegra210_amx_widgets),
+-	.dapm_routes		= tegra210_amx_routes,
+-	.num_dapm_routes	= ARRAY_SIZE(tegra210_amx_routes),
+ 	.controls		= tegra210_amx_controls,
+ 	.num_controls		= ARRAY_SIZE(tegra210_amx_controls),
+ };
+diff --git a/sound/soc/tegra/tegra210_dmic.c b/sound/soc/tegra/tegra210_dmic.c
+index 07079f2bf173f..93f84f8bb0372 100644
+--- a/sound/soc/tegra/tegra210_dmic.c
++++ b/sound/soc/tegra/tegra210_dmic.c
+@@ -332,6 +332,14 @@ static struct snd_soc_dai_driver tegra210_dmic_dais[] = {
+ 	},
+ 	{
+ 		.name = "DMIC-DAP",
++		.playback = {
++			.stream_name = "DAP-Playback",
++			.channels_min = 1,
++			.channels_max = 2,
++			.rates = SNDRV_PCM_RATE_8000_48000,
++			.formats = SNDRV_PCM_FMTBIT_S16_LE |
++				   SNDRV_PCM_FMTBIT_S32_LE,
++		},
+ 		.capture = {
+ 			.stream_name = "DAP-Capture",
+ 			.channels_min = 1,
+@@ -359,6 +367,16 @@ static const struct snd_soc_dapm_route tegra210_dmic_routes[] = {
+ 	{ "DAP-Capture",	NULL,	"MIC" },
+ };
+ 
++static const struct snd_soc_dapm_route tegra210_dmic_c2c_routes[] = {
++	/* XBAR routes */
++	{ "XBAR-RX",		NULL,	"XBAR-Playback" },
++	{ "XBAR-Capture",	NULL,	"XBAR-TX" },
++
++	/* DMIC routes */
++	{ "CIF-Capture",	NULL,	"TX" },
++	{ "TX",			NULL,	"DAP-Playback" },
++};
++
+ static const char * const tegra210_dmic_ch_select[] = {
+ 	"Left", "Right", "Stereo",
+ };
+@@ -419,11 +437,28 @@ static const struct snd_kcontrol_new tegra210_dmic_controls[] = {
+ 		     tegra210_dmic_get_pol_sel, tegra210_dmic_put_pol_sel),
+ };
+ 
++static int tegra210_dmic_component_probe(struct snd_soc_component *component)
++{
++	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
++	struct snd_soc_card *card = component->card;
++	const struct snd_soc_dapm_route *route;
++	int num_route;
++
++	if (card->component_chaining) {
++		route = tegra210_dmic_routes;
++		num_route = ARRAY_SIZE(tegra210_dmic_routes);
++	} else {
++		route = tegra210_dmic_c2c_routes;
++		num_route = ARRAY_SIZE(tegra210_dmic_c2c_routes);
++	}
++
++	return snd_soc_dapm_add_routes(dapm, route, num_route);
++}
++
+ static const struct snd_soc_component_driver tegra210_dmic_compnt = {
++	.probe			= tegra210_dmic_component_probe,
+ 	.dapm_widgets		= tegra210_dmic_widgets,
+ 	.num_dapm_widgets	= ARRAY_SIZE(tegra210_dmic_widgets),
+-	.dapm_routes		= tegra210_dmic_routes,
+-	.num_dapm_routes	= ARRAY_SIZE(tegra210_dmic_routes),
+ 	.controls		= tegra210_dmic_controls,
+ 	.num_controls		= ARRAY_SIZE(tegra210_dmic_controls),
+ };
+diff --git a/sound/soc/tegra/tegra210_i2s.c b/sound/soc/tegra/tegra210_i2s.c
+index 86554e3dab59f..f22465fd31eec 100644
+--- a/sound/soc/tegra/tegra210_i2s.c
++++ b/sound/soc/tegra/tegra210_i2s.c
+@@ -618,6 +618,7 @@ static int tegra210_i2s_hw_params(struct snd_pcm_substream *substream,
+ 	unsigned int sample_size, channels, srate, val, reg, path;
+ 	struct tegra_cif_conf cif_conf;
+ 	snd_pcm_format_t sample_format;
++	int stream = substream->stream;
+ 
+ 	memset(&cif_conf, 0, sizeof(struct tegra_cif_conf));
+ 
+@@ -691,12 +692,14 @@ static int tegra210_i2s_hw_params(struct snd_pcm_substream *substream,
+ 	srate = params_rate(params);
+ 
+ 	/* For playback I2S RX-CIF and for capture TX-CIF is used */
+-	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+-		path = I2S_RX_PATH;
+-	else
+-		path = I2S_TX_PATH;
++	if (!dai->component->card->component_chaining) {
++		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
++			stream = SNDRV_PCM_STREAM_CAPTURE;
++		else
++			stream = SNDRV_PCM_STREAM_PLAYBACK;
++	}
+ 
+-	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
++	if (stream == SNDRV_PCM_STREAM_PLAYBACK) {
+ 		unsigned int max_th;
+ 
+ 		/* FIFO threshold in terms of frames */
+@@ -708,8 +711,10 @@ static int tegra210_i2s_hw_params(struct snd_pcm_substream *substream,
+ 		cif_conf.threshold = i2s->rx_fifo_th;
+ 
+ 		reg = TEGRA210_I2S_RX_CIF_CTRL;
++		path = I2S_RX_PATH;
+ 	} else {
+ 		reg = TEGRA210_I2S_TX_CIF_CTRL + i2s->soc_data->tx_offset;
++		path = I2S_TX_PATH;
+ 	}
+ 
+ 	cif_conf.mono_conv = i2s->mono_to_stereo[path];
+@@ -854,11 +859,40 @@ static const struct snd_soc_dapm_route tegra210_i2s_routes[] = {
+ 	{ "DAP-Capture",	NULL,	"MIC" },
+ };
+ 
++static const struct snd_soc_dapm_route tegra210_i2s_c2c_routes[] = {
++	/* XBAR routes */
++	{ "XBAR-RX",		NULL,	"XBAR-Playback" },
++	{ "XBAR-Capture",	NULL,	"XBAR-TX" },
++
++	/* I2S routes */
++	{ "RX",			NULL,	"CIF-Playback" },
++	{ "DAP-Capture",	NULL,	"RX" },
++	{ "CIF-Capture",	NULL,	"TX" },
++	{ "TX",			NULL,	"DAP-Playback" },
++};
++
++static int tegra210_i2s_component_probe(struct snd_soc_component *component)
++{
++	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
++	struct snd_soc_card *card = component->card;
++	const struct snd_soc_dapm_route *route;
++	int num_route;
++
++	if (card->component_chaining) {
++		route = tegra210_i2s_routes;
++		num_route = ARRAY_SIZE(tegra210_i2s_routes);
++	} else {
++		route = tegra210_i2s_c2c_routes;
++		num_route = ARRAY_SIZE(tegra210_i2s_c2c_routes);
++	}
++
++	return snd_soc_dapm_add_routes(dapm, route, num_route);
++}
++
+ static const struct snd_soc_component_driver tegra210_i2s_cmpnt = {
++	.probe			= tegra210_i2s_component_probe,
+ 	.dapm_widgets		= tegra210_i2s_widgets,
+ 	.num_dapm_widgets	= ARRAY_SIZE(tegra210_i2s_widgets),
+-	.dapm_routes		= tegra210_i2s_routes,
+-	.num_dapm_routes	= ARRAY_SIZE(tegra210_i2s_routes),
+ 	.controls		= tegra210_i2s_controls,
+ 	.num_controls		= ARRAY_SIZE(tegra210_i2s_controls),
+ };
+diff --git a/sound/soc/tegra/tegra210_mixer.c b/sound/soc/tegra/tegra210_mixer.c
+index 29e654f54f8be..a95765bf74b48 100644
+--- a/sound/soc/tegra/tegra210_mixer.c
++++ b/sound/soc/tegra/tegra210_mixer.c
+@@ -504,11 +504,83 @@ static const struct snd_soc_dapm_route tegra210_mixer_routes[] = {
+ 	MIXER_TX_ROUTES(5),
+ };
+ 
++#define MIXER_ROUTES(name, id)			\
++	{name,		"RX1",	"RX1",},	\
++	{name,		"RX2",	"RX2",},	\
++	{name,		"RX3",	"RX3",},	\
++	{name,		"RX4",	"RX4",},	\
++	{name,		"RX5",	"RX5",},	\
++	{name,		"RX6",	"RX6",},	\
++	{name,		"RX7",	"RX7",},	\
++	{name,		"RX8",	"RX8",},	\
++	{name,		"RX9",	"RX9",},	\
++	{name,		"RX10", "RX10"},	\
++	{"TX"#id,	NULL,	name}
++
++static const struct snd_soc_dapm_route tegra210_mixer_c2c_routes[] = {
++	/* XBAR routes */
++	{ "RX1 XBAR-Capture",	NULL,	"RX1 XBAR-TX" },
++	{ "RX2 XBAR-Capture",	NULL,	"RX2 XBAR-TX" },
++	{ "RX3 XBAR-Capture",	NULL,	"RX3 XBAR-TX" },
++	{ "RX4 XBAR-Capture",	NULL,	"RX4 XBAR-TX" },
++	{ "RX5 XBAR-Capture",	NULL,	"RX5 XBAR-TX" },
++	{ "RX6 XBAR-Capture",	NULL,	"RX6 XBAR-TX" },
++	{ "RX7 XBAR-Capture",	NULL,	"RX7 XBAR-TX" },
++	{ "RX8 XBAR-Capture",	NULL,	"RX8 XBAR-TX" },
++	{ "RX9 XBAR-Capture",	NULL,	"RX9 XBAR-TX" },
++	{ "RX10 XBAR-Capture",	NULL,	"RX10 XBAR-TX" },
++	{ "TX1 XBAR-RX",	NULL,	"TX1 XBAR-Playback" },
++	{ "TX2 XBAR-RX",	NULL,	"TX2 XBAR-Playback" },
++	{ "TX3 XBAR-RX",	NULL,	"TX3 XBAR-Playback" },
++	{ "TX4 XBAR-RX",	NULL,	"TX4 XBAR-Playback" },
++	{ "TX5 XBAR-RX",	NULL,	"TX5 XBAR-Playback" },
++
++	/* MIXER routes */
++	{ "RX1",		NULL,	"RX1-CIF-Playback" },
++	{ "RX2",		NULL,	"RX2-CIF-Playback" },
++	{ "RX3",		NULL,	"RX3-CIF-Playback" },
++	{ "RX4",		NULL,	"RX4-CIF-Playback" },
++	{ "RX5",		NULL,	"RX5-CIF-Playback" },
++	{ "RX6",		NULL,	"RX6-CIF-Playback" },
++	{ "RX7",		NULL,	"RX7-CIF-Playback" },
++	{ "RX8",		NULL,	"RX8-CIF-Playback" },
++	{ "RX9",		NULL,	"RX9-CIF-Playback" },
++	{ "RX10",		NULL,	"RX10-CIF-Playback" },
++	/* route between MIXER RXs and TXs */
++	MIXER_ROUTES("Adder1", 1),
++	MIXER_ROUTES("Adder2", 2),
++	MIXER_ROUTES("Adder3", 3),
++	MIXER_ROUTES("Adder4", 4),
++	MIXER_ROUTES("Adder5", 5),
++	{ "TX1-CIF-Capture",	NULL,	"TX1" },
++	{ "TX2-CIF-Capture",	NULL,	"TX2" },
++	{ "TX3-CIF-Capture",	NULL,	"TX3" },
++	{ "TX4-CIF-Capture",	NULL,	"TX4" },
++	{ "TX5-CIF-Capture",	NULL,	"TX5" },
++};
++
++static int tegra210_mixer_component_probe(struct snd_soc_component *component)
++{
++	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
++	struct snd_soc_card *card = component->card;
++	const struct snd_soc_dapm_route *route;
++	int num_route;
++
++	if (card->component_chaining) {
++		route = tegra210_mixer_routes;
++		num_route = ARRAY_SIZE(tegra210_mixer_routes);
++	} else {
++		route = tegra210_mixer_c2c_routes;
++		num_route = ARRAY_SIZE(tegra210_mixer_c2c_routes);
++	}
++
++	return snd_soc_dapm_add_routes(dapm, route, num_route);
++}
++
+ static const struct snd_soc_component_driver tegra210_mixer_cmpnt = {
++	.probe			= tegra210_mixer_component_probe,
+ 	.dapm_widgets		= tegra210_mixer_widgets,
+ 	.num_dapm_widgets	= ARRAY_SIZE(tegra210_mixer_widgets),
+-	.dapm_routes		= tegra210_mixer_routes,
+-	.num_dapm_routes	= ARRAY_SIZE(tegra210_mixer_routes),
+ 	.controls		= tegra210_mixer_gain_ctls,
+ 	.num_controls		= ARRAY_SIZE(tegra210_mixer_gain_ctls),
+ };
+diff --git a/sound/soc/tegra/tegra210_mvc.c b/sound/soc/tegra/tegra210_mvc.c
+index c0d3769185465..0d7d9fa4a4e04 100644
+--- a/sound/soc/tegra/tegra210_mvc.c
++++ b/sound/soc/tegra/tegra210_mvc.c
+@@ -632,11 +632,39 @@ static const struct snd_soc_dapm_route tegra210_mvc_routes[] = {
+ 	MVC_ROUTES("Capture"),
+ };
+ 
++static const struct snd_soc_dapm_route tegra210_mvc_c2c_routes[] = {
++	/* XBAR routes */
++	{ "XBAR-RX",		NULL,	"TX XBAR-Playback"},
++	{ "RX XBAR-Capture",	NULL,	"XBAR-TX"},
++
++	/* MVC routes */
++	{ "RX",			NULL,	"RX-CIF-Playback" },
++	{ "TX",			NULL,	"RX" },
++	{ "TX-CIF-Capture",	NULL,	"TX" },
++};
++
++static int tegra210_mvc_component_probe(struct snd_soc_component *component)
++{
++	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
++	struct snd_soc_card *card = component->card;
++	const struct snd_soc_dapm_route *route;
++	int num_route;
++
++	if (card->component_chaining) {
++		route = tegra210_mvc_routes;
++		num_route = ARRAY_SIZE(tegra210_mvc_routes);
++	} else {
++		route = tegra210_mvc_c2c_routes;
++		num_route = ARRAY_SIZE(tegra210_mvc_c2c_routes);
++	}
++
++	return snd_soc_dapm_add_routes(dapm, route, num_route);
++}
++
+ static const struct snd_soc_component_driver tegra210_mvc_cmpnt = {
++	.probe			= tegra210_mvc_component_probe,
+ 	.dapm_widgets		= tegra210_mvc_widgets,
+ 	.num_dapm_widgets	= ARRAY_SIZE(tegra210_mvc_widgets),
+-	.dapm_routes		= tegra210_mvc_routes,
+-	.num_dapm_routes	= ARRAY_SIZE(tegra210_mvc_routes),
+ 	.controls		= tegra210_mvc_vol_ctrl,
+ 	.num_controls		= ARRAY_SIZE(tegra210_mvc_vol_ctrl),
+ };
+diff --git a/sound/soc/tegra/tegra210_ope.c b/sound/soc/tegra/tegra210_ope.c
+index fb171bbedcab5..e460ea2ff73d2 100644
+--- a/sound/soc/tegra/tegra210_ope.c
++++ b/sound/soc/tegra/tegra210_ope.c
+@@ -93,29 +93,6 @@ static int tegra210_ope_hw_params(struct snd_pcm_substream *substream,
+ 	return err;
+ }
+ 
+-static int tegra210_ope_component_probe(struct snd_soc_component *cmpnt)
+-{
+-	struct tegra210_ope *ope = dev_get_drvdata(cmpnt->dev);
+-
+-	tegra210_peq_component_init(cmpnt);
+-	tegra210_mbdrc_component_init(cmpnt);
+-
+-	/*
+-	 * The OPE, PEQ and MBDRC functionalities are combined under one
+-	 * device registered by OPE driver. In fact OPE HW block includes
+-	 * sub blocks PEQ and MBDRC. However driver registers separate
+-	 * regmap interfaces for each of these. ASoC core depends on
+-	 * dev_get_regmap() to populate the regmap field for a given ASoC
+-	 * component. A component can have one regmap reference and since
+-	 * the DAPM routes depend on OPE regmap only, below explicit
+-	 * assignment is done to highlight this. This is needed for ASoC
+-	 * core to access correct regmap during DAPM path setup.
+-	 */
+-	snd_soc_component_init_regmap(cmpnt, ope->regmap);
+-
+-	return 0;
+-}
+-
+ static const struct snd_soc_dai_ops tegra210_ope_dai_ops = {
+ 	.hw_params	= tegra210_ope_hw_params,
+ };
+@@ -190,6 +167,17 @@ static const struct snd_soc_dapm_route tegra210_ope_routes[] = {
+ 	OPE_ROUTES("Capture"),
+ };
+ 
++static const struct snd_soc_dapm_route tegra210_ope_c2c_routes[] = {
++	/* XBAR routes */
++	{ "XBAR-RX",		NULL,	"TX XBAR-Playback"},
++	{ "RX XBAR-Capture",	NULL,	"XBAR-TX"},
++
++	/* OPE routes */
++	{ "RX",			NULL,	"RX-CIF-Playback" },
++	{ "TX",			NULL,	"RX" },
++	{ "TX-CIF-Capture",	NULL,	"TX" },
++};
++
+ static const char * const tegra210_ope_data_dir_text[] = {
+ 	"MBDRC to PEQ",
+ 	"PEQ to MBDRC"
+@@ -230,12 +218,45 @@ static const struct snd_kcontrol_new tegra210_ope_controls[] = {
+ 		     tegra210_ope_get_data_dir, tegra210_ope_put_data_dir),
+ };
+ 
++static int tegra210_ope_component_probe(struct snd_soc_component *component)
++{
++	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
++	struct snd_soc_card *card = component->card;
++	struct tegra210_ope *ope = dev_get_drvdata(component->dev);
++	const struct snd_soc_dapm_route *route;
++	int num_route;
++
++	tegra210_peq_component_init(component);
++	tegra210_mbdrc_component_init(component);
++
++	/*
++	 * The OPE, PEQ and MBDRC functionalities are combined under one
++	 * device registered by OPE driver. In fact OPE HW block includes
++	 * sub blocks PEQ and MBDRC. However driver registers separate
++	 * regmap interfaces for each of these. ASoC core depends on
++	 * dev_get_regmap() to populate the regmap field for a given ASoC
++	 * component. A component can have one regmap reference and since
++	 * the DAPM routes depend on OPE regmap only, below explicit
++	 * assignment is done to highlight this. This is needed for ASoC
++	 * core to access correct regmap during DAPM path setup.
++	 */
++	snd_soc_component_init_regmap(component, ope->regmap);
++
++	if (card->component_chaining) {
++		route = tegra210_ope_routes;
++		num_route = ARRAY_SIZE(tegra210_ope_routes);
++	} else {
++		route = tegra210_ope_c2c_routes;
++		num_route = ARRAY_SIZE(tegra210_ope_c2c_routes);
++	}
++
++	return snd_soc_dapm_add_routes(dapm, route, num_route);
++}
++
+ static const struct snd_soc_component_driver tegra210_ope_cmpnt = {
+ 	.probe			= tegra210_ope_component_probe,
+ 	.dapm_widgets		= tegra210_ope_widgets,
+ 	.num_dapm_widgets	= ARRAY_SIZE(tegra210_ope_widgets),
+-	.dapm_routes		= tegra210_ope_routes,
+-	.num_dapm_routes	= ARRAY_SIZE(tegra210_ope_routes),
+ 	.controls		= tegra210_ope_controls,
+ 	.num_controls		= ARRAY_SIZE(tegra210_ope_controls),
+ };
+diff --git a/sound/soc/tegra/tegra210_sfc.c b/sound/soc/tegra/tegra210_sfc.c
+index 24498efc39b63..4348b4f885f77 100644
+--- a/sound/soc/tegra/tegra210_sfc.c
++++ b/sound/soc/tegra/tegra210_sfc.c
+@@ -3458,6 +3458,17 @@ static const struct snd_soc_dapm_route tegra210_sfc_routes[] = {
+ 	RESAMPLE_ROUTE("Capture"),
+ };
+ 
++static const struct snd_soc_dapm_route tegra210_sfc_c2c_routes[] = {
++	/* XBAR routes */
++	{ "XBAR-RX",		NULL,	"TX XBAR-Playback"},
++	{ "RX XBAR-Capture",	NULL,	"XBAR-TX"},
++
++	/* SFC routes */
++	{ "RX",			NULL,	"RX-CIF-Playback" },
++	{ "TX",			NULL,	"RX" },
++	{ "TX-CIF-Capture",	NULL,	"TX" },
++};
++
+ static const char * const tegra210_sfc_stereo_conv_text[] = {
+ 	"CH0", "CH1", "AVG",
+ };
+@@ -3491,11 +3502,28 @@ static const struct snd_kcontrol_new tegra210_sfc_controls[] = {
+ 		     tegra210_sfc_oput_mono_to_stereo),
+ };
+ 
++static int tegra210_sfc_component_probe(struct snd_soc_component *component)
++{
++	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
++	struct snd_soc_card *card = component->card;
++	const struct snd_soc_dapm_route *route;
++	int num_route;
++
++	if (card->component_chaining) {
++		route = tegra210_sfc_routes;
++		num_route = ARRAY_SIZE(tegra210_sfc_routes);
++	} else {
++		route = tegra210_sfc_c2c_routes;
++		num_route = ARRAY_SIZE(tegra210_sfc_c2c_routes);
++	}
++
++	return snd_soc_dapm_add_routes(dapm, route, num_route);
++}
++
+ static const struct snd_soc_component_driver tegra210_sfc_cmpnt = {
++	.probe			= tegra210_sfc_component_probe,
+ 	.dapm_widgets		= tegra210_sfc_widgets,
+ 	.num_dapm_widgets	= ARRAY_SIZE(tegra210_sfc_widgets),
+-	.dapm_routes		= tegra210_sfc_routes,
+-	.num_dapm_routes	= ARRAY_SIZE(tegra210_sfc_routes),
+ 	.controls		= tegra210_sfc_controls,
+ 	.num_controls		= ARRAY_SIZE(tegra210_sfc_controls),
+ };
+-- 
+2.43.0
+

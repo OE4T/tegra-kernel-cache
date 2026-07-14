@@ -1,0 +1,51 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Tue, 2 Jun 2026 09:43:34 +0100
+Subject: [PATCH 253/254] NVIDIA: SAUCE: clk: tegra: Support unique names for
+ multi-socket platforms
+
+On multi-socket platforms each socket has its own BPMP which exposes the
+same clock names. Fix this by using the NUMA ID as a prefix for the
+clock names on multi-socket platforms.
+
+Use 'sizeof(info->name)' in the strscpy() and snprintf() functions to
+future proof against anyone changing the size of the 'name' array.
+
+Bug 6095936
+
+Co-developed-by: Timo Alho <talho@nvidia.com>
+Change-Id: Id465ec9f413bed4aa1efd5ed342129b276fa051a
+Signed-off-by: Timo Alho <talho@nvidia.com>
+Reviewed-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3640225
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+APS-Inflight: svcenomis <svcenomis@nvidia.com>
+Reviewed-by: svc-mobile-coverity <svc-mobile-coverity@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit bf6c3abf6a338a24975f4de15e0e81ea4ccb3ac1)
+
+diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
+index 9f23e95fc4476..10d33004f9d3c 100644
+--- a/drivers/clk/tegra/clk-bpmp.c
++++ b/drivers/clk/tegra/clk-bpmp.c
+@@ -367,7 +367,15 @@ static int tegra_bpmp_clk_get_info(struct tegra_bpmp *bpmp, unsigned int id,
+ 	if (err < 0)
+ 		return err;
+ 
+-	strscpy(info->name, response.name, MRQ_CLK_NAME_MAXLEN);
++	if (dev_to_node(bpmp->dev) == NUMA_NO_NODE) {
++		strscpy(info->name, response.name, sizeof(info->name));
++	} else {
++		err = snprintf(info->name, sizeof(info->name), "%d-%s",
++			       dev_to_node(bpmp->dev), response.name);
++		if (WARN_ON(err >= sizeof(info->name)))
++			return -E2BIG;
++	}
++
+ 	info->num_parents = response.num_parents;
+ 
+ 	for (i = 0; i < info->num_parents; i++)
+-- 
+2.43.0
+

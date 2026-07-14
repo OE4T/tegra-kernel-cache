@@ -1,0 +1,152 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Wed, 30 Jan 2019 21:11:04 +0530
+Subject: [PATCH 021/254] NVIDIA: SAUCE: mmc: core: separate mmc_test and mmc
+ driver
+
+The mmc_test and mmc driver were currently linked in code. Separate
+out the probe of mmc_test from that of the core mmc driver.
+
+Bug 200318024
+
+Change-Id: I5dbd1bfcb900e777cf0121ef8502bef454298466
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Change-Id: Ifb2d0e3092763600732defba89d15b6203ad62bc
+Reviewed-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-by: Kasinadha Dendukuri <kdendukuri@nvidia.com>
+Reviewed-by: Sandeep Trasi <strasi@nvidia.com>
+Tested-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Tested-by: Kasinadha Dendukuri <kdendukuri@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2908978
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/mmc/core/bus.c b/drivers/mmc/core/bus.c
+index ec4f3462bf809..e137f2123fdfc 100644
+--- a/drivers/mmc/core/bus.c
++++ b/drivers/mmc/core/bus.c
+@@ -4,6 +4,7 @@
+  *
+  *  Copyright (C) 2003 Russell King, All Rights Reserved.
+  *  Copyright (C) 2007 Pierre Ossman
++ *  Copyright (c) 2018-2023, NVIDIA CORPORATION.  All rights reserved.
+  *
+  *  MMC card bus driver model
+  */
+@@ -29,6 +30,11 @@
+ 
+ #define to_mmc_driver(d)	container_of(d, struct mmc_driver, drv)
+ 
++struct mmc_card *mmc_cards[MAX_CARDS_NUM];
++EXPORT_SYMBOL(mmc_cards);
++
++static int card_idx;
++
+ static ssize_t type_show(struct device *dev,
+ 	struct device_attribute *attr, char *buf)
+ {
+@@ -129,6 +135,13 @@ static int mmc_bus_probe(struct device *dev)
+ 	struct mmc_driver *drv = to_mmc_driver(dev->driver);
+ 	struct mmc_card *card = mmc_dev_to_card(dev);
+ 
++	if (card_idx == MAX_CARDS_NUM) {
++		pr_err("Exceeded the total number of cards allowed");
++		return -EINVAL;
++	} else {
++		mmc_cards[card_idx++] = card;
++	}
++
+ 	return drv->probe(card);
+ }
+ 
+diff --git a/drivers/mmc/core/mmc_test.c b/drivers/mmc/core/mmc_test.c
+index 67d4a301895c9..7bdfb8714f933 100644
+--- a/drivers/mmc/core/mmc_test.c
++++ b/drivers/mmc/core/mmc_test.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ /*
+  *  Copyright 2007-2008 Pierre Ossman
++ *  Copyright (c) 2017-2023, NVIDIA CORPORATION.  All rights reserved.
+  */
+ 
+ #include <linux/mmc/core.h>
+@@ -3269,29 +3270,31 @@ static void mmc_test_remove(struct mmc_card *card)
+ 	mmc_test_free_dbgfs_file(card);
+ }
+ 
+-static struct mmc_driver mmc_driver = {
+-	.drv		= {
+-		.name	= "mmc_test",
+-	},
+-	.probe		= mmc_test_probe,
+-	.remove		= mmc_test_remove,
+-};
+-
+-static int __init mmc_test_init(void)
++static int mmc_test_init(void)
+ {
+-	return mmc_register_driver(&mmc_driver);
++	int card_idx;
++
++	for (card_idx = 0; card_idx < MAX_CARDS_NUM; card_idx++) {
++		if (mmc_cards[card_idx] != NULL)
++			mmc_test_probe(mmc_cards[card_idx]);
++	}
++	return 0;
+ }
+ 
+ static void __exit mmc_test_exit(void)
+ {
++	int card_idx;
++
++	for (card_idx = 0; card_idx < MAX_CARDS_NUM; card_idx++) {
++		if (mmc_cards[card_idx] != NULL)
++			mmc_test_remove(mmc_cards[card_idx]);
++	}
+ 	/* Clear stalled data if card is still plugged */
+ 	mmc_test_free_result(NULL);
+ 	mmc_test_free_dbgfs_file(NULL);
+-
+-	mmc_unregister_driver(&mmc_driver);
+ }
+ 
+-module_init(mmc_test_init);
++late_initcall(mmc_test_init);
+ module_exit(mmc_test_exit);
+ 
+ MODULE_LICENSE("GPL");
+diff --git a/include/linux/mmc/card.h b/include/linux/mmc/card.h
+index 8151f2240db41..f24a4da5dc057 100644
+--- a/include/linux/mmc/card.h
++++ b/include/linux/mmc/card.h
+@@ -2,6 +2,8 @@
+ /*
+  *  linux/include/linux/mmc/card.h
+  *
++ *  Copyright (c) 2017-2023, NVIDIA CORPORATION.  All rights reserved.
++ *
+  *  Card driver specific definitions.
+  */
+ #ifndef LINUX_MMC_CARD_H
+@@ -10,6 +12,7 @@
+ #include <linux/device.h>
+ #include <linux/mod_devicetable.h>
+ 
++#define MAX_CARDS_NUM 4
+ struct mmc_cid {
+ 	unsigned int		manfid;
+ 	char			prod_name[8];
+@@ -392,6 +395,8 @@ static inline int mmc_card_enable_async_irq(struct mmc_card *card)
+ 	return card->cccr.enable_async_irq;
+ }
+ 
++extern struct mmc_card *mmc_cards[MAX_CARDS_NUM];
++
+ bool mmc_card_is_blockaddr(struct mmc_card *card);
+ 
+ #define mmc_card_mmc(c)		((c)->type == MMC_TYPE_MMC)
+-- 
+2.43.0
+

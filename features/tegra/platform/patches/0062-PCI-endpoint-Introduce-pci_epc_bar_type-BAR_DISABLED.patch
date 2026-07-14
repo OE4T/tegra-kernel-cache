@@ -1,0 +1,71 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Niklas Cassel <cassel@kernel.org>
+Date: Thu, 12 Mar 2026 14:02:33 +0100
+Subject: [PATCH 062/140] PCI: endpoint: Introduce pci_epc_bar_type
+ BAR_DISABLED
+
+Add a pci_epc_bar_type BAR_DISABLED to more clearly differentiate from
+BAR_RESERVED.
+
+This BAR type will only be used to describe a BAR that the EPC driver
+should disable, and will thus never be available to an EPF driver.
+(Unlike BAR_RESERVED, which will never be disabled by default by an EPC
+driver.)
+
+Co-developed-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Tested-by: Koichiro Den <den@valinux.co.jp>
+Tested-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Link: https://patch.msgid.link/20260312130229.2282001-17-cassel@kernel.org
+(cherry picked from commit 33642e9e36dc084e4fc9245a266c9843bc8303b9)
+
+diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+index ca7f19cc973a4..1d6b04ac4fc58 100644
+--- a/drivers/pci/endpoint/pci-epc-core.c
++++ b/drivers/pci/endpoint/pci-epc-core.c
+@@ -103,8 +103,9 @@ enum pci_barno pci_epc_get_next_free_bar(const struct pci_epc_features
+ 		bar++;
+ 
+ 	for (i = bar; i < PCI_STD_NUM_BARS; i++) {
+-		/* If the BAR is not reserved, return it. */
+-		if (epc_features->bar[i].type != BAR_RESERVED)
++		/* If the BAR is not reserved or disabled, return it. */
++		if (epc_features->bar[i].type != BAR_RESERVED &&
++		    epc_features->bar[i].type != BAR_DISABLED)
+ 			return i;
+ 	}
+ 
+diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+index ab9107222e002..66cf46f159b3e 100644
+--- a/include/linux/pci-epc.h
++++ b/include/linux/pci-epc.h
+@@ -191,13 +191,21 @@ struct pci_epc {
+  * @BAR_RESIZABLE: The BAR implements the PCI-SIG Resizable BAR Capability.
+  *		   NOTE: An EPC driver can currently only set a single supported
+  *		   size.
+- * @BAR_RESERVED: The BAR should not be touched by an EPF driver.
++ * @BAR_RESERVED: Used for HW-backed BARs (e.g. MSI-X table, DMA regs). The BAR
++ *		  should not be disabled by an EPC driver. The BAR should not be
++ *		  reprogrammed by an EPF driver. An EPF driver is allowed to
++ *		  disable the BAR if absolutely necessary. (However, right now
++ *		  there is no EPC operation to disable a BAR that has not been
++ *		  programmed using pci_epc_set_bar().)
++ * @BAR_DISABLED: The BAR should be disabled by an EPC driver. The BAR will be
++ *		  unavailable to an EPF driver.
+  */
+ enum pci_epc_bar_type {
+ 	BAR_PROGRAMMABLE = 0,
+ 	BAR_FIXED,
+ 	BAR_RESIZABLE,
+ 	BAR_RESERVED,
++	BAR_DISABLED,
+ };
+ 
+ /**
+-- 
+2.43.0
+

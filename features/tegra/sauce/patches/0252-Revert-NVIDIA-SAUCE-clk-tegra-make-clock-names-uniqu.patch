@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Tue, 9 Jun 2026 09:34:37 +0000
+Subject: [PATCH 252/254] Revert "NVIDIA: SAUCE: clk: tegra: make clock names
+ unique for each die"
+
+This reverts commit d5824d0f1951fd21df4968bbe0f35d500bcc79d7 so that we
+can apply the latest changes that have been prepared for upstream.
+
+Bug 6095936
+
+Change-Id: I6b8ce7617dadf9dbb9cf6a56cb67566c098f1135
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3640224
+Reviewed-by: svc-mobile-coverity <svc-mobile-coverity@nvidia.com>
+APS-Inflight: svcenomis <svcenomis@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+(cherry picked from commit 0476356b8adbbeda24232eff744753cae61b80a7)
+
+diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
+index dd317046215c2..9f23e95fc4476 100644
+--- a/drivers/clk/tegra/clk-bpmp.c
++++ b/drivers/clk/tegra/clk-bpmp.c
+@@ -19,7 +19,7 @@
+ 
+ struct tegra_bpmp_clk_info {
+ 	unsigned int id;
+-	char name[MRQ_CLK_NAME_MAXLEN + 2];
++	char name[MRQ_CLK_NAME_MAXLEN];
+ 	unsigned int parents[MRQ_CLK_MAX_PARENTS];
+ 	unsigned int num_parents;
+ 	unsigned long flags;
+@@ -367,12 +367,7 @@ static int tegra_bpmp_clk_get_info(struct tegra_bpmp *bpmp, unsigned int id,
+ 	if (err < 0)
+ 		return err;
+ 
+-	if (dev_to_node(bpmp->dev) == NUMA_NO_NODE)
+-		strscpy(info->name, response.name, MRQ_CLK_NAME_MAXLEN);
+-	else
+-		snprintf(info->name, sizeof(info->name), "%s.%d",
+-			 response.name, dev_to_node(bpmp->dev));
+-
++	strscpy(info->name, response.name, MRQ_CLK_NAME_MAXLEN);
+ 	info->num_parents = response.num_parents;
+ 
+ 	for (i = 0; i < info->num_parents; i++)
+-- 
+2.43.0
+

@@ -1,0 +1,48 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Mon, 27 Oct 2025 16:57:28 +0000
+Subject: [PATCH 114/254] NVIDIA: SAUCE: tegra_hv: change to fix compilation
+ error
+
+change to fix below compilation error
+kernel-nvidia-tests-oot/nvidia-tests-oot/drivers/tegra_hv_api_test/tegra_hv_test_api.o:
+kernel-nvidia-tests-oot/linux-headers/./include/soc/tegra/virt/tegra_hv_sysmgr.h:110:
+multiple definition of `vm_state'; kernel-nvidia-tests-oot/nvidia-tests-oot/drivers/
+tegra_hv_api_test/tegra_hv_test.o:kernel-nvidia-tests-oot/linux-headers/./include/
+soc/tegra/virt/tegra_hv_sysmgr.h:110: first defined here
+
+Bug 5579375
+
+Change-Id: I010a5bba0e17baa6908fda2937e3180957714e12
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3477311
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
+Reviewed-by: Sandeep Trasi <strasi@nvidia.com>
+(cherry picked from commit 6c745d30b73145a49a4f39fc45ff83dfc5d46361)
+
+diff --git a/include/soc/tegra/virt/tegra_hv_sysmgr.h b/include/soc/tegra/virt/tegra_hv_sysmgr.h
+index 8d15bc3e2e913..a106b095449f4 100644
+--- a/include/soc/tegra/virt/tegra_hv_sysmgr.h
++++ b/include/soc/tegra/virt/tegra_hv_sysmgr.h
+@@ -142,7 +142,7 @@ enum system_function_id {
+ };
+ 
+ /** @brief Represents VM state and send to System Manager to maintian VM state */
+-typedef enum  {
++enum vm_state {
+ 	/** @brief Represents VM state as Booted */
+ 	VM_STATE_BOOT,
+ 	/** @brief Represents VM state as Halted */
+@@ -161,7 +161,7 @@ typedef enum  {
+ 	VM_STATE_INVALID,
+ 	/** @brief Represents VM state as Max possible */
+ 	VM_STATE_MAX
+-} vm_state;
++};
+ 
+ /** @brief Macro to create Command using function id and vmid */
+ #define CREATE_CMD(func_id, vmid)	((func_id << 24U) | vmid)
+-- 
+2.43.0
+

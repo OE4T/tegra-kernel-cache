@@ -1,0 +1,72 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Akhil R <akhilrajeev@nvidia.com>
+Date: Fri, 9 Aug 2024 10:37:13 +0530
+Subject: [PATCH 035/140] NVIDIA: SAUCE: i2c: tegra: resume explicitly if
+ pm_runtime is disabled
+
+This is a WAR to handle NOIRQ suspend/resume in I2C client devices.
+runtime_pm is disabled during system suspend and enabled on resume.
+Some client devices trigger I2C transfers before the I2C driver has
+resumed completely which causes the I2C transfers to fail. Do
+runtime_resume explicitly then so that I2C can work.
+
+http://nvbugs/4765610
+
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Change-Id: Id27cd9979d552216858fa3d3d2b05458a14458c7
+(cherry picked from commit 292c376b1ae077a6551ce2b91a03208758ccdf31)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3193516
+Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
+index ce08644f2aac8..03c8359c3f38f 100644
+--- a/drivers/i2c/busses/i2c-tegra.c
++++ b/drivers/i2c/busses/i2c-tegra.c
+@@ -339,6 +339,9 @@ static u32 dvc_readl(struct tegra_i2c_dev *i2c_dev, unsigned int reg)
+ 	return readl_relaxed(i2c_dev->base + reg);
+ }
+ 
++static int tegra_i2c_runtime_resume(struct device *dev);
++static int tegra_i2c_runtime_suspend(struct device *dev);
++
+ /*
+  * If necessary, i2c_writel() and i2c_readl() will offset the register
+  * in order to talk to the I2C block inside the DVC block.
+@@ -1514,10 +1517,16 @@ static int tegra_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[],
+ 	struct tegra_i2c_dev *i2c_dev = i2c_get_adapdata(adap);
+ 	int i, ret;
+ 
+-	ret = pm_runtime_get_sync(i2c_dev->dev);
++	if (pm_runtime_enabled(i2c_dev->dev))
++		ret = pm_runtime_get_sync(i2c_dev->dev);
++	else
++		ret = tegra_i2c_runtime_resume(i2c_dev->dev);
++
+ 	if (ret < 0) {
++		if (pm_runtime_enabled(i2c_dev->dev))
++			pm_runtime_put_noidle(i2c_dev->dev);
++
+ 		dev_err(i2c_dev->dev, "runtime resume failed %d\n", ret);
+-		pm_runtime_put_noidle(i2c_dev->dev);
+ 		return ret;
+ 	}
+ 
+@@ -1555,7 +1564,11 @@ static int tegra_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[],
+ 	}
+ 
+ 	ret = tegra_i2c_mutex_unlock(i2c_dev);
+-	pm_runtime_put(i2c_dev->dev);
++
++	if (pm_runtime_enabled(i2c_dev->dev))
++		pm_runtime_put(i2c_dev->dev);
++	else
++		tegra_i2c_runtime_suspend(i2c_dev->dev);
+ 
+ 	return ret ?: i;
+ }
+-- 
+2.43.0
+

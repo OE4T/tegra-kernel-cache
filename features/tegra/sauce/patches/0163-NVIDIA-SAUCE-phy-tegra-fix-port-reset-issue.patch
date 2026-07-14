@@ -1,0 +1,59 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: EJ Hsu <ejh@nvidia.com>
+Date: Fri, 21 Mar 2025 22:21:23 +0800
+Subject: [PATCH 163/254] NVIDIA: SAUCE: phy: tegra: fix port reset issue
+
+XHCI driver will dynamically power off UTMI pad for root hub ports
+entering suspend for power-saving.
+
+If the device triggers a remote wakeup, XHCI driver needs to respond
+the resume signal within 1ms according to USB2 spec. This means UTMI
+pad power should be powered on within 1ms. However, when USB core driver
+receives a "port status change" event for RESUME, it will wait 40ms
+to drive the resume signaling on the bus. During this period of time,
+XHCI driver has no chance to power on the UTMI pad which leads to the
+disconnection of USB device.
+
+In this change, we decide to remove the dynamic powerdown of UTMI pad
+for autosuspend.
+
+Bug 4819335
+Bug 4752661
+Bug 3370448
+Bug 5181436
+
+Change-Id: I9a0e2905405f2775116a2f415a7487a1cd2d17b7
+Signed-off-by: EJ Hsu <ejh@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3324584
+Tested-by: mobile promotions <svcmobile_promotions@nvidia.com>
+Reviewed-by: mobile promotions <svcmobile_promotions@nvidia.com>
+Reviewed-by: Henry Lin <henryl@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+Reviewed-by: HaoTien Hsu <haotienh@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: WK Tsai <wtsai@nvidia.com>
+(cherry picked from commit 16804a0a5b2425e703a7342e8d9bfdde34fb6637)
+
+diff --git a/drivers/phy/tegra/xusb-tegra186.c b/drivers/phy/tegra/xusb-tegra186.c
+index fba10c64ba37b..d084a250afaee 100644
+--- a/drivers/phy/tegra/xusb-tegra186.c
++++ b/drivers/phy/tegra/xusb-tegra186.c
+@@ -1007,15 +1007,11 @@ static int tegra186_utmi_phy_power_on(struct phy *phy)
+ 	}
+ 
+ skip_fuse_calibration:
+-	tegra186_utmi_pad_power_on(phy);
+-
+ 	return 0;
+ }
+ 
+ static int tegra186_utmi_phy_power_off(struct phy *phy)
+ {
+-	tegra186_utmi_pad_power_down(phy);
+-
+ 	return 0;
+ }
+ 
+-- 
+2.43.0
+

@@ -1,0 +1,51 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Chaitanya Namuduri <snamuduri@nvidia.com>
+Date: Wed, 14 Feb 2024 11:41:44 +0530
+Subject: [PATCH 078/254] NVIDIA: SAUCE: hsierrrptinj: increase SDMMC clients
+
+Increase SDMMC clients from 5 to 9 to support boards with
+rootfs over eMMC only.
+
+http://nvbugs/4363881
+http://nvbugs/4577729
+http://nvbugs/4385191
+
+Change-Id: I6741a4d8bb31b6e40f63db31ee16404fd36e6a94
+Signed-off-by: Sathyam Panda <sathyamp@nvidia.com>
+(cherry picked from commit 02c53120a7e0ff76db20f43f44512babdfe17c10)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3193515
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+
+diff --git a/drivers/platform/tegra/tegra-hsierrrptinj.c b/drivers/platform/tegra/tegra-hsierrrptinj.c
+index 22e2d65786416..3249832fea52d 100644
+--- a/drivers/platform/tegra/tegra-hsierrrptinj.c
++++ b/drivers/platform/tegra/tegra-hsierrrptinj.c
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
+-/* Copyright (c) 2021-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.*/
++// SPDX-FileCopyrightText: Copyright (c) 2021-2024 NVIDIA CORPORATION. All rights reserved.
+ 
+ /**
+  * @file tegra-hsierrrptinj.c
+@@ -70,13 +70,13 @@ struct hsm_error_report_frame {
+  * PSC   - 1
+  * I2C   = 10
+  * QSPI  - 2
+- * SDMMC - 5
++ * SDMMC - 9
+  * TSEC  - 1
+  * THERM - 1
+  * SMMU  - 1
+  * DLA   - 2
+  */
+-static unsigned int ip_instances[NUM_IPS] = {1, 1, 5, 20, 11, 1, 10, 2, 5, 1, 1, 1, 2};
++static unsigned int ip_instances[NUM_IPS] = {1, 1, 5, 20, 11, 1, 10, 2, 9, 1, 1, 1, 2};
+ 
+ /* This directory entry will point to `/sys/kernel/debug/tegra_hsierrrptinj`. */
+ static struct dentry *hsierrrptinj_debugfs_root;
+-- 
+2.43.0
+

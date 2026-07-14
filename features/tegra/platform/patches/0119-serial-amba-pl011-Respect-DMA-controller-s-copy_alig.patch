@@ -1,0 +1,43 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kartik Rajput <kkartik@nvidia.com>
+Date: Wed, 25 Feb 2026 12:29:14 +0530
+Subject: [PATCH 119/140] serial: amba-pl011: Respect DMA controller's
+ copy_align requirement
+
+Some DMA controllers require transfer lengths to be aligned to a
+specific boundary. For example, the Tegra GPC DMA requires 4-byte
+(word) aligned transfers and will reject unaligned lengths.
+
+Align the TX DMA buffer length down to the DMA controller's copy_align
+boundary before submitting the transfer. Any remaining unaligned bytes
+will be transmitted via PIO on subsequent calls, which is the existing
+fallback behavior when DMA is not used.
+
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Link: https://patch.msgid.link/20260225065915.341522-5-kkartik@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(cherry picked from commit d925538446d3f80e03a91a9ef7da34104a75df4d)
+
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 7f8deb30650ad..98e434b0c30ab 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -649,6 +649,15 @@ static int pl011_dma_tx_refill(struct uart_amba_port *uap)
+ 		count = PL011_DMA_BUFFER_SIZE;
+ 
+ 	count = kfifo_out_peek(&tport->xmit_fifo, dmatx->buf, count);
++
++	/*
++	 * Align the TX buffer length to the DMA controller's copy_align
++	 * requirements. Some DMA controllers (e.g., Tegra GPC DMA) require
++	 * word-aligned transfers. Unaligned bytes will be sent via PIO.
++	 */
++	if (chan->device->copy_align)
++		count = ALIGN_DOWN(count, 1 << chan->device->copy_align);
++
+ 	dmatx->len = count;
+ 	dmatx->dma = dma_map_single(dma_dev->dev, dmatx->buf, count,
+ 				    DMA_TO_DEVICE);
+-- 
+2.43.0
+
