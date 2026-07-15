@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: MIT
+#
+# BSP entry point for Tegra234 (Orin) — preempt-rt kernel type.
+# Discovered when KMACHINE=tegra234 and KTYPE=preempt-rt.
+#
+define KMACHINE tegra234
+define KTYPE preempt-rt
+define KARCH arm64
+
+include ktypes/preempt-rt/preempt-rt.scc
+
+branch genericarm64
+include bsp/genericarm64/genericarm64.scc
+include features/profiling/profiling.scc
+include features/latencytop/latencytop.scc
+
+include features/tegra/tegra-board-features.scc
+
+# Pick up any preempt-rt config differences
+kconf hardware bsp/genericarm64/genericarm64-preempt-rt.cfg
+
+# Machine config overlay, on top of the shared cfg/tegra.cfg the patch queues pull in.
+kconf hardware cfg/tegra234.cfg
+kconf hardware cfg/tegra-rt.cfg
