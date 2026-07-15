@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: MIT
+# Manually maintained — resolves conflicts between tegra SAUCE patches and
+# the upstream preempt-rt kernel tree.  Add entries here when a SAUCE patch
+# duplicates something already present in the preempt-rt base branch.
+define KFEATURE_DESCRIPTION "Tegra preempt-rt sauce compatibility"
+
+patch rt-compat/patches/0001-revert-sauce-realtime-sysfs-entry.patch
