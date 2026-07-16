@@ -5,4 +5,4 @@ define KFEATURE_DESCRIPTION "Tegra distro/OE patches"
 patch distro/patches/0001-NVIDIA-SAUCE-enable-handling-of-macronix-block-prote.patch
 patch distro/patches/0002-drm-tegra-select-DRM_DISPLAY_HDCP_HELPER.patch
 patch distro/patches/0003-drop-kernel-hv-ivc.h.patch
-patch distro/patches/0004-soc-tegra-pmc-populate-tegra234-boot-chain-regs.patch
+patch distro/patches/0004-soc-tegra-pmc-populate-boot-chain-regs.patch

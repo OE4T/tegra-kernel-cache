@@ -7,6 +7,15 @@ Subject: [PATCH] NVIDIA: SAUCE: soc/tegra: pmc: Add sysfs nodes to select boot
 Add sysfs nodes to select A/B boot chain so that BootROM can select
 the right boot path on warm boot.
 
+Tegra234: boot_chain_status_a/b/current use a dedicated boot_chain_reg
+(0x3cc) with T234-specific bit positions confirmed against edk2
+PcdBootChainRegisterBaseAddressT234. rootfs retry counts and magic are
+in scratch_l0_21_0 (0x3a8), confirmed against PcdRootfsRegisterBaseAddressT234.
+
+Tegra264: all boot chain attrs use scratch_l0_1_0 (0x67c,
+T264_BOOT_CHAIN_REGISTER_OFFSET) and rootfs attrs use scratch_l0_21_0
+(0x6cc, T264_ROOTFS_REGISTER offset), per edk2 T264Definitions.h.
+
 Bug 4510385
 Bug 5888572
 
@@ -16,11 +25,11 @@ Change-Id: Ife973c5310d7b640388bcc70e9c62c7351f80ce0
 Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3604653
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
-Upstream-Status: Backport [linux-noble d910a085dc690; not on linux-stable 6.18]
+Upstream-Status: Backport [linux-noble d910a085dc690 (T234); linux-noble 43c00ba732ba (T264); not on linux-stable 6.18]
 Signed-off-by: Kurt Kiefer <kkiefer@nvidia.com>
 ---
- drivers/soc/tegra/pmc.c | 149 +++++++++++++++++++++++++++++++++++++---
- 1 file changed, 138 insertions(+), 11 deletions(-)
+ drivers/soc/tegra/pmc.c | 151 +++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 140 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
 index 0000000000000..1111111111111 100644
@@ -52,7 +61,7 @@ index 0000000000000..1111111111111 100644
 -			  BOOT_CHAIN_CURRENT_MASK, BOOT_CHAIN_CURRENT_SHIFT);
  TEGRA_PMC_SCRATCH_ATTR_RO(last_boot_chain_failed, scratch_l0_1_0,
  			  LAST_BOOT_CHAIN_FAILED_MASK, LAST_BOOT_CHAIN_FAILED_SHIFT);
- 
+
 +static ssize_t boot_chain_status_a_show(struct device *dev,
 +					struct device_attribute *attr, char *buf)
 +{
@@ -161,7 +170,7 @@ index 0000000000000..1111111111111 100644
 @@ -2579,7 +2682,6 @@ static void tegra_pmc_scratch_sysfs_init(struct tegra_pmc *pmc)
  		return;
  	}
- 
+
 -	/* Only create attributes if the register fields are defined */
  	if (pmc->soc->regs->scratch_l0_1_0) {
  		err = device_create_file(dev, &dev_attr_br_fail_bitmap);
@@ -169,7 +178,7 @@ index 0000000000000..1111111111111 100644
 @@ -2589,6 +2691,12 @@ static void tegra_pmc_scratch_sysfs_init(struct tegra_pmc *pmc)
  		if (err)
  			dev_warn(dev, "failed to create br_active_chain sysfs: %d\n", err);
- 
+
 +		err = device_create_file(dev, &dev_attr_last_boot_chain_failed);
 +		if (err)
 +			dev_warn(dev, "failed to create last_boot_chain_failed sysfs: %d\n", err);
@@ -188,7 +197,7 @@ index 0000000000000..1111111111111 100644
 -		if (err)
 -			dev_warn(dev, "failed to create last_boot_chain_failed sysfs: %d\n", err);
  	}
- 
+
  	if (pmc->soc->regs->scratch_l0_21_0) {
 @@ -2635,10 +2739,13 @@ static void tegra_pmc_scratch_sysfs_remove(struct tegra_pmc *pmc)
  	if (pmc->soc->regs->scratch_l0_1_0) {
@@ -203,10 +212,19 @@ index 0000000000000..1111111111111 100644
  		device_remove_file(dev, &dev_attr_boot_chain_current);
 -		device_remove_file(dev, &dev_attr_last_boot_chain_failed);
  	}
- 
+
  	if (pmc->soc->regs->scratch_l0_21_0) {
+@@ -4538,6 +4538,8 @@ static const struct tegra_pmc_regs tegra264_pmc_regs = {
+ 	.scratch0 = 0x684,
+ 	.aowake_mask_w = 0x200,
+ 	.aowake_status_w = 0x410,
++	.scratch_l0_1_0 = 0x67c,
++	.scratch_l0_21_0 = 0x6cc,
+ 	.aowake_status_r = 0x610,
+ 	.aowake_tier2_routing = 0x660,
+ 	.aowake_sw_status_w = 0x624,
 @@ -4669,6 +4776,14 @@ static const struct pinctrl_pin_desc tegra234_pin_descs[] = {
- 
+
  static const struct tegra_pmc_regs tegra234_pmc_regs = {
  	.scratch0 = 0x2000,
 +	.scratch_l0_21_0 = 0x3a8,
@@ -220,5 +238,5 @@ index 0000000000000..1111111111111 100644
  	.rst_status = 0x70,
  	.rst_source_shift = 0x2,
  	.rst_source_mask = 0xfc,
--- 
+--
 2.43.0
