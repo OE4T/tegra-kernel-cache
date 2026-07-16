@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Abhilash G <abhilashg@nvidia.com>
+Date: Thu, 1 Jun 2023 10:27:10 +0000
+Subject: [PATCH 081/240] NVIDIA: SAUCE: scsi: ufs: Export query functions
+
+Export ufshcd_query_attr and ufshcd_query_descriptor_retry
+functions which are used for UFS provisioning and changing
+reference clock frequency using sysfs nodes
+
+Bug 3978622
+
+Change-Id: I07af952c21b2335c20a11535acb2b722d075eb95
+Signed-off-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2914025
+
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 71b5a21bb72b2..e0314560ebaf5 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -3530,6 +3530,7 @@ int ufshcd_query_attr(struct ufs_hba *hba, enum query_opcode opcode,
+ 	ufshcd_dev_man_unlock(hba);
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(ufshcd_query_attr);
+ 
+ /**
+  * ufshcd_query_attr_retry() - API function for sending query
+@@ -3667,6 +3668,7 @@ int ufshcd_query_descriptor_retry(struct ufs_hba *hba,
+ 
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(ufshcd_query_descriptor_retry);
+ 
+ /**
+  * ufshcd_read_desc_param - read the specified descriptor parameter
+-- 
+2.43.0
+

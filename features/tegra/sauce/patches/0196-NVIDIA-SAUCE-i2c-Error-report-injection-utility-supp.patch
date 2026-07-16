@@ -1,0 +1,120 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Prasun Kumar <prasunk@nvidia.com>
+Date: Wed, 30 Nov 2022 07:36:11 +0000
+Subject: [PATCH 196/240] NVIDIA: SAUCE: i2c: Error report injection utility
+ support
+
+The HSI error report injection utility is an on-bench debug and test
+utility which can be used by customers and SQA to test the end-to-end
+error detection and reporting path.
+
+Implement the callback function to integrate with the utility, and allow
+injecting I2C HSI related error reports.
+
+Bug 3877863
+
+Signed-off-by: Prasun Kumar <prasunk@nvidia.com>
+Change-Id: I66d89629e751a6c8f8ce6912a183505758efa791
+Reviewed-by: Akhil R <akhilrajeev@nvidia.com>
+Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
+(cherry picked from commit 487792ea286cb86910ac13682df51aeeb34a93b2)
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2897690
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
+index b937212e5e77f..586187cefaf4c 100644
+--- a/drivers/i2c/busses/i2c-tegra.c
++++ b/drivers/i2c/busses/i2c-tegra.c
+@@ -32,6 +32,10 @@
+ #include <linux/tegra-epl.h>
+ #endif
+ 
++#if IS_ENABLED(CONFIG_TEGRA_HSIERRRPTINJ)
++#include <linux/tegra-hsierrrptinj.h>
++#endif
++
+ #define BYTES_PER_FIFO_WORD 4
+ 
+ #define I2C_CNFG				0x000
+@@ -2078,6 +2082,39 @@ static int tegra_i2c_init_hardware(struct tegra_i2c_dev *i2c_dev)
+ 	return ret;
+ }
+ 
++#if IS_ENABLED(CONFIG_TEGRA_EPL) && IS_ENABLED(CONFIG_TEGRA_HSIERRRPTINJ)
++/* Error report injection test support is included */
++static int i2c_inject_err_fsi(unsigned int inst_id, struct epl_error_report_frame err_rpt_frame,
++				void *data)
++{
++	int err = -EFAULT;
++	struct tegra_i2c_dev *i2c_dev = (struct tegra_i2c_dev *)data;
++
++	/* Sanity check inst_id */
++	if (inst_id != i2c_dev->adapter.nr) {
++		dev_err(i2c_dev->dev, "Invalid Input -> Instance ID = 0x%04x\n", inst_id);
++		return -EINVAL;
++	}
++
++	/* Sanity check reporter_id */
++	if (err_rpt_frame.reporter_id != i2c_dev->epl_reporter_id) {
++		dev_err(i2c_dev->dev, "Invalid Input -> Reporter ID = 0x%04x\n",
++						err_rpt_frame.reporter_id);
++		return -EINVAL;
++	}
++
++	/* Report error to FSI */
++	err = epl_report_error(err_rpt_frame);
++	if (err != 0) {
++		dev_err(i2c_dev->dev, "Error injection failed for err_id: %u",
++						err_rpt_frame.error_code);
++		return -EFAULT;
++	}
++
++	return err;
++}
++#endif
++
+ static int tegra_i2c_probe(struct platform_device *pdev)
+ {
+ 	struct tegra_i2c_dev *i2c_dev;
+@@ -2175,6 +2212,17 @@ static int tegra_i2c_probe(struct platform_device *pdev)
+ 	if (err)
+ 		goto release_rpm;
+ 
++#if IS_ENABLED(CONFIG_TEGRA_EPL) && IS_ENABLED(CONFIG_TEGRA_HSIERRRPTINJ)
++	/* Register error reporting callback
++	 * Continue init despite err inj utility
++	 * registration failure, as the err inj support
++	 * is meant only for debug purposes.
++	 */
++	err = hsierrrpt_reg_cb(IP_I2C, i2c_dev->adapter.nr, i2c_inject_err_fsi, i2c_dev);
++	if (err != 0)
++		dev_info(i2c_dev->dev, "Err inj callback registration failed: %d", err);
++#endif
++
+ 	return 0;
+ 
+ release_rpm:
+@@ -2191,6 +2239,18 @@ static void tegra_i2c_remove(struct platform_device *pdev)
+ {
+ 	struct tegra_i2c_dev *i2c_dev = platform_get_drvdata(pdev);
+ 
++#if IS_ENABLED(CONFIG_TEGRA_EPL) && IS_ENABLED(CONFIG_TEGRA_HSIERRRPTINJ)
++	int err;
++
++	/* Continue remove despite err inj utility
++	 * de-registration failure, as the err inj support
++	 * is meant only for debug purposes.
++	 */
++	err = hsierrrpt_dereg_cb(IP_I2C, i2c_dev->adapter.nr);
++	if (err != 0)
++		dev_info(i2c_dev->dev, "Err inj callback de-registration failed: %d", err);
++#endif
++
+ 	i2c_del_adapter(&i2c_dev->adapter);
+ 	pm_runtime_force_suspend(i2c_dev->dev);
+ 
+-- 
+2.43.0
+

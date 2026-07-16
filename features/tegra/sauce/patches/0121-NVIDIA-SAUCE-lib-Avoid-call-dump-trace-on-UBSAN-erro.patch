@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Laxman Dewangan <ldewangan@nvidia.com>
+Date: Thu, 28 Dec 2023 12:30:57 +0000
+Subject: [PATCH 121/240] NVIDIA: SAUCE: lib: Avoid call dump trace on UBSAN
+ error
+
+Avoid call stack dump when UBSAN occurs. The prints of
+message are sufficient to get information.
+This will help on whitelisting the warning as known issue.
+
+Bug 4434688
+
+Change-Id: I09880ed24884b8a6abe5c719b88b9ea0acf2f578
+Signed-off-by: Laxman Dewangan <ldewangan@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3042024
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/lib/ubsan.c b/lib/ubsan.c
+index 456e3dd8f4ea8..e0459bf113ad6 100644
+--- a/lib/ubsan.c
++++ b/lib/ubsan.c
+@@ -230,7 +230,8 @@ static void ubsan_prologue(struct source_location *loc, const char *reason)
+ 
+ static void ubsan_epilogue(void)
+ {
+-	dump_stack();
++	/* Avoid dump stack */
++	/* dump_stack(); */
+ 	pr_warn("---[ end trace ]---\n");
+ 
+ 	current->in_ubsan--;
+-- 
+2.43.0
+

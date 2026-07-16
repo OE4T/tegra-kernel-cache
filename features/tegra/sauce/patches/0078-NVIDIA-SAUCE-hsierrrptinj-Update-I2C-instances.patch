@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Prasun Kumar <prasunk@nvidia.com>
+Date: Thu, 2 Jan 2025 12:27:03 +0530
+Subject: [PATCH 078/240] NVIDIA: SAUCE: hsierrrptinj: Update I2C instances
+
+Update the number of I2C instances to support error reporting.
+
+Bug 4771468
+Bug 5421820
+
+Change-Id: I20de21c578489b476118440497ec7f716492775f
+Signed-off-by: Prasun Kumar <prasunk@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3427768
+Tested-by: Akhil R <akhilrajeev@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Bibek Basu <bbasu@nvidia.com>
+Reviewed-by: Akhil R <akhilrajeev@nvidia.com>
+(cherry picked from commit 04d747cd17d902bef580577c4006031e7c6a521b)
+
+diff --git a/drivers/platform/tegra/tegra-hsierrrptinj.c b/drivers/platform/tegra/tegra-hsierrrptinj.c
+index 3249832fea52d..053f687a0b4f8 100644
+--- a/drivers/platform/tegra/tegra-hsierrrptinj.c
++++ b/drivers/platform/tegra/tegra-hsierrrptinj.c
+@@ -35,7 +35,7 @@
+ #define WRITE_USER 0200 /* S_IWUSR */
+ 
+ /* Max instance of any registred IP */
+-#define MAX_INSTANCE 11U
++#define MAX_INSTANCE 20U
+ 
+ /* Timeout in millisec */
+ #define TIMEOUT		1000
+@@ -68,7 +68,7 @@ struct hsm_error_report_frame {
+  * MGBE  - 20
+  * PCIE  - 11
+  * PSC   - 1
+- * I2C   = 10
++ * I2C   = 17
+  * QSPI  - 2
+  * SDMMC - 9
+  * TSEC  - 1
+@@ -76,7 +76,7 @@ struct hsm_error_report_frame {
+  * SMMU  - 1
+  * DLA   - 2
+  */
+-static unsigned int ip_instances[NUM_IPS] = {1, 1, 5, 20, 11, 1, 10, 2, 9, 1, 1, 1, 2};
++static unsigned int ip_instances[NUM_IPS] = {1, 1, 5, 20, 11, 1, 17, 2, 9, 1, 1, 1, 2};
+ 
+ /* This directory entry will point to `/sys/kernel/debug/tegra_hsierrrptinj`. */
+ static struct dentry *hsierrrptinj_debugfs_root;
+-- 
+2.43.0
+

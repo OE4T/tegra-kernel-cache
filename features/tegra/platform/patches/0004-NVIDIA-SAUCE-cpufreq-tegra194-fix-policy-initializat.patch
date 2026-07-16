@@ -1,0 +1,56 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ishan Shah <ishah@nvidia.com>
+Date: Fri, 11 Apr 2025 22:23:31 +0000
+Subject: [PATCH 004/196] NVIDIA: SAUCE: cpufreq: tegra194: fix policy
+ initialization
+
+Fix the policy-initialization scheme to correctly be dependent on cores
+sharing a clusterid or a clock-source via connected cluster-ids.
+This solves an issue where we floorsweep only one core in a cluster,
+causing logical IDs to fall out of order with physical IDs and so
+causing cores to be tied together incorrectly in the cpufreq framework.
+
+Bug 5213905
+
+Change-Id: I5411c392cbca65ce135ba53a66651b910aaced11
+Signed-off-by: Ishan Shah <ishah@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3339198
+(cherry picked from commit c7e345eedd65f65a9fcc09805c1feb7afd3e6942)
+
+diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
+index e25a51b60fd4e..de989cef6d649 100644
+--- a/drivers/cpufreq/tegra194-cpufreq.c
++++ b/drivers/cpufreq/tegra194-cpufreq.c
+@@ -683,17 +683,24 @@ static int tegra194_cpufreq_init(struct cpufreq_policy *policy)
+ 	u32 clusterid = data->cpu_data[policy->cpu].clusterid;
+ 	struct cpufreq_frequency_table *freq_table;
+ 	struct cpufreq_frequency_table *bpmp_lut;
+-	u32 start_cpu, cpu;
++	u32 cpu;
+ 	int ret;
+ 
+ 	if (clusterid >= data->soc->num_clusters || !data->bpmp_luts[clusterid])
+ 		return -EINVAL;
+ 
+-	start_cpu = rounddown(policy->cpu, maxcpus_per_clock);
+-	/* set same policy for all cpus in a cluster */
+-	for (cpu = start_cpu; cpu < (start_cpu + maxcpus_per_clock); cpu++) {
+-		if (cpu_possible(cpu))
++	/* Set same policy for all possible cpus in a clocking cluster */
++	for_each_possible_cpu(cpu) {
++		if (data->cpu_data[cpu].clusterid == clusterid) {
+ 			cpumask_set_cpu(cpu, policy->cpus);
++		} else if (data->soc->clusters_per_clk > 1) {
++			u32 policy_clk_id = clusterid / data->soc->clusters_per_clk;
++			u32 clk_id = data->cpu_data[cpu].clusterid /
++				data->soc->clusters_per_clk;
++			if (policy_clk_id == clk_id) {
++				cpumask_set_cpu(cpu, policy->cpus);
++			}
++		}
+ 	}
+ 	policy->cpuinfo.transition_latency = TEGRA_CPUFREQ_TRANSITION_LATENCY;
+ 
+-- 
+2.43.0
+

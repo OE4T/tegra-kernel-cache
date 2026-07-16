@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Fri, 5 Sep 2025 16:27:16 +0000
+Subject: [PATCH 104/240] NVIDIA: SAUCE: tegra_hv: stop logging total mempool &
+ ivc memory size
+
+stop logging total mempool & ivc memory size for
+prod builds.
+
+Bug 5433066
+
+Change-Id: I5e869d77aa0c42523bbb22a7ad2080b8ceb7721c
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3449494
+Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
+Reviewed-by: Sandeep Trasi <strasi@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 243cdfc7a9952b5157d5bf3faadb7782b2bafd4c)
+
+diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
+index 5404738330b87..fbd5c1cb075f4 100644
+--- a/drivers/virt/tegra/tegra_hv.c
++++ b/drivers/virt/tegra/tegra_hv.c
+@@ -771,7 +771,9 @@ static int tegra_hv_setup(struct tegra_hv_data *hvd)
+ 		BUG_ON(mpsize < mpd->size);
+ 	}
+ 
++#ifndef CONFIG_KERNEL_BUILD_WITH_PROD_DEFCONFIG
+ 	INFO("Memory usage: ivc:0x%llx mempool=0x%llx\n", ivcsize, mpsize);
++#endif
+ 
+ 	return 0;
+ }
+-- 
+2.43.0
+

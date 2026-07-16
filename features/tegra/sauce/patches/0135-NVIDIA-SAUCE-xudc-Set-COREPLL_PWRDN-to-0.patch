@@ -1,0 +1,75 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: haotienh <haotienh@nvidia.com>
+Date: Tue, 30 Jul 2024 06:49:22 +0000
+Subject: [PATCH 135/240] NVIDIA: SAUCE: xudc: Set COREPLL_PWRDN to 0
+
+The COREPLL_PWRDN bit can be 1 only if the device port is in
+disconnected/low-power state or is disabled.
+We set it to 0 when resume and to 1 when suspend.
+
+http://nvbugs/4739271
+
+Change-Id: Ie10bc1f134b52f7b486e99cc187f376f2b4922cf
+Signed-off-by: haotienh <haotienh@nvidia.com>
+(cherry picked from commit c1f6957ff7955a5f2be26bee20961913e3a25616)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3201121
+Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index 57eb306629e8d..5743d2ea36856 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -1563,6 +1563,12 @@ static int __tegra_xudc_ep_set_halt(struct tegra_xudc_ep *ep, bool halt)
+ 		return -ENOTSUPP;
+ 	}
+ 
++	if (!!(xudc_readl(xudc, EP_HALT) & BIT(ep->index)) == halt) {
++		dev_dbg(xudc->dev, "EP %u already %s\n", ep->index,
++			halt ? "halted" : "not halted");
++		return 0;
++	}
++
+ 	if (halt) {
+ 		ep_halt(xudc, ep->index);
+ 	} else {
+@@ -3397,18 +3403,20 @@ static void tegra_xudc_device_params_init(struct tegra_xudc *xudc)
+ {
+ 	u32 val, imod;
+ 
+-	val = xudc_readl(xudc, BLCG);
++	val = xudc_readl(xudc, BLCG) & ~BLCG_COREPLL_PWRDN;
++	xudc_writel(xudc, val, BLCG);
++
+ 	if (xudc->soc->has_ipfs) {
++		val = xudc_readl(xudc, BLCG);
+ 		val |= BLCG_ALL;
+ 		val &= ~(BLCG_DFPCI | BLCG_UFPCI | BLCG_FE |
+ 				BLCG_COREPLL_PWRDN);
+ 		val |= BLCG_IOPLL_0_PWRDN;
+ 		val |= BLCG_IOPLL_1_PWRDN;
+ 		val |= BLCG_IOPLL_2_PWRDN;
+-	} else {
+-		val &= ~BLCG_COREPLL_PWRDN;
++
++		xudc_writel(xudc, val, BLCG);
+ 	}
+-	xudc_writel(xudc, val, BLCG);
+ 
+ 	if (xudc->soc->port_speed_quirk)
+ 		tegra_xudc_limit_port_speed(xudc);
+@@ -4017,8 +4025,7 @@ tegra_xudc_lowpower_enter(struct tegra_xudc *xudc)
+ 
+ 	spin_unlock_irqrestore(&xudc->lock, flags);
+ 
+-	val = xudc_readl(xudc, BLCG);
+-	val |= BLCG_COREPLL_PWRDN;
++	val = xudc_readl(xudc, BLCG) | BLCG_COREPLL_PWRDN;
+ 	xudc_writel(xudc, val, BLCG);
+ 
+ 	clk_bulk_disable_unprepare(xudc->soc->num_clks, xudc->clks);
+-- 
+2.43.0
+

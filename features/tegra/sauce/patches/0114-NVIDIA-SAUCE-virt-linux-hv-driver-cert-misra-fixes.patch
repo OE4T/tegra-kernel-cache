@@ -1,0 +1,134 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Mon, 17 Feb 2025 07:00:13 +0000
+Subject: [PATCH 114/240] NVIDIA: SAUCE: virt: linux hv driver cert & misra
+ fixes
+
+using this patch fixing below cert & misra errors:-
+- cert_dcl37_c_violation: The reserved identifier
+  "TEGRA_HV_IVC_H", which is reserved for use as identifiers
+  with file scope in both the ordinary and tag name spaces,
+  is defined.
+- misra_c_2012_rule_21_1_violation: Defining or undefining a reserved
+  name "TEGRA_HV_IVC_H", which is an identifier or
+  macro name beginning with an underscore.
+- cert_dcl37_c_violation: The reserved identifier
+  "TEGRA_SYSCALLS_H", which is reserved for use as
+  identifiers with file scope in both the ordinary and tag name spaces,
+  is defined.
+- misra_c_2012_rule_21_1_violation: Defining or undefining a reserved
+  name "TEGRA_SYSCALLS_H", which is an identifier or
+  macro name beginning with an underscore.
+- cert_dcl37_c_violation: The reserved identifier
+  "TEGRA_HV_H", which is reserved for use as
+  identifiers with file scope in both the ordinary and tag name spaces,
+  is defined.
+- misra_c_2012_rule_21_1_violation: Defining or undefining a reserved
+  name "TEGRA_HV_H", which is an identifier or
+  macro name beginning with an underscore.
+- cert_dcl37_c_violation: The reserved identifier
+  "TEGRA_HV_SYSMGR_H", which is reserved for use as
+  identifiers with file scope in both the ordinary and tag name spaces,
+  is defined.
+- misra_c_2012_rule_21_1_violation: Defining or undefining a reserved
+  name "TEGRA_HV_SYSMGR_H", which is an identifier or
+  macro name beginning with an underscore.
+
+JIRA ESLC-8385
+
+Change-Id: I4578a6adf99efbc721668748718f55a8214b623c
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3506716
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: svc-mobile-coverity <svc-mobile-coverity@nvidia.com>
+Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+(cherry picked from commit d886c26b30c34c670f82c01a6e06b97ce5134050)
+
+diff --git a/include/soc/tegra/virt/hv-ivc.h b/include/soc/tegra/virt/hv-ivc.h
+index 9f7d09ac3164e..6f80c80d064b9 100644
+--- a/include/soc/tegra/virt/hv-ivc.h
++++ b/include/soc/tegra/virt/hv-ivc.h
+@@ -3,8 +3,8 @@
+  * SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+  */
+ 
+-#ifndef __TEGRA_HV_IVC_H
+-#define __TEGRA_HV_IVC_H
++#ifndef TEGRA_HV_IVC_H
++#define TEGRA_HV_IVC_H
+ 
+ #include <linux/of.h>
+ #include <linux/version.h>
+@@ -749,4 +749,4 @@ void tegra_hv_ivc_notify(struct tegra_hv_ivc_cookie *ivck);
+ 
+ /** @} */
+ 
+-#endif /* __TEGRA_HV_IVC_H */
++#endif /* TEGRA_HV_IVC_H */
+diff --git a/include/soc/tegra/virt/syscalls.h b/include/soc/tegra/virt/syscalls.h
+index b068712cf13d8..bb92039453059 100644
+--- a/include/soc/tegra/virt/syscalls.h
++++ b/include/soc/tegra/virt/syscalls.h
+@@ -3,8 +3,8 @@
+  * SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+  */
+ 
+-#ifndef __TEGRA_SYSCALLS_H__
+-#define __TEGRA_SYSCALLS_H__
++#ifndef TEGRA_SYSCALLS_H
++#define TEGRA_SYSCALLS_H
+ 
+ #include <soc/tegra/virt/tegra_hv_sysmgr.h>
+ 
+@@ -1100,4 +1100,4 @@ NO_SANITIZE_ADDRESS static inline long int hyp_lcpu0_mpidr(void)
+ 
+ /** @} */
+ 
+-#endif /* __TEGRA_SYSCALLS_H__ */
++#endif /* TEGRA_SYSCALLS_H */
+diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
+index d3f8dff1a80e4..59984d04af3fd 100644
+--- a/include/soc/tegra/virt/tegra_hv.h
++++ b/include/soc/tegra/virt/tegra_hv.h
+@@ -3,8 +3,8 @@
+  * SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+  */
+ 
+-#ifndef __TEGRA_HV_H__
+-#define __TEGRA_HV_H__
++#ifndef TEGRA_HV_H
++#define TEGRA_HV_H
+ 
+ /**
+  * @defgroup hypervisor_ivc_framework Hypervisor IVC Framework
+@@ -81,4 +81,4 @@ int tegra_hv_get_vmid(void);
+ 
+ /** @} */
+ 
+-#endif /* __TEGRA_HV_H__ */
++#endif /* TEGRA_HV_H */
+diff --git a/include/soc/tegra/virt/tegra_hv_sysmgr.h b/include/soc/tegra/virt/tegra_hv_sysmgr.h
+index a106b095449f4..4da15df49dd0b 100644
+--- a/include/soc/tegra/virt/tegra_hv_sysmgr.h
++++ b/include/soc/tegra/virt/tegra_hv_sysmgr.h
+@@ -3,8 +3,8 @@
+  * SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+  */
+ 
+-#ifndef _TEGRA_HV_SYSMGR_H
+-#define _TEGRA_HV_SYSMGR_H
++#ifndef TEGRA_HV_SYSMGR_H
++#define TEGRA_HV_SYSMGR_H
+ 
+ #include <linux/types.h>
+ 
+@@ -211,4 +211,4 @@ enum vm_state {
+ 
+ /** @} */
+ 
+-#endif /* _TEGRA_HV_SYSMGR_H */
++#endif /* TEGRA_HV_SYSMGR_H */
+-- 
+2.43.0
+

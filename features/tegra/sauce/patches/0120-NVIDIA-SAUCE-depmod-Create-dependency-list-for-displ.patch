@@ -1,0 +1,56 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yogish Kulkarni <yogishk@nvidia.com>
+Date: Tue, 31 Oct 2023 20:18:22 +0530
+Subject: [PATCH 120/240] NVIDIA: SAUCE: depmod: Create dependency list for
+ display modules
+
+Create modules.dep and modules.dep.bin for opensrc and closedsrc
+display modules.
+
+Bug 4361148
+
+Change-Id: I95e067a80d225502f5874677ddfb92fae785919c
+Signed-off-by: Yogish Kulkarni <yogishk@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3008618
+(cherry picked from commit 5f8d8dc670ce3ef50429f5c46802b58358a1f4d7)
+Signed-off-by: Satish Seelamsetti <sseelamsetti@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3096636
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
+
+diff --git a/scripts/depmod.sh b/scripts/depmod.sh
+index 3c34fecacbc82..179935291705a 100755
+--- a/scripts/depmod.sh
++++ b/scripts/depmod.sh
+@@ -29,4 +29,27 @@ set -- -ae -F "${objtree}/System.map"
+ if test -n "$INSTALL_MOD_PATH"; then
+ 	set -- "$@" -b "$INSTALL_MOD_PATH"
+ fi
+-exec "$DEPMOD" "$@" "$KERNELRELEASE"
++depmod_executed=false
++exit_status=0
++for config_file in $INSTALL_MOD_PATH/nv-disp-module-configs/nv-depmod-*-display.conf
++do
++	if test -f $config_file; then
++		config_file_name=$(basename -- "$config_file")
++		flavor=$(echo ${config_file_name} | cut -d'-' -f3)
++
++		exec "$DEPMOD" "$@" "$KERNELRELEASE"  -C "$config_file"
++
++		exit_status=$?
++		if [ "$exit_status" -ne 0 ]; then
++			break
++		fi
++
++		cp "$INSTALL_MOD_PATH/lib/modules/$KERNELRELEASE/modules.dep" "$INSTALL_MOD_PATH/nv-disp-module-configs/$flavor-modules.dep"
++		cp "$INSTALL_MOD_PATH/lib/modules/$KERNELRELEASE/modules.dep.bin" "$INSTALL_MOD_PATH/nv-disp-module-configs/$flavor-modules.dep.bin"
++		depmod_executed=true
++	fi
++done
++
++if [ "$exit_status" -eq 0 ] && [ "$depmod_executed" = false ]; then
++	exec "$DEPMOD" "$@" "$KERNELRELEASE"
++fi
+-- 
+2.43.0
+

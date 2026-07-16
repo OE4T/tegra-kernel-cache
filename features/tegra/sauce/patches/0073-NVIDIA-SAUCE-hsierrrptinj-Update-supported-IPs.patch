@@ -1,0 +1,78 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Prasun Kumar <prasunk@nvidia.com>
+Date: Thu, 15 Dec 2022 16:35:46 +0530
+Subject: [PATCH 073/240] NVIDIA: SAUCE: hsierrrptinj: Update supported IPs
+
+Add support to inject errors to error collator from guestOS
+
+Add support to inject sc7 entry from guestOS
+
+Bug 3908495
+
+Change-Id: I9453fbe317121151298568b413ff3119ea4773f1
+Signed-off-by: Prasun Kumar <prasunk@nvidia.com>
+Reviewed-by: Bharat Nihalani <bnihalani@nvidia.com>
+Tested-by: Bharat Nihalani <bnihalani@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2907252
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/platform/tegra/tegra-hsierrrptinj.c b/drivers/platform/tegra/tegra-hsierrrptinj.c
+index adf9dbf811750..7052e59582478 100644
+--- a/drivers/platform/tegra/tegra-hsierrrptinj.c
++++ b/drivers/platform/tegra/tegra-hsierrrptinj.c
+@@ -43,6 +43,7 @@
+ /* Error code for reporting errors to FSI */
+ #define HSM_ERROR 0x55
+ #define FSI_SW_ERROR 0xAA
++#define SC7_ENTRY_ERROR 0xBB
+ 
+ /* EC Index for reporting errors to FSI */
+ #define EC_INDEX 0xFFFFFFFF
+@@ -176,15 +177,25 @@ static int hsierrrpt_report_to_fsi(struct epl_error_report_frame err_rpt_frame,
+ 		return -ENODEV;
+ 	}
+ 
+-	if (ip_id == IP_HSM)
++
++	error_report.error_code = err_rpt_frame.error_code;
++	error_report.reporter_id = err_rpt_frame.reporter_id;
++	error_report.ec_index = EC_INDEX;
++
++	if (ip_id == IP_HSM || ip_id == IP_EC)
+ 		error_report.type = HSM_ERROR;
+ 	else if (ip_id == IP_FSI)
+ 		error_report.type = FSI_SW_ERROR;
++	else if (ip_id == IP_SC7)
++		error_report.type = SC7_ENTRY_ERROR;
+ 	else
+ 		return -EINVAL;
+-	error_report.error_code = err_rpt_frame.error_code;
+-	error_report.reporter_id = err_rpt_frame.reporter_id;
+-	error_report.ec_index = EC_INDEX;
++
++	/* Special case where ec_index other than 0xFFFFFFFF,
++	 * then FSI SW ignore reporter_id and only uses error_code.
++	 */
++	if (ip_id == IP_EC)
++		error_report.ec_index = error_report.reporter_id;
+ 
+ 	ret = mbox_send_message(hsierrrptinj_tx.chan, (void *)&error_report);
+ 
+diff --git a/include/linux/tegra-hsierrrptinj.h b/include/linux/tegra-hsierrrptinj.h
+index 13b9d0c861399..e8ba5503af2a1 100644
+--- a/include/linux/tegra-hsierrrptinj.h
++++ b/include/linux/tegra-hsierrrptinj.h
+@@ -39,6 +39,8 @@ IP_TSEC  = 0x0009,
+ IP_THERM = 0x000A,
+ IP_SMMU  = 0x000B,
+ 
++IP_EC    = 0x00FC,
++IP_SC7   = 0x00FD,
+ IP_FSI   = 0x00FE,
+ IP_HSM   = 0x00FF
+ } hsierrrpt_ipid_t;
+-- 
+2.43.0
+

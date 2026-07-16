@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Sing-Han Chen <singhanc@nvidia.com>
+Date: Wed, 17 Jul 2024 18:41:33 +0000
+Subject: [PATCH 146/240] NVIDIA: SAUCE: usb: gadget: xudc: Enable u1/u2 for
+ Tegra264
+
+This change enable u1/u2 support for T264
+
+http://nvbugs/4295138
+http://nvbugs/4753858
+
+Change-Id: I0b2dd976ed57c0300d649174ecf62c5bacb3512d
+Signed-off-by: Sing-Han Chen <singhanc@nvidia.com>
+(cherry picked from commit 8ded5788bfe5d1badd775c7535714a75b5d2afc8)
+
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index e1e24ea97e3ab..73497ac46a95c 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -3755,8 +3755,8 @@ static struct tegra_xudc_soc tegra264_xudc_soc_data = {
+ 	.clock_names = tegra186_xudc_clock_names,
+ 	.num_clks = ARRAY_SIZE(tegra186_xudc_clock_names),
+ 	.num_phys = 4,
+-	.u1_enable = false,
+-	.u2_enable = false,
++	.u1_enable = true,
++	.u2_enable = true,
+ 	.lpm_enable = true,
+ 	.invalid_seq_num = false,
+ 	.pls_quirk = false,
+-- 
+2.43.0
+

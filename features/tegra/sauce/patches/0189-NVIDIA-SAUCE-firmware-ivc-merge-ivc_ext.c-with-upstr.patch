@@ -1,0 +1,293 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Wed, 21 Aug 2024 06:52:00 +0000
+Subject: [PATCH 189/240] NVIDIA: SAUCE: firmware: ivc: merge ivc_ext.c with
+ upstream ivc.c
+
+merging ivc_ext.c driver with upstream ivc.c driver
+and stop building ivc_ext.ko driver in nvidia-oot driver.
+
+Bug 4551265
+
+Change-Id: I97c7b1f95ad796dc7cb0f803054f297d53e44f44
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on:https://git-master.nvidia.com/r/c/linux-stable/+/3214052
+(cherry picked from commit 83f90f5345d0b7fdbf86dd3e96f756d4a0ee9d3b)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3303198
+Reviewed-by: Bibek Basu <bbasu@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Sumit Gupta <sumitg@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+(cherry picked from commit 0a34c5692db7b568c26d6cbefa73c47e6f7dcaea)
+
+diff --git a/drivers/firmware/tegra/ivc.c b/drivers/firmware/tegra/ivc.c
+index bf2b45ad19807..1d2166dae9e16 100644
+--- a/drivers/firmware/tegra/ivc.c
++++ b/drivers/firmware/tegra/ivc.c
+@@ -1,7 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2014-2016, NVIDIA CORPORATION.  All rights reserved.
+- */
++// SPDX-FileCopyrightText: Copyright (c) 2014-2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+ 
+ #include <soc/tegra/ivc.h>
+ 
+@@ -92,7 +90,7 @@ static inline void tegra_ivc_flush(struct tegra_ivc *ivc, dma_addr_t phys)
+ 				   DMA_TO_DEVICE);
+ }
+ 
+-static inline bool tegra_ivc_empty(struct tegra_ivc *ivc, struct iosys_map *map)
++bool tegra_ivc_empty(struct tegra_ivc *ivc, struct iosys_map *map)
+ {
+ 	/*
+ 	 * This function performs multiple checks on the same values with
+@@ -117,6 +115,7 @@ static inline bool tegra_ivc_empty(struct tegra_ivc *ivc, struct iosys_map *map)
+ 
+ 	return tx == rx;
+ }
++EXPORT_SYMBOL(tegra_ivc_empty);
+ 
+ static inline bool tegra_ivc_full(struct tegra_ivc *ivc, struct iosys_map *map)
+ {
+@@ -622,6 +621,128 @@ static int tegra_ivc_check_params(unsigned long rx, unsigned long tx,
+ 	return 0;
+ }
+ 
++int tegra_ivc_can_read(struct tegra_ivc *ivc)
++{
++	return tegra_ivc_check_read(ivc) == 0;
++}
++EXPORT_SYMBOL(tegra_ivc_can_read);
++
++int tegra_ivc_can_write(struct tegra_ivc *ivc)
++{
++	return tegra_ivc_check_write(ivc) == 0;
++}
++EXPORT_SYMBOL(tegra_ivc_can_write);
++
++int tegra_ivc_read(struct tegra_ivc *ivc, void __user *usr_buf, void *buf, size_t max_read)
++{
++	struct iosys_map map;
++	int err;
++
++	BUG_ON(buf && usr_buf);
++
++	/* get next frame to be read from IVC channel */
++	err = tegra_ivc_read_get_next_frame(ivc, &map);
++	if (err)
++		return err;
++
++	/* update the buffer with read data*/
++	if (buf) {
++		iosys_map_memcpy_from(buf, &map, 0, max_read);
++	} else if (usr_buf) {
++		// FIXME handle io address space
++		if (WARN_ON(map.is_iomem) || copy_to_user(usr_buf, map.vaddr, max_read))
++			return -EFAULT;
++	} else
++		BUG();
++
++	/* Advance to next read frame*/
++	if (tegra_ivc_read_advance(ivc) == 0)
++		return max_read;
++	else
++		return 0;
++}
++EXPORT_SYMBOL(tegra_ivc_read);
++
++int tegra_ivc_read_peek(struct tegra_ivc *ivc, void __user *usr_buf,
++				void *buf, size_t offset, size_t size)
++{
++	struct iosys_map map;
++	int err;
++
++	BUG_ON(buf && usr_buf);
++
++	/* get next frame to be read from IVC channel */
++	err = tegra_ivc_read_get_next_frame(ivc, &map);
++	if (err)
++		return err;
++
++	/* update the buffer with read data*/
++	if (buf) {
++		iosys_map_memcpy_from(buf, &map, offset, size);
++	} else if (usr_buf) {
++		// FIXME handle io address space
++		if (WARN_ON(map.is_iomem) || copy_to_user(usr_buf, map.vaddr + offset, size))
++			return -EFAULT;
++	} else
++		BUG();
++
++	return size;
++}
++EXPORT_SYMBOL(tegra_ivc_read_peek);
++
++int tegra_ivc_write(struct tegra_ivc *ivc, const void __user *usr_buf, const void *buf, size_t size)
++{
++	struct iosys_map map;
++	int err;
++
++	BUG_ON(buf && usr_buf);
++
++	/* get next frame to be written from IVC channel */
++	err = tegra_ivc_write_get_next_frame(ivc, &map);
++	if (err)
++		return err;
++
++	/* update the write frame with data buffer*/
++	if (buf) {
++		iosys_map_memcpy_to(&map, 0, buf, size);
++	} else if (usr_buf) {
++		// FIXME handle io address space
++		if (WARN_ON(map.is_iomem) || copy_from_user(map.vaddr, usr_buf, size))
++			return -EFAULT;
++	} else
++		BUG();
++
++	/* Advance to next write frame*/
++	if (tegra_ivc_write_advance(ivc) == 0)
++		return size;
++	else
++		return 0;
++}
++EXPORT_SYMBOL(tegra_ivc_write);
++
++int tegra_ivc_channel_sync(struct tegra_ivc *ivc)
++{
++	if ((ivc == NULL) || (ivc->num_frames == 0)) {
++		return -EINVAL;
++	} else {
++		u32 count;
++
++		count = tegra_ivc_header_read_field(&ivc->tx.map, tx.count);
++		ivc->tx.position = count % ivc->num_frames;
++		count = tegra_ivc_header_read_field(&ivc->rx.map, rx.count);
++		ivc->rx.position = count % ivc->num_frames;
++	}
++
++	return 0;
++}
++EXPORT_SYMBOL(tegra_ivc_channel_sync);
++
++uint32_t tegra_ivc_frames_available(struct tegra_ivc *ivc, struct iosys_map *map)
++{
++	return (ivc->num_frames - tegra_ivc_available(ivc, map));
++}
++EXPORT_SYMBOL(tegra_ivc_frames_available);
++
+ static inline void iosys_map_copy(struct iosys_map *dst, const struct iosys_map *src)
+ {
+ 	*dst = *src;
+diff --git a/include/soc/tegra/ivc.h b/include/soc/tegra/ivc.h
+index 736590774114d..739594225b5be 100644
+--- a/include/soc/tegra/ivc.h
++++ b/include/soc/tegra/ivc.h
+@@ -1,7 +1,5 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (c) 2016, NVIDIA CORPORATION.  All rights reserved.
+- */
++/* SPDX-FileCopyrightText: Copyright (c) 2016-2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved. */
+ 
+ #ifndef __TEGRA_IVC_H
+ #define __TEGRA_IVC_H
+@@ -38,6 +36,95 @@ struct tegra_ivc {
+  */
+ void tegra_ivc_clean_queue_data(struct tegra_ivc *ivc);
+ 
++/**
++* tegra_ivc_empty - Checks whether channel is empty or not
++* @map		pointer to iosys-map buffer for the IVC channel
++*
++* Checks whether channel is empty or not to read or write
++*
++* Returns true if channel is empty to read or write.
++*/
++bool tegra_ivc_empty(struct tegra_ivc *ivc, struct iosys_map *map);
++
++/**
++ * tegra_ivc_channel_sync - Syncs the IVC channel across reboots.
++ * @ivc		pointer of the IVC channel
++ *
++ * Syncs the IVC channel across reboots.
++ *
++ * Returns 0 on success.
++ */
++int tegra_ivc_channel_sync(struct tegra_ivc *ivc);
++
++/**
++ * tegra_ivc_frames_available - Checks number of available frames.
++ * @map		pointer to iosys-map buffer for the IVC channel
++ *
++ * Checks number of available frames.
++ *
++ * Returns integer value indicating number of available frames..
++ */
++uint32_t tegra_ivc_frames_available(struct tegra_ivc *ivc, struct iosys_map *map);
++
++/**
++ * tegra_ivc_can_read - Checks whether we can read from ivc channel
++ * @ivc		pointer of the IVC channel
++ *
++ * Checks whether we can read from ivc channel or not
++ *
++ * Returns 1 for success and 0 for failure.
++ */
++int tegra_ivc_can_read(struct tegra_ivc *ivc);
++
++/**
++ * tegra_ivc_can_write - Checks whether we can write to ivc channel
++ * @ivc		pointer of the IVC channel
++ *
++ * Checks whether we can write to ivc channel or not
++ *
++ * Returns 1 for success and 0 for failure.
++ */
++int tegra_ivc_can_write(struct tegra_ivc *ivc);
++
++/**
++ * tegra_ivc_read - Reads frame form ivc channel
++ * @ivc		pointer of the IVC channel
++ * @usr_buf	user buffer to be updated with data
++ * @buf		kernel buffer to be updated with data
++ * @max_read	max data ro be read form ivc channel
++ *
++ * Reads frame form ivc channel
++ *
++ * Returns no. of bytes read from ivc channel else return error.
++ */
++int tegra_ivc_read(struct tegra_ivc *ivc, void __user *usr_buf, void *buf, size_t max_read);
++
++/**
++ * tegra_ivc_read_peek - Reads frame form ivc channel
++ * @ivc		pointer of the IVC channel
++ * @usr_buf	user buffer to be updated with data
++ * @buf		kernel buffer to be updated with data
++ * @offset	kernel buffer to be updated with data from some offset
++ * @size	max data ro be read form ivc channel
++ *
++ * Reads frame form ivc channel from some offset
++ *
++ * Returns no. of bytes read from ivc channel else return error.
++ */
++int tegra_ivc_read_peek(struct tegra_ivc *ivc, void __user *usr_buf, void *buf, size_t offset, size_t size);
++
++/**
++ * tegra_ivc_write - Writes frame to ivc channel
++ * @ivc		pointer of the IVC channel
++ * @usr_buf	user buffer to e written to ivc channel
++ * @buf		kernel buffer to be written to ivc channel
++ * @size	Data size to be written to ivc channel
++ *
++ * Writes frame to ivc channel
++ *
++ * Returns no. of bytes written to ivc channel else return error.
++ */
++int tegra_ivc_write(struct tegra_ivc *ivc, const void __user *usr_buf, const void *buf, size_t size);
+ /**
+  * tegra_ivc_read_get_next_frame - Peek at the next frame to receive
+  * @ivc		pointer of the IVC channel
+-- 
+2.43.0
+

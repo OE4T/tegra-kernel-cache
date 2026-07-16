@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Mon, 25 Aug 2025 09:38:03 +0000
+Subject: [PATCH 101/240] NVIDIA: SAUCE: tegra_hv: use kzalloc instead of
+ kmalloc
+
+- use kzalloc instead of kmalloc to get cleared out memory
+
+Bug 5433066
+
+Change-Id: I118fec93b13b643f1a63ebbc24cfd06b5eb8158c
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3449491
+Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Sandeep Trasi <strasi@nvidia.com>
+(cherry picked from commit 04247506dbdf9e914609dedd42e84a88182984c2)
+
+diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
+index 19ba8d544acf8..869380d307532 100644
+--- a/drivers/virt/tegra/tegra_hv.c
++++ b/drivers/virt/tegra/tegra_hv.c
+@@ -678,7 +678,7 @@ static int tegra_hv_setup(struct tegra_hv_data *hvd)
+ 	}
+ 
+ 	/* Do not free this, of_add_property does not copy the structure */
+-	hvd->interrupts_arr = kmalloc(hvd->info->nr_queues * sizeof(uint32_t)
++	hvd->interrupts_arr = kzalloc(hvd->info->nr_queues * sizeof(uint32_t)
+ 			* intr_property_size, GFP_KERNEL);
+ 	if (hvd->interrupts_arr == NULL) {
+ 		ERR("failed to allocate array for interrupts property\n");
+-- 
+2.43.0
+

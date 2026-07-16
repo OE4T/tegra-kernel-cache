@@ -1,0 +1,69 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Eric Funsten <efunsten@nvidia.com>
+Date: Tue, 7 May 2024 16:01:02 +0000
+Subject: [PATCH 049/240] NVIDIA: SAUCE: perf: arm_cspmu: add stop counters to
+ impl ops
+
+Adds stop_counters function pointer to implementation ops
+to allow for vendor implementations of this function. The
+default implementation is set to the existing stop_counters
+function.
+
+Change-Id: If60bca7b796fa38bd96e97f57301841ed2ab13af
+Signed-off-by: Eric Funsten <efunsten@nvidia.com>
+
+diff --git a/drivers/perf/arm_cspmu/arm_cspmu.c b/drivers/perf/arm_cspmu/arm_cspmu.c
+index 00bdf6452512e..525b0a383aaea 100644
+--- a/drivers/perf/arm_cspmu/arm_cspmu.c
++++ b/drivers/perf/arm_cspmu/arm_cspmu.c
+@@ -139,6 +139,8 @@ static void arm_cspmu_set_ev_filter(struct arm_cspmu *cspmu,
+ static void arm_cspmu_set_cc_filter(struct arm_cspmu *cspmu,
+ 				    const struct perf_event *event);
+ 
++static inline void arm_cspmu_stop_counters(struct arm_cspmu *cspmu);
++
+ static struct acpi_apmt_node *arm_cspmu_apmt_node(struct device *dev)
+ {
+ 	struct acpi_apmt_node **ptr = dev_get_platdata(dev);
+@@ -479,6 +481,7 @@ static int arm_cspmu_init_impl_ops(struct arm_cspmu *cspmu)
+ 		DEFAULT_IMPL_OP(set_cc_filter),
+ 		DEFAULT_IMPL_OP(set_ev_filter),
+ 		DEFAULT_IMPL_OP(event_attr_is_visible),
++		DEFAULT_IMPL_OP(stop_counters),
+ 	};
+ 
+ 	/* Firmware may override implementer/product ID from PMIIDR */
+@@ -613,7 +616,7 @@ static void arm_cspmu_disable(struct pmu *pmu)
+ {
+ 	struct arm_cspmu *cspmu = to_arm_cspmu(pmu);
+ 
+-	arm_cspmu_stop_counters(cspmu);
++	cspmu->impl.ops.stop_counters(cspmu);
+ }
+ 
+ static int arm_cspmu_get_event_idx(struct arm_cspmu_hw_events *hw_events,
+@@ -1091,7 +1094,7 @@ static irqreturn_t arm_cspmu_handle_irq(int irq_num, void *dev)
+ 	DECLARE_BITMAP(pmovs, ARM_CSPMU_MAX_HW_CNTRS);
+ 	bool handled = false;
+ 
+-	arm_cspmu_stop_counters(cspmu);
++	cspmu->impl.ops.stop_counters(cspmu);
+ 
+ 	has_overflowed = arm_cspmu_get_reset_overflow(cspmu, (u32 *)pmovs);
+ 	if (!has_overflowed)
+diff --git a/drivers/perf/arm_cspmu/arm_cspmu.h b/drivers/perf/arm_cspmu/arm_cspmu.h
+index 779dd2d6aa26b..094e3b89393a9 100644
+--- a/drivers/perf/arm_cspmu/arm_cspmu.h
++++ b/drivers/perf/arm_cspmu/arm_cspmu.h
+@@ -170,6 +170,8 @@ struct arm_cspmu_impl_ops {
+ 	/* Hide/show unsupported events */
+ 	umode_t (*event_attr_is_visible)(struct kobject *kobj,
+ 					 struct attribute *attr, int unused);
++	/* Disable all counters */
++	void (*stop_counters)(struct arm_cspmu *cspmu);
+ };
+ 
+ /* Vendor/implementer registration parameter. */
+-- 
+2.43.0
+

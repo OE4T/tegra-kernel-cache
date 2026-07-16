@@ -1,0 +1,86 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Besar Wicaksono <bwicaksono@nvidia.com>
+Date: Tue, 7 Nov 2023 13:08:17 -0600
+Subject: [PATCH 047/240] NVIDIA: SAUCE: perf: arm_cspmu: nvidia: add revision
+ id matching
+
+This is a preparatory patch for new NVIDIA devices
+that will need to be distinguished by revision and
+variant bits in PMIIDR register in addition to
+product id.
+
+Change-Id: I12615f73b8c587165a3784f755916951f1cc425e
+Signed-off-by: Besar Wicaksono <bwicaksono@nvidia.com>
+
+diff --git a/drivers/perf/arm_cspmu/nvidia_cspmu.c b/drivers/perf/arm_cspmu/nvidia_cspmu.c
+index dc6d4e3e2a1ba..bec9dda4e3877 100644
+--- a/drivers/perf/arm_cspmu/nvidia_cspmu.c
++++ b/drivers/perf/arm_cspmu/nvidia_cspmu.c
+@@ -23,7 +23,9 @@
+ 
+ #define NV_GENERIC_FILTER_ID_MASK    GENMASK_ULL(31, 0)
+ 
+-#define NV_PRODID_MASK               GENMASK(31, 0)
++#define NV_PRODID_MASK		(ARM_CSPMU_PMIIDR_PRODUCTID |	\
++				 ARM_CSPMU_PMIIDR_VARIANT |	\
++				 ARM_CSPMU_PMIIDR_REVISION)
+ 
+ #define NV_FORMAT_NAME_GENERIC	0
+ 
+@@ -220,7 +222,7 @@ struct nv_cspmu_match {
+ 
+ static const struct nv_cspmu_match nv_cspmu_match[] = {
+ 	{
+-	  .prodid = 0x103,
++	  .prodid = 0x10300000,
+ 	  .prodid_mask = NV_PRODID_MASK,
+ 	  .filter_mask = NV_PCIE_FILTER_ID_MASK,
+ 	  .filter_default_val = NV_PCIE_FILTER_ID_MASK,
+@@ -230,7 +232,7 @@ static const struct nv_cspmu_match nv_cspmu_match[] = {
+ 	  .format_attr = pcie_pmu_format_attrs
+ 	},
+ 	{
+-	  .prodid = 0x104,
++	  .prodid = 0x10400000,
+ 	  .prodid_mask = NV_PRODID_MASK,
+ 	  .filter_mask = NV_NVL_C2C_FILTER_ID_MASK,
+ 	  .filter_default_val = NV_NVL_C2C_FILTER_ID_MASK,
+@@ -240,7 +242,7 @@ static const struct nv_cspmu_match nv_cspmu_match[] = {
+ 	  .format_attr = nvlink_c2c_pmu_format_attrs
+ 	},
+ 	{
+-	  .prodid = 0x105,
++	  .prodid = 0x10500000,
+ 	  .prodid_mask = NV_PRODID_MASK,
+ 	  .filter_mask = NV_NVL_C2C_FILTER_ID_MASK,
+ 	  .filter_default_val = NV_NVL_C2C_FILTER_ID_MASK,
+@@ -250,7 +252,7 @@ static const struct nv_cspmu_match nv_cspmu_match[] = {
+ 	  .format_attr = nvlink_c2c_pmu_format_attrs
+ 	},
+ 	{
+-	  .prodid = 0x106,
++	  .prodid = 0x10600000,
+ 	  .prodid_mask = NV_PRODID_MASK,
+ 	  .filter_mask = NV_CNVL_FILTER_ID_MASK,
+ 	  .filter_default_val = NV_CNVL_FILTER_ID_MASK,
+@@ -260,7 +262,7 @@ static const struct nv_cspmu_match nv_cspmu_match[] = {
+ 	  .format_attr = cnvlink_pmu_format_attrs
+ 	},
+ 	{
+-	  .prodid = 0x2CF,
++	  .prodid = 0x2CF00000,
+ 	  .prodid_mask = NV_PRODID_MASK,
+ 	  .filter_mask = 0x0,
+ 	  .filter_default_val = 0x0,
+@@ -322,7 +324,7 @@ static int nv_cspmu_init_ops(struct arm_cspmu *cspmu)
+ 	if (!ctx)
+ 		return -ENOMEM;
+ 
+-	prodid = FIELD_GET(ARM_CSPMU_PMIIDR_PRODUCTID, cspmu->impl.pmiidr);
++	prodid = cspmu->impl.pmiidr;
+ 
+ 	/* Find matching PMU. */
+ 	for (; match->prodid; match++) {
+-- 
+2.43.0
+

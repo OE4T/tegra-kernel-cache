@@ -1,0 +1,137 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Krishna Yarlagadda <kyarlagadda@nvidia.com>
+Date: Mon, 26 Jun 2023 08:45:11 +0000
+Subject: [PATCH 155/240] NVIDIA: SAUCE: tegra: prod: use legacy prod settings
+
+This is an integration squash commit of following commits:
+
+- [INTG: NVIDIA INTERNAL] phy: tegra: xusb: Support prod-settings properties
+- [INTG]: drivers: spi: add support for prod framework
+- [INTG: NVIDIA INTERNAL]: mmc: host: Add prod framework changes
+- i2c: Add prod settings support
+- i2c: tegra: Add new prod setting support
+- spi: tegra114: Add new prod settings
+- sdhci: tegra: Add new prod settings
+- [NV INTERNAL] xusb: tegra: Add new prod setting
+- sdhci-tegra: host: Avoid access to prod settings on PreSi.
+- tegra: prod: use legacy prod settings
+
+Bug 4359070
+Bug 4097475
+Bug 4099482
+Bug 4189448
+Bug 4189442
+Bug 4165914
+Bug 4165933
+Bug 4165918
+Bug 4165919
+Bug 4765671
+Bug 4754882
+
+Signed-off-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+Change-Id: I835abc91e1cad79f01b7e113fc8c25ea7584b356
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3198380
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/phy/tegra/xusb-tegra186.c b/drivers/phy/tegra/xusb-tegra186.c
+index bf37b214776c9..291ae416a4134 100644
+--- a/drivers/phy/tegra/xusb-tegra186.c
++++ b/drivers/phy/tegra/xusb-tegra186.c
+@@ -13,6 +13,10 @@
+ #include <linux/clk.h>
+ #include <linux/slab.h>
+ 
++#if IS_ENABLED(CONFIG_TEGRA_PROD_LEGACY)
++#include <linux/tegra_prod.h>
++#endif
++
+ #include <soc/tegra/fuse.h>
+ 
+ #include "xusb.h"
+@@ -240,6 +244,24 @@
+ 
+ #define TEGRA_UTMI_PAD_MAX 4
+ 
++/* Prod fields */
++#define USB2_OTG_PADX_CTL0_LS_RSLEW_FIELD_START		17
++#define USB2_OTG_PADX_CTL0_LS_RSLEW_FIELD_WIDTH		4
++#define USB2_OTG_PADX_CTL0_LS_FSLEW_FIELD_START		21
++#define USB2_OTG_PADX_CTL0_LS_FSLEW_FIELD_WIDTH		4
++
++#define USB2_OTG_PADX_CTL3_HS_TXEQ_FIELD_START		1
++#define USB2_OTG_PADX_CTL3_HS_TXEQ_FIELD_WIDTH		3
++
++#define USB2_BIAS_PAD_CTL0_HS_DISCON_LEVEL_FIELD_START		3
++#define USB2_BIAS_PAD_CTL0_HS_DISCON_LEVEL_FIELD_WIDTH		3
++#define USB2_BIAS_PAD_CTL1_TRK_START_TIMER_FIELD_START		12
++#define USB2_BIAS_PAD_CTL1_TRK_START_TIMER_FIELD_WIDTH		7
++#define USB2_BIAS_PAD_CTL1_TRK_DONE_RESET_TIMER_FIELD_START	19
++#define USB2_BIAS_PAD_CTL1_TRK_DONE_RESET_TIMER_FIELD_WIDTH	7
++
++#define XUSB_PADCTL_USB2_OTG_PADX_CTL3(x)		(0x94 + (x) * 0x40)
++
+ #define TEGRA186_LANE(_name, _offset, _shift, _mask, _type)		\
+ 	{								\
+ 		.name = _name,						\
+@@ -268,6 +290,10 @@ struct tegra186_xusb_padctl {
+ 	struct tegra_xusb_padctl base;
+ 	void __iomem *ao_regs;
+ 
++#if IS_ENABLED(CONFIG_TEGRA_PROD_LEGACY)
++	/* prod settings */
++	struct tegra_prod *prod_list;
++#endif
+ 	struct tegra_xusb_fuse_calibration calib;
+ 
+ 	/* UTMI bias and tracking */
+@@ -872,6 +898,16 @@ static int tegra186_utmi_phy_set_mode(struct phy *phy, enum phy_mode mode,
+ 	return err;
+ }
+ 
++#if IS_ENABLED(CONFIG_TEGRA_PROD_LEGACY)
++static int tegra186_utmi_write_prod_settings(struct tegra_xusb_padctl *padctl,
++					     const char *prod_name)
++{
++	struct tegra186_xusb_padctl *priv = to_tegra186_xusb_padctl(padctl);
++
++	return tegra_prod_set_by_name(&padctl->regs, prod_name, priv->prod_list);
++}
++#endif
++
+ static int tegra186_utmi_phy_power_on(struct phy *phy)
+ {
+ 	struct tegra_xusb_lane *lane = phy_get_drvdata(phy);
+@@ -889,6 +925,14 @@ static int tegra186_utmi_phy_power_on(struct phy *phy)
+ 		return -ENODEV;
+ 	}
+ 
++#if IS_ENABLED(CONFIG_TEGRA_PROD_LEGACY)
++	if (priv->prod_list) {
++		int err = tegra186_utmi_write_prod_settings(padctl, "prod");
++		if (err)
++			dev_dbg(dev, "failed to apply prod settings\n");
++	}
++#endif
++
+ 	value = padctl_readl(padctl, XUSB_PADCTL_USB2_PAD_MUX);
+ 	value &= ~(USB2_PORT_MASK << USB2_PORT_SHIFT(index));
+ 	value |= (PORT_XUSB << USB2_PORT_SHIFT(index));
+@@ -1559,6 +1603,14 @@ tegra186_xusb_padctl_probe(struct device *dev,
+ 			return ERR_PTR(err);
+ 	}
+ 
++#if IS_ENABLED(CONFIG_TEGRA_PROD_LEGACY)
++	priv->prod_list = devm_tegra_prod_get(dev);
++	if (IS_ERR_OR_NULL(priv->prod_list)) {
++		dev_dbg(dev, "Prod-settings is not available\n");
++		priv->prod_list = NULL;
++	}
++#endif
++
+ 	return &priv->base;
+ }
+ 
+-- 
+2.43.0
+

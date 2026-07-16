@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Johnny Liu <johnliu@nvidia.com>
+Date: Wed, 29 Oct 2025 17:12:40 +0000
+Subject: [PATCH 006/240] NVIDIA: SAUCE: clk: tegra: make nocache for clocks
+
+Clock scaling for specific clocks, such as EMC/SCF/MCF/SMMU clocks
+, are managed by the BPMP itself without kernel involvement.
+
+When the clock is updated on BPMP side, and kernel consumer drivers
+try to use clk_get_rate to fetch the current clock rate, CCF framework
+will return the cached version of the clock rate instead of the correct
+one being scaled by the BPMP itself.
+
+This change makes all the clk_get_rate requests "CLK_GET_RATE_NOCACHE"
+to force through the requests to BPMP and get the current clock rate.
+
+Bug 5621554
+
+Change-Id: Ib31aa00810aef57cd50cd7aea0b54752a78462d6
+Signed-off-by: Johnny Liu <johnliu@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3479075
+(cherry picked from commit 9340df62f6e7a248b6a8e25a1e6dc65f26b3fef1)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3479803
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 8606cfa1ad8545187eb7e3431b57adfe58ac447f)
+
+diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
+index 8bf469639c607..10d33004f9d3c 100644
+--- a/drivers/clk/tegra/clk-bpmp.c
++++ b/drivers/clk/tegra/clk-bpmp.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (C) 2016-2022 NVIDIA Corporation
++ * Copyright (C) 2016-2025 NVIDIA Corporation
+  */
+ 
+ #include <linux/clk-provider.h>
+@@ -587,6 +587,7 @@ tegra_bpmp_clk_register(struct tegra_bpmp *bpmp,
+ 	}
+ 
+ 	init.parent_names = parents;
++	init.flags = CLK_GET_RATE_NOCACHE;
+ 
+ 	err = devm_clk_hw_register(bpmp->dev, &clk->hw);
+ 
+-- 
+2.43.0
+

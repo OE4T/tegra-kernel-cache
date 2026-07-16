@@ -1,0 +1,64 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Narayan Reddy <narayanr@nvidia.com>
+Date: Tue, 19 Sep 2023 18:03:22 +0000
+Subject: [PATCH 041/240] NVIDIA: SAUCE: aquantia: issue PHY reset during phy
+ init
+
+issue: The AQR113C is not able to pick up 50MHz Xtal as clock
+source at the time of power on reset which inturn failing
+to initialize the PHY and hence the link is not coming up
+
+As a SW WAR reset the PHY during initialization so that
+PHY reinitialized and link gets detected.
+
+Bug 4267033
+Bug 4283052
+
+Change-Id: I9a20bc148715cd1d23073aef4e358c1f7b4796b8
+Signed-off-by: Narayan Reddy <narayanr@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2981960
+(cherry picked from commit 6a3bf9f2703d443333ba0f50b084e4c978f48495)
+Signed-off-by: Satish Seelamsetti <sseelamsetti@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3085115
+Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
+index 922fd352d2c3b..6785862fa2d89 100644
+--- a/drivers/net/phy/aquantia/aquantia_main.c
++++ b/drivers/net/phy/aquantia/aquantia_main.c
+@@ -5,7 +5,7 @@
+  * Author: Shaohui Xie <Shaohui.Xie@freescale.com>
+  *
+  * Copyright 2015 Freescale Semiconductor, Inc.
+- * Copyright (c) 2021-2023, NVIDIA CORPORATION.  All rights reserved.
++ * Copyright (c) 2021-2024, NVIDIA CORPORATION.  All rights reserved.
+  */
+ 
+ #include <linux/kernel.h>
+@@ -139,6 +139,9 @@
+ #define MDIO_C22EXT_SGMII0_WAKE_UP_FRAME_MASK		BIT(4)
+ #define MDIO_C22EXT_SGMII0_MAGIC_PKT_FRAME_MASK		BIT(5)
+ 
++#define VEND1_GLOBAL_CMN_POR_CTRL	0x2681U
++#define PHY_RESET			BIT(0)
++
+ /* Sleep and timeout for checking if the Processor-Intensive
+  * MDIO operation is finished
+  */
+@@ -923,6 +926,11 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
+ 	WARN(phydev->interface == PHY_INTERFACE_MODE_XGMII,
+ 	     "Your devicetree is out of date, please update it. The AQR107 family doesn't support XGMII, maybe you mean USXGMII.\n");
+ 
++	/* SW WAR to reset PHY again to overcome link issues caused during boot */
++	err = phy_write_mmd(phydev, MDIO_MMD_VEND1, VEND1_GLOBAL_CMN_POR_CTRL, PHY_RESET);
++	if (err < 0)
++		return err;
++
+ 	ret = aqr_wait_reset_complete(phydev);
+ 	if (!ret) {
+ 		/* The PHY might work without a firmware image, so only build a
+-- 
+2.43.0
+

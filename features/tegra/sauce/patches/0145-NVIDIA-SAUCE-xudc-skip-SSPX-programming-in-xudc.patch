@@ -1,0 +1,108 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Sing-Han Chen <singhanc@nvidia.com>
+Date: Thu, 20 Jun 2024 10:07:53 +0000
+Subject: [PATCH 145/240] NVIDIA: SAUCE: xudc: skip SSPX programming in xudc
+
+This is a temporary change to skip SSPX programming.
+For poject with different settings, these registers
+will need to be updated.
+
+http://nvbugs/4703456
+
+Change-Id: I064fad3c178efde79a0d06ec8ef3705315e9888b
+Signed-off-by: Sing-Han Chen <singhanc@nvidia.com>
+(cherry picked from commit b4ea2b4039ee51cc62c1ae5d7d6508069ed4e958)
+Signed-off-by: Bodla Rakesh Babu <rbodla@nvidia.com>
+
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index 83ab8082010f8..e1e24ea97e3ab 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -562,6 +562,7 @@ struct tegra_xudc_soc {
+ 	bool has_ipfs;
+ 	bool has_pg_support;
+ 	bool is_hv_guest;
++	bool skip_sspx_config;
+ };
+ 
+ static inline u32 fpci_readl(struct tegra_xudc *xudc, unsigned int offset)
+@@ -3446,24 +3447,25 @@ static void tegra_xudc_device_params_init(struct tegra_xudc *xudc)
+ 	if (xudc->soc->port_speed_quirk)
+ 		tegra_xudc_limit_port_speed(xudc);
+ 
+-	/* Set a reasonable U3 exit timer value. */
+-	val = xudc_readl(xudc, SSPX_CORE_PADCTL4);
+-	val &= ~(SSPX_CORE_PADCTL4_RXDAT_VLD_TIMEOUT_U3_MASK);
+-	val |= SSPX_CORE_PADCTL4_RXDAT_VLD_TIMEOUT_U3(0x5dc0);
+-	xudc_writel(xudc, val, SSPX_CORE_PADCTL4);
+-
+-	/* Default ping LFPS tBurst is too large. */
+-	val = xudc_readl(xudc, SSPX_CORE_CNT0);
+-	val &= ~(SSPX_CORE_CNT0_PING_TBURST_MASK);
+-	val |= SSPX_CORE_CNT0_PING_TBURST(0xa);
+-	xudc_writel(xudc, val, SSPX_CORE_CNT0);
+-
+-	/* Default tPortConfiguration timeout is too small. */
+-	val = xudc_readl(xudc, SSPX_CORE_CNT30);
+-	val &= ~(SSPX_CORE_CNT30_LMPITP_TIMER_MASK);
+-	val |= SSPX_CORE_CNT30_LMPITP_TIMER(0x978);
+-	xudc_writel(xudc, val, SSPX_CORE_CNT30);
+-
++	if (!xudc->soc->skip_sspx_config) {
++		/* Set a reasonable U3 exit timer value. */
++		val = xudc_readl(xudc, SSPX_CORE_PADCTL4);
++		val &= ~(SSPX_CORE_PADCTL4_RXDAT_VLD_TIMEOUT_U3_MASK);
++		val |= SSPX_CORE_PADCTL4_RXDAT_VLD_TIMEOUT_U3(0x5dc0);
++		xudc_writel(xudc, val, SSPX_CORE_PADCTL4);
++
++		/* Default ping LFPS tBurst is too large. */
++		val = xudc_readl(xudc, SSPX_CORE_CNT0);
++		val &= ~(SSPX_CORE_CNT0_PING_TBURST_MASK);
++		val |= SSPX_CORE_CNT0_PING_TBURST(0xa);
++		xudc_writel(xudc, val, SSPX_CORE_CNT0);
++
++		/* Default tPortConfiguration timeout is too small. */
++		val = xudc_readl(xudc, SSPX_CORE_CNT30);
++		val &= ~(SSPX_CORE_CNT30_LMPITP_TIMER_MASK);
++		val |= SSPX_CORE_CNT30_LMPITP_TIMER(0x978);
++		xudc_writel(xudc, val, SSPX_CORE_CNT30);
++	}
+ 	if (xudc->soc->lpm_enable) {
+ 		/* Set L1 resume duration to 95 us. */
+ 		val = xudc_readl(xudc, HSFSPI_COUNT13);
+@@ -3472,14 +3474,16 @@ static void tegra_xudc_device_params_init(struct tegra_xudc *xudc)
+ 		xudc_writel(xudc, val, HSFSPI_COUNT13);
+ 	}
+ 
+-	/*
+-	 * Compliance suite appears to be violating polling LFPS tBurst max
+-	 * of 1.4us.  Send 1.45us instead.
+-	 */
+-	val = xudc_readl(xudc, SSPX_CORE_CNT32);
+-	val &= ~(SSPX_CORE_CNT32_POLL_TBURST_MAX_MASK);
+-	val |= SSPX_CORE_CNT32_POLL_TBURST_MAX(0xb0);
+-	xudc_writel(xudc, val, SSPX_CORE_CNT32);
++	if (!xudc->soc->skip_sspx_config) {
++		/*
++		 * Compliance suite appears to be violating polling
++		 * LFPS tBurst max of 1.4us.  Send 1.45us instead.
++		 */
++		val = xudc_readl(xudc, SSPX_CORE_CNT32);
++		val &= ~(SSPX_CORE_CNT32_POLL_TBURST_MAX_MASK);
++		val |= SSPX_CORE_CNT32_POLL_TBURST_MAX(0xb0);
++		xudc_writel(xudc, val, SSPX_CORE_CNT32);
++	}
+ 
+ 	/* Direct HS/FS port instance to RxDetect. */
+ 	val = xudc_readl(xudc, CFG_DEV_FE);
+@@ -3759,6 +3763,7 @@ static struct tegra_xudc_soc tegra264_xudc_soc_data = {
+ 	.port_reset_quirk = false,
+ 	.has_ipfs = false,
+ 	.has_pg_support = true,
++	.skip_sspx_config = true,
+ };
+ 
+ static const struct of_device_id tegra_xudc_of_match[] = {
+-- 
+2.43.0
+

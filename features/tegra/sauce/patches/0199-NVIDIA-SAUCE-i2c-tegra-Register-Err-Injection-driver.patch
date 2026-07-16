@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Akhil R <akhilrajeev@nvidia.com>
+Date: Mon, 4 Aug 2025 10:37:03 +0530
+Subject: [PATCH 199/240] NVIDIA: SAUCE: i2c: tegra: Register Err Injection
+ driver based on DT
+
+Register the error injection driver only if there is a reporter
+ID assigned to the I2C instance.
+
+Bug 5421820
+
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Change-Id: I990ca2014b98a922216e3c6bff0e16778921eba4
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3427769
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Bibek Basu <bbasu@nvidia.com>
+(cherry picked from commit bfcfa75217fda3b57ac8b62d1062867dabaa2e41)
+
+diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
+index f2ae89489c004..d8ebf991648f1 100644
+--- a/drivers/i2c/busses/i2c-tegra.c
++++ b/drivers/i2c/busses/i2c-tegra.c
+@@ -2326,14 +2326,16 @@ static int tegra_i2c_probe(struct platform_device *pdev)
+ 		goto release_rpm;
+ 
+ #if IS_ENABLED(CONFIG_TEGRA_EPL) && IS_ENABLED(CONFIG_TEGRA_HSIERRRPTINJ)
+-	/* Register error reporting callback
+-	 * Continue init despite err inj utility
+-	 * registration failure, as the err inj support
+-	 * is meant only for debug purposes.
+-	 */
+-	err = hsierrrpt_reg_cb(IP_I2C, i2c_dev->adapter.nr, i2c_inject_err_fsi, i2c_dev);
+-	if (err != 0)
+-		dev_info(i2c_dev->dev, "Err inj callback registration failed: %d", err);
++	/* Register error reporting callback if a reporter ID is registered */
++	if (i2c_dev->epl_reporter_id) {
++		/* Continue init despite err inj utility
++		 * registration failure, as the err inj support
++		 * is meant only for debug purposes.
++		 */
++		err = hsierrrpt_reg_cb(IP_I2C, i2c_dev->adapter.nr, i2c_inject_err_fsi, i2c_dev);
++		if (err != 0)
++			dev_info(i2c_dev->dev, "Err inj callback registration failed: %d", err);
++	}
+ #endif
+ 
+ 	return 0;
+-- 
+2.43.0
+

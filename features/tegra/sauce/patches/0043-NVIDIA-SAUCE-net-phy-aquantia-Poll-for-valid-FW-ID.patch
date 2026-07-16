@@ -1,0 +1,54 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Pohsun Su <pohsuns@nvidia.com>
+Date: Tue, 2 Apr 2024 16:12:25 +0000
+Subject: [PATCH 043/240] NVIDIA: SAUCE: net: phy: aquantia: Poll for valid FW
+ ID.
+
+Firmware ID will be shown as 0xFFFF if firmware is not yet loaded.
+So, add this too in the exit condition of the poll so that poll
+won't exit for 0xFFFF and continues till init completion with valid
+FW ID.
+
+port from http://git-master/r/3026292
+
+Bug 4382502
+
+Change-Id: Id422246a2b8bc3ef17b1ad2eacbb1884130053a5
+Signed-off-by: Pohsun Su <pohsuns@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3032613
+Signed-off-by: Satish Seelamsetti <sseelamsetti@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3108493
+Reviewed-by: Revanth Kumar Uppala <ruppala@nvidia.com>
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
+
+diff --git a/drivers/net/phy/aquantia/aquantia.h b/drivers/net/phy/aquantia/aquantia.h
+index 666755125df6c..2861dc467ae1b 100644
+--- a/drivers/net/phy/aquantia/aquantia.h
++++ b/drivers/net/phy/aquantia/aquantia.h
+@@ -20,6 +20,7 @@
+ #define VEND1_GLOBAL_FW_ID			0x0020
+ #define VEND1_GLOBAL_FW_ID_MAJOR		GENMASK(15, 8)
+ #define VEND1_GLOBAL_FW_ID_MINOR		GENMASK(7, 0)
++#define VEND1_GLOBAL_FW_ID_MASK			GENMASK(15, 0)
+ 
+ #define VEND1_GLOBAL_MAILBOX_INTERFACE1			0x0200
+ #define VEND1_GLOBAL_MAILBOX_INTERFACE1_EXECUTE		BIT(15)
+diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
+index 6785862fa2d89..e956d29b6493b 100644
+--- a/drivers/net/phy/aquantia/aquantia_main.c
++++ b/drivers/net/phy/aquantia/aquantia_main.c
+@@ -830,7 +830,9 @@ int aqr_wait_reset_complete(struct phy_device *phydev)
+ {
+ 	int ret, val;
+ 
+-	ret = read_poll_timeout(phy_read_mmd, val, val != 0,
++	ret = read_poll_timeout(phy_read_mmd, val,
++				((val & VEND1_GLOBAL_FW_ID_MASK) != 0 &&
++				(val & VEND1_GLOBAL_FW_ID_MASK) != VEND1_GLOBAL_FW_ID_MASK),
+ 				AQR_FW_WAIT_SLEEP_US, AQR_FW_WAIT_TIMEOUT_US,
+ 				false, phydev, MDIO_MMD_VEND1,
+ 				VEND1_GLOBAL_FW_ID);
+-- 
+2.43.0
+

@@ -1,0 +1,75 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Sushil Kumar Singh <sushilkumars@nvidia.com>
+Date: Fri, 15 Jul 2022 20:58:26 +0530
+Subject: [PATCH 035/240] NVIDIA: SAUCE: net: phy: realtek: phy Add support for
+ RTL8211F_VD_CG phy IC
+
+Enabled driver support for new realtek phy IC in k5.10
+
+Bug 3579943
+
+Change-Id: Ibdfa27f05339b3c706dde30467f6a69d8f9878b4
+Signed-off-by: Sushil Kumar Singh <sushilkumars@nvidia.com>
+Signed-off-by: Revanth Kumar Uppala <ruppala@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2909752
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+
+diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
+index 5a095d1c8adc5..a0de77abb5226 100644
+--- a/drivers/net/phy/realtek/realtek_main.c
++++ b/drivers/net/phy/realtek/realtek_main.c
+@@ -169,6 +169,9 @@
+ /* RTL8211E and RTL8211F support up to three LEDs */
+ #define RTL8211x_LED_COUNT			3
+ 
++#define RTL8211F_WOL_ENABLE_PMEB_EVENT		BIT(7)
++#define RTL8211F_VD_CG_WOL_ENABLE_PMEB_EVENT	BIT(12)
++
+ MODULE_DESCRIPTION("Realtek PHY driver");
+ MODULE_AUTHOR("Johnson Leung");
+ MODULE_LICENSE("GPL");
+@@ -373,13 +376,19 @@ static int rtl8211f_config_intr(struct phy_device *phydev)
+ 	struct rtl821x_priv *priv = phydev->priv;
+ 	u16 val;
+ 	int err;
++	u16 pmeb_event;
++
++	if (phydev->phy_id == 0x001cc878)
++		pmeb_event = RTL8211F_VD_CG_WOL_ENABLE_PMEB_EVENT;
++	else
++		pmeb_event = RTL8211F_WOL_ENABLE_PMEB_EVENT;
+ 
+ 	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
+ 		err = rtl8211f_ack_interrupt(phydev);
+ 		if (err)
+ 			return err;
+ 
+-		val = RTL8211F_INER_LINK_STATUS;
++		val = (RTL8211F_INER_LINK_STATUS | pmeb_event);
+ 		err = phy_write_paged(phydev, 0xa42, RTL821x_INER, val);
+ 		if (err == 0)
+ 			priv->iner = val;
+@@ -1846,6 +1855,18 @@ static struct phy_driver realtek_drvs[] = {
+ 		.read_page	= rtl821x_read_page,
+ 		.write_page	= rtl821x_write_page,
+ 		.flags		= PHY_ALWAYS_CALL_SUSPEND,
++	}, {
++		PHY_ID_MATCH_EXACT(0x001cc878),
++		.name		= "RTL8211F VD-CG Gigabit Ethernet",
++		.config_init	= &rtl8211f_config_init,
++		.handle_interrupt = rtl8211f_handle_interrupt,
++		.config_intr	= &rtl8211f_config_intr,
++		.get_wol	= &rtl8211f_get_wol,
++		.set_wol	= &rtl8211f_set_wol,
++		.suspend	= genphy_suspend,
++		.resume		= rtl821x_resume,
++		.read_page	= rtl821x_read_page,
++		.write_page	= rtl821x_write_page,
+ 	}, {
+ 		.name		= "Generic FE-GE Realtek PHY",
+ 		.match_phy_device = rtlgen_match_phy_device,
+-- 
+2.43.0
+

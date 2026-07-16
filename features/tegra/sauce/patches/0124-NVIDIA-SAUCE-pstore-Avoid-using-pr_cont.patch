@@ -1,0 +1,94 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Bharat Nihalani <bnihalani@nvidia.com>
+Date: Mon, 28 Apr 2025 08:46:57 +0000
+Subject: [PATCH 124/240] NVIDIA: SAUCE: pstore: Avoid using pr_cont
+
+This is done as pr_cont is generally discouraged in kernel code
+because it can cause message interleaving in SMP systems.
+
+This is also causing the print message to be split across lines
+making it meaningless to interpret.
+
+Solve this by using a buffer of size 256 bytes to print the text
+and use pr_info to finally print all text together.
+
+This buffer size is more than sufficient to avoid any buffer
+overflow.
+
+Bug 5277482
+
+Change-Id: Ic5ec0c4618909fad621d95f9063f61f7d8bda03e
+Signed-off-by: Bharat Nihalani <bnihalani@nvidia.com>
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3486700
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+(cherry picked from commit 622348e0f269905af325cf843771d21964a404de)
+
+diff --git a/fs/pstore/zone.c b/fs/pstore/zone.c
+index eb61ba5bb9642..50cefe04462b2 100644
+--- a/fs/pstore/zone.c
++++ b/fs/pstore/zone.c
+@@ -1301,6 +1301,8 @@ int register_pstore_zone(struct pstore_zone_info *info)
+ {
+ 	int err = -EINVAL;
+ 	struct psz_context *cxt = &pstore_zone_cxt;
++	char buf[256] = { '\0' };
++	size_t len;
+ 
+ 	if (info->total_size < 4096) {
+ 		pr_warn("total_size must be >= 4096\n");
+@@ -1383,30 +1385,41 @@ int register_pstore_zone(struct pstore_zone_info *info)
+ 	}
+ 	cxt->pstore.data = cxt;
+ 
+-	pr_info("registered %s as backend for", info->name);
++	/*
++	 * Build a complete registration message in a local buffer.
++	 * This avoids using pr_cont() and ensures the final print
++	 * happens as a single atomic printk, preventing interleaving
++	 * with concurrent log messages from interrupts or other CPUs.
++	 */
++	len = 0;
++	len += scnprintf(buf + len, sizeof(buf) - len,
++			 "registered %s as backend for", info->name);
+ 	cxt->pstore.max_reason = info->max_reason;
+ 	cxt->pstore.name = info->name;
+ 	if (info->kmsg_size) {
+ 		cxt->pstore.flags |= PSTORE_FLAGS_DMESG;
+-		pr_cont(" kmsg(%s",
+-			kmsg_dump_reason_str(cxt->pstore.max_reason));
++		len += scnprintf(buf + len, sizeof(buf) - len,
++				 " kmsg(%s",
++				 kmsg_dump_reason_str(cxt->pstore.max_reason));
+ 		if (cxt->pstore_zone_info->panic_write)
+-			pr_cont(",panic_write");
+-		pr_cont(")");
++			len += scnprintf(buf + len, sizeof(buf) - len,
++					 ",panic_write");
++		len += scnprintf(buf + len, sizeof(buf) - len, ")");
+ 	}
+ 	if (info->pmsg_size) {
+ 		cxt->pstore.flags |= PSTORE_FLAGS_PMSG;
+-		pr_cont(" pmsg");
++		len += scnprintf(buf + len, sizeof(buf) - len, " pmsg");
+ 	}
+ 	if (info->console_size) {
+ 		cxt->pstore.flags |= PSTORE_FLAGS_CONSOLE;
+-		pr_cont(" console");
++		len += scnprintf(buf + len, sizeof(buf) - len, " console");
+ 	}
+ 	if (info->ftrace_size) {
+ 		cxt->pstore.flags |= PSTORE_FLAGS_FTRACE;
+-		pr_cont(" ftrace");
++		len += scnprintf(buf + len, sizeof(buf) - len, " ftrace");
+ 	}
+-	pr_cont("\n");
++	/* Emit the complete message in a single pr_info() call */
++	pr_info("%s\n", buf);
+ 
+ 	err = pstore_register(&cxt->pstore);
+ 	if (err) {
+-- 
+2.43.0
+

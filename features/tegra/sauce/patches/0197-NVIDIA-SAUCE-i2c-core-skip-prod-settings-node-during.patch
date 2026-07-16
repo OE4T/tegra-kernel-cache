@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Shardar Shariff Md <smohammed@nvidia.com>
+Date: Fri, 9 Mar 2018 00:49:38 +0530
+Subject: [PATCH 197/240] NVIDIA: SAUCE: i2c: core: skip prod-settings node
+ during i2c device registration
+
+skip prod-settings node during i2c device registration as
+prod-settings is not i2c device
+
+Bug 200211824
+Bug 200385931
+
+Change-Id: I91230b9bf84873f534d2f971044b47262d37cd9e
+Signed-off-by: Shardar Shariff Md <smohammed@nvidia.com>
+(cherry picked from commit 269080663bc27f211ad75e9ce29803e578a72b06)
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3029807
+Tested-by: Akhil R <akhilrajeev@nvidia.com>
+Reviewed-by: Akhil R <akhilrajeev@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/i2c/i2c-core-of.c b/drivers/i2c/i2c-core-of.c
+index 354a88d0599e3..dac003f9de5e7 100644
+--- a/drivers/i2c/i2c-core-of.c
++++ b/drivers/i2c/i2c-core-of.c
+@@ -97,6 +97,9 @@ void of_i2c_register_devices(struct i2c_adapter *adap)
+ 		bus = of_node_get(adap->dev.of_node);
+ 
+ 	for_each_available_child_of_node(bus, node) {
++		if (!strcmp(node->name, "prod-settings"))
++			continue;
++
+ 		if (of_node_test_and_set_flag(node, OF_POPULATED))
+ 			continue;
+ 
+-- 
+2.43.0
+

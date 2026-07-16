@@ -1,0 +1,29 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Laxman Dewangan <ldewangan@nvidia.com>
+Date: Sat, 24 Aug 2024 10:27:30 +0000
+Subject: [PATCH 177/240] NVIDIA: SAUCE: pinctrl: Remove duplication of
+ PINCTRL_TEGRA264 definition
+
+Remove the duplication of conifg definition in the Kconfigs.
+
+Add the PINCTRL_TEGRA264 in one place and select when
+CONFIG_ARCH_TEGRA_264_SOC is enabled in defconfig.
+
+Change-Id: Ied9488116bfd50e4c12e627271d624a7f88d33b3
+Signed-off-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/soc/tegra/Kconfig b/drivers/soc/tegra/Kconfig
+index d3c5855e61f54..63eb57bfd1445 100644
+--- a/drivers/soc/tegra/Kconfig
++++ b/drivers/soc/tegra/Kconfig
+@@ -135,6 +135,7 @@ config ARCH_TEGRA_264_SOC
+ 	depends on !CPU_BIG_ENDIAN
+ 	select MAILBOX
+ 	select SOC_TEGRA_PMC
++	select PINCTRL_TEGRA264
+ 	help
+ 	  Enable support for the NVIDIA Tegra264 SoC.
+ 
+-- 
+2.43.0
+

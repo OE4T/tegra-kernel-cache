@@ -1,0 +1,70 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Hans Yang <hansy@nvidia.com>
+Date: Thu, 10 Jul 2025 05:07:10 +0000
+Subject: [PATCH 018/240] NVIDIA: SAUCE: media: uvc: zero seq number when
+ disabling stream
+
+For bulk-based devices, when disabling the video stream,
+in addition to issue CLEAR_FEATURE(HALT), it is better to set
+alternate setting 0 as well or the sequnce number in host
+side will probably not reset to zero.
+
+Then in next time video stream start, the device will expect
+host starts packet from 0 sequence number but host actually
+continue the sequence number from last transaction and this
+causes transaction errors.
+
+This commit fixes this by adding set alternate setting 0 back
+as what isoch-based devices do.
+
+Below error message will also be eliminated for some devices:
+uvcvideo: Non-zero status (-71) in video completion handler.
+
+Bug 200328129
+Bug 200773787
+Bug 200773474
+Bug 4979751
+
+Change-Id: Ic1dc30679ef8c5e3a92bf12a06a47f0ac75c09b7
+Signed-off-by: Hans Yang <hansy@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/1543436
+Reviewed-on: https://git-master.nvidia.com/r/1580119
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-5.10/+/2618097
+(cherry picked from commit 7e106e03f320690741675d9fe5b3fd916c30bcc8)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3405449
+Reviewed-by: svcacv <svcacv@nvidia.com>
+Reviewed-by: Wayne Chang <waynec@nvidia.com>
+Reviewed-by: EJ Hsu <ejh@nvidia.com>
+Reviewed-by: Henry Lin <henryl@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: WK Tsai <wtsai@nvidia.com>
+Tested-by: Henry Lin <henryl@nvidia.com>
+(cherry picked from commit 4ca5cf37519ac003e2fb53fdc945f83fb5582996)
+
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index ec76595f3c4be..b0f39fc5cdb40 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -2,6 +2,7 @@
+ /*
+  *      uvc_video.c  --  USB Video Class driver - Video handling
+  *
++ *      SPDX-FileCopyrightText: Copyright (c) 2021-2025, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+  *      Copyright (C) 2005-2010
+  *          Laurent Pinchart (laurent.pinchart@ideasonboard.com)
+  */
+@@ -2320,9 +2321,8 @@ void uvc_video_stop_streaming(struct uvc_streaming *stream)
+ {
+ 	uvc_video_stop_transfer(stream, 1);
+ 
+-	if (stream->intf->num_altsetting > 1) {
+-		usb_set_interface(stream->dev->udev, stream->intfnum, 0);
+-	} else {
++	usb_set_interface(stream->dev->udev, stream->intfnum, 0);
++	if (stream->intf->num_altsetting <= 1) {
+ 		/*
+ 		 * UVC doesn't specify how to inform a bulk-based device
+ 		 * when the video stream is stopped. Windows sends a
+-- 
+2.43.0
+

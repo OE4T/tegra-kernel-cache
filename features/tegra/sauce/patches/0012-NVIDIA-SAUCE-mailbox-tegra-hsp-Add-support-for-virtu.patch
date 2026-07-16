@@ -1,0 +1,153 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kartik <kkartik@nvidia.com>
+Date: Wed, 12 Jul 2023 18:20:29 +0000
+Subject: [PATCH 012/240] NVIDIA: SAUCE: mailbox: tegra-hsp: Add support for
+ virtualization
+
+Tegra Hypervisor configures the IE registers before the Guest OS boots.
+For security reasons, Guest OS is limited to read-only access to IE
+registers.
+
+Add support for virtual ops. Since we do not expect any routing from
+the driver we use a dummy route operation.
+
+Bug 3950679
+
+Change-Id: I7bbcd356beaf18dce335346f80987113e8a684f7
+Signed-off-by: Kartik <kkartik@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-jammy/+/2962449
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3016290
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3032919
+Reviewed-by: Akhil R <akhilrajeev@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Tested-by: Akhil R <akhilrajeev@nvidia.com>
+Tested-by: Laxman Dewangan <ldewangan@nvidia.com>
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/mailbox/tegra-hsp.c b/drivers/mailbox/tegra-hsp.c
+index 4376f936cc82e..f89ed6d0646df 100644
+--- a/drivers/mailbox/tegra-hsp.c
++++ b/drivers/mailbox/tegra-hsp.c
+@@ -115,6 +115,7 @@ struct tegra_hsp_soc {
+ 	unsigned int as_mask;
+ 	unsigned int ss_mask;
+ 	unsigned int sm_mask;
++	bool virtualized;
+ };
+ 
+ struct tegra_hsp {
+@@ -496,6 +497,13 @@ static const struct tegra_hsp_sm_ops tegra194_hsp_sm_32bit_ops = {
+ 	.set_irq = tegra194_hsp_sm_set_irq,
+ };
+ 
++static const struct tegra_hsp_sm_ops tegra194_hv_hsp_sm_32bit_ops = {
++	.send = tegra_hsp_sm_send32,
++	.recv = tegra_hsp_sm_recv32,
++	.route_irq = tegra186_hsp_sm_route_irq,
++	.set_irq = tegra194_hsp_sm_set_irq,
++};
++
+ static void tegra_hsp_sm_send128(struct tegra_hsp_channel *channel, void *data)
+ {
+ 	u32 value[4];
+@@ -544,6 +552,13 @@ static const struct tegra_hsp_sm_ops tegra234_hsp_sm_128bit_ops = {
+ 	.set_irq = tegra194_hsp_sm_set_irq,
+ };
+ 
++static const struct tegra_hsp_sm_ops tegra234_hv_hsp_sm_128bit_ops = {
++	.send = tegra_hsp_sm_send128,
++	.recv = tegra_hsp_sm_recv128,
++	.route_irq = tegra186_hsp_sm_route_irq,
++	.set_irq = tegra194_hsp_sm_set_irq,
++};
++
+ static int tegra_hsp_mailbox_send_data(struct mbox_chan *chan, void *data)
+ {
+ 	struct tegra_hsp_mailbox *mb = chan->con_priv;
+@@ -700,10 +715,14 @@ static struct mbox_chan *tegra_hsp_sm_xlate(struct mbox_controller *mbox,
+ 		if (!hsp->soc->has_128_bit_mb)
+ 			return ERR_PTR(-ENODEV);
+ 
+-		mb->ops = &tegra234_hsp_sm_128bit_ops;
++		mb->ops = hsp->soc->virtualized ?
++				&tegra234_hv_hsp_sm_128bit_ops :
++				&tegra234_hsp_sm_128bit_ops;
+ 	} else {
+ 		if (hsp->soc->has_per_mb_ie)
+-			mb->ops = &tegra194_hsp_sm_32bit_ops;
++			mb->ops = hsp->soc->virtualized ?
++					&tegra194_hv_hsp_sm_32bit_ops :
++					&tegra194_hsp_sm_32bit_ops;
+ 		else
+ 			mb->ops = &tegra186_hsp_sm_32bit_ops;
+ 	}
+@@ -836,7 +855,7 @@ static int tegra_hsp_request_shared_irq(struct tegra_hsp *hsp)
+ 		hsp->shared_irqs[i].enabled = true;
+ 
+ 		value = tegra_hsp_readl(hsp, HSP_INT_IE(i));
+-		if (value) {
++		if (value && !hsp->soc->virtualized) {
+ 			dev_warn(hsp->dev,
+ 				 "disabling interrupts for si: %d\n", i);
+ 			tegra_hsp_writel(hsp, 0, HSP_INT_IE(i));
+@@ -1055,6 +1074,7 @@ static const struct tegra_hsp_soc tegra186_hsp_soc = {
+ 	.as_mask = 0xf,
+ 	.ss_mask = 0xf,
+ 	.sm_mask = 0xf,
++	.virtualized = false,
+ };
+ 
+ static const struct tegra_hsp_soc tegra194_hsp_soc = {
+@@ -1072,6 +1092,7 @@ static const struct tegra_hsp_soc tegra194_hsp_soc = {
+ 	.as_mask = 0xf,
+ 	.ss_mask = 0xf,
+ 	.sm_mask = 0xf,
++	.virtualized = false,
+ };
+ 
+ static const struct tegra_hsp_soc tegra234_hsp_soc = {
+@@ -1089,6 +1110,7 @@ static const struct tegra_hsp_soc tegra234_hsp_soc = {
+ 	.as_mask = 0xf,
+ 	.ss_mask = 0xf,
+ 	.sm_mask = 0xf,
++	.virtualized = false,
+ };
+ 
+ static const struct tegra_hsp_soc tegra264_hsp_soc = {
+@@ -1106,6 +1128,25 @@ static const struct tegra_hsp_soc tegra264_hsp_soc = {
+ 	.as_mask = 0xf,
+ 	.ss_mask = 0xf,
+ 	.sm_mask = 0xf,
++	.virtualized = false,
++};
++
++static const struct tegra_hsp_soc tegra234_hv_hsp_soc = {
++	.map = tegra186_hsp_db_map,
++	.has_per_mb_ie = true,
++	.has_128_bit_mb = true,
++	.reg_stride = 0x100,
++	.si_shift = 16,
++	.db_shift = 12,
++	.as_shift = 8,
++	.ss_shift = 4,
++	.sm_shift = 0,
++	.si_mask = 0xf,
++	.db_mask = 0xf,
++	.as_mask = 0xf,
++	.ss_mask = 0xf,
++	.sm_mask = 0xf,
++	.virtualized = true,
+ };
+ 
+ static const struct of_device_id tegra_hsp_match[] = {
+@@ -1113,6 +1154,7 @@ static const struct of_device_id tegra_hsp_match[] = {
+ 	{ .compatible = "nvidia,tegra194-hsp", .data = &tegra194_hsp_soc },
+ 	{ .compatible = "nvidia,tegra234-hsp", .data = &tegra234_hsp_soc },
+ 	{ .compatible = "nvidia,tegra264-hsp", .data = &tegra264_hsp_soc },
++	{ .compatible = "nvidia,tegra234-hsp-hv", .data = &tegra234_hv_hsp_soc },
+ 	{ }
+ };
+ 
+-- 
+2.43.0
+

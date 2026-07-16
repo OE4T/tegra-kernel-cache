@@ -1,0 +1,66 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Prathamesh Shete <pshete@nvidia.com>
+Date: Tue, 1 Jul 2025 04:56:17 +0000
+Subject: [PATCH 127/240] NVIDIA: SAUCE: mmc: sd: Add quirk for SanDisk SR64G
+ Extreme Pro power off notify timeout
+
+SanDisk SR64G Extreme Pro cards intermittently timeout during power off
+notify operations in suspend, causing error -110 and preventing the
+system from entering suspend state successfully.
+
+The error manifests as:
+  mmc0: error -110 writing Power Off Notify bit
+  mmcblk mmc0:aaaa: PM: dpm_run_callback(): mmc_bus_suspend+0x0/0x98 returns -110
+  mmcblk mmc0:aaaa: PM: failed to suspend async: error -110
+  PM: Some devices failed to suspend, or early wake event detected
+
+This issue is specific to SR64G cards and occurs when the card takes
+longer than the standard 1-second timeout (SD_POWEROFF_NOTIFY_TIMEOUT_MS)
+to complete the power off notification during suspend.
+
+Add MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY quirk specifically for "SR64G"
+cards to skip the power off notify operation and allow suspend to
+complete successfully. The card will still be properly powered off
+through the normal power management sequence.
+
+This targeted fix ensures only the problematic SR64G cards are affected,
+while maintaining normal power off notify behavior for other SanDisk
+cards that handle it correctly.
+
+Bug 5318411
+
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Change-Id: I6a55af30a8f1a50f7ef960e5471e16f9499edca3
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3396882
+(cherry picked from commit 23f86fc3ac9e8fb815256db9561119ac288d76d4)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3427658
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 1b5cb13c08b4c46ac8c638013baf1cba15d85a75)
+
+diff --git a/drivers/mmc/core/quirks.h b/drivers/mmc/core/quirks.h
+index 6f727b4a60a52..54901102b17f7 100644
+--- a/drivers/mmc/core/quirks.h
++++ b/drivers/mmc/core/quirks.h
+@@ -50,6 +50,16 @@ static const struct mmc_fixup __maybe_unused mmc_sd_fixups[] = {
+ 	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_SANDISK_SD, 0x5344, add_quirk_sd,
+ 		  MMC_QUIRK_BROKEN_SD_DISCARD),
+ 
++	/*
++	 * SanDisk Extreme Pro SR64G card has power management issues:
++	 * - Timeout during power off notify operations (error -110)
++	 * - Communication errors during cache enable (error -84)
++	 * - Runtime resume failures (error -84)
++	 * Skip power off notify and cache operations to prevent errors.
++	 */
++	MMC_FIXUP("SR64G", CID_MANFID_SANDISK, CID_OEMID_ANY, add_quirk_sd,
++		  MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY | MMC_QUIRK_BROKEN_SD_CACHE),
++
+ 	END_FIXUP
+ };
+ 
+-- 
+2.43.0
+

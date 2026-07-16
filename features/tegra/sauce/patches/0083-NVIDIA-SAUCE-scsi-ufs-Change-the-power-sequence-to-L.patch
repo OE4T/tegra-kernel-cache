@@ -1,0 +1,109 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Mallikarjun Kasoju <mkasoju@nvidia.com>
+Date: Fri, 16 Aug 2024 09:22:55 +0000
+Subject: [PATCH 083/240] NVIDIA: SAUCE: scsi: ufs: Change the power sequence
+ to LSx1->LSx2->HSx2
+
+Change the power sequence to LSx1->LSx2->HSx2
+
+Bug 4763966
+
+Signed-off-by: Mallikarjun Kasoju <mkasoju@nvidia.com>
+Change-Id: I43f6c574ce1396ca2858b3c9ac272c093591e54e
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3195237
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index e0314560ebaf5..c0d95fe3dee1c 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -4693,7 +4693,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
+ 	 * - PA_TXGEAR, PA_ACTIVETXDATALANES, PA_TXTERMINATION,
+ 	 * - PA_HSSERIES
+ 	 */
++	if (!(hba->quirks & UFSHCD_QUIRK_BROKEN_PWR_SEQUENCE)) {
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_ACTIVERXDATALANES),
++				pwr_mode->lane_rx);
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_ACTIVETXDATALANES),
++				pwr_mode->lane_tx);
++
++		/* Lane change is triggered */
++		ret = ufshcd_uic_change_pwr_mode(hba, (SLOWAUTO_MODE << 4
++				| SLOWAUTO_MODE));
++		if (ret) {
++			dev_err(hba->dev,
++				 "%s: lane change failed %d\n", __func__, ret);
++			goto out;
++		}
++		ufshcd_dme_configure_adapt(hba, pwr_mode->gear_rx, PA_INITIAL_ADAPT);
++	}
++
+ 	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_RXGEAR), pwr_mode->gear_rx);
++	if (!(hba->quirks & UFSHCD_QUIRK_BROKEN_PWR_SEQUENCE))
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_ACTIVETXDATALANES),
++			pwr_mode->lane_tx);
+ 	if (pwr_mode->pwr_rx == FASTAUTO_MODE ||
+ 			pwr_mode->pwr_rx == FAST_MODE)
+ 		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_RXTERMINATION), true);
+@@ -4745,23 +4765,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
+ 		return ret;
+ 	}
+ 
+-	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_ACTIVERXDATALANES),
+-			pwr_mode->lane_rx);
+-	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_ACTIVETXDATALANES),
+-			pwr_mode->lane_tx);
++	if (hba->quirks & UFSHCD_QUIRK_BROKEN_PWR_SEQUENCE) {
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_ACTIVERXDATALANES),
++				pwr_mode->lane_rx);
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_ACTIVETXDATALANES),
++				pwr_mode->lane_tx);
+ 
+-	ret = ufshcd_uic_change_pwr_mode(hba, pwr_mode->pwr_rx << 4
+-			| pwr_mode->pwr_tx);
++		ret = ufshcd_uic_change_pwr_mode(hba, pwr_mode->pwr_rx << 4
++				| pwr_mode->pwr_tx);
+ 
+-	if (ret) {
+-		dev_err(hba->dev,
+-			"%s: Lane change failed %d\n", __func__, ret);
+-	} else {
+-		memcpy(&hba->pwr_info, pwr_mode,
+-			sizeof(struct ufs_pa_layer_attr));
++		if (ret)
++			dev_err(hba->dev,
++				"%s: Lane change failed %d\n", __func__, ret);
+ 	}
+-
+-	return ret;
++out:
++        if (!ret) {
++                ufshcd_vops_pwr_change_notify(hba, POST_CHANGE, NULL,
++                                                pwr_mode);
++                memcpy(&hba->pwr_info, pwr_mode,
++                        sizeof(struct ufs_pa_layer_attr));
++        }
++        return ret;
+ }
+ 
+ /**
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index 17fe07dac6a7e..0da0a0ed68040 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -695,6 +695,11 @@ enum ufshcd_quirks {
+ 	 * because it causes link startup to become unreliable.
+ 	 */
+ 	UFSHCD_QUIRK_PERFORM_LINK_STARTUP_ONCE		= 1 << 26,
++
++	/*
++	 * Enable this quirk to enable gear shift first
++	 */
++	UFSHCD_QUIRK_BROKEN_PWR_SEQUENCE		= 1 << 27,
+ };
+ 
+ enum ufshcd_caps {
+-- 
+2.43.0
+

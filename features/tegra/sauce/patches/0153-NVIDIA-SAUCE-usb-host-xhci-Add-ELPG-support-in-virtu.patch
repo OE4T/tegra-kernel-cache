@@ -1,0 +1,51 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Henry Lin <henryl@nvidia.com>
+Date: Fri, 14 Nov 2025 06:23:49 +0000
+Subject: [PATCH 153/240] NVIDIA: SAUCE: usb: host: xhci: Add ELPG support in
+ virtualization env
+
+In virtualization environment, the padctl interrupt will be owned
+by XHCI server. Once XHCI server gets the padctl interrupt, it will
+forward it to VMs via IVC channels.
+
+So, we can not enable runtime pm by only checking if padctl interrupt
+exists. Instead, we need to enable it as well if VF is enabled.
+
+Bug 4833598
+
+Change-Id: I3b0c5247b270fa2e4c2f9abb8dc0756c0196c347
+Signed-off-by: EJ Hsu <ejh@nvidia.com>
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3436314
+Tested-by: Henry Lin <henryl@nvidia.com>
+Reviewed-by: Henry Lin <henryl@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit c9eb60a3eed93dfb1693b7168893805b016a85c8)
+
+diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
+index ea077047bd75b..ab0275bd3db04 100644
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -2610,7 +2610,7 @@ static int tegra_xusb_probe(struct platform_device *pdev)
+ 	pm_runtime_mark_last_busy(tegra->dev);
+ 	pm_runtime_set_active(tegra->dev);
+ 
+-	if (tegra->padctl_irq) {
++	if ((tegra->padctl_irq) || (tegra->soc->is_xhci_vf)) {
+ 		device_init_wakeup(tegra->dev, true);
+ 		pm_runtime_enable(tegra->dev);
+ 	}
+@@ -2685,7 +2685,7 @@ static void tegra_xusb_remove(struct platform_device *pdev)
+ 
+ 	fw_log_deinit(tegra);
+ 
+-	if (tegra->padctl_irq)
++	if ((tegra->padctl_irq) || (tegra->soc->is_xhci_vf))
+ 		pm_runtime_disable(&pdev->dev);
+ 
+ 	pm_runtime_put(&pdev->dev);
+-- 
+2.43.0
+

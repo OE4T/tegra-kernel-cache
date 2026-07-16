@@ -1,0 +1,115 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Henry Lin <henryl@nvidia.com>
+Date: Wed, 11 Dec 2019 17:01:37 +0800
+Subject: [PATCH 138/240] NVIDIA: SAUCE: usb: gadget: xudc: add set_wedge
+ support
+
+Mass storage gadget needs udc's .set_wedge support to handle error
+recovery.
+
+Bug 200574868
+Bug 4810365
+
+Change-Id: I45e682e8dadcadea7f6cf6b5e9af6548632add88
+Reviewed-on: https://git-master.nvidia.com/r/2260688
+(cherry picked from commit 410fb3a52324ec998f776f454e70e961c24aeab2)
+Signed-off-by: Henry Lin <henryl@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3255023
+Reviewed-by: mobile promotions <svcmobile_promotions@nvidia.com>
+Reviewed-by: Wayne Chang <waynec@nvidia.com>
+Tested-by: mobile promotions <svcmobile_promotions@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+Reviewed-by: Sing-Han Chen <singhanc@nvidia.com>
+Tested-by: Wayne Chang <waynec@nvidia.com>
+Reviewed-by: WK Tsai <wtsai@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 624c0c941cc5162b32384874a4e5fd12d8224b6e)
+
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index 5743d2ea36856..c13697c457d89 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -409,6 +409,7 @@ struct tegra_xudc_ep {
+ 	bool pcs;
+ 	bool ring_full;
+ 	bool stream_rejected;
++	bool wedged;
+ 
+ 	struct list_head queue;
+ 	const struct usb_endpoint_descriptor *desc;
+@@ -1563,6 +1564,18 @@ static int __tegra_xudc_ep_set_halt(struct tegra_xudc_ep *ep, bool halt)
+ 		return -ENOTSUPP;
+ 	}
+ 
++	if (ep->wedged && !halt) {
++		dev_dbg(xudc->dev, "ep %u is wedged\n", ep->index);
++
++		/* Reset sequence number to 0 */
++		ep_ctx_write_state(ep->context, EP_STATE_DISABLED);
++		ep_reload(xudc, ep->index);
++		ep_ctx_write_state(ep->context, EP_STATE_RUNNING);
++		ep_ctx_write_seq_num(ep->context, 0);
++		ep_reload(xudc, ep->index);
++		return 0;
++	}
++
+ 	if (!!(xudc_readl(xudc, EP_HALT) & BIT(ep->index)) == halt) {
+ 		dev_dbg(xudc->dev, "EP %u already %s\n", ep->index,
+ 			halt ? "halted" : "not halted");
+@@ -1592,7 +1605,8 @@ static int __tegra_xudc_ep_set_halt(struct tegra_xudc_ep *ep, bool halt)
+ 	return 0;
+ }
+ 
+-static int tegra_xudc_ep_set_halt(struct usb_ep *usb_ep, int value)
++static int tegra_xudc_ep_set_halt_wedge(struct usb_ep *usb_ep, int value,
++					bool wedge)
+ {
+ 	struct tegra_xudc_ep *ep;
+ 	struct tegra_xudc *xudc;
+@@ -1610,6 +1624,8 @@ static int tegra_xudc_ep_set_halt(struct usb_ep *usb_ep, int value)
+ 		ret = -ESHUTDOWN;
+ 		goto unlock;
+ 	}
++	if (!value)
++		ep->wedged = false;
+ 
+ 	if (value && usb_endpoint_dir_in(ep->desc) &&
+ 	    !list_empty(&ep->queue)) {
+@@ -1619,12 +1635,26 @@ static int tegra_xudc_ep_set_halt(struct usb_ep *usb_ep, int value)
+ 	}
+ 
+ 	ret = __tegra_xudc_ep_set_halt(ep, value);
++	if (!ret) {
++		if (wedge)
++			ep->wedged = value;
++	}
+ unlock:
+ 	spin_unlock_irqrestore(&xudc->lock, flags);
+ 
+ 	return ret;
+ }
+ 
++static int tegra_xudc_ep_set_halt(struct usb_ep *usb_ep, int value)
++{
++	return tegra_xudc_ep_set_halt_wedge(usb_ep, value, false);
++}
++
++static int tegra_xudc_ep_set_wedge(struct usb_ep *usb_ep)
++{
++	return tegra_xudc_ep_set_halt_wedge(usb_ep, 1, true);
++}
++
+ static void tegra_xudc_ep_context_setup(struct tegra_xudc_ep *ep)
+ {
+ 	const struct usb_endpoint_descriptor *desc = ep->desc;
+@@ -1942,6 +1972,7 @@ static const struct usb_ep_ops tegra_xudc_ep_ops = {
+ 	.queue = tegra_xudc_ep_queue,
+ 	.dequeue = tegra_xudc_ep_dequeue,
+ 	.set_halt = tegra_xudc_ep_set_halt,
++	.set_wedge = tegra_xudc_ep_set_wedge,
+ };
+ 
+ static int tegra_xudc_ep0_enable(struct usb_ep *usb_ep,
+-- 
+2.43.0
+

@@ -1,0 +1,54 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: haotienh <haotienh@nvidia.com>
+Date: Wed, 9 Apr 2025 02:49:58 +0000
+Subject: [PATCH 140/240] NVIDIA: SAUCE: usb: gadget: xudc: Avoid skipping
+ clear feature
+
+We skip ClearFeature(ENDPOINT_HALT) for endpoints which are not halted
+in previous codes. That will cause sequence number mismatching.
+According to 9.4.5 in USB3.2 Revision 1.1 specification, we should
+always reinitialize data sequence and set stream state machine to
+disabled.
+
+Bug 5104500
+
+Change-Id: I7dae15da68193ab8985dd1e137841d41b07324f1
+Signed-off-by: haotienh <haotienh@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3336685
+Reviewed-by: svcacv <svcacv@nvidia.com>
+Reviewed-by: Henry Lin <henryl@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: EJ Hsu <ejh@nvidia.com>
+Reviewed-by: WK Tsai <wtsai@nvidia.com>
+Reviewed-by: Wayne Chang <waynec@nvidia.com>
+(cherry picked from commit 8c3d561f700689488651995457eac05a18532328)
+
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index c13697c457d89..17c30e21b3573 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -2,7 +2,7 @@
+ /*
+  * NVIDIA Tegra XUSB device mode controller
+  *
+- * SPDX-FileCopyrightText: Copyright (c) 2013-2024, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
++ * SPDX-FileCopyrightText: Copyright (c) 2013-2025, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+  * Copyright (c) 2015, Google Inc.
+  */
+ 
+@@ -1576,12 +1576,6 @@ static int __tegra_xudc_ep_set_halt(struct tegra_xudc_ep *ep, bool halt)
+ 		return 0;
+ 	}
+ 
+-	if (!!(xudc_readl(xudc, EP_HALT) & BIT(ep->index)) == halt) {
+-		dev_dbg(xudc->dev, "EP %u already %s\n", ep->index,
+-			halt ? "halted" : "not halted");
+-		return 0;
+-	}
+-
+ 	if (halt) {
+ 		ep_halt(xudc, ep->index);
+ 	} else {
+-- 
+2.43.0
+

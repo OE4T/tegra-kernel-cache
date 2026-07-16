@@ -1,0 +1,97 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aniruddha Rao <anrao@nvidia.com>
+Date: Mon, 27 Jul 2020 12:22:27 +0530
+Subject: [PATCH 128/240] NVIDIA: SAUCE: mmc: tegra: use gpio for voltage
+ switching on fpga
+
+Use dt property "nvidia,voltage-switch-gpio" parsed from DT
+to select voltage level and toggle it for switching voltage
+from 3.3V to 1.8V to support SD3.0 cards on FPGA.
+
+Bug 2836586
+Bug 2849456
+Bug 4333277
+
+Change-Id: I84294ed8029b1e832a1402db5a5e716f5c2a409e
+Reviewed-on: https://git-master.nvidia.com/r/#/c/linux-4.14/+/2343467/
+Signed-off-by: Aniruddha Rao <anrao@nvidia.com>
+(cherry-picked from commit b99819f98ef04c50b4a050a9f49e7e3c223868b1 and
+and edited by anrao to work in k5.9)
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-5.9/+/2386067
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+
+diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
+index ce94d23ca00a4..977bd519acbfa 100644
+--- a/drivers/mmc/host/sdhci-tegra.c
++++ b/drivers/mmc/host/sdhci-tegra.c
+@@ -26,6 +26,8 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/reset.h>
++#include <linux/gpio.h>
++#include <linux/of_gpio.h>
+ 
+ #include <soc/tegra/common.h>
+ #include <soc/tegra/fuse.h>
+@@ -222,6 +224,7 @@ struct sdhci_tegra {
+ #if IS_ENABLED(CONFIG_TEGRA_PROD_LEGACY)
+ 	struct tegra_prod *prod_list;
+ #endif
++	int volt_switch_gpio;
+ };
+ 
+ static u16 tegra_sdhci_readw(struct sdhci_host *host, int reg)
+@@ -559,8 +562,20 @@ static int tegra_sdhci_set_padctrl(struct sdhci_host *host, int voltage,
+ 			sdhci_writel(host, reg,
+ 					SDHCI_TEGRA_SDMEM_COMP_PADCTRL);
+ 		}
+-
+ 	} else {
++		/* Toggle power gpio for switching voltage on FPGA */
++		if (gpio_is_valid(tegra_host->volt_switch_gpio)) {
++			if (voltage == MMC_SIGNAL_VOLTAGE_330) {
++				gpio_set_value(tegra_host->volt_switch_gpio, 1);
++				dev_info(mmc_dev(host->mmc),
++					 "3.3V set by voltage switch gpio\n");
++			} else {
++				gpio_set_value(tegra_host->volt_switch_gpio, 0);
++				dev_info(mmc_dev(host->mmc),
++					 "1.8V set by voltage switch gpio\n");
++			}
++			return 0;
++		}
+ 		/* Dual Voltage PADS Voltage selection */
+ 		if (!tegra_host->pad_control_available)
+ 			return 0;
+@@ -1742,6 +1757,7 @@ static void sdhci_tegra_program_stream_id(struct sdhci_host *host)
+ 
+ static int sdhci_tegra_probe(struct platform_device *pdev)
+ {
++	struct device_node *np = pdev->dev.of_node;
+ 	const struct sdhci_tegra_soc_data *soc_data;
+ 	struct sdhci_host *host;
+ 	struct sdhci_pltfm_host *pltfm_host;
+@@ -1890,6 +1906,20 @@ static int sdhci_tegra_probe(struct platform_device *pdev)
+ 		usleep_range(2000, 4000);
+ 	}
+ 
++	tegra_host->volt_switch_gpio = of_get_named_gpio(np,
++			"nvidia,voltage-switch-gpio", 0);
++	if (gpio_is_valid(tegra_host->volt_switch_gpio)) {
++		rc = gpio_request(tegra_host->volt_switch_gpio, "sdhci_power");
++		if (rc)
++			dev_err(mmc_dev(host->mmc),
++				"failed to allocate gpio for voltage switch, "
++				"err: %d\n", rc);
++		gpio_direction_output(tegra_host->volt_switch_gpio, 1);
++		gpio_set_value(tegra_host->volt_switch_gpio, 1);
++		dev_info(mmc_dev(host->mmc),
++				"3.3V set initially by voltage switch gpio\n");
++	}
++
+ 	rc = sdhci_tegra_add_host(host);
+ 	if (rc)
+ 		goto err_add_host;
+-- 
+2.43.0
+
