@@ -19,10 +19,10 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 09abbfb8e1211..1e3b150a09218 100644
+index d28100c441f39..85f2928dc79e0 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -28438,3 +28438,11 @@ S:	Buried alive in reporters
+@@ -28437,3 +28437,11 @@ S:	Buried alive in reporters
  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
  F:	*
  F:	*/

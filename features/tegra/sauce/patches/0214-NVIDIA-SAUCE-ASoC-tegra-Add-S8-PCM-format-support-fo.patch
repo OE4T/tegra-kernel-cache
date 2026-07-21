@@ -1,5 +1,5 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: "akunkulagunt@" <akunkulagunt@nvidia.com>
+From: "akunkulagunt@" <akunkulagunt@>
 Date: Wed, 8 Apr 2026 15:05:16 +0000
 Subject: [PATCH 214/240] NVIDIA: SAUCE: ASoC: tegra: Add S8 PCM format support
  for MVC

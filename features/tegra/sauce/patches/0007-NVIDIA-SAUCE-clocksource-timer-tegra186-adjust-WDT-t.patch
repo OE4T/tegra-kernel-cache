@@ -22,10 +22,10 @@ Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 (cherry picked from commit c8d6529832fafbcc8a80535302597404b9488714)
 
 diff --git a/drivers/clocksource/timer-tegra186.c b/drivers/clocksource/timer-tegra186.c
-index 355558893e5f3..966266b601d91 100644
+index bfe16d2d5104e..e05dd5477fcd7 100644
 --- a/drivers/clocksource/timer-tegra186.c
 +++ b/drivers/clocksource/timer-tegra186.c
-@@ -505,8 +505,9 @@ static int __maybe_unused tegra186_timer_resume(struct device *dev)
+@@ -506,8 +506,9 @@ static int __maybe_unused tegra186_timer_resume(struct device *dev)
  	return 0;
  }
  

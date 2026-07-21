@@ -29,7 +29,7 @@ Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
 Tested-by: Prathamesh Shete <pshete@nvidia.com>
 
 diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index 34e93d6c67690..3e6d9b0dbe075 100644
+index b4b0c46d2fa44..dc828d057d8c5 100644
 --- a/drivers/usb/typec/ucsi/ucsi.c
 +++ b/drivers/usb/typec/ucsi/ucsi.c
 @@ -1574,11 +1574,14 @@ static const struct typec_operations ucsi_ops = {

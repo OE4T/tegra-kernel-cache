@@ -35,7 +35,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit f1b86419ed688791d0c116a701319d288ab3e84c)
 
 diff --git a/drivers/clocksource/timer-tegra186.c b/drivers/clocksource/timer-tegra186.c
-index 966266b601d91..c0471f5aa7976 100644
+index e05dd5477fcd7..36bb08825c5ca 100644
 --- a/drivers/clocksource/timer-tegra186.c
 +++ b/drivers/clocksource/timer-tegra186.c
 @@ -57,6 +57,8 @@
@@ -55,7 +55,7 @@ index 966266b601d91..c0471f5aa7976 100644
  	bool locked;
  
  	struct tegra186_tmr *tmr;
-@@ -174,6 +177,16 @@ static void tegra186_wdt_enable(struct tegra186_wdt *wdt)
+@@ -175,6 +178,16 @@ static void tegra186_wdt_enable(struct tegra186_wdt *wdt)
  		value &= ~WDTCR_PERIOD_MASK;
  		value |= WDTCR_PERIOD(1);
  
@@ -72,7 +72,7 @@ index 966266b601d91..c0471f5aa7976 100644
  		/* enable system POR reset */
  		value |= WDTCR_SYSTEM_POR_RESET_ENABLE;
  
-@@ -205,6 +218,10 @@ static int tegra186_wdt_ping(struct watchdog_device *wdd)
+@@ -206,6 +219,10 @@ static int tegra186_wdt_ping(struct watchdog_device *wdd)
  {
  	struct tegra186_wdt *wdt = to_tegra186_wdt(wdd);
  
@@ -83,7 +83,7 @@ index 966266b601d91..c0471f5aa7976 100644
  	tegra186_wdt_disable(wdt);
  	tegra186_wdt_enable(wdt);
  
-@@ -320,6 +337,8 @@ static struct tegra186_wdt *tegra186_wdt_create(struct tegra186_timer *tegra,
+@@ -321,6 +338,8 @@ static struct tegra186_wdt *tegra186_wdt_create(struct tegra186_timer *tegra,
  	if (value & WDTCR_LOCAL_INT_ENABLE)
  		wdt->locked = true;
  
@@ -92,7 +92,7 @@ index 966266b601d91..c0471f5aa7976 100644
  	source = value & WDTCR_TIMER_SOURCE_MASK;
  
  	wdt->tmr = tegra186_tmr_create(tegra, source);
-@@ -419,10 +438,21 @@ static int tegra186_timer_usec_init(struct tegra186_timer *tegra)
+@@ -420,10 +439,21 @@ static int tegra186_timer_usec_init(struct tegra186_timer *tegra)
  	return clocksource_register_hz(&tegra->usec, USEC_PER_SEC);
  }
  
@@ -114,7 +114,7 @@ index 966266b601d91..c0471f5aa7976 100644
  	int err;
  
  	tegra = devm_kzalloc(dev, sizeof(*tegra), GFP_KERNEL);
-@@ -441,6 +471,15 @@ static int tegra186_timer_probe(struct platform_device *pdev)
+@@ -442,6 +472,15 @@ static int tegra186_timer_probe(struct platform_device *pdev)
  	if (err < 0)
  		return err;
  
@@ -130,7 +130,7 @@ index 966266b601d91..c0471f5aa7976 100644
  	/* create a watchdog using a preconfigured timer */
  	tegra->wdt = tegra186_wdt_create(tegra, 0);
  	if (IS_ERR(tegra->wdt)) {
-@@ -467,6 +506,13 @@ static int tegra186_timer_probe(struct platform_device *pdev)
+@@ -468,6 +507,13 @@ static int tegra186_timer_probe(struct platform_device *pdev)
  		goto unregister_osc;
  	}
  
