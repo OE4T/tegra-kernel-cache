@@ -28,10 +28,10 @@ Link: https://patch.msgid.link/20251217154529.377586-2-nirmoyd@nvidia.com
 (cherry picked from commit 550a190494a0d3e933dd6f3b2e9c430f94a30a8c)
 
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index d32a47e81fcf3..481e4186a5c1b 100644
+index f6001be94955e..fb529b7034ffe 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -4481,6 +4481,16 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_BROADCOM, 0x9000,
+@@ -4466,6 +4466,16 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_BROADCOM, 0x9000,
  DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_BROADCOM, 0x9084,
  				quirk_bridge_cavm_thrx2_pcie_root);
  

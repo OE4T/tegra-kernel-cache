@@ -31,10 +31,10 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I7ef92658f89e505015a52009504a9d1579a1321c
 
 diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 9083658a4287f..ed92a7f1628f0 100644
+index d7de9790fe9fd..e465faf676a38 100644
 --- a/drivers/pci/controller/dwc/pci-imx6.c
 +++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -1407,18 +1407,18 @@ static int imx_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
+@@ -1402,18 +1402,18 @@ static int imx_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
  
  static const struct pci_epc_features imx8m_pcie_epc_features = {
  	.msi_capable = true,

@@ -3042,10 +3042,10 @@ index 76efd74124b33..4aa09660804b9 100644
  	return 0;
  }
 diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 79676188f60f3..3d1cacad559bd 100644
+index db0cf436c8395..69dd172b5ffda 100644
 --- a/drivers/iommu/intel/iommu.c
 +++ b/drivers/iommu/intel/iommu.c
-@@ -2305,7 +2305,7 @@ static void iommu_flush_all(void)
+@@ -2300,7 +2300,7 @@ static void iommu_flush_all(void)
  	}
  }
  
@@ -3054,7 +3054,7 @@ index 79676188f60f3..3d1cacad559bd 100644
  {
  	struct dmar_drhd_unit *drhd;
  	struct intel_iommu *iommu = NULL;
-@@ -2332,7 +2332,7 @@ static int iommu_suspend(void)
+@@ -2327,7 +2327,7 @@ static int iommu_suspend(void)
  	return 0;
  }
  
@@ -3063,7 +3063,7 @@ index 79676188f60f3..3d1cacad559bd 100644
  {
  	struct dmar_drhd_unit *drhd;
  	struct intel_iommu *iommu = NULL;
-@@ -2363,14 +2363,18 @@ static void iommu_resume(void)
+@@ -2358,14 +2358,18 @@ static void iommu_resume(void)
  	}
  }
  
@@ -4682,10 +4682,10 @@ index 425d429906d0d..f3aaef695b8cd 100644
  	return 0;
  }
 diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
-index c7dcccc5f3d6b..c07e562ee4c1a 100644
+index 889a8de3fc204..0127c255a9606 100644
 --- a/kernel/time/timekeeping.c
 +++ b/kernel/time/timekeeping.c
-@@ -1994,6 +1994,11 @@ void timekeeping_resume(void)
+@@ -1995,6 +1995,11 @@ void timekeeping_resume(void)
  	timerfd_resume();
  }
  
@@ -4697,7 +4697,7 @@ index c7dcccc5f3d6b..c07e562ee4c1a 100644
  int timekeeping_suspend(void)
  {
  	struct timekeeper *tks = &tk_core.shadow_timekeeper;
-@@ -2061,15 +2066,24 @@ int timekeeping_suspend(void)
+@@ -2062,15 +2067,24 @@ int timekeeping_suspend(void)
  	return 0;
  }
  
