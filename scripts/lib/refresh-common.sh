@@ -44,6 +44,7 @@ describe_conflict() {
         echo "  intended final version of a file:"
         echo "    git -C $LINUX_YOCTO show ${CURRENT_BRANCH}:<path>"
     }
+    return 0
 }
 
 prompt_resolve_conflict() {
