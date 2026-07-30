@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Revanth Kumar Uppala <ruppala@nvidia.com>
+Date: Mon, 2 Mar 2026 12:05:58 +0000
+Subject: [PATCH 184/245] NVIDIA: SAUCE: soc/tegra: pmc: Add Tegra234 PCIe wake
+ event
+
+Enable PCIe wake event for the Tegra234 SoC.
+
+Bug 4701216
+
+Change-Id: I6ec2f5db2349cdee3536f129dde6edc1b1df4841
+Signed-off-by: ruppala <ruppala@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-jammy/+/3188968
+(cherry picked from commit a322ef2471d7b6699ce4d5236ce9db9471e140a8)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3562158
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+(cherry picked from commit 0366a232baa2e470853d8697bea4b829913d7c47)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3582751
+Tested-by: Prathamesh Shete <pshete@nvidia.com>
+Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: mobile promotions <svcmobile_promotions@nvidia.com>
+Tested-by: mobile promotions <svcmobile_promotions@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+APS-Inflight: svcenomis <svcenomis@nvidia.com>
+
+diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
+index 589f91b24b442..cf4c7cf6b7571 100644
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -4681,6 +4681,7 @@ static const char * const tegra234_reset_sources[] = {
+ };
+ 
+ static const struct tegra_wake_event tegra234_wake_events[] = {
++	TEGRA_WAKE_GPIO("pcie", 1, 0, TEGRA234_MAIN_GPIO(L, 2)),
+ 	TEGRA_WAKE_GPIO("sd-wake", 8, 0, TEGRA234_MAIN_GPIO(G, 7)),
+ 	TEGRA_WAKE_GPIO("eqos", 20, 0, TEGRA234_MAIN_GPIO(G, 4)),
+ 	TEGRA_WAKE_IRQ("pmu", 24, 209),
+-- 
+2.43.0
+

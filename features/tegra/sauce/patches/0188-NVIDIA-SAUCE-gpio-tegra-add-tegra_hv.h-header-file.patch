@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Wed, 14 Jan 2026 05:09:06 +0000
+Subject: [PATCH 188/245] NVIDIA: SAUCE: gpio: tegra: add tegra_hv.h header
+ file
+
+Previously, tegra_hv.c driver was having hypervisor
+syscall interface, hypervisor IVC mempool and hypervisor
+IVC queue implementation.
+
+Now refactor the tegra_hv.c driver into tegra_hv.c driver
+and tegra_hv_ivc.c driver where tegra_hv_ivc.c driver will
+have hypervisor IVC queue impelemtation and reset in tegra_hv.c
+so update the header files based on refactoring
+
+Jira ESLC-8959
+
+Change-Id: I6c7b4ae551fe8edb4222d01bb61eb4933c8d229c
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3532105
+Reviewed-by: svcacv <svcacv@nvidia.com>
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 67601f537a2a240d6671114ea29c2bbbe5159402)
+
+diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
+index 74fbdccd82da2..d2c7ffd3c071f 100644
+--- a/drivers/gpio/gpio-tegra186.c
++++ b/drivers/gpio/gpio-tegra186.c
+@@ -19,7 +19,7 @@
+ #include <linux/delay.h>
+ 
+ #if IS_ENABLED(CONFIG_TEGRA_HV_DRIVER)
+-#include <soc/tegra/virt/hv-ivc.h>
++#include <soc/tegra/virt/tegra_hv.h>
+ #endif
+ 
+ #include <dt-bindings/gpio/tegra186-gpio.h>
+-- 
+2.43.0
+

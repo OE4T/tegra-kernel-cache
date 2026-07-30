@@ -1,0 +1,39 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Akhil R <akhilrajeev@nvidia.com>
+Date: Wed, 22 Jun 2022 10:53:13 +0530
+Subject: [PATCH 186/245] NVIDIA: SAUCE: gpio: pca953x: Use NOIRQ
+ suspend/resume for PM
+
+Use NOIRQ suspend/resume for PM since the GPIOs are required to
+resume PCIe.
+
+http://nvbugs/3676237
+http://nvbugs/3681805
+http://nvbugs/4765610
+
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Change-Id: I4efdc21c33fa7cfb8030ba178a420bba5ad06d8f
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-5.10/+/2732390
+(cherry picked from commit cbebea289a2b261c1ce740bc981788d5e3a2d281)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3195235
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index f7daeadaea57c..57f6c0d0bc8d1 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -1419,7 +1419,7 @@ static int pca953x_resume(struct device *dev)
+ 	return ret;
+ }
+ 
+-static DEFINE_SIMPLE_DEV_PM_OPS(pca953x_pm_ops, pca953x_suspend, pca953x_resume);
++static DEFINE_NOIRQ_DEV_PM_OPS(pca953x_pm_ops, pca953x_suspend, pca953x_resume);
+ 
+ /* convenience to stop overlong match-table lines */
+ #define OF_653X(__nrgpio, __int) ((void *)(__nrgpio | PCAL653X_TYPE | __int))
+-- 
+2.43.0
+

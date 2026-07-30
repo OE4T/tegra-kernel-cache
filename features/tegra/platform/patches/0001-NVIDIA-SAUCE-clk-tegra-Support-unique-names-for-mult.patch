@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Tue, 2 Jun 2026 09:43:34 +0100
-Subject: [PATCH 001/196] NVIDIA: SAUCE: clk: tegra: Support unique names for
+Subject: [PATCH 001/231] NVIDIA: SAUCE: clk: tegra: Support unique names for
  multi-socket platforms
 
 On multi-socket platforms each socket has its own BPMP which exposes the

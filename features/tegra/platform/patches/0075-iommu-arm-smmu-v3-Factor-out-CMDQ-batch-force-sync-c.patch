@@ -1,0 +1,64 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nicolin Chen <nicolinc@nvidia.com>
+Date: Sun, 26 Jul 2026 08:19:01 +0000
+Subject: [PATCH 075/231] iommu/arm-smmu-v3: Factor out CMDQ batch force-sync
+ conditions
+
+arm_smmu_cmdq_batch_add_cmd_p() carries two distinct reasons for
+flushing the current batch with a CMD_SYNC before appending the
+new command:
+
+  - The batch's pre-assigned cmdq does not support the new command.
+  - The Arm erratum 2812531 workaround (ARM_SMMU_OPT_CMDQ_FORCE_SYNC)
+    forces a SYNC at one entry before the batch is full.
+
+Lift those checks into a new arm_smmu_cmdq_batch_force_sync() helper
+so that adding another force-sync condition becomes a one-line
+addition. No functional change.
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index fd0c31c7ac9cb..6137f7b43697b 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -846,16 +846,27 @@ static void arm_smmu_cmdq_batch_init_cmd(struct arm_smmu_device *smmu,
+ 	cmds->cmdq = arm_smmu_get_cmdq(smmu, cmd);
+ }
+ 
++static bool arm_smmu_cmdq_batch_force_sync(struct arm_smmu_device *smmu,
++					   struct arm_smmu_cmdq_batch *cmds,
++					   struct arm_smmu_cmd *cmd)
++{
++	/* The batch's pre-assigned cmdq doesn't support the new command */
++	if (!arm_smmu_cmdq_supports_cmd(cmds->cmdq, cmd))
++		return true;
++
++	/* Arm erratum 2812531 */
++	if (cmds->num == CMDQ_BATCH_ENTRIES - 1 &&
++	    (smmu->options & ARM_SMMU_OPT_CMDQ_FORCE_SYNC))
++		return true;
++
++	return false;
++}
++
+ static void arm_smmu_cmdq_batch_add_cmd_p(struct arm_smmu_device *smmu,
+ 					  struct arm_smmu_cmdq_batch *cmds,
+ 					  struct arm_smmu_cmd *cmd)
+ {
+-	bool force_sync = (cmds->num == CMDQ_BATCH_ENTRIES - 1) &&
+-			  (smmu->options & ARM_SMMU_OPT_CMDQ_FORCE_SYNC);
+-	bool unsupported_cmd;
+-
+-	unsupported_cmd = !arm_smmu_cmdq_supports_cmd(cmds->cmdq, cmd);
+-	if (force_sync || unsupported_cmd) {
++	if (arm_smmu_cmdq_batch_force_sync(smmu, cmds, cmd)) {
+ 		arm_smmu_cmdq_issue_cmdlist(smmu, cmds->cmdq, cmds->cmds,
+ 					    cmds->num, true);
+ 		arm_smmu_cmdq_batch_init_cmd(smmu, cmds, cmd);
+-- 
+2.43.0
+

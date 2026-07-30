@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Mon, 20 Feb 2023 05:53:49 +0000
-Subject: [PATCH 019/240] NVIDIA: SAUCE: mmc: host: Add support to bypass
+Subject: [PATCH 019/245] NVIDIA: SAUCE: mmc: host: Add support to bypass
  clock/reset
 
 Add support to bypass all BPMP clock/reset calls for

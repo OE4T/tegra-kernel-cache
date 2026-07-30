@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Tue, 17 Feb 2026 08:14:31 +0000
-Subject: [PATCH 030/196] gpio: tegra186: Support multi-socket devices
+Subject: [PATCH 030/231] gpio: tegra186: Support multi-socket devices
 
 On Tegra platforms, multiple SoC instances may be present with each
 defining the same GPIO name. For such devices, this results in

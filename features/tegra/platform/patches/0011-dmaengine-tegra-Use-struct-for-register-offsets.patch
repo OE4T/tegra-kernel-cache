@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 31 Mar 2026 15:52:58 +0530
-Subject: [PATCH 011/196] dmaengine: tegra: Use struct for register offsets
+Subject: [PATCH 011/231] dmaengine: tegra: Use struct for register offsets
 
 Repurpose the struct tegra_dma_channel_regs to define offsets for all the
 channel registers. Previously, the struct only held the register values

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik Rajput <kkartik@nvidia.com>
 Date: Fri, 10 Oct 2025 15:43:30 +0530
-Subject: [PATCH 024/196] gpio: tegra186: Use generic macro for port
+Subject: [PATCH 024/231] gpio: tegra186: Use generic macro for port
  definitions
 
 Introduce a generic macro TEGRA_GPIO_PORT to define SoC specific

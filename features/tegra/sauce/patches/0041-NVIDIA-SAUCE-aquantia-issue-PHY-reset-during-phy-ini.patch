@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Narayan Reddy <narayanr@nvidia.com>
 Date: Tue, 19 Sep 2023 18:03:22 +0000
-Subject: [PATCH 041/240] NVIDIA: SAUCE: aquantia: issue PHY reset during phy
+Subject: [PATCH 041/245] NVIDIA: SAUCE: aquantia: issue PHY reset during phy
  init
 
 issue: The AQR113C is not able to pick up 50MHz Xtal as clock

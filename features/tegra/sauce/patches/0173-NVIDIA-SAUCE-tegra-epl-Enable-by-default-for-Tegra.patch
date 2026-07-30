@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Tue, 14 Apr 2026 13:52:12 +0100
+Subject: [PATCH 173/245] NVIDIA: SAUCE: tegra-epl: Enable by default for Tegra
+
+Enable CONFIG_TEGRA_EPL by default for Tegra devices to avoid having to
+enable via the defconfig.
+
+Change-Id: I40c8002a947d4e71b9e94c020ae7c827359d306d
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+
+diff --git a/drivers/platform/tegra/Kconfig b/drivers/platform/tegra/Kconfig
+index 5f6da15cd161a..11157e5514bf2 100644
+--- a/drivers/platform/tegra/Kconfig
++++ b/drivers/platform/tegra/Kconfig
+@@ -17,6 +17,7 @@ if TEGRA_PLATFORM_DEVICES
+ 
+ config TEGRA_EPL
+ 	tristate "Tegra Error Propagation Layer Driver"
++	default y if ARCH_TEGRA
+ 	depends on MAILBOX
+ 	help
+ 	  The tegra-epl driver provides interface for reporting software detected
+-- 
+2.43.0
+

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Frank Li <Frank.Li@nxp.com>
 Date: Wed, 25 Feb 2026 16:41:37 -0500
-Subject: [PATCH 006/196] dmaengine: of_dma: Add
+Subject: [PATCH 006/231] dmaengine: of_dma: Add
  devm_of_dma_controller_register()
 
 Add a managed API, devm_of_dma_controller_register(), to simplify DMA

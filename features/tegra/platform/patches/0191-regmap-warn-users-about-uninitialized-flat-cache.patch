@@ -1,0 +1,66 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Sander Vanheule <sander@svanheule.net>
+Date: Wed, 29 Oct 2025 09:12:48 +0100
+Subject: [PATCH 191/231] regmap: warn users about uninitialized flat cache
+
+The standard flat cache did not contain any validity info, so the cache
+was always considered to be entirely valid. Multiple mechanisms exist to
+initialize the cache on regmap init (defaults, raw defaults, HW init),
+but not all drivers are using one of these. As a result, their
+implementation might currently depend on the zero-initialized cache or
+contain other workarounds.
+
+When reading an uninitialized value from the flat cache, warn the user,
+but maintain the current behavior. This will allow developers to switch
+to a sparse (flat) cache independently.
+
+Signed-off-by: Sander Vanheule <sander@svanheule.net>
+Link: https://patch.msgid.link/20251029081248.52607-3-sander@svanheule.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
+(cherry picked from commit e062bdfdd6adbb2dee7751d054c1d8df63ddb8b8)
+
+diff --git a/drivers/base/regmap/regcache-flat.c b/drivers/base/regmap/regcache-flat.c
+index 86f7679175b16..3b9235bb8313a 100644
+--- a/drivers/base/regmap/regcache-flat.c
++++ b/drivers/base/regmap/regcache-flat.c
+@@ -89,6 +89,11 @@ static int regcache_flat_read(struct regmap *map,
+ 	struct regcache_flat_data *cache = map->cache;
+ 	unsigned int index = regcache_flat_get_index(map, reg);
+ 
++	/* legacy behavior: ignore validity, but warn the user */
++	if (unlikely(!test_bit(index, cache->valid)))
++		dev_warn_once(map->dev,
++			"using zero-initialized flat cache, this may cause unexpected behavior");
++
+ 	*value = cache->data[index];
+ 
+ 	return 0;
+@@ -114,17 +119,6 @@ static int regcache_flat_write(struct regmap *map, unsigned int reg,
+ 	struct regcache_flat_data *cache = map->cache;
+ 	unsigned int index = regcache_flat_get_index(map, reg);
+ 
+-	cache->data[index] = value;
+-
+-	return 0;
+-}
+-
+-static int regcache_flat_sparse_write(struct regmap *map, unsigned int reg,
+-				      unsigned int value)
+-{
+-	struct regcache_flat_data *cache = map->cache;
+-	unsigned int index = regcache_flat_get_index(map, reg);
+-
+ 	cache->data[index] = value;
+ 	__set_bit(index, cache->valid);
+ 
+@@ -158,6 +152,6 @@ struct regcache_ops regcache_flat_sparse_ops = {
+ 	.init = regcache_flat_init,
+ 	.exit = regcache_flat_exit,
+ 	.read = regcache_flat_sparse_read,
+-	.write = regcache_flat_sparse_write,
++	.write = regcache_flat_write,
+ 	.drop = regcache_flat_drop,
+ };
+-- 
+2.43.0
+

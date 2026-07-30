@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: haotienh <haotienh@nvidia.com>
 Date: Tue, 30 Jul 2024 06:49:22 +0000
-Subject: [PATCH 135/240] NVIDIA: SAUCE: xudc: Set COREPLL_PWRDN to 0
+Subject: [PATCH 135/245] NVIDIA: SAUCE: xudc: Set COREPLL_PWRDN to 0
 
 The COREPLL_PWRDN bit can be 1 only if the device port is in
 disconnected/low-power state or is disabled.
@@ -19,7 +19,7 @@ Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 57eb306629e8d..5743d2ea36856 100644
+index f90672c9d042c..5743d2ea36856 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -1563,6 +1563,12 @@ static int __tegra_xudc_ep_set_halt(struct tegra_xudc_ep *ep, bool halt)
@@ -60,6 +60,16 @@ index 57eb306629e8d..5743d2ea36856 100644
  
  	if (xudc->soc->port_speed_quirk)
  		tegra_xudc_limit_port_speed(xudc);
+@@ -4003,8 +4011,8 @@ static int __maybe_unused
+ tegra_xudc_lowpower_enter(struct tegra_xudc *xudc)
+ {
+ 	unsigned long flags;
+-	u32 val;
+ 	int err;
++	u32 val;
+ 
+ 	dev_dbg(xudc->dev, "entering low power state\n");
+ 
 @@ -4017,8 +4025,7 @@ tegra_xudc_lowpower_enter(struct tegra_xudc *xudc)
  
  	spin_unlock_irqrestore(&xudc->lock, flags);

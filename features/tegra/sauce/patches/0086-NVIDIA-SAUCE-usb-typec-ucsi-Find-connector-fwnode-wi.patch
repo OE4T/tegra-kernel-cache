@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Wayne Chang <waynec@nvidia.com>
 Date: Thu, 25 May 2023 08:05:01 +0000
-Subject: [PATCH 086/240] NVIDIA: SAUCE: usb: typec: ucsi: Find connector
+Subject: [PATCH 086/245] NVIDIA: SAUCE: usb: typec: ucsi: Find connector
  fwnode without relying on order
 
 The previous code relied on the order of "connector" nodes under the

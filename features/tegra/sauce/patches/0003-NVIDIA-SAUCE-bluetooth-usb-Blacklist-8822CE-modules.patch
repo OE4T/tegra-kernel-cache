@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Suresh Mangipudi <smangipudi@nvidia.com>
 Date: Wed, 7 Oct 2020 07:19:01 -0700
-Subject: [PATCH 003/240] NVIDIA: SAUCE: bluetooth: usb: Blacklist 8822CE
+Subject: [PATCH 003/245] NVIDIA: SAUCE: bluetooth: usb: Blacklist 8822CE
  modules
 
 commit bafaa50aff2d8f547b05ef3eebd87fe71146c729 ("Black list 8822CE module

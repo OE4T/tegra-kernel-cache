@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Mon, 14 Oct 2024 12:34:18 +0100
-Subject: [PATCH 044/240] NVIDIA: SAUCE: net: phy: aquantia: Fix PHY interfaces
+Subject: [PATCH 044/245] NVIDIA: SAUCE: net: phy: aquantia: Fix PHY interfaces
 
 In Linux v6.1, commit 7de26bf144f6 ("net: phy: aquantia: Add some
 additional phy interfaces") added support for additional PHY interfaces

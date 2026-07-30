@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manish Bhardwaj <mbhardwaj@nvidia.com>
 Date: Wed, 24 Sep 2025 03:55:43 +0000
-Subject: [PATCH 110/240] NVIDIA: SAUCE: tegra_hv: Update interrupt property
+Subject: [PATCH 110/245] NVIDIA: SAUCE: tegra_hv: Update interrupt property
  handling
 
 Enhanced interrupt property handling by dynamically reading

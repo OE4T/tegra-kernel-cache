@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Daniel Jurgens <danielj@nvidia.com>
 Date: Sat, 10 Jan 2026 04:09:08 +0000
-Subject: [PATCH 117/240] NVIDIA: SAUCE: tegra_hv_ivc: Add interface for
+Subject: [PATCH 117/245] NVIDIA: SAUCE: tegra_hv_ivc: Add interface for
  nvscicom driver
 
 A new OOT driver to handle nvscicom queues has been added. It shares a

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rahul Bedarkar <rabedarkar@nvidia.com>
 Date: Mon, 20 Nov 2023 09:20:05 +0000
-Subject: [PATCH 064/240] NVIDIA: SAUCE: tegra-epl: Set default handshake retry
+Subject: [PATCH 064/245] NVIDIA: SAUCE: tegra-epl: Set default handshake retry
  count to 25
 
 This patch add a DT property to set handshake retry count. Default

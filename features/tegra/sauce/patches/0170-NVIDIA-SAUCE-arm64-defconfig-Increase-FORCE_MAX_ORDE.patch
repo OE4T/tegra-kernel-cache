@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Shardar Mohammed <smohammed@nvidia.com>
+Date: Fri, 20 Oct 2023 11:52:38 +0000
+Subject: [PATCH 170/245] NVIDIA: SAUCE: arm64: defconfig: Increase
+ FORCE_MAX_ORDER for Tegra
+
+In case of ARCH_TEGRA, there is a need to allocate the memory which
+is bigger than the allowed max order. So we are forcing it only in
+case of 4KB page size.
+
+Bug 4336838
+
+Change-Id: Ia57cba416f0d82cf8e1ba3affc51196e16d12ccf
+Signed-off-by: Shardar Mohammed <smohammed@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3001471
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Reviewed-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3002205
+Tested-by: Kartik Rajput <kkartik@nvidia.com>
+Reviewed-by: Kartik Rajput <kkartik@nvidia.com>
+
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 9e834f0f8dd09..2e362f0fade1a 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -1688,6 +1688,7 @@ config XEN
+ config ARCH_FORCE_MAX_ORDER
+ 	int
+ 	default "13" if ARM64_64K_PAGES
++	default "12" if (ARCH_TEGRA && ARM64_4K_PAGES)
+ 	default "11" if ARM64_16K_PAGES
+ 	default "10"
+ 	help
+-- 
+2.43.0
+

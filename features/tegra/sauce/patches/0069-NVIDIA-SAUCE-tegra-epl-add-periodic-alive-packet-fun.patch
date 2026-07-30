@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Shubham Jain <shubhamj@nvidia.com>
 Date: Wed, 3 Sep 2025 04:57:47 +0000
-Subject: [PATCH 069/240] NVIDIA: SAUCE: tegra-epl: add periodic alive packet
+Subject: [PATCH 069/245] NVIDIA: SAUCE: tegra-epl: add periodic alive packet
  functionality
 
 Add periodic alive packet thread to maintain continuous communication with FSI:

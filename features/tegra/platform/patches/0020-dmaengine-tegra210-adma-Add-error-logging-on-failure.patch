@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Sun, 17 May 2026 16:30:45 +0000
-Subject: [PATCH 020/196] dmaengine: tegra210-adma: Add error logging on
+Subject: [PATCH 020/231] dmaengine: tegra210-adma: Add error logging on
  failure paths
 
 Add dev_err/dev_err_probe logging across failure paths to improve

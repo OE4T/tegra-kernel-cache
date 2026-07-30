@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Henry Lin <henryl@nvidia.com>
 Date: Wed, 24 Apr 2024 12:03:25 +0000
-Subject: [PATCH 055/240] NVIDIA: SAUCE: phy: tegra: xusb: add vf support
+Subject: [PATCH 055/245] NVIDIA: SAUCE: phy: tegra: xusb: add vf support
 
 In virtualization environment, xusb padctl driver does not access
 clock, reset, supply regulator, and fuse calibration.

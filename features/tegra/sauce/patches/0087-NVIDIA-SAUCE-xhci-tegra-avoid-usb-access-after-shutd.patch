@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: EJ Hsu <ejh@nvidia.com>
 Date: Fri, 13 May 2022 04:02:49 -0700
-Subject: [PATCH 087/240] NVIDIA: SAUCE: xhci: tegra: avoid usb access after
+Subject: [PATCH 087/245] NVIDIA: SAUCE: xhci: tegra: avoid usb access after
  shutdown
 
 During system shutdown, tegra_xusb_shutdown() will be called to

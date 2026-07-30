@@ -1,0 +1,103 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Date: Fri, 18 Mar 2022 21:09:41 +0530
+Subject: [PATCH 220/245] NVIDIA: SAUCE: PCI: tegra194: Disable AER interrupt
+ during controller deinit
+
+In Tegra PCIe RP <-> Tegra EP case, PCIe AER surprise down error and PCIe
+EDMA deinit calls are causing deadlock in the host. Following is the
+sequence which resulted in deadlock.
+
+ - EP is down, so PRSNT# signal is deasserted.
+ - RP received PRSNT deassert interrupt.
+ - RP driver is removing endpoint device. As part of clean up dev->mutex
+is acquired.
+ - tegra_pcie_edma_deinit() is waiting(synchronize_irq()) for any existing
+EDMA interrupt handler to return.
+
+synchronize_irq+0x84/0xc0
+tegra_pcie_edma_deinit+0x1b0/0x360
+endpoints_core_deinit+0x2f8/0x9b0 [nvscic2c_pcie_epc]
+pci_device_remove+0x48/0xf0
+device_release_driver_internal+0x11c/0x1f0
+device_release_driver+0x28/0x40
+pci_stop_bus_device+0x84/0xe0
+pci_stop_bus_device+0x3c/0xe0
+pci_stop_root_bus+0x4c/0x80
+dw_pcie_host_deinit+0x2c/0x100
+tegra_pcie_deinit_controller+0x34/0x70
+tegra_pcie_prsnt_irq+0x5c/0x120
+irq_thread_fn+0x30
+
+ - At the same time, RP received surprise down AER error.
+ - AER handler is also trying to acquire same dev->mutex_lock.
+ - However, EDMA & AER share same irq line. At step-4, synchronize_irq()
+stuck waiting for AER handler to return causing a dead lock.
+
+__rt_mutex_slowlock+0xc4/0x150
+rt_mutex_slowlock_locked+0xac/0x250
+rt_mutex_slowlock+0x84/0xe0
+__rt_mutex_lock_state+0x60/0x90
+_mutex_lock_blk_flush+0x54/0x80
+_mutex_lock+0x24/0x30
+report_error_detected+0x30/0x120
+report_frozen_detected+0x2c/0x40
+pci_walk_bus+0x68/0xc0
+pcie_do_recovery+0x14c/0x1d0
+aer_process_err_devices+0xec/0x110
+aer_isr+0x154/0x1d0
+irq_thread_fn+0x30/0xa0
+irq_thread+0x150/0x260
+kthread+0x17c/0x1a0
+ret_from_fork+0x10/0x18
+
+Bug 3540800
+
+Change-Id: I5ba00b0b6a3baeb43c7077783f3490e3eddee60b
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2898532
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index ca5f7b8675160..a6bfe2aaf2103 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -1648,6 +1648,33 @@ static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
+ 
+ static void tegra_pcie_deinit_controller(struct tegra_pcie_dw *pcie)
+ {
++	struct dw_pcie *pci = &pcie->pci;
++	u32 val;
++	u16 val_w;
++
++	/*
++	 * Surprise down AER error and edma_deinit are racing. Disable
++	 * AER error reporting, since controller is going down anyway.
++	 */
++	val = appl_readl(pcie, APPL_INTR_EN_L1_8_0);
++	val &= ~APPL_INTR_EN_L1_8_AER_INT_EN;
++	appl_writel(pcie, val, APPL_INTR_EN_L1_8_0);
++
++	val = dw_pcie_readl_dbi(pci, PCI_COMMAND);
++	val &= ~PCI_COMMAND_SERR;
++	dw_pcie_writel_dbi(pci, PCI_COMMAND, val);
++
++	val_w = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL);
++	val_w &= ~(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | PCI_EXP_DEVCTL_FERE |
++		   PCI_EXP_DEVCTL_URRE);
++	dw_pcie_writew_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL, val_w);
++
++	val_w = dw_pcie_find_ext_capability(pci, PCI_EXT_CAP_ID_ERR);
++	val = dw_pcie_readl_dbi(pci, val_w + PCI_ERR_ROOT_STATUS);
++	dw_pcie_writel_dbi(pci, val_w + PCI_ERR_ROOT_STATUS, val);
++
++	synchronize_irq(pcie->pci.pp.irq);
++
+ 	pcie->link_state = false;
+ 	clk_disable_unprepare(pcie->core_clk_m);
+ 	dw_pcie_host_deinit(&pcie->pci.pp);
+-- 
+2.43.0
+

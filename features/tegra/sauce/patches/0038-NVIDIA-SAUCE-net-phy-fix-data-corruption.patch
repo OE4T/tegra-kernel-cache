@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: David Yu <davyu@nvidia.com>
 Date: Fri, 8 Oct 2021 02:29:25 +0000
-Subject: [PATCH 038/240] NVIDIA: SAUCE: net: phy: fix data corruption
+Subject: [PATCH 038/245] NVIDIA: SAUCE: net: phy: fix data corruption
 
 Data corruption is happening in aqr107_config_init().
 It's accessing address offset across struct phy_device boundary.
@@ -35,6 +35,21 @@ index d492d5b99f9ac..922fd352d2c3b 100644
  	linkmode_copy(phydev->advertising, phydev->supported);
  
  	/* Configure flow control */
+diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
+index b6a36304f3a8e..611e3201ff124 100644
+--- a/drivers/net/phy/realtek/realtek_main.c
++++ b/drivers/net/phy/realtek/realtek_main.c
+@@ -661,8 +661,8 @@ static int rtl8211f_config_init(struct phy_device *phydev)
+ 	}
+ 
+ 	/* Advertise Flow Control */
+-	linkmode_set_bit(SUPPORTED_Pause, phydev->supported);
+-	linkmode_set_bit(SUPPORTED_Asym_Pause, phydev->supported);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_Pause_BIT, phydev->supported);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT, phydev->supported);
+ 	linkmode_copy(phydev->advertising, phydev->supported);
+ 
+ 	return genphy_soft_reset(phydev);
 -- 
 2.43.0
 

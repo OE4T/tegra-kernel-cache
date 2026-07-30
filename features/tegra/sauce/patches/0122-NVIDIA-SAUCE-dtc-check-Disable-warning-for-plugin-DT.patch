@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Laxman Dewangan <ldewangan@nvidia.com>
 Date: Wed, 29 Mar 2023 10:34:16 +0000
-Subject: [PATCH 122/240] NVIDIA: SAUCE: dtc: check: Disable warning for plugin
+Subject: [PATCH 122/245] NVIDIA: SAUCE: dtc: check: Disable warning for plugin
  DTS
 
 If the DTS is plugin type i.e. overlay then there are cases
