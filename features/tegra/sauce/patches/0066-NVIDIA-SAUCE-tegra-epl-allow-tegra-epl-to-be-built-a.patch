@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Shubham Jain <shubhamj@nvidia.com>
 Date: Fri, 9 May 2025 13:19:57 +0000
-Subject: [PATCH 066/240] NVIDIA: SAUCE: tegra-epl: allow tegra-epl to be built
+Subject: [PATCH 066/245] NVIDIA: SAUCE: tegra-epl: allow tegra-epl to be built
  as module
 
 - updating kconfig file to allow tegra-epl to

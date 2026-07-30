@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sing-Han Chen <singhanc@nvidia.com>
 Date: Thu, 2 Jun 2022 13:58:30 +0000
-Subject: [PATCH 133/240] NVIDIA: SAUCE: usb: gadget: xudc: use reset control
+Subject: [PATCH 133/245] NVIDIA: SAUCE: usb: gadget: xudc: use reset control
  framework for reset
 
 There is no XUSB powergating support for some internal platforms
@@ -26,7 +26,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 82200af1d93d0c109095a1e1c054f3a92494fa15)
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 7f7251c10e952..20f41f9fd32ab 100644
+index 7f7251c10e952..739f13d4de6e0 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -2,7 +2,7 @@
@@ -126,8 +126,8 @@ index 7f7251c10e952..20f41f9fd32ab 100644
 +tegra_xudc_lowpower_enter(struct tegra_xudc *xudc)
  {
  	unsigned long flags;
-+	int err;
  	u32 val;
++	int err;
  
 -	dev_dbg(xudc->dev, "entering ELPG\n");
 +	dev_dbg(xudc->dev, "entering low power state\n");

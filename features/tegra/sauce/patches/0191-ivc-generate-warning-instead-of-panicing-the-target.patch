@@ -1,0 +1,72 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Sun, 6 Jul 2025 09:41:55 +0000
+Subject: [PATCH 191/245] ivc: generate warning instead of panicing the target
+
+if any unexpecetd condition occurs in the ivc driver then
+just generate warning once only instead of crashing the target.
+
+Bug 5106936
+
+Change-Id: I9367666703bf2a4f79cc15857d2d418915d50abf
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+(cherry picked from commit bd6a709896a100572e6eda256c518e732696c1b5)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3449488
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+Reviewed-by: Sandeep Trasi <strasi@nvidia.com>
+Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
+(cherry picked from commit 01eb59a1fb89d76420f9b5edc2ab006c4f66787b)
+
+diff --git a/drivers/firmware/tegra/ivc.c b/drivers/firmware/tegra/ivc.c
+index 1d2166dae9e16..d3bc1d435b2f5 100644
+--- a/drivers/firmware/tegra/ivc.c
++++ b/drivers/firmware/tegra/ivc.c
+@@ -638,7 +638,7 @@ int tegra_ivc_read(struct tegra_ivc *ivc, void __user *usr_buf, void *buf, size_
+ 	struct iosys_map map;
+ 	int err;
+ 
+-	BUG_ON(buf && usr_buf);
++	WARN_ON_ONCE(buf && usr_buf);
+ 
+ 	/* get next frame to be read from IVC channel */
+ 	err = tegra_ivc_read_get_next_frame(ivc, &map);
+@@ -653,7 +653,7 @@ int tegra_ivc_read(struct tegra_ivc *ivc, void __user *usr_buf, void *buf, size_
+ 		if (WARN_ON(map.is_iomem) || copy_to_user(usr_buf, map.vaddr, max_read))
+ 			return -EFAULT;
+ 	} else
+-		BUG();
++		WARN_ON_ONCE(1);
+ 
+ 	/* Advance to next read frame*/
+ 	if (tegra_ivc_read_advance(ivc) == 0)
+@@ -669,7 +669,7 @@ int tegra_ivc_read_peek(struct tegra_ivc *ivc, void __user *usr_buf,
+ 	struct iosys_map map;
+ 	int err;
+ 
+-	BUG_ON(buf && usr_buf);
++	WARN_ON_ONCE(buf && usr_buf);
+ 
+ 	/* get next frame to be read from IVC channel */
+ 	err = tegra_ivc_read_get_next_frame(ivc, &map);
+@@ -684,7 +684,7 @@ int tegra_ivc_read_peek(struct tegra_ivc *ivc, void __user *usr_buf,
+ 		if (WARN_ON(map.is_iomem) || copy_to_user(usr_buf, map.vaddr + offset, size))
+ 			return -EFAULT;
+ 	} else
+-		BUG();
++		WARN_ON_ONCE(1);
+ 
+ 	return size;
+ }
+@@ -710,7 +710,7 @@ int tegra_ivc_write(struct tegra_ivc *ivc, const void __user *usr_buf, const voi
+ 		if (WARN_ON(map.is_iomem) || copy_from_user(map.vaddr, usr_buf, size))
+ 			return -EFAULT;
+ 	} else
+-		BUG();
++		WARN_ON_ONCE(1);
+ 
+ 	/* Advance to next write frame*/
+ 	if (tegra_ivc_write_advance(ivc) == 0)
+-- 
+2.43.0
+

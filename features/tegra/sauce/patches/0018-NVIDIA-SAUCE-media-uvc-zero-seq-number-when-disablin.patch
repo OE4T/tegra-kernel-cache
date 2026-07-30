@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Hans Yang <hansy@nvidia.com>
 Date: Thu, 10 Jul 2025 05:07:10 +0000
-Subject: [PATCH 018/240] NVIDIA: SAUCE: media: uvc: zero seq number when
+Subject: [PATCH 018/245] NVIDIA: SAUCE: media: uvc: zero seq number when
  disabling stream
 
 For bulk-based devices, when disabling the video stream,

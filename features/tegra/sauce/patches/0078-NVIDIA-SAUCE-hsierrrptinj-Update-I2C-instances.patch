@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prasun Kumar <prasunk@nvidia.com>
 Date: Thu, 2 Jan 2025 12:27:03 +0530
-Subject: [PATCH 078/240] NVIDIA: SAUCE: hsierrrptinj: Update I2C instances
+Subject: [PATCH 078/245] NVIDIA: SAUCE: hsierrrptinj: Update I2C instances
 
 Update the number of I2C instances to support error reporting.
 

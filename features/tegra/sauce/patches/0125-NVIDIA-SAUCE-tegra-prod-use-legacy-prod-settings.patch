@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Krishna Yarlagadda <kyarlagadda@nvidia.com>
 Date: Mon, 26 Jun 2023 08:45:11 +0000
-Subject: [PATCH 125/240] NVIDIA: SAUCE: tegra: prod: use legacy prod settings
+Subject: [PATCH 125/245] NVIDIA: SAUCE: tegra: prod: use legacy prod settings
 
 This is an integration squash commit of following commits:
 

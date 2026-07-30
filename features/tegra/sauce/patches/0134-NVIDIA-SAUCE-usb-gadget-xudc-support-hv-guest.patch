@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Henry Lin <henryl@nvidia.com>
 Date: Thu, 7 Mar 2024 20:41:09 +0000
-Subject: [PATCH 134/240] NVIDIA: SAUCE: usb: gadget: xudc: support hv guest
+Subject: [PATCH 134/245] NVIDIA: SAUCE: usb: gadget: xudc: support hv guest
 
 In hypervisor environment, xudc driver cannot access clock, reset,
 and power domain directly.
@@ -19,7 +19,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit 986c15c5bb7ea1ef2436d88f50050258032d3d03)
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 20f41f9fd32ab..57eb306629e8d 100644
+index 739f13d4de6e0..f90672c9d042c 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -2,7 +2,7 @@

@@ -1,0 +1,56 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Date: Mon, 22 Sep 2025 15:48:36 +0000
+Subject: [PATCH 236/245] NVIDIA: SAUCE: PCI: tegra194: Fix core_clk rate set
+
+Incorrect check on core_clk_m is done during core_clk rate set, fix it.
+Set both ICC bandwidth and core_clk rate when Root port Links up runtime.
+
+Bug 5443148
+
+Change-Id: I50f3653afeedbffd02a13890c7c7a92d31801256
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3456625
+Reviewed-by: Bibek Basu <bbasu@nvidia.com>
+Reviewed-by: Nagarjuna Kristam <nkristam@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 2ae4a174492ae5d0f1ade8778551ce10cfdb6696)
+
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index ec5404a918a42..5ff623b4ba83f 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -458,7 +458,8 @@ static void tegra_pcie_icc_set(struct tegra_pcie_dw *pcie)
+ 	if (speed >= ARRAY_SIZE(pcie_gen_freq))
+ 		speed = 0;
+ 
+-	clk_set_rate(pcie->core_clk, pcie_gen_freq[speed]);
++	if ((speed > 0) && (speed <= 4) && !pcie->is_safety_platform)
++		clk_set_rate(pcie->core_clk, pcie_gen_freq[speed - 1]);
+ }
+ 
+ static void apply_bad_link_workaround(struct dw_pcie_rp *pp)
+@@ -744,7 +745,6 @@ static irqreturn_t tegra_pcie_rp_irq_thread(int irq, void *arg)
+ 	struct tegra_pcie_dw *pcie = arg;
+ 	struct dw_pcie_rp *pp;
+ 	struct pci_bus *bus;
+-	u16 speed;
+ 
+ #if IS_ENABLED(CONFIG_TEGRA_EPL)
+ 	if (atomic_dec_and_test(&pcie->report_epl_error)) {
+@@ -774,11 +774,7 @@ static irqreturn_t tegra_pcie_rp_irq_thread(int irq, void *arg)
+ 	if (pcie->link_status_change || pcie->link_speed_change) {
+ 		pcie->link_status_change = false;
+ 		pcie->link_speed_change = false;
+-		speed = dw_pcie_readw_dbi(pci,
+-					  pcie->pcie_cap_base + PCI_EXP_LNKSTA);
+-		speed &= PCI_EXP_LNKSTA_CLS;
+-		if ((speed > 0) && (speed <= 4) && !pcie->is_safety_platform)
+-			clk_set_rate(pcie->core_clk, pcie_gen_freq[speed - 1]);
++		tegra_pcie_icc_set(pcie);
+ 	}
+ 
+ 	return IRQ_HANDLED;
+-- 
+2.43.0
+

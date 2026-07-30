@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: sheetal <sheetal@nvidia.com>
 Date: Mon, 29 Sep 2025 16:29:27 +0530
-Subject: [PATCH 017/196] dt-bindings: dma: Update ADMA bindings for tegra264
+Subject: [PATCH 017/231] dt-bindings: dma: Update ADMA bindings for tegra264
 
 - Update ADMA device tree bindings for tegra264 to support up to 64
   interrupt channels by setting 'interrupts' property maxItems to 64.

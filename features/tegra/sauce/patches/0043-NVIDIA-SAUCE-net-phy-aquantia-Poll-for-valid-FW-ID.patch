@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Pohsun Su <pohsuns@nvidia.com>
 Date: Tue, 2 Apr 2024 16:12:25 +0000
-Subject: [PATCH 043/240] NVIDIA: SAUCE: net: phy: aquantia: Poll for valid FW
+Subject: [PATCH 043/245] NVIDIA: SAUCE: net: phy: aquantia: Poll for valid FW
  ID.
 
 Firmware ID will be shown as 0xFFFF if firmware is not yet loaded.

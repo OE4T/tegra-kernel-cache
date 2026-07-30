@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Pohsun Su <pohsuns@nvidia.com>
 Date: Wed, 21 Feb 2024 16:54:34 +0800
-Subject: [PATCH 007/240] NVIDIA: SAUCE: clocksource: timer-tegra186: adjust
+Subject: [PATCH 007/245] NVIDIA: SAUCE: clocksource: timer-tegra186: adjust
  WDT timing
 
 This change disables WDT later on suspend and enables WDT earlier on

@@ -1,0 +1,61 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ashish Mhetre <amhetre@nvidia.com>
+Date: Sun, 26 Jul 2026 08:19:04 +0000
+Subject: [PATCH 078/231] iommu/arm-smmu-v3: Enable CFGI/TLBI-repeat workaround
+ on Tegra264
+
+Nvidia Tegra264 SMMU is affected by an erratum where a TLB entry can
+survive an invalidation that races with concurrent traffic targeting
+the same entry. The hardware-recommended software workaround is to
+issue every CFGI/TLBI command (each followed by CMD_SYNC) twice, and
+that infrastructure is already in place behind
+arm_smmu_erratum_repeat_tlbi_cfgi_key.
+
+Neither IDR nor IIDR flags this Tegra264-specific bug, so hardware
+detection is not possible. Tegra264 is device-tree-only (no ACPI/IORT
+support) and already has a dedicated "nvidia,tegra264-smmu" compatible,
+so DT-probe is the only viable detection path.
+
+Enable the workaround on instances matching the existing
+"nvidia,tegra264-smmu" compatible by calling static_branch_enable() on
+arm_smmu_erratum_repeat_tlbi_cfgi_key. Document the erratum in
+Documentation/arch/arm64/silicon-errata.rst.
+
+Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Change-Id: Ie88aff0f5c27f5223a3d6201928c2a9106b1358a
+
+diff --git a/Documentation/arch/arm64/silicon-errata.rst b/Documentation/arch/arm64/silicon-errata.rst
+index 1c5accd6dec49..5e1539ca40306 100644
+--- a/Documentation/arch/arm64/silicon-errata.rst
++++ b/Documentation/arch/arm64/silicon-errata.rst
+@@ -292,6 +292,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | NVIDIA         | T241 GICv3/4.x  | T241-FABRIC-4   | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
++| NVIDIA         | T264 SMMU       | T264-SMMU-3     | N/A                         |
+++----------------+-----------------+-----------------+-----------------------------+
+ +----------------+-----------------+-----------------+-----------------------------+
+ | Freescale/NXP  | LS2080A/LS1043A | A-008585        | FSL_ERRATUM_A008585         |
+ +----------------+-----------------+-----------------+-----------------------------+
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 556c9e878d2b5..6218da6ec6c94 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -5289,8 +5289,10 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
+ 	if (of_dma_is_coherent(dev->of_node))
+ 		smmu->features |= ARM_SMMU_FEAT_COHERENCY;
+ 
+-	if (of_device_is_compatible(dev->of_node, "nvidia,tegra264-smmu"))
++	if (of_device_is_compatible(dev->of_node, "nvidia,tegra264-smmu")) {
+ 		tegra_cmdqv_dt_probe(dev->of_node, smmu);
++		static_branch_enable(&arm_smmu_erratum_repeat_tlbi_cfgi_key);
++	}
+ 
+ 	return ret;
+ }
+-- 
+2.43.0
+

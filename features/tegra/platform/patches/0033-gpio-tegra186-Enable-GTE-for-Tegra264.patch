@@ -1,0 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Suneel Garapati <suneelg@nvidia.com>
+Date: Thu, 21 May 2026 01:20:30 +0000
+Subject: [PATCH 033/231] gpio: tegra186: Enable GTE for Tegra264
+
+Set has_gte flag to enable GTE for Tegra264 AON pins.
+
+Signed-off-by: Suneel Garapati <suneelg@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260521012031.2003914-1-suneelg@nvidia.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+(cherry picked from commit 822878aa1737c6c9573e05c5cd501b679cf5ea1c)
+
+diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
+index 58e0186c701d1..e015f97563c99 100644
+--- a/drivers/gpio/gpio-tegra186.c
++++ b/drivers/gpio/gpio-tegra186.c
+@@ -1399,6 +1399,7 @@ static const struct tegra_gpio_soc tegra264_aon_soc = {
+ 	.name = "tegra264-gpio-aon",
+ 	.instance = 1,
+ 	.num_irqs_per_bank = 8,
++	.has_gte = true,
+ 	.has_vm_support = true,
+ };
+ 
+-- 
+2.43.0
+

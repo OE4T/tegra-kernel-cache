@@ -1,0 +1,146 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ashish Mhetre <amhetre@nvidia.com>
+Date: Sun, 26 Jul 2026 08:19:02 +0000
+Subject: [PATCH 076/231] iommu/arm-smmu-v3: Add CFGI/TLBI-repeat workaround
+
+Tegra264 SMMU instances need every CFGI/TLBI command sequence issued
+twice, with the second issue executing only after the first issue's
+CMD_SYNC has completed:
+
+    TLBI/CFGI ... CMD_SYNC TLBI/CFGI ... CMD_SYNC
+
+ATC_INV is not affected and must never be doubled.
+
+Add arm_smmu_erratum_repeat_tlbi_cfgi_key and a file-local
+arm_smmu_erratum_cmd_needs_repeating() helper that gates on the static
+key first and then range-checks the opcode (CFGI_STE .. ATC_INV).
+
+Rename the existing arm_smmu_cmdq_issue_cmdlist() to
+__arm_smmu_cmdq_issue_cmdlist() and add a thin wrapper of the original
+name that re-issues the same cmdlist a second time when the predicate
+fires. Register the new condition with
+arm_smmu_cmdq_batch_force_sync() too.
+
+No callers enable the static key yet, so there is no functional change.
+A subsequent change will enable the key on affected instances.
+
+Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 6137f7b43697b..b927ca46b2991 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -18,6 +18,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/io-pgtable.h>
+ #include <linux/iopoll.h>
++#include <linux/jump_label.h>
+ #include <linux/module.h>
+ #include <linux/msi.h>
+ #include <linux/of.h>
+@@ -42,6 +43,14 @@ MODULE_PARM_DESC(disable_msipolling,
+ static const struct iommu_ops arm_smmu_ops;
+ static struct iommu_dirty_ops arm_smmu_dirty_ops;
+ 
++/*
++ * Repeat every {CFGI,TLBI};CMD_SYNC command sequence so that the second
++ * issue executes only after the first issue's CMD_SYNC has completed.
++ * Does not apply to ATC_INV. The key is global and is enabled from DT
++ * probe on affected hardware (currently Tegra264 only).
++ */
++static DEFINE_STATIC_KEY_FALSE(arm_smmu_erratum_repeat_tlbi_cfgi_key);
++
+ enum arm_smmu_msi_index {
+ 	EVTQ_MSI_INDEX,
+ 	GERROR_MSI_INDEX,
+@@ -697,10 +706,10 @@ static void arm_smmu_cmdq_write_entries(struct arm_smmu_cmdq *cmdq,
+  *   insert their own list of commands then all of the commands from one
+  *   CPU will appear before any of the commands from the other CPU.
+  */
+-int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
+-				struct arm_smmu_cmdq *cmdq,
+-				struct arm_smmu_cmd *cmds, int n,
+-				bool sync)
++int __arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
++				  struct arm_smmu_cmdq *cmdq,
++				  struct arm_smmu_cmd *cmds, int n,
++				  bool sync)
+ {
+ 	struct arm_smmu_cmd cmd_sync;
+ 	u32 prod;
+@@ -819,6 +828,38 @@ int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
+ 	return ret;
+ }
+ 
++static bool arm_smmu_erratum_cmd_needs_repeating(struct arm_smmu_cmd *cmd)
++{
++	u8 opcode;
++
++	if (!static_branch_unlikely(&arm_smmu_erratum_repeat_tlbi_cfgi_key))
++		return false;
++
++	opcode = FIELD_GET(CMDQ_0_OP, cmd->data[0]);
++	return opcode >= CMDQ_OP_CFGI_STE && opcode < CMDQ_OP_ATC_INV;
++}
++
++int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
++				struct arm_smmu_cmdq *cmdq,
++				struct arm_smmu_cmd *cmds, int n,
++				bool sync)
++{
++	int ret = __arm_smmu_cmdq_issue_cmdlist(smmu, cmdq, cmds, n, sync);
++
++	/*
++	 * A bare CMD_SYNC can be issued with n == 0 (e.g. an empty
++	 * batch_submit()), in which case there is no cmds[0] to inspect
++	 * and nothing to repeat.
++	 */
++	if (!n || ret || !sync)
++		return ret;
++
++	if (arm_smmu_erratum_cmd_needs_repeating(&cmds[0]))
++		ret = __arm_smmu_cmdq_issue_cmdlist(smmu, cmdq, cmds, n, sync);
++
++	return ret;
++}
++
+ static int arm_smmu_cmdq_issue_cmd_p(struct arm_smmu_device *smmu,
+ 				     struct arm_smmu_cmd *cmd, bool sync)
+ {
+@@ -859,6 +900,14 @@ static bool arm_smmu_cmdq_batch_force_sync(struct arm_smmu_device *smmu,
+ 	    (smmu->options & ARM_SMMU_OPT_CMDQ_FORCE_SYNC))
+ 		return true;
+ 
++	/*
++	 * See the description at arm_smmu_erratum_repeat_tlbi_cfgi_key. Batches
++	 * never mix CFGI/TLBI with others, so checking cmds[0] alone is enough.
++	 */
++	if (cmds->num == CMDQ_BATCH_ENTRIES &&
++	    arm_smmu_erratum_cmd_needs_repeating(&cmds->cmds[0]))
++		return true;
++
+ 	return false;
+ }
+ 
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+index aec23b90d6572..e1d4d228d5722 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -1208,6 +1208,10 @@ void arm_smmu_attach_commit(struct arm_smmu_attach_state *state);
+ void arm_smmu_install_ste_for_dev(struct arm_smmu_master *master,
+ 				  const struct arm_smmu_ste *target);
+ 
++int __arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
++				  struct arm_smmu_cmdq *cmdq,
++				  struct arm_smmu_cmd *cmds, int n,
++				  bool sync);
+ int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
+ 				struct arm_smmu_cmdq *cmdq,
+ 				struct arm_smmu_cmd *cmds, int n,
+-- 
+2.43.0
+

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Laxman Dewangan <ldewangan@nvidia.com>
 Date: Thu, 22 Jun 2023 12:34:49 +0000
-Subject: [PATCH 079/240] NVIDIA: SAUCE: platform: tegra: Add tegra prod as
+Subject: [PATCH 079/245] NVIDIA: SAUCE: platform: tegra: Add tegra prod as
  built-in driver
 
 This is an integration squash change of below commits.

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sing-Han Chen <singhanc@nvidia.com>
 Date: Thu, 6 Apr 2023 16:51:06 +0800
-Subject: [PATCH 085/240] NVIDIA: SAUCE: usb: xhci-tegra: don't assign port
+Subject: [PATCH 085/245] NVIDIA: SAUCE: usb: xhci-tegra: don't assign port
  role by default
 
 For OTG port, don't set data role to host by default.

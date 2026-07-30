@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Narayan Reddy <narayanr@nvidia.com>
 Date: Mon, 21 Feb 2022 08:53:31 +0000
-Subject: [PATCH 026/240] NVIDIA: SAUCE: net: phy: aqr113c: restore PHY
+Subject: [PATCH 026/245] NVIDIA: SAUCE: net: phy: aqr113c: restore PHY
  configuration.
 
 Restore PHY configuration once PHY receives

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mahesh Patil <maheshp@nvidia.com>
 Date: Thu, 3 Aug 2023 12:54:48 -0700
-Subject: [PATCH 042/240] NVIDIA: SAUCE: net:phy: add new speeds
+Subject: [PATCH 042/245] NVIDIA: SAUCE: net:phy: add new speeds
 
 Add speed 2500 and 25000 support in phy
 

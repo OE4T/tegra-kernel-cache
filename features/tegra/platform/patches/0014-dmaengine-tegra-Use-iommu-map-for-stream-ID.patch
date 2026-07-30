@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 31 Mar 2026 15:53:01 +0530
-Subject: [PATCH 014/196] dmaengine: tegra: Use iommu-map for stream ID
+Subject: [PATCH 014/231] dmaengine: tegra: Use iommu-map for stream ID
 
 Use 'iommu-map', when provided, to get the stream ID to be programmed
 for each channel. Iterate over the channels registered and configure

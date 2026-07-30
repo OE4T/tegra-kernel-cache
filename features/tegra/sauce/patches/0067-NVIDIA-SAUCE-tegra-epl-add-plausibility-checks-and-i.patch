@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rahul Bedarkar <rabedarkar@nvidia.com>
 Date: Mon, 21 Jul 2025 07:11:55 +0000
-Subject: [PATCH 067/240] NVIDIA: SAUCE: tegra-epl: add plausibility checks and
+Subject: [PATCH 067/245] NVIDIA: SAUCE: tegra-epl: add plausibility checks and
  improve error handling
 
 Add comprehensive plausibility checks and validation throughout the EPL driver:

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Wed, 24 May 2023 12:29:32 +0100
-Subject: [PATCH 054/240] NVIDIA: SAUCE: phy: tegra194-p2u: Fix device-tree
+Subject: [PATCH 054/245] NVIDIA: SAUCE: phy: tegra194-p2u: Fix device-tree
  backward compatibility
 
 The change that added PHY lane margining support to the Tegra194 P2U

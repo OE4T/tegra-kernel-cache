@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Thu, 26 Feb 2026 16:12:12 +0100
-Subject: [PATCH 002/196] cpufreq: tegra194: Rename Tegra239 to Tegra238
+Subject: [PATCH 002/231] cpufreq: tegra194: Rename Tegra239 to Tegra238
 
 This chip identifies as Tegra238, so update the device tree compatible
 string and data structures associated with it to use the correct name.

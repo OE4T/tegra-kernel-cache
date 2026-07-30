@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik <kkartik@nvidia.com>
 Date: Fri, 3 Feb 2023 13:17:55 +0000
-Subject: [PATCH 010/240] NVIDIA: SAUCE: mailbox: tegra-hsp: add support for
+Subject: [PATCH 010/245] NVIDIA: SAUCE: mailbox: tegra-hsp: add support for
  multiple shared interrupts
 
 Tegra HSP supports up to 8 shared interrupts for shared mailboxes.

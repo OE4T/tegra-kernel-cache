@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Frank Chen <frankc@nvidia.com>
 Date: Tue, 29 Nov 2022 11:14:18 -0800
-Subject: [PATCH 016/240] NVIDIA: SAUCE: v4l2-core: Add sync op to
+Subject: [PATCH 016/245] NVIDIA: SAUCE: v4l2-core: Add sync op to
  subdev_core_ops
 
 If multiple sub devices need to be synchronized w.r.t one

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vishnu Mandalapu <vmandalapu@nvidia.com>
 Date: Tue, 4 Feb 2025 19:55:12 +0000
-Subject: [PATCH 092/240] NVIDIA: SAUCE: drivers: tegra: virt: runtime
+Subject: [PATCH 092/245] NVIDIA: SAUCE: drivers: tegra: virt: runtime
  frequency
 
  - Add support to change VM profiler frequency in runtime.

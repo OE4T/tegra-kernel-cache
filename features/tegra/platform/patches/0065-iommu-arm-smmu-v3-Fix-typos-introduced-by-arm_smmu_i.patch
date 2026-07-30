@@ -1,0 +1,60 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nicolin Chen <nicolinc@nvidia.com>
+Date: Sat, 21 Mar 2026 15:50:41 -0700
+Subject: [PATCH 065/231] iommu/arm-smmu-v3: Fix typos introduced by
+ arm_smmu_invs
+
+These are introduced by separate commits, so not submitting with a "Fixes"
+line, since they aren't critical.
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index e755c2569c87a..9cf0609fd14e8 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -1128,7 +1128,7 @@ static inline int arm_smmu_invs_iter_next_cmp(struct arm_smmu_invs *invs_l,
+  * Both @invs and @to_merge must be sorted, to ensure the returned array will be
+  * sorted as well.
+  *
+- * Caller is resposible for freeing the @invs and the returned new one.
++ * Caller is responsible for freeing the @invs and the returned new one.
+  *
+  * Entries marked as trash will be purged in the returned array.
+  */
+@@ -1258,7 +1258,7 @@ EXPORT_SYMBOL_IF_KUNIT(arm_smmu_invs_unref);
+  * This function must be locked and serialized with arm_smmu_invs_merge() and
+  * arm_smmu_invs_unref(), but do not lockdep on any lock for KUNIT test.
+  *
+- * Caller is resposible for freeing the @invs and the returned new one.
++ * Caller is responsible for freeing the @invs and the returned new one.
+  */
+ VISIBLE_IF_KUNIT
+ struct arm_smmu_invs *arm_smmu_invs_purge(struct arm_smmu_invs *invs)
+@@ -2740,7 +2740,7 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
+ 	 * But in a race, these two can be interdependent, making it a special
+ 	 * case requiring an additional smp_mb() for the write->read ordering.
+ 	 * Pairing with the dma_wmb() in arm_smmu_install_ste_for_dev(), this
+-	 * makes sure that IOPTE update prior to this point is visable to SMMU
++	 * makes sure that IOPTE update prior to this point is visible to SMMU
+ 	 * hardware before we load the updated invalidation array.
+ 	 *
+ 	 *  [CPU0]                        | [CPU1]
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+index 997c266370c3c..df93ebff0c397 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -688,7 +688,7 @@ static inline bool arm_smmu_inv_is_ats(const struct arm_smmu_inv *inv)
+  *            greater than @max_invs
+  * @num_trashes: number of trash entries in the array for arm_smmu_invs_purge().
+  *               Must not be greater than @num_invs
+- * @rwlock: optional rwlock to fench ATS operations
++ * @rwlock: optional rwlock to fence ATS operations
+  * @has_ats: flag if the array contains an INV_TYPE_ATS or INV_TYPE_ATS_FULL
+  * @rcu: rcu head for kfree_rcu()
+  * @inv: flexible invalidation array
+-- 
+2.43.0
+

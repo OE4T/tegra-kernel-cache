@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Henry Lin <henryl@nvidia.com>
 Date: Wed, 6 Mar 2024 07:59:03 +0000
-Subject: [PATCH 132/240] NVIDIA: SAUCE: xhci: tegra: add VF support
+Subject: [PATCH 132/245] NVIDIA: SAUCE: xhci: tegra: add VF support
 
 In virtualization environment, XHCI VMM controls shared clock,
 regulator, power domain, mbox/padctl interrupts and also handles XUSB
@@ -22,7 +22,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit 44b353ccf8fddd0088c3c4ec94216d6ed3155942)
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index a8474d2825651..19543068354ad 100644
+index a8474d2825651..7c297d4ae1b4e 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -279,6 +279,8 @@ struct tegra_xusb_soc {
@@ -162,10 +162,20 @@ index a8474d2825651..19543068354ad 100644
  	/* Enable firmware messages from controller. */
  	msg.cmd = MBOX_CMD_MSG_ENABLED;
  	msg.data = 0;
-@@ -2169,6 +2206,26 @@ static int tegra_xusb_setup_wakeup(struct platform_device *pdev, struct tegra_xu
+@@ -2169,6 +2206,36 @@ static int tegra_xusb_setup_wakeup(struct platform_device *pdev, struct tegra_xu
  	return 0;
  }
  
++static void tegra_xusb_dispose_wake(struct tegra_xusb *tegra)
++{
++	unsigned int i;
++
++	for (i = 0; i < tegra->num_wakes; i++)
++		irq_dispose_mapping(tegra->wake_irqs[i]);
++
++	tegra->num_wakes = 0;
++}
++
 +#if defined(PHY_TEGRA_XUSB_SUPPORT_EVENT)
 +static int tegra_xhci_padctl_notify(struct notifier_block *nb,
 +					 unsigned long event, void *data)
@@ -189,7 +199,7 @@ index a8474d2825651..19543068354ad 100644
  static int tegra_xusb_probe(struct platform_device *pdev)
  {
  	struct tegra_xusb *tegra;
-@@ -2197,27 +2254,32 @@ static int tegra_xusb_probe(struct platform_device *pdev)
+@@ -2197,27 +2264,32 @@ static int tegra_xusb_probe(struct platform_device *pdev)
  	if (IS_ERR(tegra->regs))
  		return PTR_ERR(tegra->regs);
  
@@ -237,7 +247,7 @@ index a8474d2825651..19543068354ad 100644
  
  	err = tegra_xusb_setup_wakeup(pdev, tegra);
  	if (err)
-@@ -2233,6 +2295,9 @@ static int tegra_xusb_probe(struct platform_device *pdev)
+@@ -2233,6 +2305,9 @@ static int tegra_xusb_probe(struct platform_device *pdev)
  		goto put_padctl;
  	}
  
@@ -247,7 +257,7 @@ index a8474d2825651..19543068354ad 100644
  	tegra->padctl_irq = of_irq_get(np, 0);
  	if (tegra->padctl_irq == -EPROBE_DEFER) {
  		err = tegra->padctl_irq;
-@@ -2355,6 +2420,7 @@ static int tegra_xusb_probe(struct platform_device *pdev)
+@@ -2355,6 +2430,7 @@ static int tegra_xusb_probe(struct platform_device *pdev)
  		goto put_powerdomains;
  	}
  
@@ -255,7 +265,7 @@ index a8474d2825651..19543068354ad 100644
  	for (i = 0; i < tegra->soc->num_types; i++) {
  		if (!strncmp(tegra->soc->phy_types[i].name, "usb2", 4))
  			tegra->num_usb_phys = tegra->soc->phy_types[i].num;
-@@ -2489,13 +2555,15 @@ static int tegra_xusb_probe(struct platform_device *pdev)
+@@ -2489,13 +2565,15 @@ static int tegra_xusb_probe(struct platform_device *pdev)
  		goto put_usb3;
  	}
  
@@ -278,7 +288,7 @@ index a8474d2825651..19543068354ad 100644
  	}
  
  	if (tegra->padctl_irq) {
-@@ -2509,6 +2577,13 @@ static int tegra_xusb_probe(struct platform_device *pdev)
+@@ -2509,6 +2587,13 @@ static int tegra_xusb_probe(struct platform_device *pdev)
  		}
  	}
  
@@ -292,7 +302,7 @@ index a8474d2825651..19543068354ad 100644
  	err = tegra_xusb_enable_firmware_messages(tegra);
  	if (err < 0) {
  		dev_err(&pdev->dev, "failed to enable messages: %d\n", err);
-@@ -2549,8 +2624,9 @@ static int tegra_xusb_probe(struct platform_device *pdev)
+@@ -2549,8 +2634,9 @@ static int tegra_xusb_probe(struct platform_device *pdev)
  	else
  		tegra_xusb_reset_assert(tegra);
  free_firmware:
@@ -304,7 +314,7 @@ index a8474d2825651..19543068354ad 100644
  disable_phy:
  	tegra_xusb_phy_disable(tegra);
  disable_regulator:
-@@ -2593,7 +2669,8 @@ static void tegra_xusb_remove(struct platform_device *pdev)
+@@ -2593,7 +2679,8 @@ static void tegra_xusb_remove(struct platform_device *pdev)
  	usb_remove_hcd(tegra->hcd);
  	usb_put_hcd(tegra->hcd);
  
@@ -314,7 +324,7 @@ index a8474d2825651..19543068354ad 100644
  			  tegra->fw.phys);
  
  	fw_log_deinit(tegra);
-@@ -2684,6 +2761,9 @@ static void tegra_xusb_save_context(struct tegra_xusb *tegra)
+@@ -2684,6 +2771,9 @@ static void tegra_xusb_save_context(struct tegra_xusb *tegra)
  	struct tegra_xusb_context *ctx = &tegra->context;
  	unsigned int i;
  
@@ -324,7 +334,7 @@ index a8474d2825651..19543068354ad 100644
  	if (soc->ipfs.num_offsets > 0) {
  		for (i = 0; i < soc->ipfs.num_offsets; i++)
  			ctx->ipfs[i] = ipfs_readl(tegra, soc->ipfs.offsets[i]);
-@@ -2701,6 +2781,9 @@ static void tegra_xusb_restore_context(struct tegra_xusb *tegra)
+@@ -2701,6 +2791,9 @@ static void tegra_xusb_restore_context(struct tegra_xusb *tegra)
  	struct tegra_xusb_context *ctx = &tegra->context;
  	unsigned int i;
  
@@ -334,7 +344,7 @@ index a8474d2825651..19543068354ad 100644
  	if (soc->fpci.num_offsets > 0) {
  		for (i = 0; i < soc->fpci.num_offsets; i++)
  			fpci_writel(tegra, ctx->fpci[i], soc->fpci.offsets[i]);
-@@ -3026,7 +3109,8 @@ static __maybe_unused int tegra_xusb_suspend(struct device *dev)
+@@ -3026,7 +3119,8 @@ static __maybe_unused int tegra_xusb_suspend(struct device *dev)
  	struct tegra_xusb *tegra = dev_get_drvdata(dev);
  	int err;
  
@@ -344,7 +354,7 @@ index a8474d2825651..19543068354ad 100644
  
  	mutex_lock(&tegra->lock);
  
-@@ -3052,7 +3136,7 @@ static __maybe_unused int tegra_xusb_suspend(struct device *dev)
+@@ -3052,7 +3146,7 @@ static __maybe_unused int tegra_xusb_suspend(struct device *dev)
  		tegra->suspended = true;
  		pm_runtime_disable(dev);
  
@@ -353,7 +363,7 @@ index a8474d2825651..19543068354ad 100644
  			unsigned int i;
  
  			if (enable_irq_wake(tegra->padctl_irq))
-@@ -3086,7 +3170,7 @@ static __maybe_unused int tegra_xusb_resume(struct device *dev)
+@@ -3086,7 +3180,7 @@ static __maybe_unused int tegra_xusb_resume(struct device *dev)
  		return err;
  	}
  
@@ -362,7 +372,7 @@ index a8474d2825651..19543068354ad 100644
  		unsigned int i;
  
  		if (disable_irq_wake(tegra->padctl_irq))
-@@ -3109,7 +3193,8 @@ static __maybe_unused int tegra_xusb_runtime_suspend(struct device *dev)
+@@ -3109,7 +3203,8 @@ static __maybe_unused int tegra_xusb_runtime_suspend(struct device *dev)
  	struct tegra_xusb *tegra = dev_get_drvdata(dev);
  	int ret;
  
@@ -372,7 +382,7 @@ index a8474d2825651..19543068354ad 100644
  	mutex_lock(&tegra->lock);
  	ret = tegra_xusb_enter_elpg(tegra, true);
  	mutex_unlock(&tegra->lock);
-@@ -3375,12 +3460,64 @@ static const struct tegra_xusb_soc tegra234_soc = {
+@@ -3375,12 +3470,64 @@ static const struct tegra_xusb_soc tegra234_soc = {
  	.has_pg_support = true,
  };
  

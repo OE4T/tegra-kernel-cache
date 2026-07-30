@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 31 Mar 2026 15:52:54 +0530
-Subject: [PATCH 007/196] dt-bindings: dma: nvidia,tegra186-gpc-dma: Make reset
+Subject: [PATCH 007/231] dt-bindings: dma: nvidia,tegra186-gpc-dma: Make reset
  optional
 
 On Tegra264, GPCDMA reset control is not exposed to Linux and is handled

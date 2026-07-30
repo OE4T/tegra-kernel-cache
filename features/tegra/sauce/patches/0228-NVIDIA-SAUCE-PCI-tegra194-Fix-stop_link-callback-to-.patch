@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Date: Sat, 3 Jan 2026 11:51:09 +0530
+Subject: [PATCH 228/245] NVIDIA: SAUCE: PCI: tegra194: Fix stop_link callback
+ to handle RP and EP differently
+
+Currently, tegra_pcie_dw_stop_link() sets the pex_prsnt_gpiod to 0
+unconditionally when the GPIO is available. However, this GPIO handling
+is only relevant for Endpoint (EP) mode to signal presence to the Root
+Port.
+
+Fix the stop_link callback to only set the presence GPIO when operating
+in EP mode. This prevents unintended GPIO operations when the controller
+is configured as Root Port (RP).
+
+Bug 5391059
+Jira NET-4859
+
+Fixes: 71edaf199c80 ("NVIDIA: SAUCE: PCI: tegra194: Add PEX_PRSNT GPIO support")
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Change-Id: I4199605e3908fbe7aab70422cc5ce8fe26105d6b
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3520455
+Reviewed-by: Bibek Basu <bbasu@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Nagarjuna Kristam <nkristam@nvidia.com>
+(cherry picked from commit 14c36a34b8a89bcbf7db9af536de4e937b5f899a)
+
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 9792b055cd18c..bb96b14a37372 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -4,7 +4,7 @@
+  * Tegra194
+  * Tegra234
+  *
+- * Copyright (C) 2019-2022 NVIDIA Corporation.
++ * Copyright (C) 2019-2026 NVIDIA Corporation.
+  *
+  * Author: Vidya Sagar <vidyas@nvidia.com>
+  */
+@@ -1074,8 +1074,9 @@ static void tegra_pcie_dw_stop_link(struct dw_pcie *pci)
+ {
+ 	struct tegra_pcie_dw *pcie = to_tegra_pcie(pci);
+ 
+-	if (pcie->pex_prsnt_gpiod)
+-		gpiod_set_value_cansleep(pcie->pex_prsnt_gpiod, 0);
++	if (pcie->of_data->mode == DW_PCIE_EP_TYPE)
++		if (pcie->pex_prsnt_gpiod)
++			gpiod_set_value_cansleep(pcie->pex_prsnt_gpiod, 0);
+ }
+ 
+ static const struct dw_pcie_ops tegra_dw_pcie_ops = {
+-- 
+2.43.0
+

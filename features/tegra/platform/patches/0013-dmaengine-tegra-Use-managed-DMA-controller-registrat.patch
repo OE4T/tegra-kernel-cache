@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 31 Mar 2026 15:53:00 +0530
-Subject: [PATCH 013/196] dmaengine: tegra: Use managed DMA controller
+Subject: [PATCH 013/231] dmaengine: tegra: Use managed DMA controller
  registration
 
 Switch to managed registration in probe. This simplifies the error

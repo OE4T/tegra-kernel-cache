@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Shobek Attupurath <sattupurath@nvidia.com>
 Date: Wed, 8 Jan 2025 23:53:31 +0000
-Subject: [PATCH 005/240] NVIDIA: SAUCE: bluetooth: usb: disable 8822CE modules
+Subject: [PATCH 005/245] NVIDIA: SAUCE: bluetooth: usb: disable 8822CE modules
 
 Disable Azurewave 8822CE modules from generic driver to use
 Realtek 8822CE BT driver

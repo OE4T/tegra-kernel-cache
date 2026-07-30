@@ -1,0 +1,70 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ashish Mhetre <amhetre@nvidia.com>
+Date: Tue, 26 Aug 2025 05:24:07 +0000
+Subject: [PATCH 203/245] NVIDIA: SAUCE: iommu/tegra241-cmdqv: WAR for 64-bit
+ writes on NV HV
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+NVIDIA’s hypervisor does not support 64-bit writes to consecutive
+two 32-bit registers e.g., VCMDQ_BASE_LO and VCMDQ_BASE_HI. The driver
+currently issues a 64-bit write to such registers, which works fine on
+real hardware but fails under NV HV.
+This is not a functional bug in the driver, but rather a quirk of the
+hypervisor which does not fully emulate the HW behavior. Add a workaround
+to split the write into two 32-bit accesses.
+
+Bug 5111712
+
+Change-Id: I6fb6a926a80326e2d7a8a2ec9e475106af843f7c
+Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3439898
+Reviewed-by: Pritesh Raithatha <praithatha@nvidia.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit b82c7a458d43cfd984d3f7a336d9f4718b4c87db)
+
+diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+index 818aca94de335..ac9bf20e871fa 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
++++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+@@ -85,8 +85,10 @@
+ #define  VCMDQ_ADDR			GENMASK(47, 5)
+ #define  VCMDQ_LOG2SIZE			GENMASK(4, 0)
+ 
+-#define TEGRA241_VCMDQ_BASE		0x00000
+-#define TEGRA241_VCMDQ_CONS_INDX_BASE	0x00008
++#define TEGRA241_VCMDQ_BASE			0x00000
++#define TEGRA241_VCMDQ_BASE_H			0x00004
++#define TEGRA241_VCMDQ_CONS_INDX_BASE		0x00008
++#define TEGRA241_VCMDQ_CONS_INDX_BASE_H		0x0000C
+ 
+ /* VINTF logical-VCMDQ pages */
+ #define TEGRA241_VINTFi_PAGE0(i)	(TEGRA241_VINTF_PAGE_BASE + SZ_128K*(i))
+@@ -456,8 +458,10 @@ static void tegra241_vcmdq_hw_deinit(struct tegra241_vcmdq *vcmdq)
+ 
+ 	writel_relaxed(0, REG_VCMDQ_PAGE0(vcmdq, PROD));
+ 	writel_relaxed(0, REG_VCMDQ_PAGE0(vcmdq, CONS));
+-	writeq_relaxed(0, REG_VCMDQ_PAGE1(vcmdq, BASE));
+-	writeq_relaxed(0, REG_VCMDQ_PAGE1(vcmdq, CONS_INDX_BASE));
++	writel_relaxed(0, REG_VCMDQ_PAGE1(vcmdq, BASE_H));
++	writel_relaxed(0, REG_VCMDQ_PAGE1(vcmdq, BASE));
++	writel_relaxed(0, REG_VCMDQ_PAGE1(vcmdq, CONS_INDX_BASE_H));
++	writel_relaxed(0, REG_VCMDQ_PAGE1(vcmdq, CONS_INDX_BASE));
+ 
+ 	gerrorn = readl_relaxed(REG_VCMDQ_PAGE0(vcmdq, GERRORN));
+ 	gerror = readl_relaxed(REG_VCMDQ_PAGE0(vcmdq, GERROR));
+@@ -484,7 +488,8 @@ static int tegra241_vcmdq_hw_init(struct tegra241_vcmdq *vcmdq)
+ 		vcmdq->cmdq.supports_cmd = tegra241_guest_vcmdq_supports_cmd;
+ 
+ 	/* Configure and enable VCMDQ */
+-	writeq_relaxed(vcmdq->cmdq.q.q_base, REG_VCMDQ_PAGE1(vcmdq, BASE));
++	writel_relaxed(upper_32_bits(vcmdq->cmdq.q.q_base), REG_VCMDQ_PAGE1(vcmdq, BASE_H));
++	writel_relaxed(lower_32_bits(vcmdq->cmdq.q.q_base), REG_VCMDQ_PAGE1(vcmdq, BASE));
+ 	writel_relaxed(vcmdq->cmdq.q.llq.prod, REG_VCMDQ_PAGE0(vcmdq, PROD));
+ 	writel_relaxed(vcmdq->cmdq.q.llq.cons, REG_VCMDQ_PAGE0(vcmdq, CONS));
+ 
+-- 
+2.43.0
+
