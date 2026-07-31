@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: EJ Hsu <ejh@nvidia.com>
 Date: Fri, 21 Mar 2025 22:21:23 +0800
-Subject: [PATCH 162/245] NVIDIA: SAUCE: phy: tegra: fix port reset issue
+Subject: [PATCH 162/243] NVIDIA: SAUCE: phy: tegra: fix port reset issue
 
 XHCI driver will dynamically power off UTMI pad for root hub ports
 entering suspend for power-saving.

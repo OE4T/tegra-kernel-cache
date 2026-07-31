@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Daniel Kudrow <dkudrow@nvidia.com>
 Date: Wed, 30 Apr 2025 16:50:50 +0000
-Subject: [PATCH 093/245] NVIDIA: SAUCE: hvc_sysfs: update trace hypercall
+Subject: [PATCH 093/243] NVIDIA: SAUCE: hvc_sysfs: update trace hypercall
  wrappers
 
 Simplify the hypercalls wrappers for getting and setting the profiler

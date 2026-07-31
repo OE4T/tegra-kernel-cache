@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Geert Uytterhoeven <geert+renesas@glider.be>
+Date: Tue, 9 Jun 2026 17:08:35 +0200
+Subject: [PATCH 130/232] pinctrl: tegra: PINCTRL_TEGRA264 should depend on
+ ARCH_TEGRA
+
+The NVIDIA Tegra264 MAIN, AON, and UPHY pin controllers are only present
+on NVIDIA Tegra264 SoCs.  Hence add a dependency on ARCH_TEGRA, to
+prevent asking the user about this driver when configuring a kernel
+without NVIDIA Tegra SoC support.
+
+Fixes: c98506206912dd0d ("pinctrl: tegra: Add Tegra264 pinmux driver")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+(cherry picked from commit 32b515861e41f37347b2a86d2bf00ff0ca2fe7dd)
+
+diff --git a/drivers/pinctrl/tegra/Kconfig b/drivers/pinctrl/tegra/Kconfig
+index 4fa7295ae4499..47bd68f70b749 100644
+--- a/drivers/pinctrl/tegra/Kconfig
++++ b/drivers/pinctrl/tegra/Kconfig
+@@ -49,6 +49,7 @@ config PINCTRL_TEGRA238
+ 
+ config PINCTRL_TEGRA264
+ 	tristate "NVIDIA Tegra264 pinctrl driver"
++	depends on ARCH_TEGRA || COMPILE_TEST
+ 	default m if ARCH_TEGRA_264_SOC
+ 	select PINCTRL_TEGRA
+ 	help
+-- 
+2.43.0
+

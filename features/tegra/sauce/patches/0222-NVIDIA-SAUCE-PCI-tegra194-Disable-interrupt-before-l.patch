@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Date: Thu, 12 Jan 2023 11:17:24 +0530
-Subject: [PATCH 222/245] NVIDIA: SAUCE: PCI: tegra194: Disable interrupt
+Subject: [PATCH 222/243] NVIDIA: SAUCE: PCI: tegra194: Disable interrupt
  before link status check
 
 Data abort is observed due to synchronization issue between irq

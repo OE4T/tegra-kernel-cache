@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Date: Sat, 3 Jan 2026 11:51:09 +0530
-Subject: [PATCH 228/245] NVIDIA: SAUCE: PCI: tegra194: Fix stop_link callback
+Subject: [PATCH 228/243] NVIDIA: SAUCE: PCI: tegra194: Fix stop_link callback
  to handle RP and EP differently
 
 Currently, tegra_pcie_dw_stop_link() sets the pex_prsnt_gpiod to 0

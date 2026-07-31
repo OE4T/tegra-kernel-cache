@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Fri, 10 Oct 2025 15:43:31 +0530
-Subject: [PATCH 025/231] gpio: tegra186: Add support for Tegra410
+Subject: [PATCH 025/232] gpio: tegra186: Add support for Tegra410
 
 Extend the existing Tegra186 GPIO controller driver with support for
 the GPIO controller found on Tegra410. Tegra410 supports two GPIO

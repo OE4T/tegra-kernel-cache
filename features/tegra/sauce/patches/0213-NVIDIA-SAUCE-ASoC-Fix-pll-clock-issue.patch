@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Tue, 13 May 2025 08:57:20 +0000
-Subject: [PATCH 213/245] NVIDIA: SAUCE: ASoC: Fix pll clock issue
+Subject: [PATCH 213/243] NVIDIA: SAUCE: ASoC: Fix pll clock issue
 
 Issue:
  Using 'rt5640-codec-sysclk-bclk1' compatible throws below error

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Shubham Jain <shubhamj@nvidia.com>
 Date: Fri, 17 Oct 2025 09:35:20 +0000
-Subject: [PATCH 068/245] NVIDIA: SAUCE: tegra-epl: Fix CERT-C violations and
+Subject: [PATCH 068/243] NVIDIA: SAUCE: tegra-epl: Fix CERT-C violations and
  security compliance
 
 - Add overflow checks for integer operations (CERT INT08-C/INT30-C)

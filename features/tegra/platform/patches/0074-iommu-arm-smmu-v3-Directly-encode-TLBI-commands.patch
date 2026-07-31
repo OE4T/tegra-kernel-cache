@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:48 -0300
-Subject: [PATCH 074/231] iommu/arm-smmu-v3: Directly encode TLBI commands
+Subject: [PATCH 074/232] iommu/arm-smmu-v3: Directly encode TLBI commands
 
 TLBI is more complicated than all the other commands because the
 invalidation loop builds a template command from the struct

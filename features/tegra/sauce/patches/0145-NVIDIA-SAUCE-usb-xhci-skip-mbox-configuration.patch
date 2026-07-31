@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sing-Han Chen <singhanc@nvidia.com>
 Date: Tue, 18 Jun 2024 06:59:42 +0000
-Subject: [PATCH 145/245] NVIDIA: SAUCE: usb: xhci: skip mbox configuration
+Subject: [PATCH 145/243] NVIDIA: SAUCE: usb: xhci: skip mbox configuration
 
 This change skips the mbox configuration for the
 project that doesn't need this.

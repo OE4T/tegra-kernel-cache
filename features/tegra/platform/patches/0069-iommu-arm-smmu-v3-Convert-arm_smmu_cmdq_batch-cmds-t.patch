@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:43 -0300
-Subject: [PATCH 069/231] iommu/arm-smmu-v3: Convert arm_smmu_cmdq_batch cmds
+Subject: [PATCH 069/232] iommu/arm-smmu-v3: Convert arm_smmu_cmdq_batch cmds
  to struct arm_smmu_cmd
 
 Convert the batch's type to also get the remaining helper functions to

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sing-Han Chen <singhanc@nvidia.com>
 Date: Thu, 20 Jun 2024 06:11:39 +0000
-Subject: [PATCH 158/245] NVIDIA: SAUCE: phy: xusb: skip USB2 PAD tracking and
+Subject: [PATCH 158/243] NVIDIA: SAUCE: phy: xusb: skip USB2 PAD tracking and
  fuse
 
 The USB2 PAD tracking clock is not necessary a dedicated clock.

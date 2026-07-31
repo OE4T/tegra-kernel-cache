@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Wayne Chang <waynec@nvidia.com>
 Date: Thu, 30 Oct 2025 09:08:12 +0000
-Subject: [PATCH 141/245] NVIDIA: SAUCE: usb: host: tegra: Remove manual wake
+Subject: [PATCH 141/243] NVIDIA: SAUCE: usb: host: tegra: Remove manual wake
  IRQ disposal
 
 We found that calling irq_dispose_mapping() caused a kernel warning

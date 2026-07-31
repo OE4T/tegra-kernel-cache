@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik Rajput <kkartik@nvidia.com>
 Date: Tue, 24 Mar 2026 11:28:41 +0530
-Subject: [PATCH 045/231] i2c: tegra: Introduce tegra_i2c_variant to identify
+Subject: [PATCH 045/232] i2c: tegra: Introduce tegra_i2c_variant to identify
  DVC and VI
 
 Replace the per-instance DVC/VI boolean flags with a tegra_i2c_variant

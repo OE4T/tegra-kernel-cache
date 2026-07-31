@@ -1,0 +1,58 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Thierry Reding <treding@nvidia.com>
+Date: Mon, 3 Feb 2025 16:27:02 +0100
+Subject: [PATCH 168/232] drm/nouveau: tegra: Explicitly specify PMC instance
+ to use
+
+Currently the kernel relies on a global variable to reference the PMC
+context. Use an explicit lookup for the PMC and pass that to the public
+PMC APIs.
+
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+(cherry picked from commit 3ef27f1ad5ed0e36c2dac82876ef7dde33a588f2)
+
+diff --git a/drivers/gpu/drm/nouveau/include/nvkm/core/tegra.h b/drivers/gpu/drm/nouveau/include/nvkm/core/tegra.h
+index 22f74fc88cd75..eba9a3dc96c8b 100644
+--- a/drivers/gpu/drm/nouveau/include/nvkm/core/tegra.h
++++ b/drivers/gpu/drm/nouveau/include/nvkm/core/tegra.h
+@@ -16,6 +16,8 @@ struct nvkm_device_tegra {
+ 
+ 	struct regulator *vdd;
+ 
++	struct tegra_pmc *pmc;
++
+ 	struct {
+ 		/*
+ 		 * Protects accesses to mm from subsystems
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/device/tegra.c b/drivers/gpu/drm/nouveau/nvkm/engine/device/tegra.c
+index 114e50ca18270..ac75f566b4891 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/device/tegra.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/device/tegra.c
+@@ -54,7 +54,8 @@ nvkm_device_tegra_power_up(struct nvkm_device_tegra *tdev)
+ 		reset_control_assert(tdev->rst);
+ 		udelay(10);
+ 
+-		ret = tegra_powergate_remove_clamping(TEGRA_POWERGATE_3D);
++		ret = tegra_pmc_powergate_remove_clamping(tdev->pmc,
++							  TEGRA_POWERGATE_3D);
+ 		if (ret)
+ 			goto err_clamp;
+ 		udelay(10);
+@@ -303,6 +304,12 @@ nvkm_device_tegra_new(const struct nvkm_device_tegra_func *func,
+ 		goto free;
+ 	}
+ 
++	tdev->pmc = devm_tegra_pmc_get(&pdev->dev);
++	if (IS_ERR(tdev->pmc)) {
++		ret = PTR_ERR(tdev->pmc);
++		goto free;
++	}
++
+ 	/**
+ 	 * The IOMMU bit defines the upper limit of the GPU-addressable space.
+ 	 */
+-- 
+2.43.0
+

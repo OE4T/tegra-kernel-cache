@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prakhar Srivastava <prasrivastav@nvidia.com>
 Date: Wed, 28 Jan 2026 10:53:24 +0000
-Subject: [PATCH 231/245] NVIDIA: SAUCE: pci: Mask ADV NF AER for Pericom
+Subject: [PATCH 231/243] NVIDIA: SAUCE: pci: Mask ADV NF AER for Pericom
  switch
 
 This commit introduces a quirk to mask spurious Advisory Non-Fatal

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Sat, 21 Mar 2026 15:50:40 -0700
-Subject: [PATCH 064/231] iommu/arm-smmu-v3: Do not continue in
+Subject: [PATCH 064/232] iommu/arm-smmu-v3: Do not continue in
  __arm_smmu_domain_inv_range()
 
 The loop in the __arm_smmu_domain_inv_range() is a while loop, not a for

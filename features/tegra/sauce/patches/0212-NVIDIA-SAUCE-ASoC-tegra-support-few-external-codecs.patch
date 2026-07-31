@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sameer Pujar <spujar@nvidia.com>
 Date: Thu, 18 Jan 2024 12:31:41 +0000
-Subject: [PATCH 212/245] NVIDIA: SAUCE: ASoC: tegra: support few external
+Subject: [PATCH 212/243] NVIDIA: SAUCE: ASoC: tegra: support few external
  codecs
 
 Few external audio cards are supported out of the box. DT bindings

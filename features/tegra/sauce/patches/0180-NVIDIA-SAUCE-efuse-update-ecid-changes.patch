@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mallikarjun Kasoju <mkasoju@nvidia.com>
 Date: Mon, 7 Apr 2025 06:05:42 +0000
-Subject: [PATCH 180/245] NVIDIA: SAUCE: efuse: update ecid changes
+Subject: [PATCH 180/243] NVIDIA: SAUCE: efuse: update ecid changes
 
 ECID is moved to separate nvmem sysfs.
 

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Thu, 13 Mar 2025 09:09:44 +0000
-Subject: [PATCH 187/245] NVIDIA: SAUCE: gpio-tegra: add is_tegra_hypervisor
+Subject: [PATCH 187/243] NVIDIA: SAUCE: gpio-tegra: add is_tegra_hypervisor
  check
 
 Dynamic pinmuxing is not needed on HV+L

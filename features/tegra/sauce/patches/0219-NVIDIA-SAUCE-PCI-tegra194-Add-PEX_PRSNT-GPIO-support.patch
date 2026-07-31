@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nagarjuna Kristam <nkristam@nvidia.com>
 Date: Mon, 14 Nov 2022 00:11:30 +0530
-Subject: [PATCH 219/245] NVIDIA: SAUCE: PCI: tegra194: Add PEX_PRSNT GPIO
+Subject: [PATCH 219/243] NVIDIA: SAUCE: PCI: tegra194: Add PEX_PRSNT GPIO
  support
 
 Read nvidia,pex-prsnt-gpios DT property as a OUT GPIO for EP

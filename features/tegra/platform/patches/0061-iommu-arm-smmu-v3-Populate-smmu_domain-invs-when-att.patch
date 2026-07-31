@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:21 -0700
-Subject: [PATCH 061/231] iommu/arm-smmu-v3: Populate smmu_domain->invs when
+Subject: [PATCH 061/232] iommu/arm-smmu-v3: Populate smmu_domain->invs when
  attaching masters
 
 Update the invs array with the invalidations required by each domain type

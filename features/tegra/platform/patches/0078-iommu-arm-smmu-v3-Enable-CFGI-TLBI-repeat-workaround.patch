@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Sun, 26 Jul 2026 08:19:04 +0000
-Subject: [PATCH 078/231] iommu/arm-smmu-v3: Enable CFGI/TLBI-repeat workaround
+Subject: [PATCH 078/232] iommu/arm-smmu-v3: Enable CFGI/TLBI-repeat workaround
  on Tegra264
 
 Nvidia Tegra264 SMMU is affected by an erratum where a TLB entry can

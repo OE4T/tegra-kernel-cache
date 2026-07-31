@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Shaik Sharif <ssharif@nvidia.com>
 Date: Mon, 8 Dec 2025 11:10:48 +0000
-Subject: [PATCH 195/245] NVIDIA: SAUCE: bpmp hv driver multi socket update
+Subject: [PATCH 195/243] NVIDIA: SAUCE: bpmp hv driver multi socket update
 
 This change updated the tegra bpmp driver to support multi socket
 Bug 5602107

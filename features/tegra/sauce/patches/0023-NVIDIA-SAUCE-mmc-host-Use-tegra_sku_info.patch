@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Mon, 15 Jul 2024 10:54:31 +0100
-Subject: [PATCH 023/245] NVIDIA: SAUCE: mmc: host: Use tegra_sku_info
+Subject: [PATCH 023/243] NVIDIA: SAUCE: mmc: host: Use tegra_sku_info
 
 The structure 'tegra_sku_info' is exported by upstream kernels and so use this to identify the Tegra platform instead of exporting
 tegra_get_platform().

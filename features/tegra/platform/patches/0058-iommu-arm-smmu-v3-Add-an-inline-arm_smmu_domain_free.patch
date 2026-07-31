@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:18 -0700
-Subject: [PATCH 058/231] iommu/arm-smmu-v3: Add an inline
+Subject: [PATCH 058/232] iommu/arm-smmu-v3: Add an inline
  arm_smmu_domain_free()
 
 There will be a bit more things to free than smmu_domain itself. So keep a

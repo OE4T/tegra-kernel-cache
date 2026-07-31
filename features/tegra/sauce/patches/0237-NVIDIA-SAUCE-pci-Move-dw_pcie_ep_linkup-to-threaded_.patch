@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vikram Kanigiri <vkanigiri@nvidia.com>
 Date: Mon, 13 Jan 2025 18:59:13 +0530
-Subject: [PATCH 237/245] NVIDIA: SAUCE: pci: Move dw_pcie_ep_linkup to
+Subject: [PATCH 237/243] NVIDIA: SAUCE: pci: Move dw_pcie_ep_linkup to
  threaded_irq handler
 
 dw_pcie_ep_linkup() may take more time to execute depending on the EPF

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vishwaroop A <va@nvidia.com>
 Date: Wed, 13 Dec 2023 09:13:37 +0000
-Subject: [PATCH 207/245] NVIDIA: SAUCE: drivers: spi: fix warnings in spi
+Subject: [PATCH 207/243] NVIDIA: SAUCE: drivers: spi: fix warnings in spi
  core.
 
 Fix the below listed warnings in SPI core framework

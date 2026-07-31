@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manish Bhardwaj <mbhardwaj@nvidia.com>
 Date: Thu, 10 Jul 2025 13:54:50 +0000
-Subject: [PATCH 098/245] NVIDIA: SAUCE: tegra_hv: add support of async error
+Subject: [PATCH 098/243] NVIDIA: SAUCE: tegra_hv: add support of async error
  diagnostics in tegra_hv driver
 
 Bug 5401290

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Sun, 26 Jul 2026 08:19:01 +0000
-Subject: [PATCH 075/231] iommu/arm-smmu-v3: Factor out CMDQ batch force-sync
+Subject: [PATCH 075/232] iommu/arm-smmu-v3: Factor out CMDQ batch force-sync
  conditions
 
 arm_smmu_cmdq_batch_add_cmd_p() carries two distinct reasons for

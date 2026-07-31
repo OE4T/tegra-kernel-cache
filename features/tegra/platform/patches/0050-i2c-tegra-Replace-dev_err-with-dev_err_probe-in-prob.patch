@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Enrico Zanda <e.zanda1@gmail.com>
 Date: Tue, 20 May 2025 21:43:52 +0200
-Subject: [PATCH 050/231] i2c: tegra: Replace dev_err() with dev_err_probe() in
+Subject: [PATCH 050/232] i2c: tegra: Replace dev_err() with dev_err_probe() in
  probe function
 
 This simplifies the code while improving log.

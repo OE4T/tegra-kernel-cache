@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Daniel Jurgens <danielj@nvidia.com>
 Date: Sun, 8 Feb 2026 22:14:07 +0000
-Subject: [PATCH 167/245] virt: tegra_hv: move IVC layout declarations to
+Subject: [PATCH 167/243] virt: tegra_hv: move IVC layout declarations to
  tegra_hv_ivc.h
 
 Move struct tegra_hv_guest_area, tegra_hv_notify_info,

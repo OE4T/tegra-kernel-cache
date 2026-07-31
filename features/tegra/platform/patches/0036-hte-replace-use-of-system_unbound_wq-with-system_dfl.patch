@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Marco Crivellari <marco.crivellari@suse.com>
 Date: Wed, 24 Dec 2025 15:32:34 +0100
-Subject: [PATCH 036/231] hte: replace use of system_unbound_wq with
+Subject: [PATCH 036/232] hte: replace use of system_unbound_wq with
  system_dfl_wq
 
 This patch continues the effort to refactor workqueue APIs, which has begun

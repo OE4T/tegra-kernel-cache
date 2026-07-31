@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sing-Han Chen <singhanc@nvidia.com>
 Date: Mon, 27 May 2024 10:48:46 +0000
-Subject: [PATCH 144/245] NVIDIA: SAUCE: usb: host: xhci-tegra: Add Tegra264
+Subject: [PATCH 144/243] NVIDIA: SAUCE: usb: host: xhci-tegra: Add Tegra264
  XHCI support
 
 This commit adds Tegra264 XUSB host mode controller support.

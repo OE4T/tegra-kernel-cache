@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 31 Mar 2026 15:52:55 +0530
-Subject: [PATCH 008/231] arm64: tegra: Remove fallback compatible for GPCDMA
+Subject: [PATCH 008/232] arm64: tegra: Remove fallback compatible for GPCDMA
 
 Remove the fallback compatible string "nvidia,tegra186-gpcdma" for GPCDMA
 in Tegra264. Tegra186 compatible cannot work on Tegra264 because of the

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Wayne Chang <waynec@nvidia.com>
 Date: Fri, 8 Nov 2024 09:25:41 +0000
-Subject: [PATCH 159/245] NVIDIA: SAUCE: phy: tegra: xusb: Remove ignore_fuse
+Subject: [PATCH 159/243] NVIDIA: SAUCE: phy: tegra: xusb: Remove ignore_fuse
  flag
 
 The ignore_fuse flag was previously added as a workaround due to issues

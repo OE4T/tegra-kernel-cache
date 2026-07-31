@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nagarjuna Kristam <nkristam@nvidia.com>
 Date: Mon, 22 Sep 2025 10:31:25 +0530
-Subject: [PATCH 230/245] NVIDIA: SAUCE: pci: Add wait for link condition
+Subject: [PATCH 230/243] NVIDIA: SAUCE: pci: Add wait for link condition
  before pci scan
 
 During PCIe generic host probe,

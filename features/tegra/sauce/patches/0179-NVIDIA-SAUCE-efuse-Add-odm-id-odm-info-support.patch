@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mallikarjun Kasoju <mkasoju@nvidia.com>
 Date: Mon, 21 Apr 2025 03:45:30 +0000
-Subject: [PATCH 179/245] NVIDIA: SAUCE: efuse: Add odm-id, odm-info support
+Subject: [PATCH 179/243] NVIDIA: SAUCE: efuse: Add odm-id, odm-info support
 
 Added odm-id and odm-info read support
 

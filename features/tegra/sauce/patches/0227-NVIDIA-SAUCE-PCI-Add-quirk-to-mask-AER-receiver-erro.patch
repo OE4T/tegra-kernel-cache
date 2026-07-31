@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Date: Mon, 8 Dec 2025 19:46:20 +0530
-Subject: [PATCH 227/245] NVIDIA: SAUCE: PCI: Add quirk to mask AER receiver
+Subject: [PATCH 227/243] NVIDIA: SAUCE: PCI: Add quirk to mask AER receiver
  errors for Realtek RTL8126 on Tegra 264
 
 Realtek RTL8126 NIC reports AER correctable receiver errors when

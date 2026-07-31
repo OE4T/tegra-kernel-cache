@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik Rajput <kkartik@nvidia.com>
 Date: Thu, 13 Nov 2025 22:01:12 +0530
-Subject: [PATCH 026/231] gpio: tegra186: Fix GPIO name collisions for Tegra410
+Subject: [PATCH 026/232] gpio: tegra186: Fix GPIO name collisions for Tegra410
 
 On Tegra410, Compute and System GPIOs have same port names. This
 results in the same GPIO names for both Compute and System GPIOs

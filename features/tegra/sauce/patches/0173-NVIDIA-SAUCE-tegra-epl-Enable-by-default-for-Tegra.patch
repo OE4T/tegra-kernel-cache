@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Tue, 14 Apr 2026 13:52:12 +0100
-Subject: [PATCH 173/245] NVIDIA: SAUCE: tegra-epl: Enable by default for Tegra
+Subject: [PATCH 173/243] NVIDIA: SAUCE: tegra-epl: Enable by default for Tegra
 
 Enable CONFIG_TEGRA_EPL by default for Tegra devices to avoid having to
 enable via the defconfig.

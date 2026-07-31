@@ -200,8 +200,8 @@ patch sauce/patches/0195-NVIDIA-SAUCE-bpmp-hv-driver-multi-socket-update.patch
 patch sauce/patches/0196-NVIDIA-SAUCE-i2c-tegra-Report-critical-errors-to-FSI.patch
 patch sauce/patches/0197-NVIDIA-SAUCE-i2c-Error-report-injection-utility-supp.patch
 patch sauce/patches/0198-NVIDIA-SAUCE-i2c-core-skip-prod-settings-node-during.patch
-patch sauce/patches/0199-NVIDIA-SAUCE-tegra-prod-use-legacy-prod-settings.patch
-patch sauce/patches/0200-NVIDIA-SAUCE-i2c-tegra-Register-Err-Injection-driver.patch
+patch sauce/patches/0199-NVIDIA-SAUCE-i2c-tegra-Register-Err-Injection-driver.patch
+patch sauce/patches/0200-NVIDIA-SAUCE-iommu-arm-smmu-v3-Implement-WAR-for-Teg.patch
 patch sauce/patches/0201-NVIDIA-SAUCE-iommu-io-pgtable-arm-Support-contiguous.patch
 patch sauce/patches/0202-NVIDIA-SAUCE-iommu-arm-smmu-v3-use-reserved-memory-f.patch
 patch sauce/patches/0203-NVIDIA-SAUCE-iommu-tegra241-cmdqv-WAR-for-64-bit-wri.patch
@@ -241,10 +241,8 @@ patch sauce/patches/0236-NVIDIA-SAUCE-PCI-tegra194-Fix-core_clk-rate-set.patch
 patch sauce/patches/0237-NVIDIA-SAUCE-pci-Move-dw_pcie_ep_linkup-to-threaded_.patch
 patch sauce/patches/0238-NVIDIA-SAUCE-tee-optee-ffa-add-static-shared-memory-.patch
 patch sauce/patches/0239-NVIDIA-SAUCE-gpio-tegra186-enable-interrupt-for-all-.patch
-patch sauce/patches/0240-NVIDIA-SAUCE-i2c-tegra-resume-explicitly-if-pm_runti.patch
-patch sauce/patches/0241-NVIDIA-SAUCE-i2c-tegra-Disable-fairness-arbitration.patch
-patch sauce/patches/0242-NVIDIA-SAUCE-gpio-tegra186-Enable-GTE-for-Tegra264.patch
-patch sauce/patches/0243-NVIDIA-SAUCE-gpio-tegra186-fix-pinctrl-for-multi-soc.patch
-patch sauce/patches/0244-Revert-NVIDIA-SAUCE-soc-tegra-pmc-Multi-socket-suppo.patch
-patch sauce/patches/0245-NVIDIA-SAUCE-iommu-arm-smmu-v3-Add-pm-suspend-op.patch
+patch sauce/patches/0240-NVIDIA-SAUCE-gpio-tegra186-Enable-GTE-for-Tegra264.patch
+patch sauce/patches/0241-NVIDIA-SAUCE-gpio-tegra186-fix-pinctrl-for-multi-soc.patch
+patch sauce/patches/0242-Revert-NVIDIA-SAUCE-soc-tegra-pmc-Multi-socket-suppo.patch
+patch sauce/patches/0243-NVIDIA-SAUCE-iommu-arm-smmu-v3-Add-pm-suspend-op.patch
 

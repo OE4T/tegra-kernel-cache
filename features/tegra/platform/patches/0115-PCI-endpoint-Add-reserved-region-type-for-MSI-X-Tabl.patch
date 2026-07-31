@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Date: Tue, 24 Mar 2026 13:38:54 +0530
+Subject: [PATCH 115/232] PCI: endpoint: Add reserved region type for MSI-X
+ Table and PBA
+
+Add PCI_EPC_BAR_RSVD_MSIX_TBL_RAM and PCI_EPC_BAR_RSVD_MSIX_PBA_RAM to
+enum pci_epc_bar_rsvd_region_type so that Endpoint controllers can
+describe hardware-owned MSI-X Table and PBA (Pending Bit Array) regions
+behind a BAR_RESERVED BAR.
+
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20260324080857.916263-2-mmaddireddy@nvidia.com
+(cherry picked from commit 5f352433ea39171e19fbb3a7e18d983510176854)
+
+diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+index 66cf46f159b3e..073c9900dfe6e 100644
+--- a/include/linux/pci-epc.h
++++ b/include/linux/pci-epc.h
+@@ -211,6 +211,8 @@ enum pci_epc_bar_type {
+ /**
+  * enum pci_epc_bar_rsvd_region_type - type of a fixed subregion behind a BAR
+  * @PCI_EPC_BAR_RSVD_DMA_CTRL_MMIO: Integrated DMA controller MMIO window
++ * @PCI_EPC_BAR_RSVD_MSIX_TBL_RAM: MSI-X table structure
++ * @PCI_EPC_BAR_RSVD_MSIX_PBA_RAM: MSI-X PBA structure
+  *
+  * BARs marked BAR_RESERVED are owned by the SoC/EPC hardware and must not be
+  * reprogrammed by EPF drivers. Some of them still expose fixed subregions that
+@@ -218,6 +220,8 @@ enum pci_epc_bar_type {
+  */
+ enum pci_epc_bar_rsvd_region_type {
+ 	PCI_EPC_BAR_RSVD_DMA_CTRL_MMIO = 0,
++	PCI_EPC_BAR_RSVD_MSIX_TBL_RAM,
++	PCI_EPC_BAR_RSVD_MSIX_PBA_RAM,
+ };
+ 
+ /**
+-- 
+2.43.0
+

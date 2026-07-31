@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sing-Han Chen <singhanc@nvidia.com>
 Date: Mon, 27 May 2024 10:08:04 +0000
-Subject: [PATCH 157/245] NVIDIA: SAUCE: phy: tegra: xusb: Add Tegra264 support
+Subject: [PATCH 157/243] NVIDIA: SAUCE: phy: tegra: xusb: Add Tegra264 support
 
 Add support for the XUSB pad controller for Tegra264. Most of
 the Tegra264 XUSB PADCTL registers definition and programming sequence

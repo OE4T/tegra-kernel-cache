@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Sun, 26 Jul 2026 08:19:03 +0000
-Subject: [PATCH 077/231] iommu/arm-smmu-v3-iommufd: Report CFGI/TLBI-repeat
+Subject: [PATCH 077/232] iommu/arm-smmu-v3-iommufd: Report CFGI/TLBI-repeat
  erratum
 
 A guest with access to VCMDQ generates its own invalidation commands

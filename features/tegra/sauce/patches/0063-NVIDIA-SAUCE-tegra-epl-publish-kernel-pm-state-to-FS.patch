@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Praveen James <pjames@nvidia.com>
 Date: Thu, 26 Oct 2023 04:53:21 +0000
-Subject: [PATCH 063/245] NVIDIA: SAUCE: tegra-epl: publish kernel pm state to
+Subject: [PATCH 063/243] NVIDIA: SAUCE: tegra-epl: publish kernel pm state to
  FSI
 
 Updated tegra-epl driver to publish kernel INIT,

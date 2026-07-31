@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manish Bhardwaj <mbhardwaj@nvidia.com>
 Date: Tue, 19 Aug 2025 14:59:38 +0000
-Subject: [PATCH 193/245] ivc: cert & misra fixes in ivc.c drv
+Subject: [PATCH 193/243] ivc: cert & misra fixes in ivc.c drv
 
 Fixing below cert & misra errors:-
 - CID 27344024: cert_int08_c_violation: Unsigned integer operation

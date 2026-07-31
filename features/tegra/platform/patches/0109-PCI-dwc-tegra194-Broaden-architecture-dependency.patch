@@ -1,0 +1,51 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Vidya Sagar <vidyas@nvidia.com>
+Date: Thu, 8 May 2025 10:49:22 +0530
+Subject: [PATCH 109/232] PCI: dwc: tegra194: Broaden architecture dependency
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Replace ARCH_TEGRA_194_SOC dependency with a more generic ARCH_TEGRA check
+for the Tegra194 PCIe controller, allowing it to be built on Tegra
+platforms beyond Tegra194. Additionally, ensure compatibility by requiring
+ARM64 or COMPILE_TEST since this driver works only for ARM64 Tegra SoCs.
+
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+[mani: moved ARM64 dependency to ARCH_TEGRA]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Acked-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20250508051922.4134041-1-vidyas@nvidia.com
+(cherry picked from commit 6b5e2f70a95c1f46ed444a54ad4c6ff6b9673b1d)
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Change-Id: I96cd3f53e12ee67630c60a2edc8a9f6203dde11f
+
+diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+index 349d4657393c9..8375373322e4b 100644
+--- a/drivers/pci/controller/dwc/Kconfig
++++ b/drivers/pci/controller/dwc/Kconfig
+@@ -228,7 +228,7 @@ config PCIE_TEGRA194
+ 
+ config PCIE_TEGRA194_HOST
+ 	tristate "NVIDIA Tegra194 (and later) PCIe controller (host mode)"
+-	depends on ARCH_TEGRA_194_SOC || COMPILE_TEST
++	depends on (ARCH_TEGRA && ARM64) || COMPILE_TEST
+ 	depends on PCI_MSI
+ 	select PCIE_DW_HOST
+ 	select PHY_TEGRA194_P2U
+@@ -243,7 +243,7 @@ config PCIE_TEGRA194_HOST
+ 
+ config PCIE_TEGRA194_EP
+ 	tristate "NVIDIA Tegra194 (and later) PCIe controller (endpoint mode)"
+-	depends on ARCH_TEGRA_194_SOC || COMPILE_TEST
++	depends on (ARCH_TEGRA && ARM64) || COMPILE_TEST
+ 	depends on PCI_ENDPOINT
+ 	select PCIE_DW_EP
+ 	select PHY_TEGRA194_P2U
+-- 
+2.43.0
+

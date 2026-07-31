@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Narayan Reddy <narayanr@nvidia.com>
 Date: Mon, 23 Aug 2021 01:53:58 +0530
-Subject: [PATCH 027/245] NVIDIA: SAUCE: net: phy: add 10G, 5G for fixed link
+Subject: [PATCH 027/243] NVIDIA: SAUCE: net: phy: add 10G, 5G for fixed link
 
 Issue: currently there is no support for
 10G, 5G fixed link speed

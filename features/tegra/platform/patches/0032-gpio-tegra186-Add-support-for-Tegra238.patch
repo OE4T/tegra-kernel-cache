@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Thu, 14 May 2026 12:48:35 +0000
-Subject: [PATCH 032/231] gpio: tegra186: Add support for Tegra238
+Subject: [PATCH 032/232] gpio: tegra186: Add support for Tegra238
 
 Extend the existing Tegra186 GPIO controller driver with support for the
 GPIO controller found on Tegra238.

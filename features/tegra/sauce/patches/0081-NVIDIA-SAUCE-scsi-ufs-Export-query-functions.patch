@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Abhilash G <abhilashg@nvidia.com>
 Date: Thu, 1 Jun 2023 10:27:10 +0000
-Subject: [PATCH 081/245] NVIDIA: SAUCE: scsi: ufs: Export query functions
+Subject: [PATCH 081/243] NVIDIA: SAUCE: scsi: ufs: Export query functions
 
 Export ufshcd_query_attr and ufshcd_query_descriptor_retry
 functions which are used for UFS provisioning and changing

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:47 -0300
-Subject: [PATCH 073/231] iommu/arm-smmu-v3: Directly encode CMDQ_OP_SYNC
+Subject: [PATCH 073/232] iommu/arm-smmu-v3: Directly encode CMDQ_OP_SYNC
 
 Change the flow so the caller controls the CS field and remove the
 weird u64p_replace_bits() thing to override it.

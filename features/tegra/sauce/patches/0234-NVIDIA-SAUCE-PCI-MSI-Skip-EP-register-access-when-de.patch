@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Pallavi Singh <palsing@nvidia.com>
 Date: Fri, 6 Mar 2026 19:47:59 +0000
-Subject: [PATCH 234/245] NVIDIA: SAUCE: PCI/MSI: Skip EP register access when
+Subject: [PATCH 234/243] NVIDIA: SAUCE: PCI/MSI: Skip EP register access when
  device is disconnected
 
 When a PCIe EP is disconnected (hot unplug or link down), the

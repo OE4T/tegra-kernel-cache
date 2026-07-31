@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Date: Mon, 23 Feb 2026 11:09:25 +0530
-Subject: [PATCH 232/245] NVIDIA: SAUCE: PCI: tegra194: Disable pex_rst_irq
+Subject: [PATCH 232/243] NVIDIA: SAUCE: PCI: tegra194: Disable pex_rst_irq
  only if suspend is allowed
 
 The pex_rst_irq interrupt is always disabled when entering suspend if in

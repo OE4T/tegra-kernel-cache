@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Henry Lin <henryl@nvidia.com>
 Date: Thu, 7 Mar 2024 20:41:09 +0000
-Subject: [PATCH 134/245] NVIDIA: SAUCE: usb: gadget: xudc: support hv guest
+Subject: [PATCH 134/243] NVIDIA: SAUCE: usb: gadget: xudc: support hv guest
 
 In hypervisor environment, xudc driver cannot access clock, reset,
 and power domain directly.

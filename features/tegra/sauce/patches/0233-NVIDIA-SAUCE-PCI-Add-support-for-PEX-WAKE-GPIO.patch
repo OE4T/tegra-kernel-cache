@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Revanth Kumar Uppala <ruppala@nvidia.com>
 Date: Mon, 2 Mar 2026 12:04:15 +0000
-Subject: [PATCH 233/245] NVIDIA: SAUCE: PCI: Add support for PEX WAKE GPIO
+Subject: [PATCH 233/243] NVIDIA: SAUCE: PCI: Add support for PEX WAKE GPIO
 
 Add support for handling the PEX WAKE GPIO (pex_wake_gpiod) by
 parsing the pex-wake GPIO from the device tree and setup the

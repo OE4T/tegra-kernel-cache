@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Sat, 21 Mar 2026 15:50:41 -0700
-Subject: [PATCH 065/231] iommu/arm-smmu-v3: Fix typos introduced by
+Subject: [PATCH 065/232] iommu/arm-smmu-v3: Fix typos introduced by
  arm_smmu_invs
 
 These are introduced by separate commits, so not submitting with a "Fixes"

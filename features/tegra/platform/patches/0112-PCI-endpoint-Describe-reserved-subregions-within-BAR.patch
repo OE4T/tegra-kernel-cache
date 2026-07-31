@@ -1,0 +1,81 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Koichiro Den <den@valinux.co.jp>
+Date: Thu, 12 Mar 2026 14:02:31 +0100
+Subject: [PATCH 112/232] PCI: endpoint: Describe reserved subregions within
+ BARs
+
+Some endpoint controllers expose platform-owned, fixed register windows
+within a BAR that EPF drivers must not reprogram (e.g. a BAR marked
+BAR_RESERVED). Even in that case, EPF drivers may need to reference a
+well-defined subset of that BAR, e.g. to reuse an integrated DMA
+controller MMIO window as a doorbell target.
+
+Introduce struct pci_epc_bar_rsvd_region and extend struct
+pci_epc_bar_desc so EPC drivers can advertise such fixed subregions in a
+controller-agnostic way.
+
+No functional change for existing users.
+
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Tested-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Tested-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260312130229.2282001-15-cassel@kernel.org
+(cherry picked from commit f51644eb40a73677fcd0c92d8174eddde5d0be0e)
+
+diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+index aaaee1b492c81..ab9107222e002 100644
+--- a/include/linux/pci-epc.h
++++ b/include/linux/pci-epc.h
+@@ -200,6 +200,30 @@ enum pci_epc_bar_type {
+ 	BAR_RESERVED,
+ };
+ 
++/**
++ * enum pci_epc_bar_rsvd_region_type - type of a fixed subregion behind a BAR
++ * @PCI_EPC_BAR_RSVD_DMA_CTRL_MMIO: Integrated DMA controller MMIO window
++ *
++ * BARs marked BAR_RESERVED are owned by the SoC/EPC hardware and must not be
++ * reprogrammed by EPF drivers. Some of them still expose fixed subregions that
++ * EPFs may want to reference (e.g. embedded doorbell fallback).
++ */
++enum pci_epc_bar_rsvd_region_type {
++	PCI_EPC_BAR_RSVD_DMA_CTRL_MMIO = 0,
++};
++
++/**
++ * struct pci_epc_bar_rsvd_region - fixed subregion behind a BAR
++ * @type: reserved region type
++ * @offset: offset within the BAR aperture
++ * @size: size of the reserved region
++ */
++struct pci_epc_bar_rsvd_region {
++	enum pci_epc_bar_rsvd_region_type	type;
++	resource_size_t				offset;
++	resource_size_t				size;
++};
++
+ /**
+  * struct pci_epc_bar_desc - hardware description for a BAR
+  * @type: the type of the BAR
+@@ -207,11 +231,15 @@ enum pci_epc_bar_type {
+  * @only_64bit: if true, an EPF driver is not allowed to choose if this BAR
+  *		should be configured as 32-bit or 64-bit, the EPF driver must
+  *		configure this BAR as 64-bit.
++ * @nr_rsvd_regions: number of fixed subregions described for BAR_RESERVED
++ * @rsvd_regions: fixed subregions behind BAR_RESERVED
+  */
+ struct pci_epc_bar_desc {
+ 	enum pci_epc_bar_type type;
+ 	u64 fixed_size;
+ 	bool only_64bit;
++	u8 nr_rsvd_regions;
++	const struct pci_epc_bar_rsvd_region *rsvd_regions;
+ };
+ 
+ /**
+-- 
+2.43.0
+

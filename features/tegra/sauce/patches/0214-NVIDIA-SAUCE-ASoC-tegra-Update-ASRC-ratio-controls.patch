@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ritu Chaudhary <rituc@nvidia.com>
 Date: Mon, 2 Dec 2024 10:30:25 +0000
-Subject: [PATCH 214/245] NVIDIA: SAUCE: ASoC: tegra: Update ASRC ratio
+Subject: [PATCH 214/243] NVIDIA: SAUCE: ASoC: tegra: Update ASRC ratio
  controls
 
 Combine integer and fractional ASRC ratio controls into a single

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Thu, 18 Jul 2024 08:05:18 +0000
-Subject: [PATCH 185/245] NVIDIA: SAUCE: gpio-tegra: add 1ms delay before
+Subject: [PATCH 185/243] NVIDIA: SAUCE: gpio-tegra: add 1ms delay before
  setting debounce
 
 First interrupt is missing when debounce is enabled

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Narayan Reddy <narayanr@nvidia.com>
 Date: Mon, 18 Jul 2022 10:17:12 +0000
-Subject: [PATCH 032/245] NVIDIA: SAUCE: net: phy: aqr: configure 1G, 100M of
+Subject: [PATCH 032/243] NVIDIA: SAUCE: net: phy: aqr: configure 1G, 100M of
  aqr PHY to XFI/2
 
 Issue: In case of MAC/UPHY operating at 5G speed in XFI mode,

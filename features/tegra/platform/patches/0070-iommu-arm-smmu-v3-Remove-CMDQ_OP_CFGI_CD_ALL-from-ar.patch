@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:44 -0300
-Subject: [PATCH 070/231] iommu/arm-smmu-v3: Remove CMDQ_OP_CFGI_CD_ALL from
+Subject: [PATCH 070/232] iommu/arm-smmu-v3: Remove CMDQ_OP_CFGI_CD_ALL from
  arm_smmu_cmdq_build_cmd()
 
 Nothing uses this, just dead code.

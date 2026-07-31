@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Petlozu Pravareshwar <petlozup@nvidia.com>
 Date: Tue, 29 Jul 2025 22:35:35 +0000
-Subject: [PATCH 181/245] NVIDIA: SAUCE: soc/tegra: pmc: Add sysfs nodes to
+Subject: [PATCH 181/243] NVIDIA: SAUCE: soc/tegra: pmc: Add sysfs nodes to
  select boot chain
 
 Add sysfs nodes to select A/B boot chain so that BootROM can select

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Revanth Kumar Uppala <ruppala@nvidia.com>
 Date: Mon, 2 Mar 2026 12:05:58 +0000
-Subject: [PATCH 184/245] NVIDIA: SAUCE: soc/tegra: pmc: Add Tegra234 PCIe wake
+Subject: [PATCH 184/243] NVIDIA: SAUCE: soc/tegra: pmc: Add Tegra234 PCIe wake
  event
 
 Enable PCIe wake event for the Tegra234 SoC.

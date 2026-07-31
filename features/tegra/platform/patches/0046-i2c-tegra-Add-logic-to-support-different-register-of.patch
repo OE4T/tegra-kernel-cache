@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik Rajput <kkartik@nvidia.com>
 Date: Tue, 24 Mar 2026 11:28:42 +0530
-Subject: [PATCH 046/231] i2c: tegra: Add logic to support different register
+Subject: [PATCH 046/232] i2c: tegra: Add logic to support different register
  offsets
 
 Tegra410 use different offsets for existing I2C registers, update
