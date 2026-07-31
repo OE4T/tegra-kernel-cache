@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Wed, 3 Apr 2024 15:03:09 +0530
-Subject: [PATCH 002/245] NVIDIA: SAUCE: crypto: Skip lrw(aes) in tcrypt
+Subject: [PATCH 002/243] NVIDIA: SAUCE: crypto: Skip lrw(aes) in tcrypt
 
 Skip lrw(aes) from AES test in tcrypt. It is not supported by Tegra SE.
 Also enable the success print so that the success message is clear.

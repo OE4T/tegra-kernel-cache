@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Laxman Dewangan <ldewangan@nvidia.com>
 Date: Thu, 28 Dec 2023 12:30:57 +0000
-Subject: [PATCH 121/245] NVIDIA: SAUCE: lib: Avoid call dump trace on UBSAN
+Subject: [PATCH 121/243] NVIDIA: SAUCE: lib: Avoid call dump trace on UBSAN
  error
 
 Avoid call stack dump when UBSAN occurs. The prints of

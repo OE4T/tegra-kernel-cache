@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Tue, 8 Apr 2025 14:57:44 +0000
-Subject: [PATCH 080/231] NVIDIA: SAUCE: iommu/arm-smmu-v3: Add pm suspend op
+Subject: [PATCH 080/232] NVIDIA: SAUCE: iommu/arm-smmu-v3: Add pm suspend op
 
 - Issue CMD_OP_CFGI and CMD_OP_TBI_ALL to ensure all pending
 transactions are complete before going into suspend and then disable

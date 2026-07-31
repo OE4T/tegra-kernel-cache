@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Shardar Mohammed <smohammed@nvidia.com>
 Date: Fri, 20 Oct 2023 11:52:38 +0000
-Subject: [PATCH 170/245] NVIDIA: SAUCE: arm64: defconfig: Increase
+Subject: [PATCH 170/243] NVIDIA: SAUCE: arm64: defconfig: Increase
  FORCE_MAX_ORDER for Tegra
 
 In case of ARCH_TEGRA, there is a need to allocate the memory which

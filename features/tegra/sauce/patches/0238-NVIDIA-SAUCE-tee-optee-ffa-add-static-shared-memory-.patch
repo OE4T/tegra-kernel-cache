@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sungbae Yoo <sungbaey@nvidia.com>
 Date: Fri, 26 Sep 2025 09:20:41 +0000
-Subject: [PATCH 238/245] NVIDIA: SAUCE: tee: optee: ffa: add static shared
+Subject: [PATCH 238/243] NVIDIA: SAUCE: tee: optee: ffa: add static shared
  memory support
 
 This adds OPTEE_FFA_SEC_CAP_STATIC_SHM to support

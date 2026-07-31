@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: haotienh <haotienh@nvidia.com>
 Date: Tue, 30 Jul 2024 06:49:22 +0000
-Subject: [PATCH 135/245] NVIDIA: SAUCE: xudc: Set COREPLL_PWRDN to 0
+Subject: [PATCH 135/243] NVIDIA: SAUCE: xudc: Set COREPLL_PWRDN to 0
 
 The COREPLL_PWRDN bit can be 1 only if the device port is in
 disconnected/low-power state or is disabled.

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manish Bhardwaj <mbhardwaj@nvidia.com>
 Date: Wed, 21 Aug 2024 14:16:43 +0000
-Subject: [PATCH 090/245] NVIDIA: SAUCE: virt: tegra: build tegra_hv.c driver
+Subject: [PATCH 090/243] NVIDIA: SAUCE: virt: tegra: build tegra_hv.c driver
  as built-in driver
 
 skip building tegra_hv driver for oot kernel from

@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Fri, 31 Jul 2026 09:54:31 +0000
+Subject: [PATCH 083/232] NVIDIA: SAUCE: iommu/arm-smmu-v3: Add Tegra264
+ property for TLBI issue
+
+Add the downstream device-tree property 'nvidia,tegra264-tlbi-race-fix',
+in addition to the upstream property 'nvidia,tegra264-smmu', for
+detecting if the fix for the Tegra264 SMMU TLBI issue needed to be
+applied. The current downstream device-tree does not include the
+upstream device-tree property for the Tegra264 SMMU and so for now we
+need to continue to support the downstream property until an updated
+device-tree is available with the upstream property.
+
+Bug 5904519
+
+Change-Id: Ifa63d0d5f13b997b7f9d5ce5623b7a20a234592a
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 05f4816e7bca7..93ee43b12ba80 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -5293,6 +5293,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
+ 	if (of_device_is_compatible(dev->of_node, "nvidia,tegra264-smmu")) {
+ 		tegra_cmdqv_dt_probe(dev->of_node, smmu);
+ 		static_branch_enable(&arm_smmu_erratum_repeat_tlbi_cfgi_key);
++	} else if (of_property_read_bool(dev->of_node,
++					 "nvidia,tegra264-tlbi-race-fix")) {
++		static_branch_enable(&arm_smmu_erratum_repeat_tlbi_cfgi_key);
+ 	}
+ 
+ 	return ret;
+-- 
+2.43.0
+

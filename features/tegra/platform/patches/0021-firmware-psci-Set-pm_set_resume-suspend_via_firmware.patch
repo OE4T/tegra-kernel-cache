@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Konrad Dybcio <konradybcio@kernel.org>
 Date: Wed, 31 Dec 2025 21:51:26 +0530
-Subject: [PATCH 021/231] firmware: psci: Set
+Subject: [PATCH 021/232] firmware: psci: Set
  pm_set_resume/suspend_via_firmware() for SYSTEM_SUSPEND
 
 PSCI specification defines the SYSTEM_SUSPEND feature which enables the

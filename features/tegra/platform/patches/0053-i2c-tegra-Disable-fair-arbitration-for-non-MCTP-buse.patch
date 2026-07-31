@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Mon, 18 May 2026 17:10:11 +0530
-Subject: [PATCH 053/231] i2c: tegra: Disable fair arbitration for non-MCTP
+Subject: [PATCH 053/232] i2c: tegra: Disable fair arbitration for non-MCTP
  buses
 
 Recent Tegra I2C controllers have a fairness arbitration register, which

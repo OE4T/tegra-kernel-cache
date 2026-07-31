@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:45 -0300
-Subject: [PATCH 071/231] iommu/arm-smmu-v3: Directly encode simple commands
+Subject: [PATCH 071/232] iommu/arm-smmu-v3: Directly encode simple commands
 
 Add make functions to build commands for
 

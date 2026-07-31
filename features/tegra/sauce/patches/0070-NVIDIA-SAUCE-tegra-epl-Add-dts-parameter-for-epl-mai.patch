@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Hiteshkumar Patel <hiteshkumarg@nvidia.com>
 Date: Fri, 5 Dec 2025 13:52:21 -0800
-Subject: [PATCH 070/245] NVIDIA: SAUCE: tegra-epl: Add dts parameter for epl
+Subject: [PATCH 070/243] NVIDIA: SAUCE: tegra-epl: Add dts parameter for epl
  mailbox timeout
 
 EPL mailbox timeout is different for L4T. So added dts parameter to

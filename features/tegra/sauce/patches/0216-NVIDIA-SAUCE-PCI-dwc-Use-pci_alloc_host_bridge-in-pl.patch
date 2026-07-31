@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Date: Tue, 6 Jul 2021 16:46:56 +0530
-Subject: [PATCH 216/245] NVIDIA: SAUCE: PCI: dwc: Use pci_alloc_host_bridge()
+Subject: [PATCH 216/243] NVIDIA: SAUCE: PCI: dwc: Use pci_alloc_host_bridge()
  in place of devm_*()
 
 PCIe host bridge structure is freed during hot unplug and same strcuture

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Eric Funsten <efunsten@nvidia.com>
 Date: Tue, 7 May 2024 16:01:02 +0000
-Subject: [PATCH 049/245] NVIDIA: SAUCE: perf: arm_cspmu: add stop counters to
+Subject: [PATCH 049/243] NVIDIA: SAUCE: perf: arm_cspmu: add stop counters to
  impl ops
 
 Adds stop_counters function pointer to implementation ops

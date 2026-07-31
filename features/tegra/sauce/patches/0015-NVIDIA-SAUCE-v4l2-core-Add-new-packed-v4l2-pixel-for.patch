@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Frank Chen <frankc@nvidia.com>
 Date: Tue, 29 Nov 2022 11:17:21 -0800
-Subject: [PATCH 015/245] NVIDIA: SAUCE: v4l2-core: Add new packed v4l2 pixel
+Subject: [PATCH 015/243] NVIDIA: SAUCE: v4l2-core: Add new packed v4l2 pixel
  format
 
 Add pacekd 10-bit formats to v4l2 pixel formats list.

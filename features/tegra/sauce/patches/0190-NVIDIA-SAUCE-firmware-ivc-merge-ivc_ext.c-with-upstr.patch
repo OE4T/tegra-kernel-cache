@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manish Bhardwaj <mbhardwaj@nvidia.com>
 Date: Wed, 21 Aug 2024 06:52:00 +0000
-Subject: [PATCH 190/245] NVIDIA: SAUCE: firmware: ivc: merge ivc_ext.c with
+Subject: [PATCH 190/243] NVIDIA: SAUCE: firmware: ivc: merge ivc_ext.c with
  upstream ivc.c
 
 merging ivc_ext.c driver with upstream ivc.c driver

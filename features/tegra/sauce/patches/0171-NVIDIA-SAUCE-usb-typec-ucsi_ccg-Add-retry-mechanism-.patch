@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Wayne Chang <waynec@nvidia.com>
 Date: Fri, 13 Feb 2026 02:29:24 +0000
-Subject: [PATCH 171/245] NVIDIA: SAUCE: usb: typec: ucsi_ccg: Add retry
+Subject: [PATCH 171/243] NVIDIA: SAUCE: usb: typec: ucsi_ccg: Add retry
  mechanism in ccg_read
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

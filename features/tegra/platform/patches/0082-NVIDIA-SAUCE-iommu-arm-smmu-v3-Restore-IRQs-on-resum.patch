@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Fri, 21 Nov 2025 08:31:36 +0000
-Subject: [PATCH 082/231] NVIDIA: SAUCE: iommu/arm-smmu-v3: Restore IRQs on
+Subject: [PATCH 082/232] NVIDIA: SAUCE: iommu/arm-smmu-v3: Restore IRQs on
  resume
 
 The ARM SMMU v3 driver was not restoring interrupt configuration after

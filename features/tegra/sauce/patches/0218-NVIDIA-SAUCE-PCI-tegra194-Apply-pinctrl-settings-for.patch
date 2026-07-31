@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vidya Sagar <vidyas@nvidia.com>
 Date: Fri, 14 Oct 2022 00:08:38 +0530
-Subject: [PATCH 218/245] NVIDIA: SAUCE: PCI: tegra194: Apply pinctrl settings
+Subject: [PATCH 218/243] NVIDIA: SAUCE: PCI: tegra194: Apply pinctrl settings
  for both PCIe RP and EP
 
 PERST# and CLKREQ# pinctrl settings should be applied for both root port

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: christophert <christophert@nvidia.com>
 Date: Tue, 9 Dec 2025 17:43:27 +0000
-Subject: [PATCH 116/245] NVIDIA: SAUCE: virt: tegra: add nvlog ability to
+Subject: [PATCH 116/243] NVIDIA: SAUCE: virt: tegra: add nvlog ability to
  access hypervisor from sysfs
 
 Added NvLog Entity sysfs support to expose nvlog_entities[] from the

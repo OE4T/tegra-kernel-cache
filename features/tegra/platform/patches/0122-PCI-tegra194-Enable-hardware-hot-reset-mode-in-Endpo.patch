@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Vidya Sagar <vidyas@nvidia.com>
+Date: Wed, 25 Mar 2026 00:39:56 +0530
+Subject: [PATCH 122/232] PCI: tegra194: Enable hardware hot reset mode in
+ Endpoint mode
+
+When PCIe link goes down, hardware can retrain the link and try to link up.
+To enable this feature, program the APPL_CTRL register with hardware hot
+reset with immediate LTSSM enable mode when the controller is operating in
+endpoint mode.
+
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+[mani: commit log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
+Link: https://patch.msgid.link/20260324191000.1095768-6-mmaddireddy@nvidia.com
+(cherry picked from commit acd46d51f22f0d4b83d4e34088e68498110085b5)
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Change-Id: I241ac17248a8e487dfb974a270467082754d66b2
+
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index c1f1f6a930922..3fcbca0d883aa 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -1796,6 +1796,8 @@ static void pex_ep_event_pex_rst_deassert(struct tegra_pcie_dw *pcie)
+ 	val = appl_readl(pcie, APPL_CTRL);
+ 	val |= APPL_CTRL_SYS_PRE_DET_STATE;
+ 	val |= APPL_CTRL_HW_HOT_RST_EN;
++	val &= ~(APPL_CTRL_HW_HOT_RST_MODE_MASK << APPL_CTRL_HW_HOT_RST_MODE_SHIFT);
++	val |= (APPL_CTRL_HW_HOT_RST_MODE_IMDT_RST_LTSSM_EN << APPL_CTRL_HW_HOT_RST_MODE_SHIFT);
+ 	appl_writel(pcie, val, APPL_CTRL);
+ 
+ 	val = appl_readl(pcie, APPL_CFG_MISC);
+-- 
+2.43.0
+

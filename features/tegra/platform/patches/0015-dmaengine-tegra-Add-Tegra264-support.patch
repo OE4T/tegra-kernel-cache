@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 31 Mar 2026 15:53:02 +0530
-Subject: [PATCH 015/231] dmaengine: tegra: Add Tegra264 support
+Subject: [PATCH 015/232] dmaengine: tegra: Add Tegra264 support
 
 Add compatible and chip data to support GPCDMA in Tegra264, which has
 differences in register layout and address bits compared to previous

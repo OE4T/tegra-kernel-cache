@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Fri, 12 May 2023 10:49:26 +0000
-Subject: [PATCH 204/245] NVIDIA: SAUCE: memory: tegra: Skip SID override on HV
+Subject: [PATCH 204/243] NVIDIA: SAUCE: memory: tegra: Skip SID override on HV
 
 HV has blocked access to MC registers.
 SID override programming is required on L4T.

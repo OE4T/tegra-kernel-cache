@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 13 Jan 2026 05:49:32 +0000
-Subject: [PATCH 055/231] iommu/tegra241-cmdqv: Decouple driver from ACPI
+Subject: [PATCH 055/232] iommu/tegra241-cmdqv: Decouple driver from ACPI
 
 A platform device is created by acpi_create_platform_device() per CMDQV's
 adev. That means there is no point in going through _CRS of ACPI.

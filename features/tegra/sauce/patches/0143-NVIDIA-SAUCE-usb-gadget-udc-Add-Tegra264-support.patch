@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sing-Han Chen <singhanc@nvidia.com>
 Date: Mon, 27 May 2024 10:21:00 +0000
-Subject: [PATCH 143/245] NVIDIA: SAUCE: usb: gadget: udc: Add Tegra264 support
+Subject: [PATCH 143/243] NVIDIA: SAUCE: usb: gadget: udc: Add Tegra264 support
 
 This commit adds support for XUSB device mode controller support on
 Tegra264 SoC. The configuration is mostly copied from Tegra234 XUDC.

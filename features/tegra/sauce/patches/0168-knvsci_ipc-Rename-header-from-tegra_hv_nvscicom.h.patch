@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Daniel Jurgens <danielj@nvidia.com>
 Date: Mon, 9 Feb 2026 16:20:02 +0000
-Subject: [PATCH 168/245] knvsci_ipc: Rename header from tegra_hv_nvscicom.h
+Subject: [PATCH 168/243] knvsci_ipc: Rename header from tegra_hv_nvscicom.h
 
 Rename the NvSci IPC header and API:
 - include/soc/tegra/virt/tegra_hv_nvscicom.h -> knvsci_ipc.h

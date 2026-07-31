@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Haotien Hsu <haotienh@nvidia.com>
 Date: Tue, 6 Jan 2026 08:13:10 +0000
-Subject: [PATCH 229/245] NVIDIA: SAUCE: PCI/DOE: Increase DOE timeout
+Subject: [PATCH 229/243] NVIDIA: SAUCE: PCI/DOE: Increase DOE timeout
 
 When we establish the PCIe Link IDE, we need the PSC to perform the key
 management (KM) process over DOE on our platforms. The PSC processing

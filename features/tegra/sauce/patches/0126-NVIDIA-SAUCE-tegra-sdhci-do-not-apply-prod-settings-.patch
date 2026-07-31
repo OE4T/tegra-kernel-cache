@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ninad Malwade <nmalwade@nvidia.com>
 Date: Mon, 19 Aug 2024 15:52:55 +0800
-Subject: [PATCH 126/245] NVIDIA: SAUCE: tegra: sdhci: do not apply prod
+Subject: [PATCH 126/243] NVIDIA: SAUCE: tegra: sdhci: do not apply prod
  settings during reset call
 
 Do not apply general "prod" during reset call

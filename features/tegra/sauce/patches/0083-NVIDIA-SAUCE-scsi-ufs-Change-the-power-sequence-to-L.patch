@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mallikarjun Kasoju <mkasoju@nvidia.com>
 Date: Fri, 16 Aug 2024 09:22:55 +0000
-Subject: [PATCH 083/245] NVIDIA: SAUCE: scsi: ufs: Change the power sequence
+Subject: [PATCH 083/243] NVIDIA: SAUCE: scsi: ufs: Change the power sequence
  to LSx1->LSx2->HSx2
 
 Change the power sequence to LSx1->LSx2->HSx2

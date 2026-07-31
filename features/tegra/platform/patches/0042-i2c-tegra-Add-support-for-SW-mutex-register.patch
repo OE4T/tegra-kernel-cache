@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik Rajput <kkartik@nvidia.com>
 Date: Tue, 18 Nov 2025 19:36:19 +0530
-Subject: [PATCH 042/231] i2c: tegra: Add support for SW mutex register
+Subject: [PATCH 042/232] i2c: tegra: Add support for SW mutex register
 
 Add support for SW mutex register introduced in Tegra264 to provide
 an option to share the interface between multiple firmwares and/or

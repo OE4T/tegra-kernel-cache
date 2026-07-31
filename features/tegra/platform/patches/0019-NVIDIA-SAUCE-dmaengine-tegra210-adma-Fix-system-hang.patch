@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Hirak Biswas <hbiswas@nvidia.com>
 Date: Wed, 10 Apr 2024 10:47:48 +0000
-Subject: [PATCH 019/231] NVIDIA: SAUCE: dmaengine: tegra210-adma: Fix system
+Subject: [PATCH 019/232] NVIDIA: SAUCE: dmaengine: tegra210-adma: Fix system
  hang on PREEMPT_RT kernel
 
 On RT kernel spin_lock() behavior changes. It becomes a sleeping lock

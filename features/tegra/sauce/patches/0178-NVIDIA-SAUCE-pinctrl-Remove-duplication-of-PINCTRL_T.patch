@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Laxman Dewangan <ldewangan@nvidia.com>
 Date: Sat, 24 Aug 2024 10:27:30 +0000
-Subject: [PATCH 178/245] NVIDIA: SAUCE: pinctrl: Remove duplication of
+Subject: [PATCH 178/243] NVIDIA: SAUCE: pinctrl: Remove duplication of
  PINCTRL_TEGRA264 definition
 
 Remove the duplication of conifg definition in the Kconfigs.

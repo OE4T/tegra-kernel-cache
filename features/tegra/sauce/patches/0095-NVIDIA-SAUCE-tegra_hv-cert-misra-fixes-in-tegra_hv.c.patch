@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manish Bhardwaj <mbhardwaj@nvidia.com>
 Date: Sat, 1 Mar 2025 08:40:46 +0000
-Subject: [PATCH 095/245] NVIDIA: SAUCE: tegra_hv: cert & misra fixes in
+Subject: [PATCH 095/243] NVIDIA: SAUCE: tegra_hv: cert & misra fixes in
  tegra_hv.c drv
 
 using this patch fixing below cert & misra errors:-

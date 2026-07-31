@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: "akunkulagunt@" <akunkulagunt@nvidia.com>
+From: "akunkulagunt@" <akunkulagunt@>
 Date: Wed, 8 Apr 2026 15:05:16 +0000
-Subject: [PATCH 215/245] NVIDIA: SAUCE: ASoC: tegra: Add S8 PCM format support
+Subject: [PATCH 215/243] NVIDIA: SAUCE: ASoC: tegra: Add S8 PCM format support
  for MVC
 
 Add handling for SNDRV_PCM_FORMAT_S8 in the MVC audio CIF

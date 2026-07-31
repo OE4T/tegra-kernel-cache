@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sumit Gupta <sumitg@nvidia.com>
 Date: Wed, 7 Sep 2022 18:42:17 +0530
-Subject: [PATCH 176/245] NVIDIA: SAUCE: soc: tegra: cbb: add multi socket
+Subject: [PATCH 176/243] NVIDIA: SAUCE: soc: tegra: cbb: add multi socket
  error handling
 
 Add support to handle errors from multiple sockets by using

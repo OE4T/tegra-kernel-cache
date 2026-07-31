@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Date: Fri, 18 Mar 2022 21:09:41 +0530
-Subject: [PATCH 220/245] NVIDIA: SAUCE: PCI: tegra194: Disable AER interrupt
+Subject: [PATCH 220/243] NVIDIA: SAUCE: PCI: tegra194: Disable AER interrupt
  during controller deinit
 
 In Tegra PCIe RP <-> Tegra EP case, PCIe AER surprise down error and PCIe

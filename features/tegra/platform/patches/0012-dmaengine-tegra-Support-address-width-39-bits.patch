@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 31 Mar 2026 15:52:59 +0530
-Subject: [PATCH 012/231] dmaengine: tegra: Support address width > 39 bits
+Subject: [PATCH 012/232] dmaengine: tegra: Support address width > 39 bits
 
 Tegra264 supports address width of 41 bits. Unlike older SoCs which use
 a common high_addr register for upper address bits, Tegra264 has separate

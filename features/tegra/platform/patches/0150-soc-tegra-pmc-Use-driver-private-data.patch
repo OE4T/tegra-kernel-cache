@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Thierry Reding <treding@nvidia.com>
+Date: Mon, 3 Feb 2025 14:52:46 +0100
+Subject: [PATCH 150/232] soc/tegra: pmc: Use driver-private data
+
+Instead of relying on a global variable for the PMC context, use the
+driver-private data for sysfs attributes.
+
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+(cherry picked from commit 2e944c51d6617d3ded7734d21202036c126344a1)
+
+diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
+index da8890520fc8d..9cfa7c3d5cae6 100644
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -2243,6 +2243,7 @@ static int tegra_pmc_pinctrl_init(struct tegra_pmc *pmc)
+ static ssize_t reset_reason_show(struct device *dev,
+ 				 struct device_attribute *attr, char *buf)
+ {
++	struct tegra_pmc *pmc = dev_get_drvdata(dev);
+ 	u32 value;
+ 
+ 	value = tegra_pmc_readl(pmc, pmc->soc->regs->rst_status);
+@@ -2260,6 +2261,7 @@ static DEVICE_ATTR_RO(reset_reason);
+ static ssize_t reset_level_show(struct device *dev,
+ 				struct device_attribute *attr, char *buf)
+ {
++	struct tegra_pmc *pmc = dev_get_drvdata(dev);
+ 	u32 value;
+ 
+ 	value = tegra_pmc_readl(pmc, pmc->soc->regs->rst_status);
+-- 
+2.43.0
+

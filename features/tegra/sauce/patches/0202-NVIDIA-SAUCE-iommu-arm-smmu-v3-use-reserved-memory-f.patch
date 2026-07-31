@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Pritesh Raithatha <praithatha@nvidia.com>
 Date: Thu, 17 Apr 2025 03:04:36 -0700
-Subject: [PATCH 202/245] NVIDIA: SAUCE: iommu/arm-smmu-v3: use reserved memory
+Subject: [PATCH 202/243] NVIDIA: SAUCE: iommu/arm-smmu-v3: use reserved memory
  for allocations
 
 CMA allocations are reusable. When not allocated, it can be used
@@ -27,7 +27,7 @@ Tested-by: Bharat Nihalani <bnihalani@nvidia.com>
 (cherry picked from commit 415c7fb8e350ea1d28d8955de03faf174f575d1b)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 05f4816e7bca7..a987ebdaaf9e7 100644
+index c53792ec331a4..0cfdb72bd993a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -2,7 +2,8 @@
@@ -48,7 +48,7 @@ index 05f4816e7bca7..a987ebdaaf9e7 100644
  #include <linux/pci.h>
  #include <linux/pci-ats.h>
  #include <linux/platform_device.h>
-@@ -5278,6 +5280,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
+@@ -5295,6 +5297,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
  	u32 cells;
  	int ret = -EINVAL;
  

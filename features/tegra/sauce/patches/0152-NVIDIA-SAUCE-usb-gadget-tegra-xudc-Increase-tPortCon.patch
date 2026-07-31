@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Wayne Chang <waynec@nvidia.com>
 Date: Tue, 3 Sep 2024 09:04:19 +0000
-Subject: [PATCH 152/245] NVIDIA: SAUCE: usb: gadget: tegra-xudc: Increase
+Subject: [PATCH 152/243] NVIDIA: SAUCE: usb: gadget: tegra-xudc: Increase
  tPortConfiguration timeout
 
 The default tPortConfiguration timeout is too small.

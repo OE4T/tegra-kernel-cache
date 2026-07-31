@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sing-Han Chen <singhanc@nvidia.com>
 Date: Thu, 2 Jun 2022 13:58:30 +0000
-Subject: [PATCH 133/245] NVIDIA: SAUCE: usb: gadget: xudc: use reset control
+Subject: [PATCH 133/243] NVIDIA: SAUCE: usb: gadget: xudc: use reset control
  framework for reset
 
 There is no XUSB powergating support for some internal platforms

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vishwaroop A <va@nvidia.com>
 Date: Mon, 27 Mar 2023 04:44:56 +0000
-Subject: [PATCH 025/245] NVIDIA: SAUCE: mtd: spi-nor: support for spansion and
+Subject: [PATCH 025/243] NVIDIA: SAUCE: mtd: spi-nor: support for spansion and
  macronix
 
 Add flash info for spansion and macronix flash

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Pritesh Raithatha <praithatha@nvidia.com>
 Date: Mon, 1 Apr 2024 13:54:08 +0000
-Subject: [PATCH 079/231] NVIDIA: SAUCE: iommu/arm-smmu-v3: add suspend/resume
+Subject: [PATCH 079/232] NVIDIA: SAUCE: iommu/arm-smmu-v3: add suspend/resume
  support
 
 Add suspend/resume support for arm-smmu-v3. Move irq initialization

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Frank Chen <frankc@nvidia.com>
 Date: Tue, 29 Nov 2022 11:16:11 -0800
-Subject: [PATCH 017/245] NVIDIA: SAUCE: include/linux: Add new packed v4l2
+Subject: [PATCH 017/243] NVIDIA: SAUCE: include/linux: Add new packed v4l2
  pixel format
 
 Add pacekd 10-bit formats to v4l2 pixel formats list.

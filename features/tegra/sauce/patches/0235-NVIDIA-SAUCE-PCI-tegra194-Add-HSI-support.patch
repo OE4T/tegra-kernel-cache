@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nagarjuna Kristam <nkristam@nvidia.com>
 Date: Wed, 16 Nov 2022 11:57:02 +0530
-Subject: [PATCH 235/245] NVIDIA: SAUCE: PCI: tegra194: Add HSI support
+Subject: [PATCH 235/243] NVIDIA: SAUCE: PCI: tegra194: Add HSI support
 
 Enable PCIe HSI faults and LIC interrupts for each error. Clear error
 status and report EPL error to FSI.

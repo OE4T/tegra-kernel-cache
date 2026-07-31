@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: "Wayne Wang(SW-TEGRA)" <waywang@nvidia.com>
 Date: Tue, 29 Jul 2025 16:09:20 +0800
-Subject: [PATCH 054/231] NVIDIA: SAUCE: i2c: tegra: Do not mark ACPI devices
+Subject: [PATCH 054/232] NVIDIA: SAUCE: i2c: tegra: Do not mark ACPI devices
  and PREEMPT_RT as irq safe
 
 That patch includes commit 14d069d92951a3e150c0a81f2ca3b93e54da913b upstream.

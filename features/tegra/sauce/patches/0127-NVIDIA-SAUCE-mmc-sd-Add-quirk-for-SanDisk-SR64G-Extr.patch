@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Tue, 1 Jul 2025 04:56:17 +0000
-Subject: [PATCH 127/245] NVIDIA: SAUCE: mmc: sd: Add quirk for SanDisk SR64G
+Subject: [PATCH 127/243] NVIDIA: SAUCE: mmc: sd: Add quirk for SanDisk SR64G
  Extreme Pro power off notify timeout
 
 SanDisk SR64G Extreme Pro cards intermittently timeout during power off

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik Rajput <kkartik@nvidia.com>
 Date: Tue, 18 Nov 2025 19:36:15 +0530
-Subject: [PATCH 038/231] i2c: tegra: Do not configure DMA if not supported
+Subject: [PATCH 038/232] i2c: tegra: Do not configure DMA if not supported
 
 On Tegra264, not all I2C controllers have the necessary interface to
 GPC DMA, this causes failures when function tegra_i2c_init_dma()

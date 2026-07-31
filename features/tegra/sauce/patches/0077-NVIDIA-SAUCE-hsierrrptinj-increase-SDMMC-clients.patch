@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Chaitanya Namuduri <snamuduri@nvidia.com>
 Date: Wed, 14 Feb 2024 11:41:44 +0530
-Subject: [PATCH 077/245] NVIDIA: SAUCE: hsierrrptinj: increase SDMMC clients
+Subject: [PATCH 077/243] NVIDIA: SAUCE: hsierrrptinj: increase SDMMC clients
 
 Increase SDMMC clients from 5 to 9 to support boards with
 rootfs over eMMC only.

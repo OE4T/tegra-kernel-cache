@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Bharat Nihalani <bnihalani@nvidia.com>
 Date: Mon, 28 Apr 2025 08:46:57 +0000
-Subject: [PATCH 124/245] NVIDIA: SAUCE: pstore: Avoid using pr_cont
+Subject: [PATCH 124/243] NVIDIA: SAUCE: pstore: Avoid using pr_cont
 
 This is done as pr_cont is generally discouraged in kernel code
 because it can cause message interleaving in SMP systems.

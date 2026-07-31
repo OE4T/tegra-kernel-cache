@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Shobek Attupurath <sattupurath@nvidia.com>
 Date: Tue, 5 Nov 2024 02:24:38 +0000
-Subject: [PATCH 004/245] NVIDIA: SAUCE: bt_usb: Disable RTL8852CE upstream
+Subject: [PATCH 004/243] NVIDIA: SAUCE: bt_usb: Disable RTL8852CE upstream
  driver
 
 Disable RTL8852CE upstream bluetooth driver detection to

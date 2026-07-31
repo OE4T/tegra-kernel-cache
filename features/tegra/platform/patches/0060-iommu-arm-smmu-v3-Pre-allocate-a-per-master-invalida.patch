@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:20 -0700
-Subject: [PATCH 060/231] iommu/arm-smmu-v3: Pre-allocate a per-master
+Subject: [PATCH 060/232] iommu/arm-smmu-v3: Pre-allocate a per-master
  invalidation array
 
 When a master is attached from an old domain to a new domain, it needs to

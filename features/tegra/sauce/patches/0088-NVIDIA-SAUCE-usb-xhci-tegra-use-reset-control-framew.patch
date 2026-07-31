@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sing-Han Chen <singhanc@nvidia.com>
 Date: Sun, 15 Oct 2023 15:00:51 +0000
-Subject: [PATCH 088/245] NVIDIA: SAUCE: usb: xhci: tegra: use reset control
+Subject: [PATCH 088/243] NVIDIA: SAUCE: usb: xhci: tegra: use reset control
  framework for reset
 
 There is no XUSB powergating support for some internal platforms

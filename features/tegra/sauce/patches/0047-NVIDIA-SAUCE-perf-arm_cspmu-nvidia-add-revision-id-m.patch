@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Besar Wicaksono <bwicaksono@nvidia.com>
 Date: Tue, 7 Nov 2023 13:08:17 -0600
-Subject: [PATCH 047/245] NVIDIA: SAUCE: perf: arm_cspmu: nvidia: add revision
+Subject: [PATCH 047/243] NVIDIA: SAUCE: perf: arm_cspmu: nvidia: add revision
  id matching
 
 This is a preparatory patch for new NVIDIA devices
