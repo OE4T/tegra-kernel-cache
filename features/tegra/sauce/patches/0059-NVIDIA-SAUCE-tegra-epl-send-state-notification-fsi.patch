@@ -17,7 +17,7 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
-index e45195cbc3600..d7b7cae727906 100644
+index e45195cbc360..d7b7cae72790 100644
 --- a/drivers/platform/tegra/tegra-epl.c
 +++ b/drivers/platform/tegra/tegra-epl.c
 @@ -1,5 +1,5 @@
@@ -119,5 +119,5 @@ index e45195cbc3600..d7b7cae727906 100644
  
  module_platform_driver(epl_client);
 -- 
-2.43.0
+2.55.0
 

@@ -22,7 +22,7 @@ Reviewed-by: EJ Hsu <ejh@nvidia.com>
 (cherry picked from commit 265621324cc30874504d60870ae13ad4ed9e9a38)
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 01567a9f2eb93..3ed44e8cc7129 100644
+index 01567a9f2eb9..3ed44e8cc712 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -150,7 +150,6 @@
@@ -250,5 +250,5 @@ index 01567a9f2eb93..3ed44e8cc7129 100644
  	tegra_xudc_init_event_ring(xudc);
  
 -- 
-2.43.0
+2.55.0
 

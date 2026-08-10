@@ -21,7 +21,7 @@ Reviewed-on: https://git-master.nvidia.com/r/c/linux-5.9/+/2386067
 Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
 
 diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
-index ce94d23ca00a4..977bd519acbfa 100644
+index ce94d23ca00a..977bd519acbf 100644
 --- a/drivers/mmc/host/sdhci-tegra.c
 +++ b/drivers/mmc/host/sdhci-tegra.c
 @@ -26,6 +26,8 @@
@@ -93,5 +93,5 @@ index ce94d23ca00a4..977bd519acbfa 100644
  	if (rc)
  		goto err_add_host;
 -- 
-2.43.0
+2.55.0
 

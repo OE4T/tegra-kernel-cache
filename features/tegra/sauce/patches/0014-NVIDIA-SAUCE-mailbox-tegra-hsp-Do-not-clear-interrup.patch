@@ -23,7 +23,7 @@ Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
 (cherry picked from commit 41152afc729bfbb8f3a737f2aa7a1e8773c9fe58)
 
 diff --git a/drivers/mailbox/tegra-hsp.c b/drivers/mailbox/tegra-hsp.c
-index 4abcf77ae22b7..fda5dbf95604d 100644
+index 4abcf77ae22b..fda5dbf95604 100644
 --- a/drivers/mailbox/tegra-hsp.c
 +++ b/drivers/mailbox/tegra-hsp.c
 @@ -836,7 +836,6 @@ static int tegra_hsp_request_shared_irq(struct tegra_hsp *hsp)
@@ -49,5 +49,5 @@ index 4abcf77ae22b7..fda5dbf95604d 100644
  		if (default_si == hsp->num_si)
  			default_si = i;
 -- 
-2.43.0
+2.55.0
 

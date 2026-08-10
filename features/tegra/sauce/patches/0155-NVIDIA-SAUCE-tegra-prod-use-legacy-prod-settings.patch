@@ -35,7 +35,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/phy/tegra/xusb-tegra186.c b/drivers/phy/tegra/xusb-tegra186.c
-index bf37b214776c9..291ae416a4134 100644
+index bf37b214776c..291ae416a413 100644
 --- a/drivers/phy/tegra/xusb-tegra186.c
 +++ b/drivers/phy/tegra/xusb-tegra186.c
 @@ -13,6 +13,10 @@
@@ -133,5 +133,5 @@ index bf37b214776c9..291ae416a4134 100644
  }
  
 -- 
-2.43.0
+2.55.0
 

@@ -16,7 +16,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit e59c7dc35e2b6830c1deab4410aa37f478cd247a)
 
 diff --git a/scripts/depmod.sh b/scripts/depmod.sh
-index 179935291705a..8ae4f49a71114 100755
+index 179935291705..8ae4f49a7111 100755
 --- a/scripts/depmod.sh
 +++ b/scripts/depmod.sh
 @@ -37,7 +37,7 @@ do
@@ -29,5 +29,5 @@ index 179935291705a..8ae4f49a71114 100755
  		exit_status=$?
  		if [ "$exit_status" -ne 0 ]; then
 -- 
-2.43.0
+2.55.0
 

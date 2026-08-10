@@ -22,7 +22,7 @@ Reviewed-by: Pritesh Raithatha <praithatha@nvidia.com>
 (cherry picked from commit 8ba39bd5f5498c53affe2e199290ecc4990cba19)
 
 diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
-index 6b989a62def20..c31369924944d 100644
+index 6b989a62def2..c31369924944 100644
 --- a/drivers/iommu/of_iommu.c
 +++ b/drivers/iommu/of_iommu.c
 @@ -141,7 +141,6 @@ int of_iommu_configure(struct device *dev, struct device_node *master_np,
@@ -34,7 +34,7 @@ index 6b989a62def20..c31369924944d 100644
  					     of_pci_iommu_init, &info);
  		of_pci_check_device_ats(dev, master_np);
 diff --git a/drivers/pci/of.c b/drivers/pci/of.c
-index 52a3eedfe5638..8ecd72fa318cf 100644
+index 52a3eedfe563..8ecd72fa318c 100644
 --- a/drivers/pci/of.c
 +++ b/drivers/pci/of.c
 @@ -646,9 +646,15 @@ static int pci_parse_request_of_pci_ranges(struct device *dev,
@@ -55,5 +55,5 @@ index 52a3eedfe5638..8ecd72fa318cf 100644
  	bridge->map_irq = of_irq_parse_and_map_pci;
  
 -- 
-2.43.0
+2.55.0
 

@@ -59,7 +59,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Change-Id: Icd2480c42924607b2f8361a47795ca2d1faa43a5
 
 diff --git a/drivers/platform/tegra/Kconfig b/drivers/platform/tegra/Kconfig
-index 2502c0ccd2f06..5f6da15cd161a 100644
+index 2502c0ccd2f0..5f6da15cd161 100644
 --- a/drivers/platform/tegra/Kconfig
 +++ b/drivers/platform/tegra/Kconfig
 @@ -36,3 +36,8 @@ config TEGRA_HSIERRRPTINJ
@@ -72,7 +72,7 @@ index 2502c0ccd2f06..5f6da15cd161a 100644
 +	  This config helps client driver to identify whether prod
 +	  framework is implemented as legacy method or not.
 diff --git a/drivers/platform/tegra/Makefile b/drivers/platform/tegra/Makefile
-index 55e92006a555f..d00b69d54cfcc 100644
+index 55e92006a555..d00b69d54cfc 100644
 --- a/drivers/platform/tegra/Makefile
 +++ b/drivers/platform/tegra/Makefile
 @@ -1,3 +1,5 @@
@@ -83,7 +83,7 @@ index 55e92006a555f..d00b69d54cfcc 100644
 +obj-$(CONFIG_TEGRA_PROD_LEGACY) += tegra_prod.o
 diff --git a/drivers/platform/tegra/tegra_prod.c b/drivers/platform/tegra/tegra_prod.c
 new file mode 100644
-index 0000000000000..19aa893df939a
+index 000000000000..19aa893df939
 --- /dev/null
 +++ b/drivers/platform/tegra/tegra_prod.c
 @@ -0,0 +1,620 @@
@@ -709,7 +709,7 @@ index 0000000000000..19aa893df939a
 +EXPORT_SYMBOL(devm_tegra_prod_get_from_node);
 diff --git a/include/linux/tegra_prod.h b/include/linux/tegra_prod.h
 new file mode 100644
-index 0000000000000..b69938d504e67
+index 000000000000..b69938d504e6
 --- /dev/null
 +++ b/include/linux/tegra_prod.h
 @@ -0,0 +1,126 @@
@@ -840,5 +840,5 @@ index 0000000000000..b69938d504e67
 +						 struct device_node *np);
 +#endif
 -- 
-2.43.0
+2.55.0
 

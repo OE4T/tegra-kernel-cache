@@ -25,7 +25,7 @@ Reviewed-by: Bibek Basu <bbasu@nvidia.com>
 (cherry picked from commit 1d3fdf3fc619b9ce12f3dac7b8afc3e3b49f385d)
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index 2e2c1240206a2..43f4eba80e29f 100644
+index 2e2c1240206a..43f4eba80e29 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -16,6 +16,11 @@
@@ -53,5 +53,5 @@ index 2e2c1240206a2..43f4eba80e29f 100644
  		return 0;
  
 -- 
-2.43.0
+2.55.0
 

@@ -24,7 +24,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 67601f537a2a240d6671114ea29c2bbbe5159402)
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index 43f4eba80e29f..24a45d383ff2d 100644
+index 43f4eba80e29..24a45d383ff2 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -19,7 +19,7 @@
@@ -37,5 +37,5 @@ index 43f4eba80e29f..24a45d383ff2d 100644
  
  #include <dt-bindings/gpio/tegra186-gpio.h>
 -- 
-2.43.0
+2.55.0
 

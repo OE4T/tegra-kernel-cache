@@ -16,7 +16,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit 7708801841e4456c0a039c6fee6967896eb39bac)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 43d5d8873d8ff..c130a91d96933 100644
+index 43d5d8873d8f..c130a91d9693 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -925,6 +925,7 @@ int tegra_hv_ivc_read_user(struct tegra_hv_ivc_cookie *ivck, void __user *buf, i
@@ -52,7 +52,7 @@ index 43d5d8873d8ff..c130a91d96933 100644
  void *tegra_hv_ivc_read_get_next_frame(struct tegra_hv_ivc_cookie *ivck)
  {
 diff --git a/include/soc/tegra/virt/hv-ivc.h b/include/soc/tegra/virt/hv-ivc.h
-index 6eef871eaa1c6..dab9b26bc39a7 100644
+index 6eef871eaa1c..dab9b26bc39a 100644
 --- a/include/soc/tegra/virt/hv-ivc.h
 +++ b/include/soc/tegra/virt/hv-ivc.h
 @@ -134,6 +134,17 @@ int tegra_hv_ivc_can_read(struct tegra_hv_ivc_cookie *ivck);
@@ -99,5 +99,5 @@ index 6eef871eaa1c6..dab9b26bc39a7 100644
  /**
   * ivc_hv_ivc_read_get_next_frame - Peek at the next frame to receive
 -- 
-2.43.0
+2.55.0
 

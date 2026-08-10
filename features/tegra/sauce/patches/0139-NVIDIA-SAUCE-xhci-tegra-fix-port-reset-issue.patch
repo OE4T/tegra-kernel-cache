@@ -33,7 +33,7 @@ Reviewed-by: HaoTien Hsu <haotienh@nvidia.com>
 (cherry picked from commit 2313d1badb3c649c772874966fef1ed3a3da84f8)
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index 299515c678676..c634ee7c6c2c3 100644
+index 299515c67867..c634ee7c6c2c 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -2905,6 +2905,26 @@ static void tegra_xhci_disable_phy_sleepwalk(struct tegra_xusb *tegra)
@@ -148,5 +148,5 @@ index 299515c678676..c634ee7c6c2c3 100644
  			ports = rhub->ports;
  			portsc = readl(ports[port]->addr);
 -- 
-2.43.0
+2.55.0
 

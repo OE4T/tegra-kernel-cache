@@ -21,7 +21,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit 5bec34dcacc6f07f0bf8ad4b18ddaeb7c599e268)
 
 diff --git a/drivers/firmware/tegra/Makefile b/drivers/firmware/tegra/Makefile
-index 41e2e4dc31d63..25413da15d93a 100644
+index 41e2e4dc31d6..25413da15d93 100644
 --- a/drivers/firmware/tegra/Makefile
 +++ b/drivers/firmware/tegra/Makefile
 @@ -1,10 +1,12 @@
@@ -38,7 +38,7 @@ index 41e2e4dc31d63..25413da15d93a 100644
  obj-$(CONFIG_TEGRA_BPMP)	+= tegra-bpmp.o
  obj-$(CONFIG_TEGRA_IVC)		+= ivc.o
 diff --git a/drivers/firmware/tegra/bpmp-private.h b/drivers/firmware/tegra/bpmp-private.h
-index 07c3d46abb874..59a86db30adf3 100644
+index 07c3d46abb87..59a86db30adf 100644
 --- a/drivers/firmware/tegra/bpmp-private.h
 +++ b/drivers/firmware/tegra/bpmp-private.h
 @@ -1,7 +1,5 @@
@@ -61,7 +61,7 @@ index 07c3d46abb874..59a86db30adf3 100644
  #endif
 diff --git a/drivers/firmware/tegra/bpmp-tegra194-hv.c b/drivers/firmware/tegra/bpmp-tegra194-hv.c
 new file mode 100644
-index 0000000000000..d171aa532e2e8
+index 000000000000..d171aa532e2e
 --- /dev/null
 +++ b/drivers/firmware/tegra/bpmp-tegra194-hv.c
 @@ -0,0 +1,267 @@
@@ -333,7 +333,7 @@ index 0000000000000..d171aa532e2e8
 +	.resume = tegra194_hv_bpmp_resume,
 +};
 diff --git a/drivers/firmware/tegra/bpmp.c b/drivers/firmware/tegra/bpmp.c
-index af1144619acc4..e942d1dd9cd66 100644
+index af1144619acc..e942d1dd9cd6 100644
 --- a/drivers/firmware/tegra/bpmp.c
 +++ b/drivers/firmware/tegra/bpmp.c
 @@ -1,10 +1,9 @@
@@ -427,5 +427,5 @@ index af1144619acc4..e942d1dd9cd66 100644
  	{ }
  };
 -- 
-2.43.0
+2.55.0
 

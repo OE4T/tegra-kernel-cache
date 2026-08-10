@@ -20,7 +20,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit 7a37704afa8c072c6ae43cb72abf0d476f35451b)
 
 diff --git a/drivers/soc/tegra/Kconfig b/drivers/soc/tegra/Kconfig
-index c0fc54c3cd35e..d3c5855e61f54 100644
+index c0fc54c3cd35..d3c5855e61f5 100644
 --- a/drivers/soc/tegra/Kconfig
 +++ b/drivers/soc/tegra/Kconfig
 @@ -175,3 +175,8 @@ config SOC_TEGRA_CBB
@@ -33,7 +33,7 @@ index c0fc54c3cd35e..d3c5855e61f54 100644
 +	depends on ARCH_TEGRA_234_SOC
 +	default y
 diff --git a/drivers/soc/tegra/Makefile b/drivers/soc/tegra/Makefile
-index 01059619e7643..a51a9a3b96ef3 100644
+index 01059619e764..a51a9a3b96ef 100644
 --- a/drivers/soc/tegra/Makefile
 +++ b/drivers/soc/tegra/Makefile
 @@ -8,3 +8,6 @@ obj-$(CONFIG_SOC_TEGRA_PMC) += pmc.o
@@ -45,7 +45,7 @@ index 01059619e7643..a51a9a3b96ef3 100644
 +endif
 diff --git a/drivers/soc/tegra/mssnvlink.c b/drivers/soc/tegra/mssnvlink.c
 new file mode 100644
-index 0000000000000..0394418a45788
+index 000000000000..0394418a4578
 --- /dev/null
 +++ b/drivers/soc/tegra/mssnvlink.c
 @@ -0,0 +1,174 @@
@@ -225,5 +225,5 @@ index 0000000000000..0394418a45788
 +device_initcall(mssnvlink_init);
 \ No newline at end of file
 -- 
-2.43.0
+2.55.0
 

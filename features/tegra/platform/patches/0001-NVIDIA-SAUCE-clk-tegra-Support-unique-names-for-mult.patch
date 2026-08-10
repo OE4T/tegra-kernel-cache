@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Tue, 2 Jun 2026 09:43:34 +0100
-Subject: [PATCH 001/196] NVIDIA: SAUCE: clk: tegra: Support unique names for
+Subject: [PATCH 001/184] NVIDIA: SAUCE: clk: tegra: Support unique names for
  multi-socket platforms
 
 On multi-socket platforms each socket has its own BPMP which exposes the
@@ -26,7 +26,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit bf6c3abf6a338a24975f4de15e0e81ea4ccb3ac1)
 
 diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
-index 77a2586dbe000..8bf469639c607 100644
+index 77a2586dbe00..8bf469639c60 100644
 --- a/drivers/clk/tegra/clk-bpmp.c
 +++ b/drivers/clk/tegra/clk-bpmp.c
 @@ -367,7 +367,15 @@ static int tegra_bpmp_clk_get_info(struct tegra_bpmp *bpmp, unsigned int id,
@@ -47,5 +47,5 @@ index 77a2586dbe000..8bf469639c607 100644
  
  	for (i = 0; i < info->num_parents; i++)
 -- 
-2.43.0
+2.55.0
 

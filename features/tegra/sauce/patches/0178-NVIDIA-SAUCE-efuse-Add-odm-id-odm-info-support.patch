@@ -16,7 +16,7 @@ Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 (cherry picked from commit 46d5c2f637a55d1646de7a9add610e2a6b1bf76b)
 
 diff --git a/drivers/nvmem/tegra-efuse.c b/drivers/nvmem/tegra-efuse.c
-index f3520fe7b6d44..4e857255419d3 100644
+index f3520fe7b6d4..4e857255419d 100644
 --- a/drivers/nvmem/tegra-efuse.c
 +++ b/drivers/nvmem/tegra-efuse.c
 @@ -10,6 +10,10 @@
@@ -171,5 +171,5 @@ index f3520fe7b6d44..4e857255419d3 100644
  module_platform_driver(tegra_efuse_driver);
  
 -- 
-2.43.0
+2.55.0
 

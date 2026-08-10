@@ -41,7 +41,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 1b5cb13c08b4c46ac8c638013baf1cba15d85a75)
 
 diff --git a/drivers/mmc/core/quirks.h b/drivers/mmc/core/quirks.h
-index 6f727b4a60a52..54901102b17f7 100644
+index 6f727b4a60a5..54901102b17f 100644
 --- a/drivers/mmc/core/quirks.h
 +++ b/drivers/mmc/core/quirks.h
 @@ -50,6 +50,16 @@ static const struct mmc_fixup __maybe_unused mmc_sd_fixups[] = {
@@ -62,5 +62,5 @@ index 6f727b4a60a52..54901102b17f7 100644
  };
  
 -- 
-2.43.0
+2.55.0
 

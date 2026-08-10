@@ -21,7 +21,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia.h b/drivers/net/phy/aquantia/aquantia.h
-index 31427ee343e36..89655b6e40048 100644
+index 31427ee343e3..89655b6e4004 100644
 --- a/drivers/net/phy/aquantia/aquantia.h
 +++ b/drivers/net/phy/aquantia/aquantia.h
 @@ -230,6 +230,7 @@ struct aqr107_priv {
@@ -33,7 +33,7 @@ index 31427ee343e36..89655b6e40048 100644
  
  #if IS_REACHABLE(CONFIG_HWMON)
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 7ee9eb6cbc4bb..96aee6a22b5f3 100644
+index 7ee9eb6cbc4b..96aee6a22b5f 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -54,6 +54,7 @@
@@ -85,5 +85,5 @@ index 7ee9eb6cbc4bb..96aee6a22b5f3 100644
  	return ret;
  }
 -- 
-2.43.0
+2.55.0
 

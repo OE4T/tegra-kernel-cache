@@ -20,7 +20,7 @@ Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index b9e5adecfed60..6dfe2e7d54cb9 100644
+index fea3cb502a4e..02d08313d389 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
 @@ -823,8 +823,8 @@ static const struct usb_device_id quirks_table[] = {
@@ -35,5 +35,5 @@ index b9e5adecfed60..6dfe2e7d54cb9 100644
  						     BTUSB_WIDEBAND_SPEECH },
  	{ USB_DEVICE(0x13d3, 0x3555), .driver_info = BTUSB_REALTEK |
 -- 
-2.43.0
+2.55.0
 

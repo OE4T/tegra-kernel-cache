@@ -35,7 +35,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 586187cefaf4c..f2ae89489c004 100644
+index 586187cefaf4..f2ae89489c00 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -36,6 +36,10 @@
@@ -313,5 +313,5 @@ index 586187cefaf4c..f2ae89489c004 100644
  
  	err = tegra_i2c_init_clocks(i2c_dev);
 -- 
-2.43.0
+2.55.0
 

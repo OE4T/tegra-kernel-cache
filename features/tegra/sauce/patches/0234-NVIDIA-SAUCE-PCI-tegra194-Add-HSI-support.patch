@@ -18,7 +18,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 7f6641d747a25..ec5404a918a42 100644
+index 7f6641d747a2..ec5404a918a4 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -29,6 +29,12 @@
@@ -881,5 +881,5 @@ index 7f6641d747a25..ec5404a918a42 100644
  	if (pcie->of_data->mode == DW_PCIE_RC_TYPE) {
  		disable_irq(pcie->prsnt_irq);
 -- 
-2.43.0
+2.55.0
 

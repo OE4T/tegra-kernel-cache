@@ -19,7 +19,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 4428343d58d1e..b937212e5e77f 100644
+index 4428343d58d1..b937212e5e77 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -28,6 +28,10 @@
@@ -216,5 +216,5 @@ index 4428343d58d1e..b937212e5e77f 100644
  
  static int tegra_i2c_init_clocks(struct tegra_i2c_dev *i2c_dev)
 -- 
-2.43.0
+2.55.0
 

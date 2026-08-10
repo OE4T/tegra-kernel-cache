@@ -22,7 +22,7 @@ Reviewed-by: Sing-Han Chen <singhanc@nvidia.com>
 (cherry picked from commit f21d59ada4c11afa51b7fc89975568d5f48ae8cf)
 
 diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
-index 6f275c3d11ac5..4763d92da12e6 100644
+index 6f275c3d11ac..4763d92da12e 100644
 --- a/drivers/usb/gadget/function/f_mass_storage.c
 +++ b/drivers/usb/gadget/function/f_mass_storage.c
 @@ -5,6 +5,7 @@
@@ -99,5 +99,5 @@ index 6f275c3d11ac5..4763d92da12e6 100644
  		if (common->ep0_req_tag == exception_req_tag)
  			ep0_queue(common);	/* Complete the status stage */
 -- 
-2.43.0
+2.55.0
 

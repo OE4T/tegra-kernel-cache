@@ -19,7 +19,7 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/phy/tegra/phy-tegra194-p2u.c b/drivers/phy/tegra/phy-tegra194-p2u.c
-index 63735934aab48..480de32819e8a 100644
+index 63735934aab4..480de32819e8 100644
 --- a/drivers/phy/tegra/phy-tegra194-p2u.c
 +++ b/drivers/phy/tegra/phy-tegra194-p2u.c
 @@ -21,6 +21,10 @@
@@ -71,5 +71,5 @@ index 63735934aab48..480de32819e8a 100644
  
  static const struct of_device_id tegra_p2u_id_table[] = {
 -- 
-2.43.0
+2.55.0
 

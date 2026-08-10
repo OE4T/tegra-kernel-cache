@@ -23,7 +23,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
-index 978ccdfec9d0a..d44cba4d6f2f4 100644
+index 978ccdfec9d0..d44cba4d6f2f 100644
 --- a/drivers/platform/tegra/tegra-epl.c
 +++ b/drivers/platform/tegra/tegra-epl.c
 @@ -75,6 +75,8 @@ static struct epl_misc_sw_err_cfg miscerr_cfg[NUM_SW_GENERIC_ERR];
@@ -66,5 +66,5 @@ index 978ccdfec9d0a..d44cba4d6f2f4 100644
  	if (IS_ERR(mission_err_status_va)) {
  		isAddrMappOk = false;
 -- 
-2.43.0
+2.55.0
 

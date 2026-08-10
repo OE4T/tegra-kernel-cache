@@ -11,7 +11,7 @@ Change-Id: Ie9333cafbcacffbc40d6a0a083f0a39c8482b034
 Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/drivers/platform/tegra/Kconfig b/drivers/platform/tegra/Kconfig
-index 11157e5514bf2..3b5a66ffd7e4d 100644
+index 11157e5514bf..3b5a66ffd7e4 100644
 --- a/drivers/platform/tegra/Kconfig
 +++ b/drivers/platform/tegra/Kconfig
 @@ -30,7 +30,7 @@ config TEGRA_EPL
@@ -24,5 +24,5 @@ index 11157e5514bf2..3b5a66ffd7e4d 100644
  	  The tegra-hsierrrptinj driver provides a
  	  mechanism for HSI error report transmission
 -- 
-2.43.0
+2.55.0
 

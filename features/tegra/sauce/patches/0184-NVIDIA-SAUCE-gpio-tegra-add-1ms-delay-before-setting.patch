@@ -21,7 +21,7 @@ Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
 Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index d1eed00e7bbe4..2e2c1240206a2 100644
+index d1eed00e7bbe..2e2c1240206a 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -15,6 +15,7 @@
@@ -41,5 +41,5 @@ index d1eed00e7bbe4..2e2c1240206a2 100644
  	writel(value, base + TEGRA186_GPIO_DEBOUNCE_CONTROL);
  
 -- 
-2.43.0
+2.55.0
 

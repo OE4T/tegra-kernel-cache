@@ -21,7 +21,7 @@ Reviewed-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
 (cherry picked from commit f3c52101af0762929bb8c454b2e87f6e71626c1f)
 
 diff --git a/drivers/virt/tegra/tegra_hv_ivc.c b/drivers/virt/tegra/tegra_hv_ivc.c
-index c43baee0603d8..b08e2620a5a30 100644
+index c43baee0603d..b08e2620a5a3 100644
 --- a/drivers/virt/tegra/tegra_hv_ivc.c
 +++ b/drivers/virt/tegra/tegra_hv_ivc.c
 @@ -57,9 +57,11 @@ struct hv_ivc {
@@ -90,7 +90,7 @@ index c43baee0603d8..b08e2620a5a30 100644
  		int size)
  {
 diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
-index 2825a39930c8c..035d2546d28d7 100644
+index 2825a39930c8..035d2546d28d 100644
 --- a/include/soc/tegra/virt/tegra_hv.h
 +++ b/include/soc/tegra/virt/tegra_hv.h
 @@ -212,6 +212,62 @@ const struct ivc_info_page *tegra_hv_get_ivc_info(void);
@@ -157,5 +157,5 @@ index 2825a39930c8c..035d2546d28d7 100644
   * @brief          Initialize IVC layout structure
   * @param[in,out]  layout Pointer to layout structure to initialize
 -- 
-2.43.0
+2.55.0
 

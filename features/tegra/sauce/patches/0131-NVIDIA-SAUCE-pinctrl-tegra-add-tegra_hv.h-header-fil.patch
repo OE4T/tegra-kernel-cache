@@ -24,7 +24,7 @@ Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
 (cherry picked from commit 2fa4b2850fb6d5a3441f728746a1be1c13689555)
 
 diff --git a/drivers/pinctrl/tegra/pinctrl-tegra.c b/drivers/pinctrl/tegra/pinctrl-tegra.c
-index 2282a96af025c..8eacfe5898973 100644
+index 2282a96af025..8eacfe589897 100644
 --- a/drivers/pinctrl/tegra/pinctrl-tegra.c
 +++ b/drivers/pinctrl/tegra/pinctrl-tegra.c
 @@ -1,4 +1,5 @@
@@ -46,5 +46,5 @@ index 2282a96af025c..8eacfe5898973 100644
  #include "../core.h"
  #include "../pinctrl-utils.h"
 -- 
-2.43.0
+2.55.0
 

@@ -26,7 +26,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Prathamesh Shete <pshete@nvidia.com>
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 02fd890b3ac02..9792b055cd18c 100644
+index 02fd890b3ac0..9792b055cd18 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -2623,7 +2623,6 @@ static void tegra_pcie_dw_shutdown(struct platform_device *pdev)
@@ -47,5 +47,5 @@ index 02fd890b3ac02..9792b055cd18c 100644
  		tegra_pcie_unconfig_controller(pcie);
  		pm_runtime_put_sync(pcie->dev);
 -- 
-2.43.0
+2.55.0
 

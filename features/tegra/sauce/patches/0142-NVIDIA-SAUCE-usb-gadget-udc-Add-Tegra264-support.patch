@@ -16,7 +16,7 @@ Signed-off-by: Sing-Han Chen <singhanc@nvidia.com>
 Signed-off-by: Bodla Rakesh Babu <rbodla@nvidia.com>
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 17c30e21b3573..83ab8082010f8 100644
+index 17c30e21b357..83ab8082010f 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -3747,6 +3747,20 @@ static struct tegra_xudc_soc tegra234_hv_xudc_soc_data = {
@@ -52,5 +52,5 @@ index 17c30e21b3573..83ab8082010f8 100644
  };
  MODULE_DEVICE_TABLE(of, tegra_xudc_of_match);
 -- 
-2.43.0
+2.55.0
 

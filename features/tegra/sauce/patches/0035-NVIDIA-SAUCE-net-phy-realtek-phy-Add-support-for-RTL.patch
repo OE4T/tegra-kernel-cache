@@ -17,7 +17,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index 5a095d1c8adc5..a0de77abb5226 100644
+index 9b8d33a65e2b..8e136a9ac54b 100644
 --- a/drivers/net/phy/realtek/realtek_main.c
 +++ b/drivers/net/phy/realtek/realtek_main.c
 @@ -169,6 +169,9 @@
@@ -51,7 +51,7 @@ index 5a095d1c8adc5..a0de77abb5226 100644
  		err = phy_write_paged(phydev, 0xa42, RTL821x_INER, val);
  		if (err == 0)
  			priv->iner = val;
-@@ -1846,6 +1855,18 @@ static struct phy_driver realtek_drvs[] = {
+@@ -1847,6 +1856,18 @@ static struct phy_driver realtek_drvs[] = {
  		.read_page	= rtl821x_read_page,
  		.write_page	= rtl821x_write_page,
  		.flags		= PHY_ALWAYS_CALL_SUSPEND,
@@ -71,5 +71,5 @@ index 5a095d1c8adc5..a0de77abb5226 100644
  		.name		= "Generic FE-GE Realtek PHY",
  		.match_phy_device = rtlgen_match_phy_device,
 -- 
-2.43.0
+2.55.0
 

@@ -21,7 +21,7 @@ Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 (cherry picked from commit cec21bbcdc64787407485aa6a80968061c0ffe6b)
 
 diff --git a/include/soc/tegra/virt/syscalls.h b/include/soc/tegra/virt/syscalls.h
-index bd73c57e85c8a..18fb0bb8e582e 100644
+index bd73c57e85c8..18fb0bb8e582 100644
 --- a/include/soc/tegra/virt/syscalls.h
 +++ b/include/soc/tegra/virt/syscalls.h
 @@ -19,14 +19,19 @@
@@ -92,5 +92,5 @@ index bd73c57e85c8a..18fb0bb8e582e 100644
  }
  
 -- 
-2.43.0
+2.55.0
 

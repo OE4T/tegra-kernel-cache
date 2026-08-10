@@ -22,7 +22,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit d4a690c44daef79676b0b99b2a57737d75f24611)
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index 98e2b182c0bc4..eb1f2cc75ebf2 100644
+index 98e2b182c0bc..eb1f2cc75ebf 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -250,6 +250,7 @@ struct tegra_xusb_soc {
@@ -211,5 +211,5 @@ index 98e2b182c0bc4..eb1f2cc75ebf2 100644
  
  static const struct of_device_id tegra_xusb_of_match[] = {
 -- 
-2.43.0
+2.55.0
 

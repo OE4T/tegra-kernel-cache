@@ -19,7 +19,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit 986c15c5bb7ea1ef2436d88f50050258032d3d03)
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 20f41f9fd32ab..57eb306629e8d 100644
+index 20f41f9fd32a..57eb306629e8 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -2,7 +2,7 @@
@@ -90,5 +90,5 @@ index 20f41f9fd32ab..57eb306629e8d 100644
  	if (IS_ERR(xudc->genpd_dev_device)) {
  		err = PTR_ERR(xudc->genpd_dev_device);
 -- 
-2.43.0
+2.55.0
 

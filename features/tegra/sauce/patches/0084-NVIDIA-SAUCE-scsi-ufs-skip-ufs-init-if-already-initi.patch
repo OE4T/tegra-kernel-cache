@@ -14,7 +14,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit c3c1db5b1103af75f0fb704ba2043c30a8c4a61c)
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index c0d95fe3dee1c..2bc9e89cce3c0 100644
+index 6b2a096d9c8b..090361e06433 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
 @@ -4674,6 +4674,11 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
@@ -117,7 +117,7 @@ index c0d95fe3dee1c..2bc9e89cce3c0 100644
  		/* check if device is detected by inter-connect layer */
  		if (!ret && !ufshcd_is_device_present(hba)) {
 diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index 0da0a0ed68040..73fb085c274d1 100644
+index 0da0a0ed6804..73fb085c274d 100644
 --- a/include/ufs/ufshcd.h
 +++ b/include/ufs/ufshcd.h
 @@ -1032,6 +1032,7 @@ struct ufs_hba {
@@ -129,5 +129,5 @@ index 0da0a0ed68040..73fb085c274d1 100644
  	struct semaphore host_sem;
  
 -- 
-2.43.0
+2.55.0
 

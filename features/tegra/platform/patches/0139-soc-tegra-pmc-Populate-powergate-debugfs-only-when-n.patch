@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Fri, 22 May 2026 16:58:24 +0100
+Subject: [PATCH 139/184] soc/tegra: pmc: Populate powergate debugfs only when
+ needed
+
+The 'powergate' debugfs node is used to show the state of the powergates
+but for some devices the 'num_powergates' is 0 and so it displays
+nothing. Therefore, only populate this debugfs entry for devices where
+num_powergates is greater than 0.
+
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+(cherry picked from commit e9bfdf06fb05168e72d3d9d6163b04e2316e0aa2)
+
+diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
+index c789f8c1035e..37a6f56b1631 100644
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -3160,7 +3160,8 @@ static int tegra_pmc_probe(struct platform_device *pdev)
+ 	if (pmc->soc->set_wake_filters)
+ 		pmc->soc->set_wake_filters(pmc);
+ 
+-	debugfs_create_file("powergate", 0444, NULL, pmc, &powergate_fops);
++	if (pmc->soc->num_powergates)
++		debugfs_create_file("powergate", 0444, NULL, pmc, &powergate_fops);
+ 
+ 	return 0;
+ 
+-- 
+2.55.0
+

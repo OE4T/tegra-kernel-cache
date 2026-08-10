@@ -13,7 +13,7 @@ Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
 Change-Id: Icc1b20e8b67507a7531de9c2c4ec89ce545904e8
 
 diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
-index 977bd519acbfa..53f7a75629cc5 100644
+index 977bd519acbf..53f7a75629cc 100644
 --- a/drivers/mmc/host/sdhci-tegra.c
 +++ b/drivers/mmc/host/sdhci-tegra.c
 @@ -1681,7 +1681,20 @@ static const struct sdhci_tegra_soc_data soc_data_tegra234 = {
@@ -38,5 +38,5 @@ index 977bd519acbfa..53f7a75629cc5 100644
  	{ .compatible = "nvidia,tegra194-sdhci", .data = &soc_data_tegra194 },
  	{ .compatible = "nvidia,tegra186-sdhci", .data = &soc_data_tegra186 },
 -- 
-2.43.0
+2.55.0
 

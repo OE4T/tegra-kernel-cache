@@ -26,7 +26,7 @@ Reviewed-by: Nagarjuna Kristam <nkristam@nvidia.com>
 (cherry picked from commit 14c36a34b8a89bcbf7db9af536de4e937b5f899a)
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 9792b055cd18c..bb96b14a37372 100644
+index 9792b055cd18..bb96b14a3737 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -4,7 +4,7 @@
@@ -51,5 +51,5 @@ index 9792b055cd18c..bb96b14a37372 100644
  
  static const struct dw_pcie_ops tegra_dw_pcie_ops = {
 -- 
-2.43.0
+2.55.0
 

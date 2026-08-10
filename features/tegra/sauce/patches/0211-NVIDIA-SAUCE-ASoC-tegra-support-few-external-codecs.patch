@@ -49,7 +49,7 @@ Reviewed-by: Sharad Gupta <sharadg@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/sound/soc/generic/audio-graph-card.c b/sound/soc/generic/audio-graph-card.c
-index 15d4902734766..22b258ddd9fb8 100644
+index 15d490273476..22b258ddd9fb 100644
 --- a/sound/soc/generic/audio-graph-card.c
 +++ b/sound/soc/generic/audio-graph-card.c
 @@ -273,6 +273,9 @@ static int graph_dai_link_of_dpcm(struct simple_util_priv *priv,
@@ -73,7 +73,7 @@ index 15d4902734766..22b258ddd9fb8 100644
  end:
  	return graph_ret(priv, ret);
 diff --git a/sound/soc/tegra/Makefile b/sound/soc/tegra/Makefile
-index defea7f53f115..04cf93c842ac4 100644
+index defea7f53f11..04cf93c842ac 100644
 --- a/sound/soc/tegra/Makefile
 +++ b/sound/soc/tegra/Makefile
 @@ -44,7 +44,8 @@ obj-$(CONFIG_SND_SOC_TEGRA210_OPE) += snd-soc-tegra210-ope.o
@@ -87,7 +87,7 @@ index defea7f53f115..04cf93c842ac4 100644
  obj-$(CONFIG_SND_SOC_TEGRA_WM8903) += snd-soc-tegra-wm8903.o
  obj-$(CONFIG_SND_SOC_TEGRA_MACHINE_DRV) += snd-soc-tegra-machine.o
 diff --git a/sound/soc/tegra/tegra_audio_graph_card.c b/sound/soc/tegra/tegra_audio_graph_card.c
-index f33e18a707fb8..addf0aa4f6ba5 100644
+index f33e18a707fb..addf0aa4f6ba 100644
 --- a/sound/soc/tegra/tegra_audio_graph_card.c
 +++ b/sound/soc/tegra/tegra_audio_graph_card.c
 @@ -13,6 +13,8 @@
@@ -123,7 +123,7 @@ index f33e18a707fb8..addf0aa4f6ba5 100644
  static struct snd_soc_dai_driver tegra_dummy_dai = {
 diff --git a/sound/soc/tegra/tegra_codecs.c b/sound/soc/tegra/tegra_codecs.c
 new file mode 100644
-index 0000000000000..1386412dbd6be
+index 000000000000..1386412dbd6b
 --- /dev/null
 +++ b/sound/soc/tegra/tegra_codecs.c
 @@ -0,0 +1,324 @@
@@ -453,7 +453,7 @@ index 0000000000000..1386412dbd6be
 +}
 diff --git a/sound/soc/tegra/tegra_codecs.h b/sound/soc/tegra/tegra_codecs.h
 new file mode 100644
-index 0000000000000..e7de3fde7d5bc
+index 000000000000..e7de3fde7d5b
 --- /dev/null
 +++ b/sound/soc/tegra/tegra_codecs.h
 @@ -0,0 +1,18 @@
@@ -476,5 +476,5 @@ index 0000000000000..e7de3fde7d5bc
 +
 +#endif
 -- 
-2.43.0
+2.55.0
 

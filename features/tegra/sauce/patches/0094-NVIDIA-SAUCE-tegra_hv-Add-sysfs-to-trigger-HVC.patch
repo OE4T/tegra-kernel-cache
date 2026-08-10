@@ -23,7 +23,7 @@ Reviewed-by: Deepak Nibade <dnibade@nvidia.com>
 (cherry picked from commit 451f77c9111fec082663da4cd1238bc343b18257)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 8de28870da846..46f259e1cc468 100644
+index 8de28870da84..46f259e1cc46 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -29,6 +29,11 @@
@@ -109,7 +109,7 @@ index 8de28870da846..46f259e1cc468 100644
  	if (ret != 0) {
  		ERR("failed to obtain IVC info page: %d\n", ret);
 diff --git a/include/soc/tegra/virt/syscalls.h b/include/soc/tegra/virt/syscalls.h
-index 18fb0bb8e582e..c33a01fc6714c 100644
+index 18fb0bb8e582..c33a01fc6714 100644
 --- a/include/soc/tegra/virt/syscalls.h
 +++ b/include/soc/tegra/virt/syscalls.h
 @@ -376,6 +376,20 @@ static inline int hyp_guest_reset(unsigned int id, struct hyp_sys_state_info *ou
@@ -134,7 +134,7 @@ index 18fb0bb8e582e..c33a01fc6714c 100644
  static inline uint64_t hyp_sysinfo_ipa(void)
  {
 diff --git a/include/soc/tegra/virt/tegra_hv_sysmgr.h b/include/soc/tegra/virt/tegra_hv_sysmgr.h
-index e735b6f172495..d8ac0cc255521 100644
+index e735b6f17249..d8ac0cc25552 100644
 --- a/include/soc/tegra/virt/tegra_hv_sysmgr.h
 +++ b/include/soc/tegra/virt/tegra_hv_sysmgr.h
 @@ -93,6 +93,7 @@ enum system_function_id {
@@ -153,5 +153,5 @@ index e735b6f172495..d8ac0cc255521 100644
 +
  #endif /* _TEGRA_HV_SYSMGR_H */
 -- 
-2.43.0
+2.55.0
 

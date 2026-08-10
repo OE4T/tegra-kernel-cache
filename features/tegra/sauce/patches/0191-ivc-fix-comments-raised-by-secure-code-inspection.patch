@@ -16,7 +16,7 @@ Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
 (cherry picked from commit 2aea973e8b1aec28a4609e5119824cb3d4b00846)
 
 diff --git a/drivers/firmware/tegra/ivc.c b/drivers/firmware/tegra/ivc.c
-index d3bc1d435b2f5..e4745c08ff8fa 100644
+index d3bc1d435b2f..e4745c08ff8f 100644
 --- a/drivers/firmware/tegra/ivc.c
 +++ b/drivers/firmware/tegra/ivc.c
 @@ -649,6 +649,12 @@ int tegra_ivc_read(struct tegra_ivc *ivc, void __user *usr_buf, void *buf, size_
@@ -57,5 +57,5 @@ index d3bc1d435b2f5..e4745c08ff8fa 100644
  	if (buf) {
  		iosys_map_memcpy_to(&map, 0, buf, size);
 -- 
-2.43.0
+2.55.0
 

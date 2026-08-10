@@ -1,0 +1,73 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Thierry Reding <treding@nvidia.com>
+Date: Mon, 3 Feb 2025 16:29:35 +0100
+Subject: [PATCH 136/184] media: vde: Explicitly specify PMC instance to use
+
+Currently the kernel relies on a global variable to reference the PMC
+context. Use an explicit lookup for the PMC and pass that to the public
+PMC APIs.
+
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+
+diff --git a/drivers/media/platform/nvidia/tegra-vde/vde.c b/drivers/media/platform/nvidia/tegra-vde/vde.c
+index 3232392c60e2..de58d34ed2be 100644
+--- a/drivers/media/platform/nvidia/tegra-vde/vde.c
++++ b/drivers/media/platform/nvidia/tegra-vde/vde.c
+@@ -161,7 +161,8 @@ static __maybe_unused int tegra_vde_runtime_suspend(struct device *dev)
+ 	int err;
+ 
+ 	if (!dev->pm_domain) {
+-		err = tegra_powergate_power_off(TEGRA_POWERGATE_VDEC);
++		err = tegra_pmc_powergate_power_off(vde->pmc,
++						    TEGRA_POWERGATE_VDEC);
+ 		if (err) {
+ 			dev_err(dev, "Failed to power down HW: %d\n", err);
+ 			return err;
+@@ -193,15 +194,16 @@ static __maybe_unused int tegra_vde_runtime_resume(struct device *dev)
+ 	}
+ 
+ 	if (!dev->pm_domain) {
+-		err = tegra_powergate_sequence_power_up(TEGRA_POWERGATE_VDEC,
+-							vde->clk, vde->rst);
++		err = tegra_pmc_powergate_sequence_power_up(vde->pmc,
++							    TEGRA_POWERGATE_VDEC,
++							    vde->clk, vde->rst);
+ 		if (err) {
+ 			dev_err(dev, "Failed to power up HW : %d\n", err);
+ 			goto release_reset;
+ 		}
+ 	} else {
+ 		/*
+-		 * tegra_powergate_sequence_power_up() leaves clocks enabled,
++		 * tegra_pmc_powergate_sequence_power_up() leaves clocks enabled,
+ 		 * while GENPD not.
+ 		 */
+ 		err = clk_prepare_enable(vde->clk);
+@@ -293,6 +295,11 @@ static int tegra_vde_probe(struct platform_device *pdev)
+ 		return err;
+ 	}
+ 
++	vde->pmc = devm_tegra_pmc_get(dev);
++	if (IS_ERR(vde->pmc))
++		return dev_err_probe(dev, PTR_ERR(vde->pmc),
++				     "failed to get PMC\n");
++
+ 	irq = platform_get_irq_byname(pdev, "sync-token");
+ 	if (irq < 0)
+ 		return irq;
+diff --git a/drivers/media/platform/nvidia/tegra-vde/vde.h b/drivers/media/platform/nvidia/tegra-vde/vde.h
+index b2890484b7c3..abac0221d6e4 100644
+--- a/drivers/media/platform/nvidia/tegra-vde/vde.h
++++ b/drivers/media/platform/nvidia/tegra-vde/vde.h
+@@ -107,6 +107,7 @@ struct tegra_vde {
+ 	struct list_head map_list;
+ 	struct reset_control *rst;
+ 	struct reset_control *rst_mc;
++	struct tegra_pmc *pmc;
+ 	struct gen_pool *iram_pool;
+ 	struct completion decode_completion;
+ 	struct clk *clk;
+-- 
+2.55.0
+

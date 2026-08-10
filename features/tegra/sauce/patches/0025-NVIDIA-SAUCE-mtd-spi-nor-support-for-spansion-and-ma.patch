@@ -22,7 +22,7 @@ Tested-by: mobile promotions <svcmobile_promotions@nvidia.com>
 Reviewed-by: mobile promotions <svcmobile_promotions@nvidia.com>
 
 diff --git a/drivers/mtd/spi-nor/macronix.c b/drivers/mtd/spi-nor/macronix.c
-index e97f5cbd9aad2..0e91c726b4b69 100644
+index e97f5cbd9aad..0e91c726b4b6 100644
 --- a/drivers/mtd/spi-nor/macronix.c
 +++ b/drivers/mtd/spi-nor/macronix.c
 @@ -225,6 +225,12 @@ static const struct flash_info macronix_nor_parts[] = {
@@ -39,10 +39,10 @@ index e97f5cbd9aad2..0e91c726b4b69 100644
  		/* MX25L3255E */
  		.id = SNOR_ID(0xc2, 0x9e, 0x16),
 diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
-index f15abe18fc6c1..60520f5e4dba5 100644
+index 5a9f6483ac4f..be599c0682da 100644
 --- a/drivers/mtd/spi-nor/spansion.c
 +++ b/drivers/mtd/spi-nor/spansion.c
-@@ -939,6 +939,12 @@ static const struct flash_info spansion_nor_parts[] = {
+@@ -941,6 +941,12 @@ static const struct flash_info spansion_nor_parts[] = {
  		.size = SZ_16M,
  		.no_sfdp_flags = SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ,
  		.mfr_flags = USE_CLSR,
@@ -56,5 +56,5 @@ index f15abe18fc6c1..60520f5e4dba5 100644
  		.id = SNOR_ID(0x01, 0x20, 0x18, 0x4d, 0x01, 0x81),
  		.name = "s25fs128s1",
 -- 
-2.43.0
+2.55.0
 

@@ -12,7 +12,7 @@ Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2892801
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index 24a45d383ff2d..e667e9f80bf6e 100644
+index 24a45d383ff2..e667e9f80bf6 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -1007,27 +1007,8 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
@@ -46,5 +46,5 @@ index 24a45d383ff2d..e667e9f80bf6e 100644
  	if (gpio->soc->num_irqs_per_bank > 1)
  		tegra186_gpio_init_route_mapping(gpio);
 -- 
-2.43.0
+2.55.0
 

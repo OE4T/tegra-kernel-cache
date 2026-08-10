@@ -22,7 +22,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
 
 diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index f7daeadaea57c..57f6c0d0bc8d1 100644
+index f7daeadaea57..57f6c0d0bc8d 100644
 --- a/drivers/gpio/gpio-pca953x.c
 +++ b/drivers/gpio/gpio-pca953x.c
 @@ -1419,7 +1419,7 @@ static int pca953x_resume(struct device *dev)
@@ -35,5 +35,5 @@ index f7daeadaea57c..57f6c0d0bc8d1 100644
  /* convenience to stop overlong match-table lines */
  #define OF_653X(__nrgpio, __int) ((void *)(__nrgpio | PCAL653X_TYPE | __int))
 -- 
-2.43.0
+2.55.0
 

@@ -33,7 +33,7 @@ Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index 97644ec915f4e..98e2b182c0bc4 100644
+index 97644ec915f4..98e2b182c0bc 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -2,7 +2,7 @@
@@ -132,5 +132,5 @@ index 97644ec915f4e..98e2b182c0bc4 100644
  }
  
 -- 
-2.43.0
+2.55.0
 

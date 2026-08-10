@@ -42,7 +42,7 @@ Tested-by: Henry Lin <henryl@nvidia.com>
 (cherry picked from commit 4ca5cf37519ac003e2fb53fdc945f83fb5582996)
 
 diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index ec76595f3c4be..b0f39fc5cdb40 100644
+index 9629e17cc5eb..4227f0302ba7 100644
 --- a/drivers/media/usb/uvc/uvc_video.c
 +++ b/drivers/media/usb/uvc/uvc_video.c
 @@ -2,6 +2,7 @@
@@ -53,7 +53,7 @@ index ec76595f3c4be..b0f39fc5cdb40 100644
   *      Copyright (C) 2005-2010
   *          Laurent Pinchart (laurent.pinchart@ideasonboard.com)
   */
-@@ -2320,9 +2321,8 @@ void uvc_video_stop_streaming(struct uvc_streaming *stream)
+@@ -2361,9 +2362,8 @@ void uvc_video_stop_streaming(struct uvc_streaming *stream)
  {
  	uvc_video_stop_transfer(stream, 1);
  
@@ -66,5 +66,5 @@ index ec76595f3c4be..b0f39fc5cdb40 100644
  		 * UVC doesn't specify how to inform a bulk-based device
  		 * when the video stream is stopped. Windows sends a
 -- 
-2.43.0
+2.55.0
 

@@ -35,7 +35,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit f1b86419ed688791d0c116a701319d288ab3e84c)
 
 diff --git a/drivers/clocksource/timer-tegra186.c b/drivers/clocksource/timer-tegra186.c
-index e05dd5477fcd7..36bb08825c5ca 100644
+index e05dd5477fcd..36bb08825c5c 100644
 --- a/drivers/clocksource/timer-tegra186.c
 +++ b/drivers/clocksource/timer-tegra186.c
 @@ -57,6 +57,8 @@
@@ -145,5 +145,5 @@ index e05dd5477fcd7..36bb08825c5ca 100644
  
  unregister_osc:
 -- 
-2.43.0
+2.55.0
 

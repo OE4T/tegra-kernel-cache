@@ -20,7 +20,7 @@ Reviewed-by: HaoTien Hsu <haotienh@nvidia.com>
 (cherry picked from commit 6b804b9fb4aee05358f0023ecb5156c481d9b74d)
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index e425d2c0001ad..522a8b89b8184 100644
+index e425d2c0001a..522a8b89b818 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -146,10 +146,6 @@
@@ -74,5 +74,5 @@ index e425d2c0001ad..522a8b89b8184 100644
  	/*
  	 * Compliance suite appears to be violating polling
 -- 
-2.43.0
+2.55.0
 

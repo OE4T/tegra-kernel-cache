@@ -29,7 +29,7 @@ Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 (cherry picked from commit cd3994cc8533ed624016c837cad155cfabb2f84c)
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 23db64b402557..7f6641d747a25 100644
+index 23db64b40255..7f6641d747a2 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -291,6 +291,8 @@ struct tegra_pcie_dw {
@@ -105,5 +105,5 @@ index 23db64b402557..7f6641d747a25 100644
  	if (ret < 0)
  		return ret;
 -- 
-2.43.0
+2.55.0
 

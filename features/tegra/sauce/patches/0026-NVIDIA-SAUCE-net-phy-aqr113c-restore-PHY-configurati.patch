@@ -17,7 +17,7 @@ Signed-off-by: Revanth Kumar Uppala <ruppala@nvidia.com>
 Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2906740
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 41f3676c7f1ec..6b7009e6d4ffa 100644
+index 41f3676c7f1e..6b7009e6d4ff 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -110,6 +110,8 @@
@@ -63,5 +63,5 @@ index 41f3676c7f1ec..6b7009e6d4ffa 100644
  				  MDIO_AN_TX_VEND_INT_STATUS2);
  	if (irq_status < 0) {
 -- 
-2.43.0
+2.55.0
 

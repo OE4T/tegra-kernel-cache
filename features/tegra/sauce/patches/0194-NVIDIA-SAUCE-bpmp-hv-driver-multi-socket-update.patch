@@ -22,7 +22,7 @@ Reviewed-by: svc-mobile-coverity <svc-mobile-coverity@nvidia.com>
 (cherry picked from commit 132e50000bcd8b7b8c306e261de930fdb8181e5b)
 
 diff --git a/drivers/firmware/tegra/bpmp-tegra194-hv.c b/drivers/firmware/tegra/bpmp-tegra194-hv.c
-index 47312cf738010..ad4a88974a95c 100644
+index 47312cf73801..ad4a88974a95 100644
 --- a/drivers/firmware/tegra/bpmp-tegra194-hv.c
 +++ b/drivers/firmware/tegra/bpmp-tegra194-hv.c
 @@ -18,8 +18,22 @@
@@ -202,5 +202,5 @@ index 47312cf738010..ad4a88974a95c 100644
  
  const struct tegra_bpmp_ops tegra194_bpmp_hv_ops = {
 -- 
-2.43.0
+2.55.0
 

@@ -20,7 +20,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index a6bfe2aaf2103..304c0a9796b21 100644
+index a6bfe2aaf210..304c0a9796b2 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -240,6 +240,8 @@ struct tegra_pcie_dw_of_data {
@@ -74,5 +74,5 @@ index a6bfe2aaf2103..304c0a9796b21 100644
  
  static const struct of_device_id tegra_pcie_dw_of_match[] = {
 -- 
-2.43.0
+2.55.0
 

@@ -28,7 +28,7 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/scripts/dtc/checks.c b/scripts/dtc/checks.c
-index 7e3fed5005b31..ba5cc30d81b4d 100644
+index 7e3fed5005b3..ba5cc30d81b4 100644
 --- a/scripts/dtc/checks.c
 +++ b/scripts/dtc/checks.c
 @@ -759,6 +759,10 @@ static void check_reg_format(struct check *c, struct dt_info *dti,
@@ -98,5 +98,5 @@ index 7e3fed5005b31..ba5cc30d81b4d 100644
  		FAIL_PROP(c, dti, node, irq_prop, "size (%d) is invalid, expected multiple of %zu",
  		     irq_prop->val.len, sizeof(cell_t));
 -- 
-2.43.0
+2.55.0
 

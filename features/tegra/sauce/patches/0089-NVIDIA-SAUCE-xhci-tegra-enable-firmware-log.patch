@@ -18,7 +18,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit 6ae34c8204121f69e7d3fe86503405bfd58cb9fa)
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index eb1f2cc75ebf2..a8474d2825651 100644
+index eb1f2cc75ebf..a8474d282565 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -2,12 +2,14 @@
@@ -723,5 +723,5 @@ index eb1f2cc75ebf2..a8474d2825651 100644
  		tegra_xusb_powergate_partitions(tegra);
  	else {
 -- 
-2.43.0
+2.55.0
 

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ishan Shah <ishah@nvidia.com>
 Date: Mon, 19 Aug 2024 19:41:05 +0000
-Subject: [PATCH 003/196] NVIDIA: SAUCE: cpufreq: tegra194: Add support for
+Subject: [PATCH 003/184] NVIDIA: SAUCE: cpufreq: tegra194: Add support for
  Tegra264
 
 Adding support for Tegra264, which has clusters sharing clock-sources.
@@ -34,7 +34,7 @@ Signed-off-by: Ishan Shah <ishah@nvidia.com>
 Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
-index 6fe8a3f9797a2..e25a51b60fd4e 100644
+index 6fe8a3f9797a..e25a51b60fd4 100644
 --- a/drivers/cpufreq/tegra194-cpufreq.c
 +++ b/drivers/cpufreq/tegra194-cpufreq.c
 @@ -14,6 +14,7 @@
@@ -349,5 +349,5 @@ index 6fe8a3f9797a2..e25a51b60fd4e 100644
  };
  MODULE_DEVICE_TABLE(of, tegra194_cpufreq_of_match);
 -- 
-2.43.0
+2.55.0
 

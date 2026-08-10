@@ -16,7 +16,7 @@ Reviewed-by: Aparna Das <aparnad@nvidia.com>
 
 diff --git a/include/soc/tegra/virt/tegra_hv_nvscicom.h b/include/soc/tegra/virt/tegra_hv_nvscicom.h
 new file mode 100644
-index 0000000000000..92bcb910f8343
+index 000000000000..92bcb910f834
 --- /dev/null
 +++ b/include/soc/tegra/virt/tegra_hv_nvscicom.h
 @@ -0,0 +1,144 @@
@@ -165,5 +165,5 @@ index 0000000000000..92bcb910f8343
 +
 +#endif /* __TEGRA_HV_NVSCICOM_H */
 -- 
-2.43.0
+2.55.0
 

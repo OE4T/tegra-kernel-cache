@@ -26,7 +26,7 @@ Reviewed-by: Sandeep Trasi <strasi@nvidia.com>
 (cherry picked from commit 38340e780b8762c102d0fc56bfa34ab58ab74dbf)
 
 diff --git a/drivers/firmware/tegra/ivc.c b/drivers/firmware/tegra/ivc.c
-index 75e50a7da4a0a..bf2b45ad19807 100644
+index 75e50a7da4a0..bf2b45ad1980 100644
 --- a/drivers/firmware/tegra/ivc.c
 +++ b/drivers/firmware/tegra/ivc.c
 @@ -645,6 +645,14 @@ static inline void *iosys_map_get_vaddr(const struct iosys_map *map)
@@ -45,7 +45,7 @@ index 75e50a7da4a0a..bf2b45ad19807 100644
  	iosys_map_memset(&ivc->tx.map, sizeof(struct tegra_ivc_header), 0, ivc->num_frames * ivc->frame_size);
  }
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index d62aaf826a1df..2f38cadb4a7d0 100644
+index d62aaf826a1d..2f38cadb4a7d 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -781,6 +781,11 @@ static int tegra_hv_setup(struct tegra_hv_data *hvd)
@@ -73,5 +73,5 @@ index d62aaf826a1df..2f38cadb4a7d0 100644
  		return ret;
  	}
 -- 
-2.43.0
+2.55.0
 

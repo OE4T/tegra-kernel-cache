@@ -28,7 +28,7 @@ Reviewed-by: Mohan kumar <mkumard@nvidia.com>
 (cherry picked from commit 4b50b0282b8b281368f8e86031a54a35b300676e)
 
 diff --git a/sound/soc/tegra/tegra186_asrc.c b/sound/soc/tegra/tegra186_asrc.c
-index 6a482c04c59bc..49082dc33d4e2 100644
+index 6a482c04c59b..49082dc33d4e 100644
 --- a/sound/soc/tegra/tegra186_asrc.c
 +++ b/sound/soc/tegra/tegra186_asrc.c
 @@ -270,81 +270,40 @@ static int tegra186_asrc_put_ratio_source(struct snd_kcontrol *kcontrol,
@@ -292,5 +292,5 @@ index 6a482c04c59bc..49082dc33d4e2 100644
  	/* Source of ratio provider */
  	SOC_ENUM_EXT("Ratio1 Source", src_select1,
 -- 
-2.43.0
+2.55.0
 

@@ -26,7 +26,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit 622348e0f269905af325cf843771d21964a404de)
 
 diff --git a/fs/pstore/zone.c b/fs/pstore/zone.c
-index eb61ba5bb9642..50cefe04462b2 100644
+index eb61ba5bb964..50cefe04462b 100644
 --- a/fs/pstore/zone.c
 +++ b/fs/pstore/zone.c
 @@ -1301,6 +1301,8 @@ int register_pstore_zone(struct pstore_zone_info *info)
@@ -90,5 +90,5 @@ index eb61ba5bb9642..50cefe04462b2 100644
  	err = pstore_register(&cxt->pstore);
  	if (err) {
 -- 
-2.43.0
+2.55.0
 

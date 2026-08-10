@@ -13,7 +13,7 @@ Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2917006
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/ufs/core/Kconfig b/drivers/ufs/core/Kconfig
-index 817208ee64ecf..ec26b5b00b816 100644
+index 817208ee64ec..ec26b5b00b81 100644
 --- a/drivers/ufs/core/Kconfig
 +++ b/drivers/ufs/core/Kconfig
 @@ -50,3 +50,11 @@ config SCSI_UFS_HWMON
@@ -29,5 +29,5 @@ index 817208ee64ecf..ec26b5b00b816 100644
 +	  Export the  UFS HCD query APIs for provisioning the UFS. This config will
 +	  tell whether APIs are exported or not.
 -- 
-2.43.0
+2.55.0
 

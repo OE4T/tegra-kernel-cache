@@ -17,7 +17,7 @@ Reviewed-by: Revanth Kumar Uppala <ruppala@nvidia.com>
 (cherry picked from commit f672a3817b827a131011dac4ed5ae6f6904eef90)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 1d3810849189d..2cd6f7e8a2627 100644
+index a3263c326137..0039e409e5a7 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
 @@ -510,12 +510,10 @@ static const struct usb_device_id quirks_table[] = {
@@ -36,5 +36,5 @@ index 1d3810849189d..2cd6f7e8a2627 100644
  	/* Realtek 8851BE Bluetooth devices */
  	{ USB_DEVICE(0x0bda, 0xb850), .driver_info = BTUSB_REALTEK },
 -- 
-2.43.0
+2.55.0
 

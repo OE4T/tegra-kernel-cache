@@ -21,7 +21,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 03f24b76101bbd1bca5ad6c89d0fed84681f09d6)
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index b5cf8a375d73c..e425d2c0001ad 100644
+index b5cf8a375d73..e425d2c0001a 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -3548,6 +3548,15 @@ static void tegra264_xudc_device_params_init(struct tegra_xudc *xudc)
@@ -41,5 +41,5 @@ index b5cf8a375d73c..e425d2c0001ad 100644
  #define  SSPX_CORE_CNT27_PING_LFPS_TRPT_MASK GENMASK(29, 0)
  #define  SSPX_CORE_CNT27_PING_LFPS_TRPT(x) ((x) & \
 -- 
-2.43.0
+2.55.0
 

@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Sumit Gupta <sumitg@nvidia.com>
+Date: Wed, 27 May 2026 19:31:27 +0530
+Subject: [PATCH 072/184] memory: tegra234: drop dead NULL check in
+ tegra234_mc_icc_aggregate()
+
+In tegra234_mc_icc_aggregate(), the 'if (mc)' check inside the
+CPU-cluster branch is always true.  'mc' was already dereferenced
+via 'mc->bwmgr_mrq_supported' a few lines above, so if it were NULL
+the function would have faulted there.  Drop the redundant check.
+
+Reported-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+
+diff --git a/drivers/memory/tegra/tegra234.c b/drivers/memory/tegra/tegra234.c
+index 9fbd34d4abe0..982476b67d5a 100644
+--- a/drivers/memory/tegra/tegra234.c
++++ b/drivers/memory/tegra/tegra234.c
+@@ -1106,10 +1106,8 @@ static int tegra234_mc_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+ 
+ 	if (node->id == TEGRA_ICC_MC_CPU_CLUSTER0 ||
+ 	    node->id == TEGRA_ICC_MC_CPU_CLUSTER1 ||
+-	    node->id == TEGRA_ICC_MC_CPU_CLUSTER2) {
+-		if (mc)
+-			peak_bw = peak_bw * mc->num_channels;
+-	}
++	    node->id == TEGRA_ICC_MC_CPU_CLUSTER2)
++		peak_bw = peak_bw * mc->num_channels;
+ 
+ 	*agg_avg += avg_bw;
+ 	*agg_peak = max(*agg_peak, peak_bw);
+-- 
+2.55.0
+

@@ -13,7 +13,7 @@ Change-Id: If60bca7b796fa38bd96e97f57301841ed2ab13af
 Signed-off-by: Eric Funsten <efunsten@nvidia.com>
 
 diff --git a/drivers/perf/arm_cspmu/arm_cspmu.c b/drivers/perf/arm_cspmu/arm_cspmu.c
-index 00bdf6452512e..525b0a383aaea 100644
+index 00bdf6452512..525b0a383aae 100644
 --- a/drivers/perf/arm_cspmu/arm_cspmu.c
 +++ b/drivers/perf/arm_cspmu/arm_cspmu.c
 @@ -139,6 +139,8 @@ static void arm_cspmu_set_ev_filter(struct arm_cspmu *cspmu,
@@ -52,7 +52,7 @@ index 00bdf6452512e..525b0a383aaea 100644
  	has_overflowed = arm_cspmu_get_reset_overflow(cspmu, (u32 *)pmovs);
  	if (!has_overflowed)
 diff --git a/drivers/perf/arm_cspmu/arm_cspmu.h b/drivers/perf/arm_cspmu/arm_cspmu.h
-index 779dd2d6aa26b..094e3b89393a9 100644
+index 779dd2d6aa26..094e3b89393a 100644
 --- a/drivers/perf/arm_cspmu/arm_cspmu.h
 +++ b/drivers/perf/arm_cspmu/arm_cspmu.h
 @@ -170,6 +170,8 @@ struct arm_cspmu_impl_ops {
@@ -65,5 +65,5 @@ index 779dd2d6aa26b..094e3b89393a9 100644
  
  /* Vendor/implementer registration parameter. */
 -- 
-2.43.0
+2.55.0
 

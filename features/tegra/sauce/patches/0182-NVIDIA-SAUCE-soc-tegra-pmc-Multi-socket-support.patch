@@ -9,7 +9,7 @@ Change-Id: I526e177cebc590549af160502c6a8903f352a743
 Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index 044fb34dc5ea9..589f91b24b442 100644
+index 044fb34dc5ea..589f91b24b44 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -3163,6 +3163,78 @@ static void tegra_pmc_reset_suspend_mode(void *data)
@@ -103,5 +103,5 @@ index 044fb34dc5ea9..589f91b24b442 100644
  	if (err < 0)
  		return dev_err_probe(&pdev->dev, err, "failed to parse DT\n");
 -- 
-2.43.0
+2.55.0
 

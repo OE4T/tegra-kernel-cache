@@ -12,7 +12,7 @@ Change-Id: I678f900916d786ef262fe40e4b0aeedd1847358a
 Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/drivers/virt/tegra/tegra_hv_ivc.c b/drivers/virt/tegra/tegra_hv_ivc.c
-index b6155fc48a6f5..ede79e3ad3fe6 100644
+index b6155fc48a6f..ede79e3ad3fe 100644
 --- a/drivers/virt/tegra/tegra_hv_ivc.c
 +++ b/drivers/virt/tegra/tegra_hv_ivc.c
 @@ -1138,17 +1138,16 @@ static int tegra_hv_ivc_probe(struct platform_device *pdev)
@@ -36,5 +36,5 @@ index b6155fc48a6f5..ede79e3ad3fe6 100644
  
  static const struct of_device_id tegra_hv_ivc_match[] = {
 -- 
-2.43.0
+2.55.0
 

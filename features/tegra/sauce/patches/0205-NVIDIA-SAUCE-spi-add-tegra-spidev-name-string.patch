@@ -18,7 +18,7 @@ Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
 Tested-by: Prathamesh Shete <pshete@nvidia.com>
 
 diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index 769942ede87df..1675e86b4f069 100644
+index 769942ede87d..1675e86b4f06 100644
 --- a/drivers/spi/spidev.c
 +++ b/drivers/spi/spidev.c
 @@ -700,6 +700,7 @@ static const struct spi_device_id spidev_spi_ids[] = {
@@ -30,5 +30,5 @@ index 769942ede87df..1675e86b4f069 100644
  };
  MODULE_DEVICE_TABLE(spi, spidev_spi_ids);
 -- 
-2.43.0
+2.55.0
 

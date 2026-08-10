@@ -26,7 +26,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 8606cfa1ad8545187eb7e3431b57adfe58ac447f)
 
 diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
-index 8bf469639c607..10d33004f9d3c 100644
+index 8bf469639c60..10d33004f9d3 100644
 --- a/drivers/clk/tegra/clk-bpmp.c
 +++ b/drivers/clk/tegra/clk-bpmp.c
 @@ -1,6 +1,6 @@
@@ -46,5 +46,5 @@ index 8bf469639c607..10d33004f9d3c 100644
  	err = devm_clk_hw_register(bpmp->dev, &clk->hw);
  
 -- 
-2.43.0
+2.55.0
 

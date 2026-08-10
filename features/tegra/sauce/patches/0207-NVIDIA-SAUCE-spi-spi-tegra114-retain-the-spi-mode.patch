@@ -18,7 +18,7 @@ Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index a28597b6b80d6..5a8c4a2737b86 100644
+index a28597b6b80d..5a8c4a2737b8 100644
 --- a/drivers/spi/spi-tegra114.c
 +++ b/drivers/spi/spi-tegra114.c
 @@ -57,6 +57,7 @@
@@ -67,5 +67,5 @@ index a28597b6b80d6..5a8c4a2737b86 100644
  	tegra_spi_writel(tspi, tspi->def_command1_reg, SPI_COMMAND1);
  	tspi->spi_cs_timing1 = tegra_spi_readl(tspi, SPI_CS_TIMING1);
 -- 
-2.43.0
+2.55.0
 

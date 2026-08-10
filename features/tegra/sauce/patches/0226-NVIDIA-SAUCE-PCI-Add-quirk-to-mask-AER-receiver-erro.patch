@@ -33,7 +33,7 @@ Reviewed-by: Robert Lin <robelin@nvidia.com>
 (cherry picked from commit 458f31b6eab3ffe60c148802709eff618c8c9b15)
 
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index fb529b7034ffe..fbfeb451e50ab 100644
+index fb529b7034ff..fbfeb451e50a 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
 @@ -6373,3 +6373,50 @@ static void pci_mask_replay_timer_timeout(struct pci_dev *pdev)
@@ -88,5 +88,5 @@ index fb529b7034ffe..fbfeb451e50ab 100644
 +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_REALTEK, PCI_DEVICE_ID_REALTEK_RTL8126,
 +			quirk_realtek_mask_aer_rcv_err);
 -- 
-2.43.0
+2.55.0
 

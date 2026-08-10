@@ -24,7 +24,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/phy/tegra/xusb-tegra186.c b/drivers/phy/tegra/xusb-tegra186.c
-index 1d8a9e57ecf67..bf37b214776c9 100644
+index 1d8a9e57ecf6..bf37b214776c 100644
 --- a/drivers/phy/tegra/xusb-tegra186.c
 +++ b/drivers/phy/tegra/xusb-tegra186.c
 @@ -638,7 +638,7 @@ static void tegra186_utmi_bias_pad_power_on(struct tegra_xusb_padctl *padctl)
@@ -37,5 +37,5 @@ index 1d8a9e57ecf67..bf37b214776c9 100644
  			/* The failure with polling on trk complete will not
  			 * cause the failure of powering on the bias pad.
 -- 
-2.43.0
+2.55.0
 

@@ -19,7 +19,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 9c7c02d1c39b501578d65f0300384a1545ec674f)
 
 diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
-index 8ccb303ce8098..5c0bfec6bce14 100644
+index 8ccb303ce809..5c0bfec6bce1 100644
 --- a/drivers/platform/tegra/tegra-epl.c
 +++ b/drivers/platform/tegra/tegra-epl.c
 @@ -105,7 +105,20 @@ static inline uint32_t epl_get_current_timestamp(void)
@@ -143,5 +143,5 @@ index 8ccb303ce8098..5c0bfec6bce14 100644
  	}
  
 -- 
-2.43.0
+2.55.0
 

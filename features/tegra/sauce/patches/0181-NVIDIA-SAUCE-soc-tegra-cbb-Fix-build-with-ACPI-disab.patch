@@ -19,7 +19,7 @@ Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 (cherry picked from commit e05745d7d36986d507a6bfb45f07394cb1d70f25)
 
 diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
-index 9215509967234..8ac6344049d0d 100644
+index 921550996723..8ac6344049d0 100644
 --- a/drivers/soc/tegra/cbb/tegra234-cbb.c
 +++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
 @@ -1,7 +1,6 @@
@@ -103,5 +103,5 @@ index 9215509967234..8ac6344049d0d 100644
  	},
  };
 -- 
-2.43.0
+2.55.0
 

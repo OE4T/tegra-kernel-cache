@@ -16,7 +16,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index f1f1a9d632465..1143efd50a91f 100644
+index f1f1a9d63246..1143efd50a91 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -1433,7 +1433,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
@@ -42,5 +42,5 @@ index f1f1a9d632465..1143efd50a91f 100644
  		return aqr113c_wol_settings(phydev, true);
  	else
 -- 
-2.43.0
+2.55.0
 

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Frank Li <Frank.Li@nxp.com>
 Date: Wed, 25 Feb 2026 16:41:37 -0500
-Subject: [PATCH 006/196] dmaengine: of_dma: Add
+Subject: [PATCH 006/184] dmaengine: of_dma: Add
  devm_of_dma_controller_register()
 
 Add a managed API, devm_of_dma_controller_register(), to simplify DMA
@@ -14,7 +14,7 @@ Signed-off-by: Vinod Koul <vkoul@kernel.org>
 (cherry picked from commit 3a005126c9d7f30093627a6f329656c358e16b3a)
 
 diff --git a/include/linux/of_dma.h b/include/linux/of_dma.h
-index fd706cdf255c6..16b08234d03b3 100644
+index fd706cdf255c..16b08234d03b 100644
 --- a/include/linux/of_dma.h
 +++ b/include/linux/of_dma.h
 @@ -38,6 +38,26 @@ extern int of_dma_controller_register(struct device_node *np,
@@ -61,5 +61,5 @@ index fd706cdf255c6..16b08234d03b3 100644
  		void *(*of_dma_route_allocate)
  		(struct of_phandle_args *, struct of_dma *),
 -- 
-2.43.0
+2.55.0
 

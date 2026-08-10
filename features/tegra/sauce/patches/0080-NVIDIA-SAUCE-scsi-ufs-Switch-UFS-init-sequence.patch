@@ -18,7 +18,7 @@ Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2914016
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 5371f173e28b9..71b5a21bb72b2 100644
+index 8de3d0886a12..6b94518b664f 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
 @@ -4692,8 +4692,6 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
@@ -61,5 +61,5 @@ index 5371f173e28b9..71b5a21bb72b2 100644
  		memcpy(&hba->pwr_info, pwr_mode,
  			sizeof(struct ufs_pa_layer_attr));
 -- 
-2.43.0
+2.55.0
 

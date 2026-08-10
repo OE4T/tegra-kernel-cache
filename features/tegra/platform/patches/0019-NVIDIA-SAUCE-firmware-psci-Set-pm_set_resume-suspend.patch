@@ -1,0 +1,62 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Konrad Dybcio <konradybcio@kernel.org>
+Date: Wed, 31 Dec 2025 21:51:26 +0530
+Subject: [PATCH 019/184] NVIDIA: SAUCE: firmware: psci: Set
+ pm_set_resume/suspend_via_firmware() for SYSTEM_SUSPEND
+
+PSCI specification defines the SYSTEM_SUSPEND feature which enables the
+firmware to implement the suspend to RAM (S2RAM) functionality by
+transitioning the system to a deeper low power state. When the system
+enters such state, the power to the peripheral devices might be removed. So
+the respective device drivers must prepare for the possible removal of the
+power by performing actions such as shutting down or resetting the device
+in their system suspend callbacks.
+
+The Linux PM framework allows the platform drivers to convey this info to
+device drivers by calling the pm_set_suspend_via_firmware() and
+pm_set_resume_via_firmware() APIs.
+
+Hence, if the PSCI firmware supports SYSTEM_SUSPEND feature, call the above
+mentioned APIs in the psci_system_suspend_begin() and
+psci_system_suspend_enter() callbacks.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+[mani: reworded the description to be more elaborative]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+
+Bug 5748911
+
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Change-Id: Idfeff61cf1757e53c9b18899b203dbf041f8a79f
+
+diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+index 38ca190d4a22..e73bae6cb23a 100644
+--- a/drivers/firmware/psci/psci.c
++++ b/drivers/firmware/psci/psci.c
+@@ -539,12 +539,22 @@ static int psci_system_suspend(unsigned long unused)
+ 
+ static int psci_system_suspend_enter(suspend_state_t state)
+ {
++	pm_set_resume_via_firmware();
++
+ 	return cpu_suspend(0, psci_system_suspend);
+ }
+ 
++static int psci_system_suspend_begin(suspend_state_t state)
++{
++	pm_set_suspend_via_firmware();
++
++	return 0;
++}
++
+ static const struct platform_suspend_ops psci_suspend_ops = {
+ 	.valid          = suspend_valid_only_mem,
+ 	.enter          = psci_system_suspend_enter,
++	.begin          = psci_system_suspend_begin,
+ };
+ 
+ static void __init psci_init_system_reset2(void)
+-- 
+2.55.0
+

@@ -38,7 +38,7 @@ Reviewed-by: Sharad Gupta <sharadg@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/sound/soc/tegra/tegra186_asrc.c b/sound/soc/tegra/tegra186_asrc.c
-index f073166db697f..c0851fe5c45b1 100644
+index f073166db697..c0851fe5c45b 100644
 --- a/sound/soc/tegra/tegra186_asrc.c
 +++ b/sound/soc/tegra/tegra186_asrc.c
 @@ -635,6 +635,44 @@ static const struct snd_soc_dapm_route tegra186_asrc_routes[] = {
@@ -118,7 +118,7 @@ index f073166db697f..c0851fe5c45b1 100644
  	.num_controls		= ARRAY_SIZE(tegra186_asrc_controls),
  };
 diff --git a/sound/soc/tegra/tegra186_dspk.c b/sound/soc/tegra/tegra186_dspk.c
-index ef0c7ec297a68..08b629cb5c3a6 100644
+index ef0c7ec297a6..08b629cb5c3a 100644
 --- a/sound/soc/tegra/tegra186_dspk.c
 +++ b/sound/soc/tegra/tegra186_dspk.c
 @@ -329,6 +329,15 @@ static struct snd_soc_dai_driver tegra186_dspk_dais[] = {
@@ -186,7 +186,7 @@ index ef0c7ec297a68..08b629cb5c3a6 100644
  	.num_controls = ARRAY_SIZE(tegrat186_dspk_controls),
  };
 diff --git a/sound/soc/tegra/tegra210_adx.c b/sound/soc/tegra/tegra210_adx.c
-index a604406c547f7..bbdd079875229 100644
+index a604406c547f..bbdd07987522 100644
 --- a/sound/soc/tegra/tegra210_adx.c
 +++ b/sound/soc/tegra/tegra210_adx.c
 @@ -354,6 +354,26 @@ static const struct snd_soc_dapm_route tegra210_adx_routes[] = {
@@ -259,7 +259,7 @@ index a604406c547f7..bbdd079875229 100644
  	.num_controls		= ARRAY_SIZE(tegra210_adx_controls),
  };
 diff --git a/sound/soc/tegra/tegra210_amx.c b/sound/soc/tegra/tegra210_amx.c
-index 1e8888edf0914..82d64f868ccf8 100644
+index 1e8888edf091..82d64f868ccf 100644
 --- a/sound/soc/tegra/tegra210_amx.c
 +++ b/sound/soc/tegra/tegra210_amx.c
 @@ -363,6 +363,26 @@ static const struct snd_soc_dapm_route tegra210_amx_routes[] = {
@@ -332,7 +332,7 @@ index 1e8888edf0914..82d64f868ccf8 100644
  	.num_controls		= ARRAY_SIZE(tegra210_amx_controls),
  };
 diff --git a/sound/soc/tegra/tegra210_dmic.c b/sound/soc/tegra/tegra210_dmic.c
-index 84c7f9e902c71..6fd4f05124ea9 100644
+index 84c7f9e902c7..6fd4f05124ea 100644
 --- a/sound/soc/tegra/tegra210_dmic.c
 +++ b/sound/soc/tegra/tegra210_dmic.c
 @@ -332,6 +332,14 @@ static struct snd_soc_dai_driver tegra210_dmic_dais[] = {
@@ -399,7 +399,7 @@ index 84c7f9e902c71..6fd4f05124ea9 100644
  	.num_controls		= ARRAY_SIZE(tegra210_dmic_controls),
  };
 diff --git a/sound/soc/tegra/tegra210_i2s.c b/sound/soc/tegra/tegra210_i2s.c
-index c091399d2bac7..980e820b523bf 100644
+index c091399d2bac..980e820b523b 100644
 --- a/sound/soc/tegra/tegra210_i2s.c
 +++ b/sound/soc/tegra/tegra210_i2s.c
 @@ -622,6 +622,7 @@ static int tegra210_i2s_hw_params(struct snd_pcm_substream *substream,
@@ -485,7 +485,7 @@ index c091399d2bac7..980e820b523bf 100644
  	.num_controls		= ARRAY_SIZE(tegra210_i2s_controls),
  };
 diff --git a/sound/soc/tegra/tegra210_mixer.c b/sound/soc/tegra/tegra210_mixer.c
-index aab414af6d0db..12753614aa0fa 100644
+index aab414af6d0d..12753614aa0f 100644
 --- a/sound/soc/tegra/tegra210_mixer.c
 +++ b/sound/soc/tegra/tegra210_mixer.c
 @@ -754,11 +754,83 @@ static const struct snd_soc_dapm_route tegra210_mixer_routes[] = {
@@ -575,7 +575,7 @@ index aab414af6d0db..12753614aa0fa 100644
  	.num_controls		= ARRAY_SIZE(tegra210_mixer_gain_ctls),
  };
 diff --git a/sound/soc/tegra/tegra210_mvc.c b/sound/soc/tegra/tegra210_mvc.c
-index 7c88d2656b5ee..c76fdf6e85b56 100644
+index 7c88d2656b5e..c76fdf6e85b5 100644
 --- a/sound/soc/tegra/tegra210_mvc.c
 +++ b/sound/soc/tegra/tegra210_mvc.c
 @@ -632,11 +632,39 @@ static const struct snd_soc_dapm_route tegra210_mvc_routes[] = {
@@ -621,7 +621,7 @@ index 7c88d2656b5ee..c76fdf6e85b56 100644
  	.num_controls		= ARRAY_SIZE(tegra210_mvc_vol_ctrl),
  };
 diff --git a/sound/soc/tegra/tegra210_ope.c b/sound/soc/tegra/tegra210_ope.c
-index e19cd0563082e..59b446b7c773e 100644
+index e19cd0563082..59b446b7c773 100644
 --- a/sound/soc/tegra/tegra210_ope.c
 +++ b/sound/soc/tegra/tegra210_ope.c
 @@ -93,29 +93,6 @@ static int tegra210_ope_hw_params(struct snd_pcm_substream *substream,
@@ -721,7 +721,7 @@ index e19cd0563082e..59b446b7c773e 100644
  	.num_controls		= ARRAY_SIZE(tegra210_ope_controls),
  };
 diff --git a/sound/soc/tegra/tegra210_sfc.c b/sound/soc/tegra/tegra210_sfc.c
-index 68bc39a650124..925e2f3a7637a 100644
+index 68bc39a65012..925e2f3a7637 100644
 --- a/sound/soc/tegra/tegra210_sfc.c
 +++ b/sound/soc/tegra/tegra210_sfc.c
 @@ -3458,6 +3458,17 @@ static const struct snd_soc_dapm_route tegra210_sfc_routes[] = {
@@ -774,5 +774,5 @@ index 68bc39a650124..925e2f3a7637a 100644
  	.num_controls		= ARRAY_SIZE(tegra210_sfc_controls),
  };
 -- 
-2.43.0
+2.55.0
 

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sumit Gupta <sumitg@nvidia.com>
 Date: Mon, 14 Apr 2025 16:37:11 +0000
-Subject: [PATCH 005/196] NVIDIA: SAUCE: cpufreq: tegra194: Support read-only
+Subject: [PATCH 005/184] NVIDIA: SAUCE: cpufreq: tegra194: Support read-only
  initialization
 
 If a platform uses system registers for frequency readback, support
@@ -23,7 +23,7 @@ Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
 (cherry picked from commit 485d868fa01e2d6522bdf851c47c532b98122cd7)
 
 diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
-index de989cef6d649..e0e742a034171 100644
+index de989cef6d64..e0e742a03417 100644
 --- a/drivers/cpufreq/tegra194-cpufreq.c
 +++ b/drivers/cpufreq/tegra194-cpufreq.c
 @@ -1,6 +1,6 @@
@@ -231,5 +231,5 @@ index de989cef6d649..e0e742a034171 100644
  
  	data->cpu_data = devm_kcalloc(&pdev->dev, data->soc->num_clusters *
 -- 
-2.43.0
+2.55.0
 

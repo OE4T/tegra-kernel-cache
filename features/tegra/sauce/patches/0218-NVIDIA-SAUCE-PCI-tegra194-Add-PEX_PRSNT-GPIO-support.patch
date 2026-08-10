@@ -24,7 +24,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 0b4dcd805c6ec..ca5f7b8675160 100644
+index 0b4dcd805c6e..ca5f7b867516 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -282,10 +282,16 @@ struct tegra_pcie_dw {
@@ -245,5 +245,5 @@ index 0b4dcd805c6ec..ca5f7b8675160 100644
  	}
  }
 -- 
-2.43.0
+2.55.0
 

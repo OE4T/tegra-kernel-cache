@@ -18,7 +18,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit cbc5d03fb9fe9790586b3ace4ebb98078e17cce3)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index f5759a19b6e5b..044fb34dc5ea9 100644
+index f5759a19b6e5..044fb34dc5ea 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -204,6 +204,29 @@
@@ -245,5 +245,5 @@ index f5759a19b6e5b..044fb34dc5ea9 100644
  	return err;
  }
 -- 
-2.43.0
+2.55.0
 
