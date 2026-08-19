@@ -17,7 +17,7 @@ Reviewed-by: Revanth Kumar Uppala <ruppala@nvidia.com>
 (cherry picked from commit f672a3817b827a131011dac4ed5ae6f6904eef90)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 1d3810849189d..2cd6f7e8a2627 100644
+index e751c6b6e92c..cd58e93da117 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
 @@ -510,12 +510,10 @@ static const struct usb_device_id quirks_table[] = {

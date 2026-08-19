@@ -23,7 +23,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit eedfc6404fcfeb73f514d6677ff7567f2c7b28c2)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 77b5534b357df..d62aaf826a1df 100644
+index 77b5534b357d..d62aaf826a1d 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -533,9 +533,65 @@ static ssize_t async_err_diagnostics_store(const struct class *class,

@@ -18,7 +18,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit 9670b0e58fa4d81733edde9773b91904a9508926)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 9b1be4d1db2b5..5404738330b87 100644
+index 9b1be4d1db2b..5404738330b8 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -1063,15 +1063,45 @@ EXPORT_SYMBOL(tegra_hv_mempool_reserve);

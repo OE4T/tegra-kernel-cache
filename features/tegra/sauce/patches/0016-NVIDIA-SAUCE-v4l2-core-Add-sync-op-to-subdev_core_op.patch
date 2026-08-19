@@ -25,7 +25,7 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/include/media/v4l2-subdev.h b/include/media/v4l2-subdev.h
-index e0bb58cb6d042..96343c330a411 100644
+index e0bb58cb6d04..96343c330a41 100644
 --- a/include/media/v4l2-subdev.h
 +++ b/include/media/v4l2-subdev.h
 @@ -139,6 +139,10 @@ struct v4l2_subdev_io_pin_config {
@@ -61,7 +61,7 @@ index e0bb58cb6d042..96343c330a411 100644
  
  /**
 diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index becd08fdbddb8..95a5e76e8c268 100644
+index becd08fdbddb..95a5e76e8c26 100644
 --- a/include/uapi/linux/videodev2.h
 +++ b/include/uapi/linux/videodev2.h
 @@ -2580,6 +2580,7 @@ struct v4l2_event_frame_sync {

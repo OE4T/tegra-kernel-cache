@@ -20,7 +20,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit 3b03016b582ce399fb639a5cd9928bc76935520f)
 
 diff --git a/include/soc/tegra/virt/tegra_hv_nvscicom.h b/include/soc/tegra/virt/tegra_hv_nvscicom.h
-index 92bcb910f8343..71e8ba502edc5 100644
+index 92bcb910f834..71e8ba502edc 100644
 --- a/include/soc/tegra/virt/tegra_hv_nvscicom.h
 +++ b/include/soc/tegra/virt/tegra_hv_nvscicom.h
 @@ -6,7 +6,7 @@

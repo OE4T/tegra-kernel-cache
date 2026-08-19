@@ -20,7 +20,7 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/mailbox/tegra-hsp.c b/drivers/mailbox/tegra-hsp.c
-index 7991e8dba579f..d80ef4aebabc6 100644
+index 7991e8dba579..d80ef4aebabc 100644
 --- a/drivers/mailbox/tegra-hsp.c
 +++ b/drivers/mailbox/tegra-hsp.c
 @@ -73,8 +73,15 @@ struct tegra_hsp_sm_ops {

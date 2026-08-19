@@ -23,7 +23,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 28864b1a90ac68498a35e1452b31a1ffe36eaa51)
 
 diff --git a/drivers/perf/arm_smmuv3_pmu.c b/drivers/perf/arm_smmuv3_pmu.c
-index 621f02a7f43be..c48a9504dacd8 100644
+index 621f02a7f43b..c48a9504dacd 100644
 --- a/drivers/perf/arm_smmuv3_pmu.c
 +++ b/drivers/perf/arm_smmuv3_pmu.c
 @@ -849,7 +849,7 @@ static int smmu_pmu_probe(struct platform_device *pdev)

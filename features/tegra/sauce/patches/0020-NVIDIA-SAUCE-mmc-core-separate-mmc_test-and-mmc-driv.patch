@@ -23,7 +23,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/mmc/core/bus.c b/drivers/mmc/core/bus.c
-index ec4f3462bf809..e137f2123fdfc 100644
+index ec4f3462bf80..e137f2123fdf 100644
 --- a/drivers/mmc/core/bus.c
 +++ b/drivers/mmc/core/bus.c
 @@ -4,6 +4,7 @@
@@ -61,7 +61,7 @@ index ec4f3462bf809..e137f2123fdfc 100644
  }
  
 diff --git a/drivers/mmc/core/mmc_test.c b/drivers/mmc/core/mmc_test.c
-index 67d4a301895c9..7bdfb8714f933 100644
+index 67d4a301895c..7bdfb8714f93 100644
 --- a/drivers/mmc/core/mmc_test.c
 +++ b/drivers/mmc/core/mmc_test.c
 @@ -1,6 +1,7 @@
@@ -118,7 +118,7 @@ index 67d4a301895c9..7bdfb8714f933 100644
  
  MODULE_LICENSE("GPL");
 diff --git a/include/linux/mmc/card.h b/include/linux/mmc/card.h
-index 8151f2240db41..f24a4da5dc057 100644
+index 8151f2240db4..f24a4da5dc05 100644
 --- a/include/linux/mmc/card.h
 +++ b/include/linux/mmc/card.h
 @@ -2,6 +2,8 @@

@@ -47,7 +47,7 @@ Tested-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/mailbox/tegra-hsp.c b/drivers/mailbox/tegra-hsp.c
-index d80ef4aebabc6..4376f936cc82e 100644
+index d80ef4aebabc..4376f936cc82 100644
 --- a/drivers/mailbox/tegra-hsp.c
 +++ b/drivers/mailbox/tegra-hsp.c
 @@ -51,6 +51,7 @@

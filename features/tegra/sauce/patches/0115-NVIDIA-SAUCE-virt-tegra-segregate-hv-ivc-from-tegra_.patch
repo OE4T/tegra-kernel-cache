@@ -23,7 +23,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit a56df8dbdb42743a8dcd0ecc160fa364ad0c4075)
 
 diff --git a/drivers/virt/tegra/Makefile b/drivers/virt/tegra/Makefile
-index 9172577716d1f..63fa41f8408d9 100644
+index 9172577716d1..63fa41f8408d 100644
 --- a/drivers/virt/tegra/Makefile
 +++ b/drivers/virt/tegra/Makefile
 @@ -1,8 +1,9 @@
@@ -38,7 +38,7 @@ index 9172577716d1f..63fa41f8408d9 100644
 +obj-$(CONFIG_TEGRA_HV_DRIVER)          += tegra_hv_ivc.o
  obj-$(CONFIG_TEGRA_HV_DRIVER)          += tegra_hv.o
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 9f38c60b1068f..fdeff62441ef8 100644
+index 9f38c60b1068..fdeff62441ef 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -1,5 +1,5 @@
@@ -1137,7 +1137,7 @@ index 9f38c60b1068f..fdeff62441ef8 100644
  MODULE_LICENSE("GPL v2");
 diff --git a/drivers/virt/tegra/tegra_hv_ivc.c b/drivers/virt/tegra/tegra_hv_ivc.c
 new file mode 100644
-index 0000000000000..0a78cc2e86469
+index 000000000000..0a78cc2e8646
 --- /dev/null
 +++ b/drivers/virt/tegra/tegra_hv_ivc.c
 @@ -0,0 +1,1041 @@
@@ -2183,7 +2183,7 @@ index 0000000000000..0a78cc2e86469
 +MODULE_LICENSE("GPL v2");
 +
 diff --git a/include/soc/tegra/virt/hv-ivc.h b/include/soc/tegra/virt/hv-ivc.h
-index 6f80c80d064b9..d88650786019f 100644
+index 6f80c80d064b..d88650786019 100644
 --- a/include/soc/tegra/virt/hv-ivc.h
 +++ b/include/soc/tegra/virt/hv-ivc.h
 @@ -1,6 +1,6 @@
@@ -2303,7 +2303,7 @@ index 6f80c80d064b9..d88650786019f 100644
   * @brief          Handle internal messages.
   *                 This function must be called following every notification (interrupt or
 diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
-index 59984d04af3fd..77fc7c25a7f20 100644
+index 59984d04af3f..77fc7c25a7f2 100644
 --- a/include/soc/tegra/virt/tegra_hv.h
 +++ b/include/soc/tegra/virt/tegra_hv.h
 @@ -1,6 +1,6 @@

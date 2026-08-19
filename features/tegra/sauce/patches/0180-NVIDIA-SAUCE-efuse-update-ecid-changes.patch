@@ -20,7 +20,7 @@ Reviewed-by: mobile promotions <svcmobile_promotions@nvidia.com>
 (cherry picked from commit 3f7dda17b2984f7fa36680e1e06f2eb3dc27bccd)
 
 diff --git a/drivers/nvmem/tegra-efuse.c b/drivers/nvmem/tegra-efuse.c
-index 4e857255419d3..0e2893b2bf7d6 100644
+index 4e857255419d..0e2893b2bf7d 100644
 --- a/drivers/nvmem/tegra-efuse.c
 +++ b/drivers/nvmem/tegra-efuse.c
 @@ -1,6 +1,6 @@

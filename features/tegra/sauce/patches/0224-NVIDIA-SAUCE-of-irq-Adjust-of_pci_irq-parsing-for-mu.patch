@@ -24,7 +24,7 @@ Tested-by: mobile promotions <svcmobile_promotions@nvidia.com>
 Reviewed-by: mobile promotions <svcmobile_promotions@nvidia.com>
 
 diff --git a/drivers/pci/of.c b/drivers/pci/of.c
-index 3579265f11984..52a3eedfe5638 100644
+index 3579265f1198..52a3eedfe563 100644
 --- a/drivers/pci/of.c
 +++ b/drivers/pci/of.c
 @@ -474,9 +474,17 @@ static int of_irq_parse_pci(const struct pci_dev *pdev, struct of_phandle_args *

@@ -19,7 +19,7 @@ Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index f90672c9d042c..5743d2ea36856 100644
+index f90672c9d042..5743d2ea3685 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -1563,6 +1563,12 @@ static int __tegra_xudc_ep_set_halt(struct tegra_xudc_ep *ep, bool halt)

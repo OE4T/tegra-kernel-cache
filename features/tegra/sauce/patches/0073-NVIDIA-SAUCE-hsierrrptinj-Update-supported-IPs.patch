@@ -19,7 +19,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/platform/tegra/tegra-hsierrrptinj.c b/drivers/platform/tegra/tegra-hsierrrptinj.c
-index adf9dbf811750..7052e59582478 100644
+index adf9dbf81175..7052e5958247 100644
 --- a/drivers/platform/tegra/tegra-hsierrrptinj.c
 +++ b/drivers/platform/tegra/tegra-hsierrrptinj.c
 @@ -43,6 +43,7 @@
@@ -61,7 +61,7 @@ index adf9dbf811750..7052e59582478 100644
  	ret = mbox_send_message(hsierrrptinj_tx.chan, (void *)&error_report);
  
 diff --git a/include/linux/tegra-hsierrrptinj.h b/include/linux/tegra-hsierrrptinj.h
-index 13b9d0c861399..e8ba5503af2a1 100644
+index 13b9d0c86139..e8ba5503af2a 100644
 --- a/include/linux/tegra-hsierrrptinj.h
 +++ b/include/linux/tegra-hsierrrptinj.h
 @@ -39,6 +39,8 @@ IP_TSEC  = 0x0009,

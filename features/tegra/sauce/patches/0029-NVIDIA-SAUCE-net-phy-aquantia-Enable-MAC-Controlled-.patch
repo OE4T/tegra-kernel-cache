@@ -18,7 +18,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index d71758eb67e6b..a69bb0a16638e 100644
+index d71758eb67e6..a69bb0a16638 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -121,6 +121,8 @@

@@ -22,7 +22,7 @@ Reviewed-by: Pritesh Raithatha <praithatha@nvidia.com>
 (cherry picked from commit d4303ed2cb0d467bf1446a9dd6a5f35b1c9450d8)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 0cfdb72bd993a..fc38d93380129 100644
+index 0cfdb72bd993..fc38d9338012 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -5591,17 +5591,15 @@ static int __maybe_unused arm_smmu_runtime_resume(struct device *dev)

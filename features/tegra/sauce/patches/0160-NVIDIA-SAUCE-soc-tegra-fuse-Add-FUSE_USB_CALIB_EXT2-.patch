@@ -20,7 +20,7 @@ Reviewed-by: HaoTien Hsu <haotienh@nvidia.com>
 (cherry picked from commit 848fc623c0751a3b762488b0c30a0ea94853f0b2)
 
 diff --git a/include/soc/tegra/fuse.h b/include/soc/tegra/fuse.h
-index 8f421b9f7585c..5a112763457aa 100644
+index 8f421b9f7585..5a112763457a 100644
 --- a/include/soc/tegra/fuse.h
 +++ b/include/soc/tegra/fuse.h
 @@ -23,6 +23,8 @@

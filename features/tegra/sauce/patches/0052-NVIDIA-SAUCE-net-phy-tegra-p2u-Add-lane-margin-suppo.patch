@@ -18,7 +18,7 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/phy/tegra/phy-tegra194-p2u.c b/drivers/phy/tegra/phy-tegra194-p2u.c
-index f49b417c9eb60..63735934aab48 100644
+index f49b417c9eb6..63735934aab4 100644
 --- a/drivers/phy/tegra/phy-tegra194-p2u.c
 +++ b/drivers/phy/tegra/phy-tegra194-p2u.c
 @@ -7,12 +7,15 @@

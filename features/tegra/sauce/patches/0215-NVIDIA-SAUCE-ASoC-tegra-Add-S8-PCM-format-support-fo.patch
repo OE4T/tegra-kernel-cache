@@ -22,7 +22,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 APS-Inflight: svcenomis <svcenomis@nvidia.com>
 
 diff --git a/sound/soc/tegra/tegra210_mvc.c b/sound/soc/tegra/tegra210_mvc.c
-index 5b2aad0220aa4..e797dce60e54a 100644
+index 5b2aad0220aa..e797dce60e54 100644
 --- a/sound/soc/tegra/tegra210_mvc.c
 +++ b/sound/soc/tegra/tegra210_mvc.c
 @@ -1,5 +1,5 @@

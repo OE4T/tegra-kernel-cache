@@ -19,7 +19,7 @@ Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
 Tested-by: Prathamesh Shete <pshete@nvidia.com>
 
 diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra186.c
-index 579d058da220c..99930a0848657 100644
+index 579d058da220..99930a084865 100644
 --- a/drivers/memory/tegra/tegra186.c
 +++ b/drivers/memory/tegra/tegra186.c
 @@ -134,6 +134,11 @@ static int tegra186_mc_probe_device(struct tegra_mc *mc, struct device *dev)

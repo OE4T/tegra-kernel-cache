@@ -24,7 +24,7 @@ Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
 (cherry picked from commit c9314b533e3c6729e3add69faaf3a781d10c1c7e)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index fbd5c1cb075f4..371f4ea4c58b2 100644
+index fbd5c1cb075f..371f4ea4c58b 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -939,17 +939,6 @@ int tegra_hv_ivc_read_user(struct tegra_hv_ivc_cookie *ivck, void __user *buf, i
@@ -46,7 +46,7 @@ index fbd5c1cb075f4..371f4ea4c58b2 100644
  {
  	struct hv_ivc *ivc = cookie_to_ivc_dev(ivck);
 diff --git a/include/soc/tegra/virt/hv-ivc.h b/include/soc/tegra/virt/hv-ivc.h
-index 35fdb9876e1fd..fa61b6223449f 100644
+index 35fdb9876e1f..fa61b6223449 100644
 --- a/include/soc/tegra/virt/hv-ivc.h
 +++ b/include/soc/tegra/virt/hv-ivc.h
 @@ -9,301 +9,686 @@
@@ -925,7 +925,7 @@ index 35fdb9876e1fd..fa61b6223449f 100644
 +
  #endif /* __TEGRA_HV_IVC_H */
 diff --git a/include/soc/tegra/virt/syscalls.h b/include/soc/tegra/virt/syscalls.h
-index 03f97c46976ae..0497f749d4a9e 100644
+index 03f97c46976a..0497f749d4a9 100644
 --- a/include/soc/tegra/virt/syscalls.h
 +++ b/include/soc/tegra/virt/syscalls.h
 @@ -8,34 +8,84 @@
@@ -1969,7 +1969,7 @@ index 03f97c46976ae..0497f749d4a9e 100644
 +
  #endif /* __TEGRA_SYSCALLS_H__ */
 diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
-index 00c4fcb0e5db0..b23dfae84a63c 100644
+index 00c4fcb0e5db..b23dfae84a63 100644
 --- a/include/soc/tegra/virt/tegra_hv.h
 +++ b/include/soc/tegra/virt/tegra_hv.h
 @@ -6,10 +6,17 @@
@@ -2047,7 +2047,7 @@ index 00c4fcb0e5db0..b23dfae84a63c 100644
 +
  #endif /* __TEGRA_HV_H__ */
 diff --git a/include/soc/tegra/virt/tegra_hv_sysmgr.h b/include/soc/tegra/virt/tegra_hv_sysmgr.h
-index d8ac0cc255521..8d15bc3e2e913 100644
+index d8ac0cc25552..8d15bc3e2e91 100644
 --- a/include/soc/tegra/virt/tegra_hv_sysmgr.h
 +++ b/include/soc/tegra/virt/tegra_hv_sysmgr.h
 @@ -8,129 +8,207 @@

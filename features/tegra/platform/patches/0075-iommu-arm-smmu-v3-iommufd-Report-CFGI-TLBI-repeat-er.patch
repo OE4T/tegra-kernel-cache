@@ -1,0 +1,115 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ashish Mhetre <amhetre@nvidia.com>
+Date: Sun, 26 Jul 2026 08:19:03 +0000
+Subject: [PATCH 075/220] iommu/arm-smmu-v3-iommufd: Report CFGI/TLBI-repeat
+ erratum
+
+A guest with access to VCMDQ generates its own invalidation commands
+and must apply any invalidation errata before submitting them. If the
+host also repeats those commands, each affected invalidation is issued
+four times instead of twice.
+
+Add IOMMU_HW_INFO_ARM_SMMUV3_ERRATA_REPEAT_TLBI_CFGI to report the
+CFGI/TLBI-repeat erratum to user space. This allows the VMM to expose
+the erratum to the guest or apply the workaround itself.
+
+Use the raw __arm_smmu_cmdq_issue_cmdlist() helper for user-provided
+invalidations so the host does not apply the workaround a second time.
+Add arm_smmu_erratum_repeat_tlbi_cfgi() to query the static key when
+populating the SMMUv3 hardware information.
+
+Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+index 7cf6de10c320..0c65ff420f57 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+@@ -33,6 +33,9 @@ void *arm_smmu_hw_info(struct device *dev, u32 *length,
+ 	info->iidr = readl_relaxed(master->smmu->base + ARM_SMMU_IIDR);
+ 	info->aidr = readl_relaxed(master->smmu->base + ARM_SMMU_AIDR);
+ 
++	if (arm_smmu_erratum_repeat_tlbi_cfgi())
++		info->flags |= IOMMU_HW_INFO_ARM_SMMUV3_ERRATA_REPEAT_TLBI_CFGI;
++
+ 	*length = sizeof(*info);
+ 	*type = IOMMU_HW_INFO_TYPE_ARM_SMMUV3;
+ 
+@@ -388,8 +391,8 @@ int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
+ 			continue;
+ 
+ 		/* FIXME always uses the main cmdq rather than trying to group by type */
+-		ret = arm_smmu_cmdq_issue_cmdlist(smmu, &smmu->cmdq, &last->cmd,
+-						  cur - last, true);
++		ret = __arm_smmu_cmdq_issue_cmdlist(smmu, &smmu->cmdq, &last->cmd,
++						    cur - last, true);
+ 		if (ret) {
+ 			cur--;
+ 			goto out;
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index b927ca46b299..556c9e878d2b 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -828,11 +828,16 @@ int __arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
+ 	return ret;
+ }
+ 
++bool arm_smmu_erratum_repeat_tlbi_cfgi(void)
++{
++	return static_branch_unlikely(&arm_smmu_erratum_repeat_tlbi_cfgi_key);
++}
++
+ static bool arm_smmu_erratum_cmd_needs_repeating(struct arm_smmu_cmd *cmd)
+ {
+ 	u8 opcode;
+ 
+-	if (!static_branch_unlikely(&arm_smmu_erratum_repeat_tlbi_cfgi_key))
++	if (!arm_smmu_erratum_repeat_tlbi_cfgi())
+ 		return false;
+ 
+ 	opcode = FIELD_GET(CMDQ_0_OP, cmd->data[0]);
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+index e1d4d228d572..9739db5f8a7f 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -1216,6 +1216,7 @@ int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
+ 				struct arm_smmu_cmdq *cmdq,
+ 				struct arm_smmu_cmd *cmds, int n,
+ 				bool sync);
++bool arm_smmu_erratum_repeat_tlbi_cfgi(void);
+ 
+ #ifdef CONFIG_ARM_SMMU_V3_SVA
+ bool arm_smmu_sva_supported(struct arm_smmu_device *smmu);
+diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
+index bdd20666d1eb..4f4480ae7a3f 100644
+--- a/include/uapi/linux/iommufd.h
++++ b/include/uapi/linux/iommufd.h
+@@ -549,11 +549,22 @@ struct iommu_hw_info_vtd {
+ 	__aligned_u64 ecap_reg;
+ };
+ 
++/**
++ * enum iommu_hw_info_arm_smmuv3_flags - Flags for ARM SMMUv3 hw_info
++ * @IOMMU_HW_INFO_ARM_SMMUV3_ERRATA_REPEAT_TLBI_CFGI:
++ *    If set, user space must issue TLBI/CFGI+SYNC commands twice due to
++ *    hardware erratum T264-SMMU-3. See the description at
++ *    arm_smmu_erratum_repeat_tlbi_cfgi_key.
++ */
++enum iommu_hw_info_arm_smmuv3_flags {
++	IOMMU_HW_INFO_ARM_SMMUV3_ERRATA_REPEAT_TLBI_CFGI = 1 << 0,
++};
++
+ /**
+  * struct iommu_hw_info_arm_smmuv3 - ARM SMMUv3 hardware information
+  *                                   (IOMMU_HW_INFO_TYPE_ARM_SMMUV3)
+  *
+- * @flags: Must be set to 0
++ * @flags: Combination of enum iommu_hw_info_arm_smmuv3_flags
+  * @__reserved: Must be 0
+  * @idr: Implemented features for ARM SMMU Non-secure programming interface
+  * @iidr: Information about the implementation and implementer of ARM SMMU,
+-- 
+2.43.0
+

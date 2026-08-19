@@ -35,7 +35,7 @@ Reviewed-by: WK Tsai <wtsai@nvidia.com>
 (cherry picked from commit 16804a0a5b2425e703a7342e8d9bfdde34fb6637)
 
 diff --git a/drivers/phy/tegra/xusb-tegra186.c b/drivers/phy/tegra/xusb-tegra186.c
-index 1b6e6955d942f..6c70c6910c9db 100644
+index 1b6e6955d942..6c70c6910c9d 100644
 --- a/drivers/phy/tegra/xusb-tegra186.c
 +++ b/drivers/phy/tegra/xusb-tegra186.c
 @@ -1004,15 +1004,11 @@ static int tegra186_utmi_phy_power_on(struct phy *phy)

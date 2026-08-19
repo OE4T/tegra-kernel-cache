@@ -19,7 +19,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 
 diff --git a/include/soc/tegra/virt/knvsci_ipc.h b/include/soc/tegra/virt/knvsci_ipc.h
 new file mode 100644
-index 0000000000000..1d22e1b421f24
+index 000000000000..1d22e1b421f2
 --- /dev/null
 +++ b/include/soc/tegra/virt/knvsci_ipc.h
 @@ -0,0 +1,144 @@
@@ -169,7 +169,7 @@ index 0000000000000..1d22e1b421f24
 +#endif /* __KNVSCI_IPC_H */
 diff --git a/include/soc/tegra/virt/tegra_hv_nvscicom.h b/include/soc/tegra/virt/tegra_hv_nvscicom.h
 deleted file mode 100644
-index 71e8ba502edc5..0000000000000
+index 71e8ba502edc..000000000000
 --- a/include/soc/tegra/virt/tegra_hv_nvscicom.h
 +++ /dev/null
 @@ -1,144 +0,0 @@

@@ -26,7 +26,7 @@ Reviewed-by: Pritesh Raithatha <praithatha@nvidia.com>
 (cherry picked from commit 82f92000e9f39443713157dd1f34935e93fff932)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-index f1f8e01a7e914..e852dd5e8be3f 100644
+index f1f8e01a7e91..e852dd5e8be3 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
 @@ -139,6 +139,9 @@ static void arm_smmu_mm_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
@@ -49,7 +49,7 @@ index f1f8e01a7e914..e852dd5e8be3f 100644
  
  static void arm_smmu_mmu_notifier_free(struct mmu_notifier *mn)
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 93ee43b12ba80..c53792ec331a4 100644
+index 93ee43b12ba8..c53792ec331a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -91,6 +91,7 @@ DEFINE_MUTEX(arm_smmu_asid_lock);
@@ -128,7 +128,7 @@ index 93ee43b12ba80..c53792ec331a4 100644
  	dev_dbg(dev, "Disabling\n");
  	arm_smmu_device_disable(smmu);
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 9739db5f8a7f2..e03a05c671cbc 100644
+index 9739db5f8a7f..e03a05c671cb 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -929,6 +929,7 @@ struct arm_smmu_device {

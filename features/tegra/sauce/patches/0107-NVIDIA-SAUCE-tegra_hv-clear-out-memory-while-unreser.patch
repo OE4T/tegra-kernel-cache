@@ -17,7 +17,7 @@ Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
 (cherry picked from commit ec3b32edfa1e6bb85d30734a9cbc7e7863241410)
 
 diff --git a/drivers/firmware/tegra/ivc.c b/drivers/firmware/tegra/ivc.c
-index 8c9aff9804c0d..75e50a7da4a0a 100644
+index 8c9aff9804c0..75e50a7da4a0 100644
 --- a/drivers/firmware/tegra/ivc.c
 +++ b/drivers/firmware/tegra/ivc.c
 @@ -643,6 +643,13 @@ static inline void *iosys_map_get_vaddr(const struct iosys_map *map)
@@ -35,7 +35,7 @@ index 8c9aff9804c0d..75e50a7da4a0a 100644
  		   dma_addr_t rx_phys, const struct iosys_map *tx, dma_addr_t tx_phys,
  		   unsigned int num_frames, size_t frame_size,
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 371f4ea4c58b2..77b5534b357df 100644
+index 371f4ea4c58b..77b5534b357d 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -895,6 +895,7 @@ int tegra_hv_ivc_unreserve(struct tegra_hv_ivc_cookie *ivck)
@@ -47,7 +47,7 @@ index 371f4ea4c58b2..77b5534b357df 100644
  	} else {
  		ret = -EINVAL;
 diff --git a/include/soc/tegra/ivc.h b/include/soc/tegra/ivc.h
-index be45d5f5adeaa..736590774114d 100644
+index be45d5f5adea..736590774114 100644
 --- a/include/soc/tegra/ivc.h
 +++ b/include/soc/tegra/ivc.h
 @@ -29,6 +29,15 @@ struct tegra_ivc {

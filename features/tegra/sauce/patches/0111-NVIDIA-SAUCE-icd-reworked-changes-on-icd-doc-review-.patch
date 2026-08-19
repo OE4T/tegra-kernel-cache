@@ -18,7 +18,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit 08a7fd1f9dc57292e9760105059c10d24914058b)
 
 diff --git a/include/soc/tegra/virt/hv-ivc.h b/include/soc/tegra/virt/hv-ivc.h
-index 09a00501c434d..9f7d09ac3164e 100644
+index 09a00501c434..9f7d09ac3164 100644
 --- a/include/soc/tegra/virt/hv-ivc.h
 +++ b/include/soc/tegra/virt/hv-ivc.h
 @@ -57,15 +57,14 @@ struct tegra_hv_ivm_cookie {
@@ -229,7 +229,7 @@ index 09a00501c434d..9f7d09ac3164e 100644
   *                   - Interrupt handler: Yes
   *                   - Signal handler: N/A
 diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
-index 33086114b3017..d3f8dff1a80e4 100644
+index 33086114b301..d3f8dff1a80e 100644
 --- a/include/soc/tegra/virt/tegra_hv.h
 +++ b/include/soc/tegra/virt/tegra_hv.h
 @@ -42,7 +42,7 @@

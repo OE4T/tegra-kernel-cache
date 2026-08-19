@@ -24,7 +24,7 @@ Reviewed-by: Wayne Chang <waynec@nvidia.com>
 (cherry picked from commit 8c3d561f700689488651995457eac05a18532328)
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index c13697c457d89..17c30e21b3573 100644
+index c13697c457d8..17c30e21b357 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -2,7 +2,7 @@

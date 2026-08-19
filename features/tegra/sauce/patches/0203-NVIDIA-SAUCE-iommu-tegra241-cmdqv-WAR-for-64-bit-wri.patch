@@ -26,7 +26,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit b82c7a458d43cfd984d3f7a336d9f4718b4c87db)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 818aca94de335..ac9bf20e871fa 100644
+index 818aca94de33..ac9bf20e871f 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 @@ -85,8 +85,10 @@

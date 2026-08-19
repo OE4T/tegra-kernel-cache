@@ -20,7 +20,7 @@ Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2872938
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/swphy.c b/drivers/net/phy/swphy.c
-index 59f1ba4d49bc1..6e946285fa0f6 100644
+index 59f1ba4d49bc..6e946285fa0f 100644
 --- a/drivers/net/phy/swphy.c
 +++ b/drivers/net/phy/swphy.c
 @@ -8,6 +8,7 @@

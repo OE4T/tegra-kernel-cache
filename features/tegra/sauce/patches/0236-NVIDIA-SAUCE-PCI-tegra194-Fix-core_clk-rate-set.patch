@@ -17,7 +17,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 2ae4a174492ae5d0f1ade8778551ce10cfdb6696)
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index ec5404a918a42..5ff623b4ba83f 100644
+index ec5404a918a4..5ff623b4ba83 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -458,7 +458,8 @@ static void tegra_pcie_icc_set(struct tegra_pcie_dw *pcie)

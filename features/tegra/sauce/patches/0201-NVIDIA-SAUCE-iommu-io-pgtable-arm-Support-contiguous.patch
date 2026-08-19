@@ -39,7 +39,7 @@ Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
 (cherry picked from commit 1a7168dbd2c6908b5e33768bbd95e1d499256b09)
 
 diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-index 040f5c4672564..e05233eb0cbcc 100644
+index 040f5c467256..e05233eb0cbc 100644
 --- a/drivers/iommu/io-pgtable-arm.c
 +++ b/drivers/iommu/io-pgtable-arm.c
 @@ -78,6 +78,7 @@

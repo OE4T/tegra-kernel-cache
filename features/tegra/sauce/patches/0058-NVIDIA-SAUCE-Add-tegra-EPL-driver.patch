@@ -18,10 +18,10 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 1792c69a7faf0..d28100c441f39 100644
+index bd8af95b6f95..140534d53c02 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -25279,6 +25279,14 @@ M:	Jon Hunter <jonathanh@nvidia.com>
+@@ -25292,6 +25292,14 @@ M:	Jon Hunter <jonathanh@nvidia.com>
  S:	Supported
  F:	drivers/dma/tegra*
  
@@ -37,7 +37,7 @@ index 1792c69a7faf0..d28100c441f39 100644
  M:	Laxman Dewangan <ldewangan@nvidia.com>
  R:	Dmitry Osipenko <digetx@gmail.com>
 diff --git a/drivers/platform/Kconfig b/drivers/platform/Kconfig
-index 960fd6a82450a..eb18091a503ff 100644
+index 960fd6a82450..eb18091a503f 100644
 --- a/drivers/platform/Kconfig
 +++ b/drivers/platform/Kconfig
 @@ -18,3 +18,5 @@ source "drivers/platform/surface/Kconfig"
@@ -47,7 +47,7 @@ index 960fd6a82450a..eb18091a503ff 100644
 +
 +source "drivers/platform/tegra/Kconfig"
 diff --git a/drivers/platform/Makefile b/drivers/platform/Makefile
-index 19ac54648586e..bed2220d32378 100644
+index 19ac54648586..bed2220d3237 100644
 --- a/drivers/platform/Makefile
 +++ b/drivers/platform/Makefile
 @@ -13,3 +13,4 @@ obj-$(CONFIG_CHROME_PLATFORMS)	+= chrome/
@@ -57,7 +57,7 @@ index 19ac54648586e..bed2220d32378 100644
 +obj-$(CONFIG_ARCH_TEGRA)	+= tegra/
 diff --git a/drivers/platform/tegra/Kconfig b/drivers/platform/tegra/Kconfig
 new file mode 100644
-index 0000000000000..d8f93678d183e
+index 000000000000..d8f93678d183
 --- /dev/null
 +++ b/drivers/platform/tegra/Kconfig
 @@ -0,0 +1,30 @@
@@ -93,7 +93,7 @@ index 0000000000000..d8f93678d183e
 +endif # TEGRA_PLATFORM_DEVICES
 diff --git a/drivers/platform/tegra/Makefile b/drivers/platform/tegra/Makefile
 new file mode 100644
-index 0000000000000..d20e795034723
+index 000000000000..d20e79503472
 --- /dev/null
 +++ b/drivers/platform/tegra/Makefile
 @@ -0,0 +1,2 @@
@@ -101,7 +101,7 @@ index 0000000000000..d20e795034723
 +obj-$(CONFIG_TEGRA_EPL) += tegra-epl.o
 diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
 new file mode 100644
-index 0000000000000..e45195cbc3600
+index 000000000000..e45195cbc360
 --- /dev/null
 +++ b/drivers/platform/tegra/tegra-epl.c
 @@ -0,0 +1,392 @@
@@ -499,7 +499,7 @@ index 0000000000000..e45195cbc3600
 +MODULE_LICENSE("GPL v2");
 diff --git a/include/linux/tegra-epl.h b/include/linux/tegra-epl.h
 new file mode 100644
-index 0000000000000..cd0447be1f748
+index 000000000000..cd0447be1f74
 --- /dev/null
 +++ b/include/linux/tegra-epl.h
 @@ -0,0 +1,103 @@
@@ -608,7 +608,7 @@ index 0000000000000..cd0447be1f748
 +#endif /* _TEGRA_EPL_H_ */
 diff --git a/include/uapi/linux/tegra-epl.h b/include/uapi/linux/tegra-epl.h
 new file mode 100644
-index 0000000000000..2418f81aa8d6d
+index 000000000000..2418f81aa8d6
 --- /dev/null
 +++ b/include/uapi/linux/tegra-epl.h
 @@ -0,0 +1,14 @@

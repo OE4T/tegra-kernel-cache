@@ -15,7 +15,7 @@ Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2907303
 
 diff --git a/drivers/platform/tegra/tegra-hsierrrptinj.c b/drivers/platform/tegra/tegra-hsierrrptinj.c
-index 7052e59582478..664e17263496e 100644
+index 7052e5958247..664e17263496 100644
 --- a/drivers/platform/tegra/tegra-hsierrrptinj.c
 +++ b/drivers/platform/tegra/tegra-hsierrrptinj.c
 @@ -1,5 +1,5 @@
@@ -37,7 +37,7 @@ index 7052e59582478..664e17263496e 100644
  /* This directory entry will point to `/sys/kernel/debug/tegra_hsierrrptinj`. */
  static struct dentry *hsierrrptinj_debugfs_root;
 diff --git a/include/linux/tegra-hsierrrptinj.h b/include/linux/tegra-hsierrrptinj.h
-index e8ba5503af2a1..a31bb5abb48a6 100644
+index e8ba5503af2a..a31bb5abb48a 100644
 --- a/include/linux/tegra-hsierrrptinj.h
 +++ b/include/linux/tegra-hsierrrptinj.h
 @@ -1,5 +1,5 @@

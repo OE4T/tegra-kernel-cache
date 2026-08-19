@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Mon, 7 Nov 2022 14:24:59 +0000
+Subject: [PATCH 016/220] NVIDIA: SAUCE: dmaengine: tegra210-adma: Update
+ Virtual support
+
+For RT kernels, request_irq() by default uses threaded IRQs and so for
+RT kernel ensure the flag IRQF_NO_THREAD is used for prevent using
+threaded IRQs for the ADMA controller.
+
+Bug 3735757
+Bug 4122636
+Bug 4183914
+Bug 4406418
+
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Change-Id: I41ec50b7763709edffef0ca805100ab78a9838a8
+
+diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
+index 812f64569e6d..e2ddf24d3744 100644
+--- a/drivers/dma/tegra210-adma.c
++++ b/drivers/dma/tegra210-adma.c
+@@ -774,9 +774,10 @@ static struct dma_async_tx_descriptor *tegra_adma_prep_dma_cyclic(
+ static int tegra_adma_alloc_chan_resources(struct dma_chan *dc)
+ {
+ 	struct tegra_adma_chan *tdc = to_tegra_adma_chan(dc);
+-	int ret;
++	int ret, flags = !tdc->tdma->base_addr ? IRQF_NO_THREAD : 0;
+ 
+-	ret = request_irq(tdc->irq, tegra_adma_isr, 0, dma_chan_name(dc), tdc);
++	ret = request_irq(tdc->irq, tegra_adma_isr, flags, dma_chan_name(dc),
++			  tdc);
+ 	if (ret) {
+ 		dev_err(tdc2dev(tdc), "failed to get interrupt for %s\n",
+ 			dma_chan_name(dc));
+-- 
+2.43.0
+

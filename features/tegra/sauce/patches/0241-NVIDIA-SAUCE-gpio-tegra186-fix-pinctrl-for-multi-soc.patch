@@ -20,7 +20,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I9ccb8766073fd7274262e5c8e0af734d2f6b60a3
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index 87df62fb57b81..a533e356f9478 100644
+index 87df62fb57b8..a533e356f947 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -479,7 +479,7 @@ static int tegra186_gpio_add_pin_ranges(struct gpio_chip *chip)

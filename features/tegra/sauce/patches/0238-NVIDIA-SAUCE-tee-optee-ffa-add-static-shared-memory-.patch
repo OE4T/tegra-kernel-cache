@@ -30,7 +30,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit cf5f46ac81e4458685d055a810d6df68f4301480)
 
 diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
-index bf8390789ecf8..0273274202873 100644
+index bf8390789ecf..027327420287 100644
 --- a/drivers/tee/optee/ffa_abi.c
 +++ b/drivers/tee/optee/ffa_abi.c
 @@ -18,6 +18,23 @@
@@ -342,7 +342,7 @@ index bf8390789ecf8..0273274202873 100644
  		rc = PTR_ERR(pool);
  		goto err_free_optee;
 diff --git a/drivers/tee/optee/optee_ffa.h b/drivers/tee/optee/optee_ffa.h
-index cc257e7956a31..1a46177397ede 100644
+index cc257e7956a3..1a46177397ed 100644
 --- a/drivers/tee/optee/optee_ffa.h
 +++ b/drivers/tee/optee/optee_ffa.h
 @@ -96,6 +96,8 @@
@@ -355,7 +355,7 @@ index cc257e7956a31..1a46177397ede 100644
  #define OPTEE_FFA_EXCHANGE_CAPABILITIES OPTEE_FFA_BLOCKING_CALL(2)
  
 diff --git a/drivers/tee/optee/optee_private.h b/drivers/tee/optee/optee_private.h
-index db9ea673fbca1..0562764d7cfdc 100644
+index db9ea673fbca..0562764d7cfd 100644
 --- a/drivers/tee/optee/optee_private.h
 +++ b/drivers/tee/optee/optee_private.h
 @@ -158,6 +158,12 @@ struct optee_smc {

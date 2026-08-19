@@ -26,7 +26,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 82200af1d93d0c109095a1e1c054f3a92494fa15)
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 7f7251c10e952..739f13d4de6e0 100644
+index 7f7251c10e95..739f13d4de6e 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -2,7 +2,7 @@
