@@ -20,7 +20,7 @@ Tested-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
 (cherry picked from commit fb8a9a8d588206807eab8af3560aafbbd4ff7f75)
 
 diff --git a/drivers/virt/tegra/tegra_hv_ivc.c b/drivers/virt/tegra/tegra_hv_ivc.c
-index b08e2620a5a30..b6155fc48a6f5 100644
+index b08e2620a5a3..b6155fc48a6f 100644
 --- a/drivers/virt/tegra/tegra_hv_ivc.c
 +++ b/drivers/virt/tegra/tegra_hv_ivc.c
 @@ -103,7 +103,6 @@ static int tegra_hv_add_ivc(struct tegra_hv_data *hvd,

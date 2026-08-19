@@ -19,7 +19,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 4fd847e5fc26bf6386537abf11ed797162418cb4)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 6dfe2e7d54cb9..1d3810849189d 100644
+index 6c100f15bd4b..e751c6b6e92c 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
 @@ -559,8 +559,7 @@ static const struct usb_device_id quirks_table[] = {

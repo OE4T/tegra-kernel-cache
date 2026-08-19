@@ -38,7 +38,7 @@ GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
 
 diff --git a/drivers/phy/tegra/phy-tegra194-p2u.c b/drivers/phy/tegra/phy-tegra194-p2u.c
-index 480de32819e8a..5d347774ac3aa 100644
+index 480de32819e8..5d347774ac3a 100644
 --- a/drivers/phy/tegra/phy-tegra194-p2u.c
 +++ b/drivers/phy/tegra/phy-tegra194-p2u.c
 @@ -155,7 +155,7 @@ static int tegra_p2u_power_on(struct phy *x)

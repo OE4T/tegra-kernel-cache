@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Thierry Reding <treding@nvidia.com>
+Date: Mon, 3 Feb 2025 14:55:03 +0100
+Subject: [PATCH 148/220] soc/tegra: pmc: Do not rely on global variable
+
+The reset action for changing the suspend mode back on failure can take
+a context-specific data argument that can be set to the PMC context in
+order to avoid relying on a global variable.
+
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+(cherry picked from commit e1fd5ad68acd3c3a76651c811e1fdb4846237370)
+
+diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
+index 9cfa7c3d5cae..750fe29f4cf5 100644
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -2944,6 +2944,8 @@ static int tegra_pmc_regmap_init(struct tegra_pmc *pmc)
+ 
+ static void tegra_pmc_reset_suspend_mode(void *data)
+ {
++	struct tegra_pmc *pmc = data;
++
+ 	pmc->suspend_mode = TEGRA_SUSPEND_NOT_READY;
+ }
+ 
+@@ -2966,7 +2968,7 @@ static int tegra_pmc_probe(struct platform_device *pdev)
+ 		return err;
+ 
+ 	err = devm_add_action_or_reset(&pdev->dev, tegra_pmc_reset_suspend_mode,
+-				       NULL);
++				       pmc);
+ 	if (err)
+ 		return err;
+ 
+-- 
+2.43.0
+

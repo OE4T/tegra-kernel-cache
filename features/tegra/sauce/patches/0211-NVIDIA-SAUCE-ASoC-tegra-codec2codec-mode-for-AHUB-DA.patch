@@ -20,7 +20,7 @@ Reviewed-by: Sharad Gupta <sharadg@nvidia.com>
 Reviewed-by: Mohan kumar <mkumard@nvidia.com>
 
 diff --git a/include/sound/simple_card_utils.h b/include/sound/simple_card_utils.h
-index 69a9c9c4d0e9c..5646c14f6c79e 100644
+index 69a9c9c4d0e9..5646c14f6c79 100644
 --- a/include/sound/simple_card_utils.h
 +++ b/include/sound/simple_card_utils.h
 @@ -70,6 +70,7 @@ struct simple_util_priv {
@@ -32,7 +32,7 @@ index 69a9c9c4d0e9c..5646c14f6c79e 100644
  	struct gpio_desc *pa_gpio;
  	const struct snd_soc_ops *ops;
 diff --git a/sound/soc/generic/audio-graph-card.c b/sound/soc/generic/audio-graph-card.c
-index a8a3bad3df00d..15d4902734766 100644
+index a8a3bad3df00..15d490273476 100644
 --- a/sound/soc/generic/audio-graph-card.c
 +++ b/sound/soc/generic/audio-graph-card.c
 @@ -297,12 +297,18 @@ static int graph_dai_link_of(struct simple_util_priv *priv,
@@ -56,7 +56,7 @@ index a8a3bad3df00d..15d4902734766 100644
  	simple_util_canonicalize_cpu(cpus, is_single_links);
  	simple_util_canonicalize_platform(platforms, cpus);
 diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
-index 9e5be0eaa77f3..e6ca99941128a 100644
+index 9e5be0eaa77f..e6ca99941128 100644
 --- a/sound/soc/generic/simple-card-utils.c
 +++ b/sound/soc/generic/simple-card-utils.c
 @@ -265,6 +265,9 @@ int simple_util_parse_clk(struct device *dev,
@@ -70,7 +70,7 @@ index 9e5be0eaa77f3..e6ca99941128a 100644
  	 * Parse dai->sysclk come from "clocks = <&xxx>"
  	 * (if system has common clock)
 diff --git a/sound/soc/soc-link.c b/sound/soc/soc-link.c
-index 02fd68f2e7028..8415173c7a0e8 100644
+index 02fd68f2e702..8415173c7a0e 100644
 --- a/sound/soc/soc-link.c
 +++ b/sound/soc/soc-link.c
 @@ -50,6 +50,7 @@ int snd_soc_link_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
@@ -82,7 +82,7 @@ index 02fd68f2e7028..8415173c7a0e8 100644
  int snd_soc_link_startup(struct snd_pcm_substream *substream)
  {
 diff --git a/sound/soc/tegra/tegra186_asrc.c b/sound/soc/tegra/tegra186_asrc.c
-index c0851fe5c45b1..6a482c04c59bc 100644
+index c0851fe5c45b..6a482c04c59b 100644
 --- a/sound/soc/tegra/tegra186_asrc.c
 +++ b/sound/soc/tegra/tegra186_asrc.c
 @@ -927,6 +927,7 @@ static const struct snd_soc_component_driver tegra186_asrc_cmpnt = {
@@ -94,7 +94,7 @@ index c0851fe5c45b1..6a482c04c59bc 100644
  
  static bool tegra186_asrc_wr_reg(struct device *dev, unsigned int reg)
 diff --git a/sound/soc/tegra/tegra186_dspk.c b/sound/soc/tegra/tegra186_dspk.c
-index 08b629cb5c3a6..891bf5af5931b 100644
+index 08b629cb5c3a..891bf5af5931 100644
 --- a/sound/soc/tegra/tegra186_dspk.c
 +++ b/sound/soc/tegra/tegra186_dspk.c
 @@ -450,6 +450,7 @@ static const struct snd_soc_component_driver tegra186_dspk_cmpnt = {
@@ -106,7 +106,7 @@ index 08b629cb5c3a6..891bf5af5931b 100644
  
  static bool tegra186_dspk_wr_reg(struct device *dev, unsigned int reg)
 diff --git a/sound/soc/tegra/tegra210_adx.c b/sound/soc/tegra/tegra210_adx.c
-index bbdd079875229..5f917916b57a2 100644
+index bbdd07987522..5f917916b57a 100644
 --- a/sound/soc/tegra/tegra210_adx.c
 +++ b/sound/soc/tegra/tegra210_adx.c
 @@ -547,6 +547,7 @@ static const struct snd_soc_component_driver tegra210_adx_cmpnt = {
@@ -118,10 +118,10 @@ index bbdd079875229..5f917916b57a2 100644
  
  static bool tegra210_adx_wr_reg(struct device *dev,
 diff --git a/sound/soc/tegra/tegra210_ahub.c b/sound/soc/tegra/tegra210_ahub.c
-index ecea0cbfbb1bc..2d3ad8df60e85 100644
+index 001f8161eea7..dfe498dba61f 100644
 --- a/sound/soc/tegra/tegra210_ahub.c
 +++ b/sound/soc/tegra/tegra210_ahub.c
-@@ -2026,6 +2026,7 @@ static const struct snd_soc_component_driver tegra210_ahub_component = {
+@@ -2028,6 +2028,7 @@ static const struct snd_soc_component_driver tegra210_ahub_component = {
  	.num_dapm_widgets	= ARRAY_SIZE(tegra210_ahub_widgets),
  	.dapm_routes		= tegra210_ahub_routes,
  	.num_dapm_routes	= ARRAY_SIZE(tegra210_ahub_routes),
@@ -129,7 +129,7 @@ index ecea0cbfbb1bc..2d3ad8df60e85 100644
  };
  
  static const struct snd_soc_component_driver tegra186_ahub_component = {
-@@ -2033,6 +2034,7 @@ static const struct snd_soc_component_driver tegra186_ahub_component = {
+@@ -2035,6 +2036,7 @@ static const struct snd_soc_component_driver tegra186_ahub_component = {
  	.num_dapm_widgets = ARRAY_SIZE(tegra186_ahub_widgets),
  	.dapm_routes = tegra186_ahub_routes,
  	.num_dapm_routes = ARRAY_SIZE(tegra186_ahub_routes),
@@ -137,7 +137,7 @@ index ecea0cbfbb1bc..2d3ad8df60e85 100644
  };
  
  static const struct snd_soc_component_driver tegra234_ahub_component = {
-@@ -2040,6 +2042,7 @@ static const struct snd_soc_component_driver tegra234_ahub_component = {
+@@ -2042,6 +2044,7 @@ static const struct snd_soc_component_driver tegra234_ahub_component = {
  	.num_dapm_widgets	= ARRAY_SIZE(tegra234_ahub_widgets),
  	.dapm_routes		= tegra186_ahub_routes,
  	.num_dapm_routes	= ARRAY_SIZE(tegra186_ahub_routes),
@@ -145,7 +145,7 @@ index ecea0cbfbb1bc..2d3ad8df60e85 100644
  };
  
  static const struct snd_soc_component_driver tegra264_ahub_component = {
-@@ -2047,6 +2050,7 @@ static const struct snd_soc_component_driver tegra264_ahub_component = {
+@@ -2049,6 +2052,7 @@ static const struct snd_soc_component_driver tegra264_ahub_component = {
  	.num_dapm_widgets	= ARRAY_SIZE(tegra264_ahub_widgets),
  	.dapm_routes		= tegra264_ahub_routes,
  	.num_dapm_routes	= ARRAY_SIZE(tegra264_ahub_routes),
@@ -154,7 +154,7 @@ index ecea0cbfbb1bc..2d3ad8df60e85 100644
  
  static bool tegra210_ahub_wr_reg(struct device *dev, unsigned int reg)
 diff --git a/sound/soc/tegra/tegra210_amx.c b/sound/soc/tegra/tegra210_amx.c
-index 82d64f868ccf8..c97f7ee2e3606 100644
+index 82d64f868ccf..c97f7ee2e360 100644
 --- a/sound/soc/tegra/tegra210_amx.c
 +++ b/sound/soc/tegra/tegra210_amx.c
 @@ -556,6 +556,7 @@ static const struct snd_soc_component_driver tegra210_amx_cmpnt = {
@@ -166,7 +166,7 @@ index 82d64f868ccf8..c97f7ee2e3606 100644
  
  static bool tegra210_amx_wr_reg(struct device *dev, unsigned int reg)
 diff --git a/sound/soc/tegra/tegra210_dmic.c b/sound/soc/tegra/tegra210_dmic.c
-index 6fd4f05124ea9..9be1e1ac9746e 100644
+index 6fd4f05124ea..9be1e1ac9746 100644
 --- a/sound/soc/tegra/tegra210_dmic.c
 +++ b/sound/soc/tegra/tegra210_dmic.c
 @@ -461,6 +461,7 @@ static const struct snd_soc_component_driver tegra210_dmic_compnt = {
@@ -178,7 +178,7 @@ index 6fd4f05124ea9..9be1e1ac9746e 100644
  
  static bool tegra210_dmic_wr_reg(struct device *dev, unsigned int reg)
 diff --git a/sound/soc/tegra/tegra210_i2s.c b/sound/soc/tegra/tegra210_i2s.c
-index 980e820b523bf..7c5a6e6c89305 100644
+index 980e820b523b..7c5a6e6c8930 100644
 --- a/sound/soc/tegra/tegra210_i2s.c
 +++ b/sound/soc/tegra/tegra210_i2s.c
 @@ -899,15 +899,16 @@ static const struct snd_soc_component_driver tegra210_i2s_cmpnt = {
@@ -201,7 +201,7 @@ index 980e820b523bf..7c5a6e6c89305 100644
  
  static bool tegra210_i2s_wr_reg(struct device *dev, unsigned int reg)
 diff --git a/sound/soc/tegra/tegra210_mixer.c b/sound/soc/tegra/tegra210_mixer.c
-index 12753614aa0fa..83ca0f783e1f3 100644
+index 12753614aa0f..83ca0f783e1f 100644
 --- a/sound/soc/tegra/tegra210_mixer.c
 +++ b/sound/soc/tegra/tegra210_mixer.c
 @@ -833,6 +833,7 @@ static const struct snd_soc_component_driver tegra210_mixer_cmpnt = {
@@ -213,7 +213,7 @@ index 12753614aa0fa..83ca0f783e1f3 100644
  
  static bool tegra210_mixer_wr_reg(struct device *dev,
 diff --git a/sound/soc/tegra/tegra210_mvc.c b/sound/soc/tegra/tegra210_mvc.c
-index c76fdf6e85b56..5b2aad0220aa4 100644
+index c76fdf6e85b5..5b2aad0220aa 100644
 --- a/sound/soc/tegra/tegra210_mvc.c
 +++ b/sound/soc/tegra/tegra210_mvc.c
 @@ -667,6 +667,7 @@ static const struct snd_soc_component_driver tegra210_mvc_cmpnt = {
@@ -225,7 +225,7 @@ index c76fdf6e85b56..5b2aad0220aa4 100644
  
  static bool tegra210_mvc_rd_reg(struct device *dev, unsigned int reg)
 diff --git a/sound/soc/tegra/tegra210_ope.c b/sound/soc/tegra/tegra210_ope.c
-index 59b446b7c773e..a62ad268b9550 100644
+index 59b446b7c773..a62ad268b955 100644
 --- a/sound/soc/tegra/tegra210_ope.c
 +++ b/sound/soc/tegra/tegra210_ope.c
 @@ -259,6 +259,7 @@ static const struct snd_soc_component_driver tegra210_ope_cmpnt = {
@@ -237,7 +237,7 @@ index 59b446b7c773e..a62ad268b9550 100644
  
  static bool tegra210_ope_wr_reg(struct device *dev, unsigned int reg)
 diff --git a/sound/soc/tegra/tegra210_sfc.c b/sound/soc/tegra/tegra210_sfc.c
-index 925e2f3a7637a..c4d42a577074b 100644
+index 925e2f3a7637..c4d42a577074 100644
 --- a/sound/soc/tegra/tegra210_sfc.c
 +++ b/sound/soc/tegra/tegra210_sfc.c
 @@ -3526,6 +3526,7 @@ static const struct snd_soc_component_driver tegra210_sfc_cmpnt = {
@@ -249,7 +249,7 @@ index 925e2f3a7637a..c4d42a577074b 100644
  
  static bool tegra210_sfc_wr_reg(struct device *dev, unsigned int reg)
 diff --git a/sound/soc/tegra/tegra_audio_graph_card.c b/sound/soc/tegra/tegra_audio_graph_card.c
-index b93a61db9ed0b..beca869559887 100644
+index b93a61db9ed0..beca86955988 100644
 --- a/sound/soc/tegra/tegra_audio_graph_card.c
 +++ b/sound/soc/tegra/tegra_audio_graph_card.c
 @@ -6,10 +6,12 @@

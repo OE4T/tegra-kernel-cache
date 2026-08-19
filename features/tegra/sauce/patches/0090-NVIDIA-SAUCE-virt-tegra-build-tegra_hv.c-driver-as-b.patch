@@ -21,7 +21,7 @@ Reviewed-by: Bibek Basu <bbasu@nvidia.com>
 (cherry picked from commit 4b43217a59cbdf9f76dbace03e9a577d4e130688)
 
 diff --git a/drivers/virt/Kconfig b/drivers/virt/Kconfig
-index d8c848cf09a6a..99aed786ce8b1 100644
+index d8c848cf09a6..99aed786ce8b 100644
 --- a/drivers/virt/Kconfig
 +++ b/drivers/virt/Kconfig
 @@ -49,4 +49,6 @@ source "drivers/virt/acrn/Kconfig"
@@ -32,7 +32,7 @@ index d8c848cf09a6a..99aed786ce8b1 100644
 +
  endif
 diff --git a/drivers/virt/Makefile b/drivers/virt/Makefile
-index f29901bd78205..c1fad483bfc1e 100644
+index f29901bd7820..c1fad483bfc1 100644
 --- a/drivers/virt/Makefile
 +++ b/drivers/virt/Makefile
 @@ -10,3 +10,5 @@ obj-y				+= vboxguest/
@@ -43,7 +43,7 @@ index f29901bd78205..c1fad483bfc1e 100644
 +obj-$(CONFIG_TEGRA_HV_DRIVER)   += tegra/
 diff --git a/drivers/virt/tegra/Kconfig b/drivers/virt/tegra/Kconfig
 new file mode 100644
-index 0000000000000..1adf0f951075b
+index 000000000000..1adf0f951075
 --- /dev/null
 +++ b/drivers/virt/tegra/Kconfig
 @@ -0,0 +1,9 @@
@@ -58,7 +58,7 @@ index 0000000000000..1adf0f951075b
 +	  Tegra Hypervisor Driver used for tegra virtualized environment.
 diff --git a/drivers/virt/tegra/Makefile b/drivers/virt/tegra/Makefile
 new file mode 100644
-index 0000000000000..9172577716d1f
+index 000000000000..9172577716d1
 --- /dev/null
 +++ b/drivers/virt/tegra/Makefile
 @@ -0,0 +1,8 @@
@@ -72,7 +72,7 @@ index 0000000000000..9172577716d1f
 +obj-$(CONFIG_TEGRA_HV_DRIVER)          += tegra_hv.o
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
 new file mode 100644
-index 0000000000000..8de28870da846
+index 000000000000..8de28870da84
 --- /dev/null
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -0,0 +1,1022 @@
@@ -1100,7 +1100,7 @@ index 0000000000000..8de28870da846
 +MODULE_LICENSE("GPL v2");
 diff --git a/include/soc/tegra/virt/hv-ivc.h b/include/soc/tegra/virt/hv-ivc.h
 new file mode 100644
-index 0000000000000..6eef871eaa1c6
+index 000000000000..6eef871eaa1c
 --- /dev/null
 +++ b/include/soc/tegra/virt/hv-ivc.h
 @@ -0,0 +1,309 @@
@@ -1415,7 +1415,7 @@ index 0000000000000..6eef871eaa1c6
 +#endif /* __TEGRA_HV_IVC_H */
 diff --git a/include/soc/tegra/virt/syscalls.h b/include/soc/tegra/virt/syscalls.h
 new file mode 100644
-index 0000000000000..8775e904bc5f2
+index 000000000000..8775e904bc5f
 --- /dev/null
 +++ b/include/soc/tegra/virt/syscalls.h
 @@ -0,0 +1,495 @@
@@ -1916,7 +1916,7 @@ index 0000000000000..8775e904bc5f2
 +#endif /* __TEGRA_SYSCALLS_H__ */
 diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
 new file mode 100644
-index 0000000000000..c64db45e90efd
+index 000000000000..c64db45e90ef
 --- /dev/null
 +++ b/include/soc/tegra/virt/tegra_hv.h
 @@ -0,0 +1,18 @@
@@ -1940,7 +1940,7 @@ index 0000000000000..c64db45e90efd
 +#endif /* __TEGRA_HV_H__ */
 diff --git a/include/soc/tegra/virt/tegra_hv_sysmgr.h b/include/soc/tegra/virt/tegra_hv_sysmgr.h
 new file mode 100644
-index 0000000000000..e735b6f172495
+index 000000000000..e735b6f17249
 --- /dev/null
 +++ b/include/soc/tegra/virt/tegra_hv_sysmgr.h
 @@ -0,0 +1,133 @@

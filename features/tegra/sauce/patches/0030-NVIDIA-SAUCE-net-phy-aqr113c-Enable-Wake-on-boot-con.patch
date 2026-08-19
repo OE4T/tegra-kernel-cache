@@ -20,7 +20,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index a69bb0a16638e..3f8d2a614690c 100644
+index a69bb0a16638..3f8d2a614690 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -5,6 +5,7 @@

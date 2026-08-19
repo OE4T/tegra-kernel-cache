@@ -35,7 +35,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
-index fdef1c7352481..cecfc691b8c7c 100644
+index fdef1c735248..cecfc691b8c7 100644
 --- a/drivers/mmc/host/sdhci-tegra.c
 +++ b/drivers/mmc/host/sdhci-tegra.c
 @@ -1,6 +1,6 @@

@@ -22,7 +22,7 @@ Reviewed-by: Sandeep Trasi <strasi@nvidia.com>
 (cherry picked from commit 6c745d30b73145a49a4f39fc45ff83dfc5d46361)
 
 diff --git a/include/soc/tegra/virt/tegra_hv_sysmgr.h b/include/soc/tegra/virt/tegra_hv_sysmgr.h
-index 8d15bc3e2e913..a106b095449f4 100644
+index 8d15bc3e2e91..a106b095449f 100644
 --- a/include/soc/tegra/virt/tegra_hv_sysmgr.h
 +++ b/include/soc/tegra/virt/tegra_hv_sysmgr.h
 @@ -142,7 +142,7 @@ enum system_function_id {

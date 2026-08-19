@@ -19,7 +19,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit b60c30d0dcb61311718fa8a2a7a7f4da235844e1)
 
 diff --git a/include/soc/tegra/virt/syscalls.h b/include/soc/tegra/virt/syscalls.h
-index 8775e904bc5f2..0b337ec2165de 100644
+index 8775e904bc5f..0b337ec2165d 100644
 --- a/include/soc/tegra/virt/syscalls.h
 +++ b/include/soc/tegra/virt/syscalls.h
 @@ -18,11 +18,13 @@

@@ -22,7 +22,7 @@ Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/mmc/core/bus.c b/drivers/mmc/core/bus.c
-index e137f2123fdfc..070d373e0e2ca 100644
+index e137f2123fdf..070d373e0e2c 100644
 --- a/drivers/mmc/core/bus.c
 +++ b/drivers/mmc/core/bus.c
 @@ -134,12 +134,18 @@ static int mmc_bus_probe(struct device *dev)

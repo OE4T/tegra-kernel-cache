@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Wed, 15 Jul 2026 12:10:37 +0100
+Subject: [PATCH 176/220] soc/tegra: pmc: Don't register sys-off handler for
+ multi-socket devices
+
+The kernel does not permit a device to register multiple sys-off
+handlers for non-default priority levels. Hence, for multi-socket Tegra
+devices, registering the sys-off handler in the Tegra PMC driver (which
+uses the low priority level) more than once fails.
+
+The Tegra PMC sys-off handler is supported for all current generations
+of the Tegra SoC, however, it is only used as a low priority handler if
+everything else fails. For example, on Tegra264 the EFI reboot handler
+is called to restart the device. Therefore, for multi-socket devices,
+skip the registering of the sys-off handler to because this is not
+critical.
+
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+
+diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
+index ef1896d567ec..f5759a19b6e5 100644
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -3074,15 +3074,18 @@ static int tegra_pmc_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
+-	err = devm_register_sys_off_handler(&pdev->dev,
+-					    SYS_OFF_MODE_RESTART,
+-					    SYS_OFF_PRIO_LOW,
+-					    tegra_pmc_restart_handler,
+-					    pmc);
+-	if (err) {
+-		dev_err(&pdev->dev, "failed to register sys-off handler: %d\n",
+-			err);
+-		return err;
++	if (dev_to_node(&pdev->dev) == NUMA_NO_NODE) {
++		err = devm_register_sys_off_handler(&pdev->dev,
++						    SYS_OFF_MODE_RESTART,
++						    SYS_OFF_PRIO_LOW,
++						    tegra_pmc_restart_handler,
++						    pmc);
++		if (err) {
++			dev_err(&pdev->dev,
++				"failed to register sys-off handler: %d\n",
++				err);
++			return err;
++		}
+ 	}
+ 
+ 	/*
+-- 
+2.43.0
+

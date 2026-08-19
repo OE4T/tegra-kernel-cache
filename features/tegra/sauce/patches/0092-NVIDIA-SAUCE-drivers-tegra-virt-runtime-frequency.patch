@@ -20,7 +20,7 @@ Reviewed-by: Bibek Basu <bbasu@nvidia.com>
 (cherry picked from commit dffd783fc499a8c95675f82567b0940636ec8166)
 
 diff --git a/include/soc/tegra/virt/syscalls.h b/include/soc/tegra/virt/syscalls.h
-index 0b337ec2165de..bd73c57e85c8a 100644
+index 0b337ec2165d..bd73c57e85c8 100644
 --- a/include/soc/tegra/virt/syscalls.h
 +++ b/include/soc/tegra/virt/syscalls.h
 @@ -525,7 +525,7 @@ static __attribute__((always_inline)) inline void hyp_call44(uint16_t id, uint64

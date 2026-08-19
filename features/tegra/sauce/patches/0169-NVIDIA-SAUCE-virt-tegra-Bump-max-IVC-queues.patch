@@ -23,7 +23,7 @@ Reviewed-by: Matt Aamold <maamold@nvidia.com>
 Tested-by: mobile promotions <svcmobile_promotions@nvidia.com>
 
 diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
-index 6fefb333bf095..27aecb68899ca 100644
+index 6fefb333bf09..27aecb68899c 100644
 --- a/include/soc/tegra/virt/tegra_hv.h
 +++ b/include/soc/tegra/virt/tegra_hv.h
 @@ -23,7 +23,7 @@

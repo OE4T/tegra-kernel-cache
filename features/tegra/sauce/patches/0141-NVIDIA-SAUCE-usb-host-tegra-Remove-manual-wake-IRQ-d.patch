@@ -21,7 +21,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 35c41ccfecc2bee1d8725aad0193bcfdd6fd5a5e)
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index 7434bda687134..c634ee7c6c2c3 100644
+index 7434bda68713..c634ee7c6c2c 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -2206,16 +2206,6 @@ static int tegra_xusb_setup_wakeup(struct platform_device *pdev, struct tegra_xu

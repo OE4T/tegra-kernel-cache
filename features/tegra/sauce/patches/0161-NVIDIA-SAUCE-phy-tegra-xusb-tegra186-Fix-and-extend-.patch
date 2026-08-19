@@ -31,7 +31,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit 1f219c8da2b127952d506fcc3a9e3b420bfe1962)
 
 diff --git a/drivers/phy/tegra/xusb-tegra186.c b/drivers/phy/tegra/xusb-tegra186.c
-index 2f2ad4d7a45d2..1b6e6955d942f 100644
+index 2f2ad4d7a45d..1b6e6955d942 100644
 --- a/drivers/phy/tegra/xusb-tegra186.c
 +++ b/drivers/phy/tegra/xusb-tegra186.c
 @@ -31,6 +31,10 @@

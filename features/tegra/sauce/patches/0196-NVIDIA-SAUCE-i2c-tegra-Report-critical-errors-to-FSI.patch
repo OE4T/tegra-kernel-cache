@@ -19,7 +19,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index fa36558ec5fe6..a6824508a59d6 100644
+index fa36558ec5fe..a6824508a59d 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -28,6 +28,10 @@

@@ -22,7 +22,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 47b4f2a7edf2d3dc4a1adc0d279656e2c436394b)
 
 diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
-index 4dee455d2f58c..7787a99310669 100644
+index 4dee455d2f58..7787a9931066 100644
 --- a/drivers/platform/tegra/tegra-epl.c
 +++ b/drivers/platform/tegra/tegra-epl.c
 @@ -181,14 +181,25 @@ static void tegra_hsp_tx_empty_notify(struct mbox_client *cl,

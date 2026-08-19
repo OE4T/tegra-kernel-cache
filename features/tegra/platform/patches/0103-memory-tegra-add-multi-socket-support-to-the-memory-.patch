@@ -1,0 +1,321 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Sumit Gupta <sumitg@nvidia.com>
+Date: Fri, 26 Jun 2026 18:44:23 +0530
+Subject: [PATCH 103/220] memory: tegra: add multi-socket support to the memory
+ interconnect
+
+Add support for representing each memory-controller instance (one
+per NUMA node / socket) as its own interconnect (ICC) provider,
+with its own MC client nodes, to match the hardware topology on
+multi-socket Tegra SoCs.
+
+Use the NUMA node ID to make client IDs globally unique across
+per-socket providers, since the ICC framework allocates node IDs
+from a single global IDR. Per-socket MC and EMC node names are
+also derived from dev_name() so they match the corresponding
+debugfs subdirectory. On single-socket platforms (NUMA_NO_NODE)
+the existing client IDs and node-name strings are preserved.
+
+Each socket's MC and EMC therefore get their own debugfs
+subdirectory under /sys/kernel/debug/{mc,emc}/. The parent
+directories are created on first probe.
+
+Bandwidth requests from MC clients in a socket are routed to
+that socket's local BPMP.
+
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+
+diff --git a/drivers/memory/tegra/mc.c b/drivers/memory/tegra/mc.c
+index d96c71c780c4..d6321af51d57 100644
+--- a/drivers/memory/tegra/mc.c
++++ b/drivers/memory/tegra/mc.c
+@@ -3,6 +3,7 @@
+  * Copyright (C) 2014-2026 NVIDIA CORPORATION.  All rights reserved.
+  */
+ 
++#include <linux/cleanup.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/dma-mapping.h>
+@@ -10,6 +11,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/of.h>
+ #include <linux/of_platform.h>
+ #include <linux/platform_device.h>
+@@ -22,6 +24,9 @@
+ 
+ #include "mc.h"
+ 
++static DEFINE_MUTEX(tegra_mc_debugfs_root_lock);
++static struct dentry *tegra_mc_debugfs_root;
++
+ static const struct of_device_id tegra_mc_of_match[] = {
+ #ifdef CONFIG_ARCH_TEGRA_2x_SOC
+ 	{ .compatible = "nvidia,tegra20-mc-gart", .data = &tegra20_mc_soc },
+@@ -787,7 +792,7 @@ struct icc_node *tegra_mc_icc_xlate(const struct of_phandle_args *spec, void *da
+ 	struct icc_node *node;
+ 
+ 	list_for_each_entry(node, &mc->provider.nodes, node_list) {
+-		if (node->id == spec->args[0])
++		if (tegra_mc_client_id_from_node(node) == spec->args[0])
+ 			return node;
+ 	}
+ 
+@@ -843,6 +848,7 @@ const struct tegra_mc_icc_ops tegra_mc_icc_ops = {
+  */
+ static int tegra_mc_interconnect_setup(struct tegra_mc *mc)
+ {
++	int node_id = dev_to_node(mc->dev);
+ 	struct icc_node *node;
+ 	unsigned int i;
+ 	int err;
+@@ -863,31 +869,40 @@ static int tegra_mc_interconnect_setup(struct tegra_mc *mc)
+ 	icc_provider_init(&mc->provider);
+ 
+ 	/* create Memory Controller node */
+-	node = icc_node_create(TEGRA_ICC_MC);
++	node = tegra_mc_icc_node_create(node_id, TEGRA_ICC_MC);
+ 	if (IS_ERR(node))
+ 		return PTR_ERR(node);
+ 
+-	node->name = "Memory Controller";
++	if (node_id == NUMA_NO_NODE)
++		node->name = "Memory Controller";
++	else
++		node->name = dev_name(mc->dev);
++
+ 	icc_node_add(node, &mc->provider);
+ 
+ 	/* link Memory Controller to External Memory Controller */
+-	err = icc_link_create(node, TEGRA_ICC_EMC);
++	err = tegra_mc_icc_link_create(node, node_id, TEGRA_ICC_EMC);
+ 	if (err)
+ 		goto remove_nodes;
+ 
+ 	for (i = 0; i < mc->soc->num_clients; i++) {
+ 		/* create MC client node */
+-		node = icc_node_create(mc->soc->clients[i].id);
++		node = tegra_mc_icc_node_create(node_id, mc->soc->clients[i].id);
+ 		if (IS_ERR(node)) {
+ 			err = PTR_ERR(node);
+ 			goto remove_nodes;
+ 		}
+ 
+-		node->name = mc->soc->clients[i].name;
++		if (node_id == NUMA_NO_NODE)
++			node->name = mc->soc->clients[i].name;
++		else
++			node->name = devm_kasprintf(mc->dev, GFP_KERNEL, "%d-%s",
++						    node_id, mc->soc->clients[i].name);
++
+ 		icc_node_add(node, &mc->provider);
+ 
+ 		/* link Memory Client to Memory Controller */
+-		err = icc_link_create(node, TEGRA_ICC_MC);
++		err = tegra_mc_icc_link_create(node, node_id, TEGRA_ICC_MC);
+ 		if (err)
+ 			goto remove_nodes;
+ 
+@@ -966,7 +981,16 @@ static int tegra_mc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(mc->regs))
+ 		return PTR_ERR(mc->regs);
+ 
+-	mc->debugfs.root = debugfs_create_dir("mc", NULL);
++	scoped_guard(mutex, &tegra_mc_debugfs_root_lock) {
++		if (!tegra_mc_debugfs_root)
++			tegra_mc_debugfs_root = debugfs_create_dir("mc", NULL);
++
++		if (dev_to_node(mc->dev) == NUMA_NO_NODE)
++			mc->debugfs.root = tegra_mc_debugfs_root;
++		else
++			mc->debugfs.root = debugfs_create_dir(dev_name(mc->dev),
++							      tegra_mc_debugfs_root);
++	}
+ 
+ 	if (mc->soc->ops && mc->soc->ops->probe) {
+ 		err = mc->soc->ops->probe(mc);
+diff --git a/drivers/memory/tegra/mc.h b/drivers/memory/tegra/mc.h
+index e94d265d7b67..01499292dd5f 100644
+--- a/drivers/memory/tegra/mc.h
++++ b/drivers/memory/tegra/mc.h
+@@ -8,6 +8,7 @@
+ 
+ #include <linux/bits.h>
+ #include <linux/io.h>
++#include <linux/numa.h>
+ #include <linux/types.h>
+ 
+ #include <soc/tegra/mc.h>
+@@ -167,6 +168,42 @@ icc_provider_to_tegra_mc(struct icc_provider *provider)
+ 	return container_of(provider, struct tegra_mc, provider);
+ }
+ 
++/*
++ * Compose a globally-unique ICC node ID. On single-socket
++ * systems (NUMA_NO_NODE), the SoC client ID is returned unchanged.
++ * On multi-socket systems, the NUMA node ID is encoded in the
++ * upper bits of the returned ID.
++ *
++ * The client ID field is sized to keep composed IDs below
++ * ICC_DYN_ID_START (the start of the ICC core's dynamic-ID range).
++ */
++#define TEGRA_MC_CLIENT_ID_BITS	12
++#define TEGRA_MC_CLIENT_ID_MASK	((1U << TEGRA_MC_CLIENT_ID_BITS) - 1)
++
++static inline u32 tegra_mc_get_client_id(int node_id, int id)
++{
++	if (node_id == NUMA_NO_NODE)
++		return id;
++
++	return ((node_id + 1) << TEGRA_MC_CLIENT_ID_BITS) | id;
++}
++
++static inline struct icc_node *tegra_mc_icc_node_create(int node_id, int id)
++{
++	return icc_node_create(tegra_mc_get_client_id(node_id, id));
++}
++
++static inline int tegra_mc_icc_link_create(struct icc_node *node, int node_id, int id)
++{
++	return icc_link_create(node, tegra_mc_get_client_id(node_id, id));
++}
++
++/* Return the SoC client ID encoded in an ICC node ID. */
++static inline u32 tegra_mc_client_id_from_node(const struct icc_node *node)
++{
++	return node->id & TEGRA_MC_CLIENT_ID_MASK;
++}
++
+ static inline u32 mc_ch_readl(const struct tegra_mc *mc, int ch,
+ 			      unsigned long offset)
+ {
+diff --git a/drivers/memory/tegra/tegra186-emc.c b/drivers/memory/tegra/tegra186-emc.c
+index f71265b303b9..e25f485e136e 100644
+--- a/drivers/memory/tegra/tegra186-emc.c
++++ b/drivers/memory/tegra/tegra186-emc.c
+@@ -3,16 +3,22 @@
+  * Copyright (C) 2019-2025 NVIDIA CORPORATION.  All rights reserved.
+  */
+ 
++#include <linux/cleanup.h>
+ #include <linux/clk.h>
+ #include <linux/debugfs.h>
++#include <linux/fs.h>
+ #include <linux/module.h>
+ #include <linux/mod_devicetable.h>
++#include <linux/mutex.h>
+ #include <linux/of_platform.h>
+ #include <linux/platform_device.h>
+ 
+ #include <soc/tegra/bpmp.h>
+ #include "mc.h"
+ 
++static DEFINE_MUTEX(tegra_emc_debugfs_root_lock);
++static struct dentry *tegra_emc_debugfs_root;
++
+ struct tegra186_emc_dvfs {
+ 	unsigned long latency;
+ 	unsigned long rate;
+@@ -207,7 +213,17 @@ static int tegra186_emc_get_emc_dvfs_latency(struct tegra186_emc *emc)
+ 		return err;
+ 	}
+ 
+-	emc->debugfs.root = debugfs_create_dir("emc", NULL);
++	scoped_guard(mutex, &tegra_emc_debugfs_root_lock) {
++		if (!tegra_emc_debugfs_root)
++			tegra_emc_debugfs_root = debugfs_create_dir("emc", NULL);
++
++		if (dev_to_node(emc->dev) == NUMA_NO_NODE)
++			emc->debugfs.root = tegra_emc_debugfs_root;
++		else
++			emc->debugfs.root = debugfs_create_dir(dev_name(emc->dev),
++							       tegra_emc_debugfs_root);
++	}
++
+ 	debugfs_create_file("available_rates", 0444, emc->debugfs.root, emc,
+ 			    &tegra186_emc_debug_available_rates_fops);
+ 	debugfs_create_file("min_rate", 0644, emc->debugfs.root, emc,
+@@ -239,7 +255,7 @@ tegra186_emc_of_icc_xlate(const struct of_phandle_args *spec, void *data)
+ 
+ 	/* External Memory is the only possible ICC route */
+ 	list_for_each_entry(node, &provider->nodes, node_list) {
+-		if (node->id != TEGRA_ICC_EMEM)
++		if (tegra_mc_client_id_from_node(node) != TEGRA_ICC_EMEM)
+ 			continue;
+ 
+ 		return node;
+@@ -258,6 +274,7 @@ static int tegra186_emc_icc_get_init_bw(struct icc_node *node, u32 *avg, u32 *pe
+ 
+ static int tegra186_emc_interconnect_init(struct tegra186_emc *emc)
+ {
++	int node_id = dev_to_node(emc->dev->parent);
+ 	struct icc_node *node;
+ 	int err;
+ 
+@@ -271,26 +288,36 @@ static int tegra186_emc_interconnect_init(struct tegra186_emc *emc)
+ 	icc_provider_init(&emc->provider);
+ 
+ 	/* create External Memory Controller node */
+-	node = icc_node_create(TEGRA_ICC_EMC);
+-	if (IS_ERR(node))
+-		return PTR_ERR(node);
++	node = tegra_mc_icc_node_create(node_id, TEGRA_ICC_EMC);
++	if (IS_ERR(node)) {
++		err = PTR_ERR(node);
++		goto remove_nodes;
++	}
++
++	if (node_id == NUMA_NO_NODE)
++		node->name = "External Memory Controller";
++	else
++		node->name = dev_name(emc->dev);
+ 
+-	node->name = "External Memory Controller";
+ 	icc_node_add(node, &emc->provider);
+ 
+ 	/* link External Memory Controller to External Memory (DRAM) */
+-	err = icc_link_create(node, TEGRA_ICC_EMEM);
++	err = tegra_mc_icc_link_create(node, node_id, TEGRA_ICC_EMEM);
+ 	if (err)
+ 		goto remove_nodes;
+ 
+ 	/* create External Memory node */
+-	node = icc_node_create(TEGRA_ICC_EMEM);
++	node = tegra_mc_icc_node_create(node_id, TEGRA_ICC_EMEM);
+ 	if (IS_ERR(node)) {
+ 		err = PTR_ERR(node);
+ 		goto remove_nodes;
+ 	}
+ 
+-	node->name = "External Memory (DRAM)";
++	if (node_id == NUMA_NO_NODE)
++		node->name = "External Memory (DRAM)";
++	else
++		node->name = devm_kasprintf(emc->dev, GFP_KERNEL, "%d-dram", node_id);
++
+ 	icc_node_add(node, &emc->provider);
+ 
+ 	err = icc_provider_register(&emc->provider);
+@@ -383,6 +410,16 @@ static void tegra186_emc_remove(struct platform_device *pdev)
+ 
+ 	debugfs_remove_recursive(emc->debugfs.root);
+ 
++	scoped_guard(mutex, &tegra_emc_debugfs_root_lock) {
++		if (emc->debugfs.root == tegra_emc_debugfs_root) {
++			tegra_emc_debugfs_root = NULL;
++		} else if (tegra_emc_debugfs_root &&
++			   simple_empty(tegra_emc_debugfs_root)) {
++			debugfs_remove(tegra_emc_debugfs_root);
++			tegra_emc_debugfs_root = NULL;
++		}
++	}
++
+ 	mc->bpmp = NULL;
+ 	tegra_bpmp_put(emc->bpmp);
+ }
+-- 
+2.43.0
+

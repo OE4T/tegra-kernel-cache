@@ -23,7 +23,7 @@ GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia.h b/drivers/net/phy/aquantia/aquantia.h
-index 666755125df6c..2861dc467ae1b 100644
+index 666755125df6..2861dc467ae1 100644
 --- a/drivers/net/phy/aquantia/aquantia.h
 +++ b/drivers/net/phy/aquantia/aquantia.h
 @@ -20,6 +20,7 @@
@@ -35,7 +35,7 @@ index 666755125df6c..2861dc467ae1b 100644
  #define VEND1_GLOBAL_MAILBOX_INTERFACE1			0x0200
  #define VEND1_GLOBAL_MAILBOX_INTERFACE1_EXECUTE		BIT(15)
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 6785862fa2d89..e956d29b6493b 100644
+index 6785862fa2d8..e956d29b6493 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -830,7 +830,9 @@ int aqr_wait_reset_complete(struct phy_device *phydev)

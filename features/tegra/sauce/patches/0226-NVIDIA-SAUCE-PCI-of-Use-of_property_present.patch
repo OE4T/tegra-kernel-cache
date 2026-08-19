@@ -28,7 +28,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 3a955f68fd3c02b814a44823679f1f9807299940)
 
 diff --git a/drivers/pci/of.c b/drivers/pci/of.c
-index 8ecd72fa318cf..568e73c71544e 100644
+index 8ecd72fa318c..568e73c71544 100644
 --- a/drivers/pci/of.c
 +++ b/drivers/pci/of.c
 @@ -652,7 +652,7 @@ int devm_of_pci_bridge_init(struct device *dev, struct pci_host_bridge *bridge)

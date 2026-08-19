@@ -20,7 +20,7 @@ Tested-by: Kartik Rajput <kkartik@nvidia.com>
 Reviewed-by: Kartik Rajput <kkartik@nvidia.com>
 
 diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 9e834f0f8dd09..2e362f0fade1a 100644
+index 9e834f0f8dd0..2e362f0fade1 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
 @@ -1688,6 +1688,7 @@ config XEN

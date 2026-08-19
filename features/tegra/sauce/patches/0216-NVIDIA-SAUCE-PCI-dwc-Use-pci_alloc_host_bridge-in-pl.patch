@@ -77,7 +77,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 48e4a887bb1bb..20778b85afde5 100644
+index 48e4a887bb1b..20778b85afde 100644
 --- a/drivers/pci/controller/dwc/pcie-designware-host.c
 +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
 @@ -575,10 +575,15 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)

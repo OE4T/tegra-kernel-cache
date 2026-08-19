@@ -33,7 +33,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit a7415c43437d37f2732d334cfe90ef2f4c7d7575)
 
 diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
-index 219dbc108f64f..8ccb303ce8098 100644
+index 219dbc108f64..8ccb303ce809 100644
 --- a/drivers/platform/tegra/tegra-epl.c
 +++ b/drivers/platform/tegra/tegra-epl.c
 @@ -25,6 +25,16 @@

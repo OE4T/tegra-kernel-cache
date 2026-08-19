@@ -14,7 +14,7 @@ Change-Id: I750f5a96530167662479d62349b520f665d8bdb7
 (cherry picked from commit 29af4fd969ee53e1e7e3b128be386106172d1b4b)
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 73497ac46a95c..01567a9f2eb93 100644
+index 73497ac46a95..01567a9f2eb9 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -2335,8 +2335,10 @@ static int tegra_xudc_ep0_set_feature(struct tegra_xudc *xudc,

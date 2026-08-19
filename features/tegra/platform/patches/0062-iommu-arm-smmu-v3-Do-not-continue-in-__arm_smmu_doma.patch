@@ -1,0 +1,44 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nicolin Chen <nicolinc@nvidia.com>
+Date: Sat, 21 Mar 2026 15:50:40 -0700
+Subject: [PATCH 062/220] iommu/arm-smmu-v3: Do not continue in
+ __arm_smmu_domain_inv_range()
+
+The loop in the __arm_smmu_domain_inv_range() is a while loop, not a for
+loop. So, using "continue" is wrong that would fail to move the needle.
+
+Meanwhile, though the current command is skipped, the batch still has to
+go through arm_smmu_invs_end_batch() to be issued accordingly.
+
+Thus, use "break" to fix the issue.
+
+Fixes: 587bb3e56a2c ("iommu/arm-smmu-v3: Add arm_smmu_invs based arm_smmu_domain_inv_range()")
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 0840ec1ea697..e755c2569c87 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2689,7 +2689,7 @@ static void __arm_smmu_domain_inv_range(struct arm_smmu_invs *invs,
+ 		case INV_TYPE_S2_VMID_S1_CLEAR:
+ 			/* CMDQ_OP_TLBI_S12_VMALL already flushed S1 entries */
+ 			if (arm_smmu_inv_size_too_big(cur->smmu, size, granule))
+-				continue;
++				break;
+ 			cmd.tlbi.vmid = cur->id;
+ 			arm_smmu_cmdq_batch_add(smmu, &cmds, &cmd);
+ 			break;
+@@ -2705,7 +2705,7 @@ static void __arm_smmu_domain_inv_range(struct arm_smmu_invs *invs,
+ 			break;
+ 		default:
+ 			WARN_ON_ONCE(1);
+-			continue;
++			break;
+ 		}
+ 
+ 		/* Skip any trash entry in-between */
+-- 
+2.43.0
+

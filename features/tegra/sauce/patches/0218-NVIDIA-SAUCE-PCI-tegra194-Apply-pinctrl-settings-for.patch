@@ -16,7 +16,7 @@ Tested-by: Nagarjuna Kristam <nkristam@nvidia.com>
 Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2888820
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index b05301533d3a8..0b4dcd805c6ec 100644
+index b05301533d3a..0b4dcd805c6e 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -1644,12 +1644,6 @@ static int tegra_pcie_config_rp(struct tegra_pcie_dw *pcie)

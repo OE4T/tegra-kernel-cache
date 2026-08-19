@@ -15,7 +15,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index e0314560ebaf5..c0d95fe3dee1c 100644
+index bc25888caf00..c3c119714583 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
 @@ -4693,7 +4693,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
@@ -89,7 +89,7 @@ index e0314560ebaf5..c0d95fe3dee1c 100644
  
  /**
 diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index 17fe07dac6a7e..0da0a0ed68040 100644
+index 17fe07dac6a7..0da0a0ed6804 100644
 --- a/include/ufs/ufshcd.h
 +++ b/include/ufs/ufshcd.h
 @@ -695,6 +695,11 @@ enum ufshcd_quirks {

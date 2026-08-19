@@ -20,7 +20,7 @@ Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
 (cherry picked from commit ef6b748002cca1a86bca1b42508b4147eb022eeb)
 
 diff --git a/drivers/virt/tegra/tegra_hv_ivc.c b/drivers/virt/tegra/tegra_hv_ivc.c
-index ede79e3ad3fe6..96f398b1bd565 100644
+index ede79e3ad3fe..96f398b1bd56 100644
 --- a/drivers/virt/tegra/tegra_hv_ivc.c
 +++ b/drivers/virt/tegra/tegra_hv_ivc.c
 @@ -17,7 +17,7 @@
@@ -34,7 +34,7 @@ index ede79e3ad3fe6..96f398b1bd565 100644
  
 diff --git a/include/soc/tegra/virt/tegra_hv_ivc.h b/include/soc/tegra/virt/tegra_hv_ivc.h
 new file mode 100644
-index 0000000000000..d88650786019f
+index 000000000000..d88650786019
 --- /dev/null
 +++ b/include/soc/tegra/virt/tegra_hv_ivc.h
 @@ -0,0 +1,658 @@

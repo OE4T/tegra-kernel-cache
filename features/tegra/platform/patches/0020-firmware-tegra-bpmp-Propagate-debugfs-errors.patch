@@ -1,0 +1,63 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Fri, 29 May 2026 18:33:36 +0100
+Subject: [PATCH 020/220] firmware: tegra: bpmp: Propagate debugfs errors
+
+The Tegra BPMP debugfs code returns -ENOMEM for most cases where calls
+to debugfs_create_dir() or debugfs_create_file() fail. These debugfs
+functions return an ERR_PTR with the actual error code on failure.
+Therefore, update the Tegra BPMP debugfs code to propagate the actual
+error code on failure.
+
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+(cherry picked from commit 7ba53a3d1c4dae0124b2c141ae551ab9d9d7f1f9)
+
+diff --git a/drivers/firmware/tegra/bpmp-debugfs.c b/drivers/firmware/tegra/bpmp-debugfs.c
+index 4221fed70ad4..29037e2b3158 100644
+--- a/drivers/firmware/tegra/bpmp-debugfs.c
++++ b/drivers/firmware/tegra/bpmp-debugfs.c
+@@ -468,7 +468,7 @@ static int bpmp_populate_debugfs_inband(struct tegra_bpmp *bpmp,
+ 			dentry = debugfs_create_file(name, mode, parent, bpmp,
+ 						     &bpmp_debug_fops);
+ 			if (IS_ERR(dentry)) {
+-				err = -ENOMEM;
++				err = PTR_ERR(dentry);
+ 				goto out;
+ 			}
+ 		}
+@@ -719,7 +719,7 @@ static int bpmp_populate_dir(struct tegra_bpmp *bpmp, struct seqbuf *seqbuf,
+ 		if (t & DEBUGFS_S_ISDIR) {
+ 			dentry = debugfs_create_dir(name, parent);
+ 			if (IS_ERR(dentry))
+-				return -ENOMEM;
++				return PTR_ERR(dentry);
+ 			err = bpmp_populate_dir(bpmp, seqbuf, dentry, depth+1);
+ 			if (err < 0)
+ 				return err;
+@@ -732,7 +732,7 @@ static int bpmp_populate_dir(struct tegra_bpmp *bpmp, struct seqbuf *seqbuf,
+ 						     parent, bpmp,
+ 						     &debugfs_fops);
+ 			if (IS_ERR(dentry))
+-				return -ENOMEM;
++				return PTR_ERR(dentry);
+ 		}
+ 	}
+ 
+@@ -782,11 +782,11 @@ int tegra_bpmp_init_debugfs(struct tegra_bpmp *bpmp)
+ 
+ 	root = debugfs_create_dir("bpmp", NULL);
+ 	if (IS_ERR(root))
+-		return -ENOMEM;
++		return PTR_ERR(root);
+ 
+ 	bpmp->debugfs_mirror = debugfs_create_dir("debug", root);
+ 	if (IS_ERR(bpmp->debugfs_mirror)) {
+-		err = -ENOMEM;
++		err = PTR_ERR(bpmp->debugfs_mirror);
+ 		goto out;
+ 	}
+ 
+-- 
+2.43.0
+

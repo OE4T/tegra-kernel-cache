@@ -27,7 +27,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 19dc13faf9fd9..96788c1c9fe86 100644
+index 19dc13faf9fd..96788c1c9fe8 100644
 --- a/drivers/mtd/spi-nor/core.c
 +++ b/drivers/mtd/spi-nor/core.c
 @@ -2523,6 +2523,35 @@ int spi_nor_post_bfpt_fixups(struct spi_nor *nor,
@@ -67,7 +67,7 @@ index 19dc13faf9fd9..96788c1c9fe86 100644
  			       u32 shared_hwcaps)
  {
 diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
-index e838c40a25897..1efa61eaec23a 100644
+index e838c40a2589..1efa61eaec23 100644
 --- a/drivers/mtd/spi-nor/core.h
 +++ b/drivers/mtd/spi-nor/core.h
 @@ -434,6 +434,7 @@ struct spi_nor_fixups {
@@ -89,7 +89,7 @@ index e838c40a25897..1efa61eaec23a 100644
  void spi_nor_try_unlock_all(struct spi_nor *nor);
  void spi_nor_set_mtd_locking_ops(struct spi_nor *nor);
 diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
-index a0296c8716346..f15abe18fc6c1 100644
+index 3ba7dcc39032..5a9f6483ac4f 100644
 --- a/drivers/mtd/spi-nor/spansion.c
 +++ b/drivers/mtd/spi-nor/spansion.c
 @@ -26,6 +26,7 @@
@@ -108,7 +108,7 @@ index a0296c8716346..f15abe18fc6c1 100644
  #define SPINOR_REG_CYPRESS_CFR3_PGSZ		BIT(4) /* Page size. */
  #define SPINOR_REG_CYPRESS_CFR5			0x6
  #define SPINOR_REG_CYPRESS_CFR5_BIT6		BIT(6)
-@@ -785,8 +787,54 @@ s25fs_s_nor_post_bfpt_fixups(struct spi_nor *nor,
+@@ -787,8 +789,54 @@ s25fs_s_nor_post_bfpt_fixups(struct spi_nor *nor,
  	return 0;
  }
  

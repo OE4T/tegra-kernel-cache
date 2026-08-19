@@ -46,7 +46,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit d886c26b30c34c670f82c01a6e06b97ce5134050)
 
 diff --git a/include/soc/tegra/virt/hv-ivc.h b/include/soc/tegra/virt/hv-ivc.h
-index 9f7d09ac3164e..6f80c80d064b9 100644
+index 9f7d09ac3164..6f80c80d064b 100644
 --- a/include/soc/tegra/virt/hv-ivc.h
 +++ b/include/soc/tegra/virt/hv-ivc.h
 @@ -3,8 +3,8 @@
@@ -67,7 +67,7 @@ index 9f7d09ac3164e..6f80c80d064b9 100644
 -#endif /* __TEGRA_HV_IVC_H */
 +#endif /* TEGRA_HV_IVC_H */
 diff --git a/include/soc/tegra/virt/syscalls.h b/include/soc/tegra/virt/syscalls.h
-index b068712cf13d8..bb92039453059 100644
+index b068712cf13d..bb9203945305 100644
 --- a/include/soc/tegra/virt/syscalls.h
 +++ b/include/soc/tegra/virt/syscalls.h
 @@ -3,8 +3,8 @@
@@ -88,7 +88,7 @@ index b068712cf13d8..bb92039453059 100644
 -#endif /* __TEGRA_SYSCALLS_H__ */
 +#endif /* TEGRA_SYSCALLS_H */
 diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
-index d3f8dff1a80e4..59984d04af3fd 100644
+index d3f8dff1a80e..59984d04af3f 100644
 --- a/include/soc/tegra/virt/tegra_hv.h
 +++ b/include/soc/tegra/virt/tegra_hv.h
 @@ -3,8 +3,8 @@
@@ -109,7 +109,7 @@ index d3f8dff1a80e4..59984d04af3fd 100644
 -#endif /* __TEGRA_HV_H__ */
 +#endif /* TEGRA_HV_H */
 diff --git a/include/soc/tegra/virt/tegra_hv_sysmgr.h b/include/soc/tegra/virt/tegra_hv_sysmgr.h
-index a106b095449f4..4da15df49dd0b 100644
+index a106b095449f..4da15df49dd0 100644
 --- a/include/soc/tegra/virt/tegra_hv_sysmgr.h
 +++ b/include/soc/tegra/virt/tegra_hv_sysmgr.h
 @@ -3,8 +3,8 @@

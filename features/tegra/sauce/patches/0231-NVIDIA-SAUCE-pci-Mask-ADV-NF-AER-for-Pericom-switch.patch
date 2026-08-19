@@ -20,7 +20,7 @@ Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
 (cherry picked from commit dd3ce51ee801d8cb3ff8f397ab07cc248332fc6c)
 
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index fbfeb451e50ab..0be4a1624857e 100644
+index fbfeb451e50a..0be4a1624857 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
 @@ -6420,3 +6420,36 @@ static void quirk_realtek_mask_aer_rcv_err(struct pci_dev *dev)

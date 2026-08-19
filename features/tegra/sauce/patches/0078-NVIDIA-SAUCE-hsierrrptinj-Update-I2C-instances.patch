@@ -18,7 +18,7 @@ Reviewed-by: Akhil R <akhilrajeev@nvidia.com>
 (cherry picked from commit 04d747cd17d902bef580577c4006031e7c6a521b)
 
 diff --git a/drivers/platform/tegra/tegra-hsierrrptinj.c b/drivers/platform/tegra/tegra-hsierrrptinj.c
-index 3249832fea52d..053f687a0b4f8 100644
+index 3249832fea52..053f687a0b4f 100644
 --- a/drivers/platform/tegra/tegra-hsierrrptinj.c
 +++ b/drivers/platform/tegra/tegra-hsierrrptinj.c
 @@ -35,7 +35,7 @@

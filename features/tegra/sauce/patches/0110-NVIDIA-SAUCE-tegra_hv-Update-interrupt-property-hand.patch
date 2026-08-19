@@ -20,7 +20,7 @@ Reviewed-by: Suresh Mangipudi <smangipudi@nvidia.com>
 (cherry picked from commit 68ae606c6b62fb95cbabf494bcd55470b842b724)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 2f38cadb4a7d0..c2ce088cbe964 100644
+index 2f38cadb4a7d..c2ce088cbe96 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -590,7 +590,8 @@ static struct ivc_info_page *validate_ivc_info_page(void __iomem *mapped_mem, si
