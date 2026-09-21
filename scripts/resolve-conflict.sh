@@ -32,9 +32,11 @@ g() { git -C "$WT" "$@"; }
 
 # Which operation is mid-flight, so continue/skip/abort target the right one.
 current_op() {
-    local gd; gd="$(g rev-parse --git-dir)"
+    # --absolute-git-dir: a linked worktree's git-dir lives outside $WT, so a
+    # relative join against $WT would never find the in-progress operation.
+    local gd; gd="$(g rev-parse --absolute-git-dir)"
     if g rev-parse -q --verify CHERRY_PICK_HEAD >/dev/null 2>&1; then echo cherry-pick
-    elif [[ -d "$WT/$gd/rebase-apply" ]]; then echo am
+    elif [[ -d "$gd/rebase-apply" ]]; then echo am
     else echo none; fi
 }
 
