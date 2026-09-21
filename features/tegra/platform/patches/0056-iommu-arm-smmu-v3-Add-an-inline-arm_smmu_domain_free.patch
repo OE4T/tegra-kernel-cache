@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:18 -0700
-Subject: [PATCH 056/220] iommu/arm-smmu-v3: Add an inline
+Subject: [PATCH 056/219] iommu/arm-smmu-v3: Add an inline
  arm_smmu_domain_free()
 
 There will be a bit more things to free than smmu_domain itself. So keep a
@@ -15,10 +15,10 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-index 6097f1f540d8..440ad8cc07de 100644
+index c1eb2ae2023f..006d8159622d 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-@@ -197,7 +197,8 @@ static void arm_smmu_mm_release(struct mmu_notifier *mn, struct mm_struct *mm)
+@@ -208,7 +208,8 @@ static void arm_smmu_mm_release(struct mmu_notifier *mn, struct mm_struct *mm)
  
  static void arm_smmu_mmu_notifier_free(struct mmu_notifier *mn)
  {
@@ -28,7 +28,7 @@ index 6097f1f540d8..440ad8cc07de 100644
  }
  
  static const struct mmu_notifier_ops arm_smmu_mmu_notifier_ops = {
-@@ -365,6 +366,6 @@ struct iommu_domain *arm_smmu_sva_domain_alloc(struct device *dev,
+@@ -379,6 +380,6 @@ struct iommu_domain *arm_smmu_sva_domain_alloc(struct device *dev,
  err_asid:
  	xa_erase(&arm_smmu_asid_xa, smmu_domain->cd.asid);
  err_free:
@@ -37,7 +37,7 @@ index 6097f1f540d8..440ad8cc07de 100644
  	return ERR_PTR(ret);
  }
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 0bfa94da2f66..5e14ed85ac02 100644
+index 3e3c551adf98..3c2e6acadecc 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -2560,7 +2560,7 @@ static void arm_smmu_domain_free_paging(struct iommu_domain *domain)
@@ -59,10 +59,10 @@ index 0bfa94da2f66..5e14ed85ac02 100644
  }
  
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 2e79fd2f56a8..094bcbb1c7b4 100644
+index 026b1145b0bb..03e924a2725c 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -958,6 +958,11 @@ extern struct mutex arm_smmu_asid_lock;
+@@ -962,6 +962,11 @@ extern struct mutex arm_smmu_asid_lock;
  
  struct arm_smmu_domain *arm_smmu_domain_alloc(void);
  

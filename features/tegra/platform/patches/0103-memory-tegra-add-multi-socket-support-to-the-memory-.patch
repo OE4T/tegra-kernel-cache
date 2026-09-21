@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sumit Gupta <sumitg@nvidia.com>
 Date: Fri, 26 Jun 2026 18:44:23 +0530
-Subject: [PATCH 103/220] memory: tegra: add multi-socket support to the memory
+Subject: [PATCH 103/219] memory: tegra: add multi-socket support to the memory
  interconnect
 
 Add support for representing each memory-controller instance (one

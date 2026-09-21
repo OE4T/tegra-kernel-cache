@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Date: Tue, 24 Mar 2026 13:38:54 +0530
-Subject: [PATCH 112/220] PCI: endpoint: Add reserved region type for MSI-X
+Subject: [PATCH 112/219] PCI: endpoint: Add reserved region type for MSI-X
  Table and PBA
 
 Add PCI_EPC_BAR_RSVD_MSIX_TBL_RAM and PCI_EPC_BAR_RSVD_MSIX_PBA_RAM to

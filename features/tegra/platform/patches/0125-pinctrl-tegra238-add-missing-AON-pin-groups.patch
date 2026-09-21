@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Mon, 8 Jun 2026 09:41:22 +0000
-Subject: [PATCH 125/220] pinctrl: tegra238: add missing AON pin groups
+Subject: [PATCH 125/219] pinctrl: tegra238: add missing AON pin groups
 
 Add 24 pin groups on ports EE, FF, GG and HH to the AON pin controller
 group table (tegra238_aon_groups[]). Their pin arrays, drive-group

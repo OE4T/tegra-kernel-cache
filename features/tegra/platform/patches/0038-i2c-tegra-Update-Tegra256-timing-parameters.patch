@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 18 Nov 2025 19:36:17 +0530
-Subject: [PATCH 038/220] i2c: tegra: Update Tegra256 timing parameters
+Subject: [PATCH 038/219] i2c: tegra: Update Tegra256 timing parameters
 
 Update the timing parameters of Tegra256 so that the signals are complaint
 with the I2C specification for SCL low time.

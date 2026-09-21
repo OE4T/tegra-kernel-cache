@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:21 -0700
-Subject: [PATCH 059/220] iommu/arm-smmu-v3: Populate smmu_domain->invs when
+Subject: [PATCH 059/219] iommu/arm-smmu-v3: Populate smmu_domain->invs when
  attaching masters
 
 Update the invs array with the invalidations required by each domain type
@@ -44,7 +44,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index af8d4dbc9585..409b7f914704 100644
+index 73e1e491783a..b57a6fb68f3b 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -3148,6 +3148,121 @@ static void arm_smmu_disable_iopf(struct arm_smmu_master *master,
@@ -370,10 +370,10 @@ index af8d4dbc9585..409b7f914704 100644
  
  	/*
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 23fff9fa796e..834500adc2d9 100644
+index 28a5d72a0fbf..9ab3a8498190 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -1104,6 +1104,21 @@ static inline bool arm_smmu_master_canwbs(struct arm_smmu_master *master)
+@@ -1108,6 +1108,21 @@ static inline bool arm_smmu_master_canwbs(struct arm_smmu_master *master)
  	       IOMMU_FWSPEC_PCI_RC_CANWBS;
  }
  
@@ -395,7 +395,7 @@ index 23fff9fa796e..834500adc2d9 100644
  struct arm_smmu_attach_state {
  	/* Inputs */
  	struct iommu_domain *old_domain;
-@@ -1113,6 +1128,8 @@ struct arm_smmu_attach_state {
+@@ -1117,6 +1132,8 @@ struct arm_smmu_attach_state {
  	ioasid_t ssid;
  	/* Resulting state */
  	struct arm_smmu_vmaster *vmaster;

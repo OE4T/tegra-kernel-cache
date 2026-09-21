@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Mon, 22 Apr 2024 05:49:56 +0000
-Subject: [PATCH 033/220] NVIDIA: SAUCE: gpio: tegra186: Add pinmux support for
+Subject: [PATCH 033/219] NVIDIA: SAUCE: gpio: tegra186: Add pinmux support for
  PCIe
 
 Add dynamic pinmuxing support for PCIe pins. As the GPIO generic DT is

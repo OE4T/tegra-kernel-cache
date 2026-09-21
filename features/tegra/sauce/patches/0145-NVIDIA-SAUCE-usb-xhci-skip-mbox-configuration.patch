@@ -14,7 +14,7 @@ Signed-off-by: Sing-Han Chen <singhanc@nvidia.com>
 Signed-off-by: Bodla Rakesh Babu <rbodla@nvidia.com>
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index 58ed58dfb289..a5ff601e2b40 100644
+index 159afff5056e..171476e12a1e 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -277,6 +277,7 @@ struct tegra_xusb_soc {

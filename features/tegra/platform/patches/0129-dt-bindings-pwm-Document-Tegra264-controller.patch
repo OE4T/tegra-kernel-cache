@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Tue, 31 Mar 2026 11:12:13 +0900
-Subject: [PATCH 129/220] dt-bindings: pwm: Document Tegra264 controller
+Subject: [PATCH 129/219] dt-bindings: pwm: Document Tegra264 controller
 
 Add a new compatible string for the PWM controller found on Tegra264.
 The controller is similar to earlier generations but not compatible

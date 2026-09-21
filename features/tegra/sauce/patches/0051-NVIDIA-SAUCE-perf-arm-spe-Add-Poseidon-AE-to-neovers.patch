@@ -33,7 +33,7 @@ index 139d5e87dc95..9cb44638d41e 100644
  #define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
  #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
 diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
-index 71be979f5077..e6c47831bc72 100644
+index cc99b06e5980..41560acba6d3 100644
 --- a/tools/perf/util/arm-spe.c
 +++ b/tools/perf/util/arm-spe.c
 @@ -579,6 +579,7 @@ static const struct midr_range common_ds_encoding_cpus[] = {

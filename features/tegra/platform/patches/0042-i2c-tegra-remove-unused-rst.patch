@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Guixin Liu <kanie@linux.alibaba.com>
 Date: Wed, 17 Dec 2025 16:16:01 +0800
-Subject: [PATCH 042/220] i2c: tegra: remove unused rst
+Subject: [PATCH 042/219] i2c: tegra: remove unused rst
 
 Since commit 56344e241c54 ("i2c: tegra: Fix reset error handling with
 ACPI") replace reset_control_reset() with device_reset(), the rst

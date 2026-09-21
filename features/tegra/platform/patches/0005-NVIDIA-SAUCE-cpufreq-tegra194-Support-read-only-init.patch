@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sumit Gupta <sumitg@nvidia.com>
 Date: Mon, 14 Apr 2025 16:37:11 +0000
-Subject: [PATCH 005/220] NVIDIA: SAUCE: cpufreq: tegra194: Support read-only
+Subject: [PATCH 005/219] NVIDIA: SAUCE: cpufreq: tegra194: Support read-only
  initialization
 
 If a platform uses system registers for frequency readback, support

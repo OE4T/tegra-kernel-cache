@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vidya Sagar <vidyas@nvidia.com>
 Date: Thu, 8 May 2025 10:49:22 +0530
-Subject: [PATCH 106/220] PCI: dwc: tegra194: Broaden architecture dependency
+Subject: [PATCH 106/219] PCI: dwc: tegra194: Broaden architecture dependency
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

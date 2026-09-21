@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Mon, 18 May 2026 17:10:10 +0530
-Subject: [PATCH 050/220] i2c: tegra: use dmaengine_get_dma_device() for DMA
+Subject: [PATCH 050/219] i2c: tegra: use dmaengine_get_dma_device() for DMA
  buffer allocation
 
 Use dmaengine_get_dma_device() to obtain the correct struct device

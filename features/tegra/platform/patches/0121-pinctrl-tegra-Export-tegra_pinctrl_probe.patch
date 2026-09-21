@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Mon, 27 Apr 2026 13:42:26 +0000
-Subject: [PATCH 121/220] pinctrl: tegra: Export tegra_pinctrl_probe()
+Subject: [PATCH 121/219] pinctrl: tegra: Export tegra_pinctrl_probe()
 
 Export tegra_pinctrl_probe() to allow SoC-specific Tegra pinctrl drivers
 built as modules to use the common probe path.

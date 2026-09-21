@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Koichiro Den <den@valinux.co.jp>
 Date: Thu, 12 Mar 2026 14:02:31 +0100
-Subject: [PATCH 109/220] PCI: endpoint: Describe reserved subregions within
+Subject: [PATCH 109/219] PCI: endpoint: Describe reserved subregions within
  BARs
 
 Some endpoint controllers expose platform-owned, fixed register windows

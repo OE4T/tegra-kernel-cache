@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Fri, 18 Oct 2024 06:14:21 +0000
-Subject: [PATCH 032/220] NVIDIA: SAUCE: gpio: tegra186: Add suspend resume
+Subject: [PATCH 032/219] NVIDIA: SAUCE: gpio: tegra186: Add suspend resume
  support
 
 Squash following 2 commits needed for suspend resume support in GPIO

@@ -1,0 +1,51 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Date: Fri, 31 Oct 2025 09:03:18 +0100
+Subject: [PATCH 190/219] regcache: flat: Remove unneeded check and error
+ message for -ENOMEM
+
+There is a convention in the kernel to avoid error messages
+in the cases of -ENOMEM errors. Besides that, the idea behind
+using struct_size() and other macros from overflow.h is
+to saturate the size that the following allocation call will
+definitely fail, hence the check and the error messaging added
+in regcache_flat_init() are redundant. Remove them.
+
+Acked-by: Sander Vanheule <sander@svanheule.net>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251031080540.3970776-4-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+(cherry picked from commit 27fef3048fe95934f6f2f87341eb33ef6581a075)
+
+diff --git a/drivers/base/regmap/regcache-flat.c b/drivers/base/regmap/regcache-flat.c
+index 3b9235bb8313..bacb7137092f 100644
+--- a/drivers/base/regmap/regcache-flat.c
++++ b/drivers/base/regmap/regcache-flat.c
+@@ -30,7 +30,6 @@ struct regcache_flat_data {
+ static int regcache_flat_init(struct regmap *map)
+ {
+ 	int i;
+-	size_t cache_data_size;
+ 	unsigned int cache_size;
+ 	struct regcache_flat_data *cache;
+ 
+@@ -38,14 +37,7 @@ static int regcache_flat_init(struct regmap *map)
+ 		return -EINVAL;
+ 
+ 	cache_size = regcache_flat_get_index(map, map->max_register) + 1;
+-	cache_data_size = struct_size(cache, data, cache_size);
+-
+-	if (cache_data_size == SIZE_MAX) {
+-		dev_err(map->dev, "cannot allocate regmap cache");
+-		return -ENOMEM;
+-	}
+-
+-	cache = kzalloc(cache_data_size, map->alloc_flags);
++	cache = kzalloc(struct_size(cache, data, cache_size), map->alloc_flags);
+ 	if (!cache)
+ 		return -ENOMEM;
+ 
+-- 
+2.43.0
+

@@ -27,7 +27,7 @@ Tested-by: Bharat Nihalani <bnihalani@nvidia.com>
 (cherry picked from commit 415c7fb8e350ea1d28d8955de03faf174f575d1b)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index c53792ec331a..0cfdb72bd993 100644
+index bcec8775f117..c24cc2db5938 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -2,7 +2,8 @@
@@ -48,7 +48,7 @@ index c53792ec331a..0cfdb72bd993 100644
  #include <linux/pci.h>
  #include <linux/pci-ats.h>
  #include <linux/platform_device.h>
-@@ -5295,6 +5297,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
+@@ -5330,6 +5332,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
  	u32 cells;
  	int ret = -EINVAL;
  

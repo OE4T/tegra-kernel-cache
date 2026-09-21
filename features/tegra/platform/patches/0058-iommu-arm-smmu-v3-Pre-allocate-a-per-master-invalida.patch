@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:20 -0700
-Subject: [PATCH 058/220] iommu/arm-smmu-v3: Pre-allocate a per-master
+Subject: [PATCH 058/219] iommu/arm-smmu-v3: Pre-allocate a per-master
  invalidation array
 
 When a master is attached from an old domain to a new domain, it needs to
@@ -29,7 +29,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 4e1cb62e202d..af8d4dbc9585 100644
+index 347adc1d45ed..73e1e491783a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -3783,12 +3783,22 @@ static int arm_smmu_init_sid_strtab(struct arm_smmu_device *smmu, u32 sid)
@@ -112,10 +112,10 @@ index 4e1cb62e202d..af8d4dbc9585 100644
  
  static struct iommu_device *arm_smmu_probe_device(struct device *dev)
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 8c36c655b1b3..23fff9fa796e 100644
+index ce2665034374..28a5d72a0fbf 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -930,6 +930,14 @@ struct arm_smmu_master {
+@@ -934,6 +934,14 @@ struct arm_smmu_master {
  	struct arm_smmu_device		*smmu;
  	struct device			*dev;
  	struct arm_smmu_stream		*streams;

@@ -26,10 +26,10 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit b82c7a458d43cfd984d3f7a336d9f4718b4c87db)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 818aca94de33..ac9bf20e871f 100644
+index 25c6d4fd94af..ccff60a1b28c 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -85,8 +85,10 @@
+@@ -87,8 +87,10 @@
  #define  VCMDQ_ADDR			GENMASK(47, 5)
  #define  VCMDQ_LOG2SIZE			GENMASK(4, 0)
  
@@ -42,7 +42,7 @@ index 818aca94de33..ac9bf20e871f 100644
  
  /* VINTF logical-VCMDQ pages */
  #define TEGRA241_VINTFi_PAGE0(i)	(TEGRA241_VINTF_PAGE_BASE + SZ_128K*(i))
-@@ -456,8 +458,10 @@ static void tegra241_vcmdq_hw_deinit(struct tegra241_vcmdq *vcmdq)
+@@ -483,8 +485,10 @@ static void tegra241_vcmdq_hw_deinit(struct tegra241_vcmdq *vcmdq)
  
  	writel_relaxed(0, REG_VCMDQ_PAGE0(vcmdq, PROD));
  	writel_relaxed(0, REG_VCMDQ_PAGE0(vcmdq, CONS));
@@ -55,7 +55,7 @@ index 818aca94de33..ac9bf20e871f 100644
  
  	gerrorn = readl_relaxed(REG_VCMDQ_PAGE0(vcmdq, GERRORN));
  	gerror = readl_relaxed(REG_VCMDQ_PAGE0(vcmdq, GERROR));
-@@ -484,7 +488,8 @@ static int tegra241_vcmdq_hw_init(struct tegra241_vcmdq *vcmdq)
+@@ -511,7 +515,8 @@ static int tegra241_vcmdq_hw_init(struct tegra241_vcmdq *vcmdq)
  		vcmdq->cmdq.supports_cmd = tegra241_guest_vcmdq_supports_cmd;
  
  	/* Configure and enable VCMDQ */

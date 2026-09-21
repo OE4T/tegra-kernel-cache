@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:48 -0300
-Subject: [PATCH 072/220] iommu/arm-smmu-v3: Directly encode TLBI commands
+Subject: [PATCH 072/219] iommu/arm-smmu-v3: Directly encode TLBI commands
 
 TLBI is more complicated than all the other commands because the
 invalidation loop builds a template command from the struct
@@ -19,7 +19,7 @@ Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 8d2b2231a6c1..fd0c31c7ac9c 100644
+index fd90d77c21bf..83f132fff56a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -267,53 +267,6 @@ static int queue_remove_raw(struct arm_smmu_queue *q, u64 *ent)
@@ -307,10 +307,10 @@ index 8d2b2231a6c1..fd0c31c7ac9c 100644
  
  /* Should be installed after arm_smmu_install_ste_for_dev() */
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 5b24a318921f..aec23b90d657 100644
+index ac622857b4e5..e88c5d507cad 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -584,6 +584,21 @@ static inline struct arm_smmu_cmd arm_smmu_make_cmd_sync(unsigned int cs,
+@@ -586,6 +586,21 @@ static inline struct arm_smmu_cmd arm_smmu_make_cmd_sync(unsigned int cs,
  	return cmd;
  }
  
@@ -332,7 +332,7 @@ index 5b24a318921f..aec23b90d657 100644
  /* Event queue */
  #define EVTQ_ENT_SZ_SHIFT		5
  #define EVTQ_ENT_DWORDS			((1 << EVTQ_ENT_SZ_SHIFT) >> 3)
-@@ -644,26 +659,6 @@ static inline struct arm_smmu_cmd arm_smmu_make_cmd_sync(unsigned int cs,
+@@ -646,26 +661,6 @@ static inline struct arm_smmu_cmd arm_smmu_make_cmd_sync(unsigned int cs,
  #define MSI_IOVA_BASE			0x8000000
  #define MSI_IOVA_LENGTH			0x100000
  

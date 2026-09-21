@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Pritesh Raithatha <praithatha@nvidia.com>
 Date: Mon, 1 Apr 2024 13:54:08 +0000
-Subject: [PATCH 077/220] NVIDIA: SAUCE: iommu/arm-smmu-v3: add suspend/resume
+Subject: [PATCH 077/219] NVIDIA: SAUCE: iommu/arm-smmu-v3: add suspend/resume
  support
 
 Add suspend/resume support for arm-smmu-v3. Move irq initialization
@@ -19,10 +19,10 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 69677a732a7de255ba8171aa86411a16352f60f2)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 6218da6ec6c9..e530e5bd7fd0 100644
+index abdf29800c2b..e11db606d154 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -4841,12 +4841,6 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
+@@ -4869,12 +4869,6 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
  		}
  	}
  
@@ -35,9 +35,9 @@ index 6218da6ec6c9..e530e5bd7fd0 100644
  	if (is_kdump_kernel())
  		enables &= ~(CR0_EVTQEN | CR0_PRIQEN);
  
-@@ -5484,6 +5478,12 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+@@ -5526,6 +5520,12 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
  	if (ret)
- 		goto err_disable;
+ 		return ret;
  
 +	ret = arm_smmu_setup_irqs(smmu);
 +	if (ret) {
@@ -48,7 +48,7 @@ index 6218da6ec6c9..e530e5bd7fd0 100644
  	/* And we're up. Go go go! */
  	ret = iommu_device_sysfs_add(&smmu->iommu, dev, NULL,
  				     "smmu3.%pa", &ioaddr);
-@@ -5537,10 +5537,24 @@ static void arm_smmu_driver_unregister(struct platform_driver *drv)
+@@ -5571,10 +5571,24 @@ static void arm_smmu_driver_unregister(struct platform_driver *drv)
  	platform_driver_unregister(drv);
  }
  

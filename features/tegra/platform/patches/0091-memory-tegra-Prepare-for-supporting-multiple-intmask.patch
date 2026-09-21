@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ketan Patil <ketanp@nvidia.com>
 Date: Thu, 26 Feb 2026 16:31:14 +0000
-Subject: [PATCH 091/220] memory: tegra: Prepare for supporting multiple
+Subject: [PATCH 091/219] memory: tegra: Prepare for supporting multiple
  intmask registers
 
 Add a new structure for the intmask register e.g. MC_INTMASK_0 and

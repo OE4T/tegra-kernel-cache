@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Date: Thu, 12 Mar 2026 14:02:30 +0100
-Subject: [PATCH 108/220] PCI: endpoint: Allow only_64bit on BAR_RESERVED
+Subject: [PATCH 108/219] PCI: endpoint: Allow only_64bit on BAR_RESERVED
 
 Remove the documentation that forbids setting only_64bit on a BAR of type
 BAR_RESERVED.

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sumit Gupta <sumitg@nvidia.com>
 Date: Wed, 27 May 2026 19:31:25 +0530
-Subject: [PATCH 100/220] memory: tegra186-emc: stop borrowing MC aggregate
+Subject: [PATCH 100/219] memory: tegra186-emc: stop borrowing MC aggregate
  hook for EMC
 
 tegra186_emc_interconnect_init() copies the MC's ICC aggregate hook

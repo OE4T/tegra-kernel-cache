@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mikko Perttunen <mperttunen@nvidia.com>
 Date: Tue, 31 Mar 2026 11:12:17 +0900
-Subject: [PATCH 133/220] pwm: tegra: Parametrize duty and scale field widths
+Subject: [PATCH 133/219] pwm: tegra: Parametrize duty and scale field widths
 
 Tegra264 has wider fields for the duty and scale register fields.
 Parameterize the driver in preparation. The depth value also

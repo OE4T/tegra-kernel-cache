@@ -20,10 +20,10 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 6ea9ac2931cd..fbe1f812463a 100644
+index 6900514e7329..e9589c0353db 100644
 --- a/drivers/spi/spi.c
 +++ b/drivers/spi/spi.c
-@@ -2523,6 +2523,8 @@ static void of_register_spi_devices(struct spi_controller *ctlr)
+@@ -2525,6 +2525,8 @@ static void of_register_spi_devices(struct spi_controller *ctlr)
  	for_each_available_child_of_node(ctlr->dev.of_node, nc) {
  		if (of_node_test_and_set_flag(nc, OF_POPULATED))
  			continue;

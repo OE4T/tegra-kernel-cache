@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Date: Tue, 24 Mar 2026 13:38:56 +0530
-Subject: [PATCH 114/220] PCI: tegra194: Expose BAR2 (MSI-X) and BAR4 (DMA) as
+Subject: [PATCH 114/219] PCI: tegra194: Expose BAR2 (MSI-X) and BAR4 (DMA) as
  64-bit BAR_RESERVED
 
 Tegra Endpoint exposes three 64-bit BARs at indices 0, 2, and 4:

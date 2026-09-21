@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
 Date: Thu, 12 Mar 2026 14:02:33 +0100
-Subject: [PATCH 110/220] PCI: endpoint: Introduce pci_epc_bar_type
+Subject: [PATCH 110/219] PCI: endpoint: Introduce pci_epc_bar_type
  BAR_DISABLED
 
 Add a pci_epc_bar_type BAR_DISABLED to more clearly differentiate from

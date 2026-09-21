@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mikko Perttunen <mperttunen@nvidia.com>
 Date: Tue, 31 Mar 2026 11:12:18 +0900
-Subject: [PATCH 134/220] pwm: tegra: Add support for Tegra264
+Subject: [PATCH 134/219] pwm: tegra: Add support for Tegra264
 
 Tegra264 changes the register layout to accommodate wider fields
 for duty and scale, and adds configurable depth which will be

@@ -18,10 +18,10 @@ Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2914016
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 504600f1e08c..bf28a3d7b1dd 100644
+index 87578e8824d2..eb7bff38f76b 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -4692,8 +4692,6 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
+@@ -4693,8 +4693,6 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
  	 * - PA_HSSERIES
  	 */
  	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_RXGEAR), pwr_mode->gear_rx);
@@ -30,7 +30,7 @@ index 504600f1e08c..bf28a3d7b1dd 100644
  	if (pwr_mode->pwr_rx == FASTAUTO_MODE ||
  			pwr_mode->pwr_rx == FAST_MODE)
  		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_RXTERMINATION), true);
-@@ -4701,8 +4699,6 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
+@@ -4702,8 +4700,6 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
  		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_RXTERMINATION), false);
  
  	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_TXGEAR), pwr_mode->gear_tx);
@@ -39,7 +39,7 @@ index 504600f1e08c..bf28a3d7b1dd 100644
  	if (pwr_mode->pwr_tx == FASTAUTO_MODE ||
  			pwr_mode->pwr_tx == FAST_MODE)
  		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_TXTERMINATION), true);
-@@ -4744,6 +4740,20 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
+@@ -4745,6 +4741,20 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
  	if (ret) {
  		dev_err(hba->dev,
  			"%s: power mode change failed %d\n", __func__, ret);

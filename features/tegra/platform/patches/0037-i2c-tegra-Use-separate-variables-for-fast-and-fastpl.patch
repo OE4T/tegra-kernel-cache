@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 18 Nov 2025 19:36:16 +0530
-Subject: [PATCH 037/220] i2c: tegra: Use separate variables for fast and
+Subject: [PATCH 037/219] i2c: tegra: Use separate variables for fast and
  fastplus
 
 The current implementation uses a single value of THIGH, TLOW and setup

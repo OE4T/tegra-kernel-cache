@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Mon, 18 May 2026 17:10:12 +0530
-Subject: [PATCH 049/220] i2c: tegra: Update Tegra410 I2C timing parameters
+Subject: [PATCH 049/219] i2c: tegra: Update Tegra410 I2C timing parameters
 
 Update Tegra410 I2C timing parameters based on hardware characterization
 results. This adjusts the fast mode and HS mode settings to be compliant

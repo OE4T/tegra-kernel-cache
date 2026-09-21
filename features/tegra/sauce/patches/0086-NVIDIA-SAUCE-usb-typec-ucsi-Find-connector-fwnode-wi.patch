@@ -29,10 +29,10 @@ Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
 Tested-by: Prathamesh Shete <pshete@nvidia.com>
 
 diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index 0d1062191951..3deecda7f88d 100644
+index 2acd48a0a6a2..7b36f82de753 100644
 --- a/drivers/usb/typec/ucsi/ucsi.c
 +++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1712,11 +1712,14 @@ static const struct typec_operations ucsi_ops = {
+@@ -1713,11 +1713,14 @@ static const struct typec_operations ucsi_ops = {
  static struct fwnode_handle *ucsi_find_fwnode(struct ucsi_connector *con)
  {
  	struct fwnode_handle *fwnode;

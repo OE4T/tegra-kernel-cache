@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sumit Gupta <sumitg@nvidia.com>
 Date: Mon, 18 May 2026 18:13:04 +0530
-Subject: [PATCH 098/220] memory: tegra264: Skip clients without bpmp_id or
+Subject: [PATCH 098/219] memory: tegra264: Skip clients without bpmp_id or
  type
 
 Some MC clients are present in tegra264_mc_clients[] only for

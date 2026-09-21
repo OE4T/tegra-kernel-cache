@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Wed, 28 Jan 2026 08:51:12 +0000
-Subject: [PATCH 025/220] dt-bindings: gpio: Add Tegra264 support
+Subject: [PATCH 025/219] dt-bindings: gpio: Add Tegra264 support
 
 Extend the existing Tegra186 GPIO controller device tree bindings with
 support for the GPIO controller found on Tegra264. The number of pins

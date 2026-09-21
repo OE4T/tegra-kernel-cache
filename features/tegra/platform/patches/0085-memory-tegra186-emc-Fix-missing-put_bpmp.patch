@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Thu, 6 Nov 2025 19:05:50 +0000
-Subject: [PATCH 085/220] memory: tegra186-emc: Fix missing put_bpmp
+Subject: [PATCH 085/219] memory: tegra186-emc: Fix missing put_bpmp
 
 Commit a52ddb98a674 ("memory: tegra186-emc: Simplify and handle deferred
 probe with dev_err_probe()") accidently dropped a call to 'put_bpmp' to

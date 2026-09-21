@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:23 -0700
-Subject: [PATCH 061/220] iommu/arm-smmu-v3: Perform per-domain invalidations
+Subject: [PATCH 061/219] iommu/arm-smmu-v3: Perform per-domain invalidations
  using arm_smmu_invs
 
 Replace the old invalidation functions with arm_smmu_domain_inv_range() in
@@ -21,10 +21,10 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-index 440ad8cc07de..f1f8e01a7e91 100644
+index 006d8159622d..4cd60d3c450a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-@@ -122,15 +122,6 @@ void arm_smmu_make_sva_cd(struct arm_smmu_cd *target,
+@@ -133,15 +133,6 @@ void arm_smmu_make_sva_cd(struct arm_smmu_cd *target,
  }
  EXPORT_SYMBOL_IF_KUNIT(arm_smmu_make_sva_cd);
  
@@ -40,7 +40,7 @@ index 440ad8cc07de..f1f8e01a7e91 100644
  static void arm_smmu_mm_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
  						struct mm_struct *mm,
  						unsigned long start,
-@@ -146,21 +137,8 @@ static void arm_smmu_mm_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
+@@ -157,21 +148,8 @@ static void arm_smmu_mm_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
  	 * range. So do a simple translation here by calculating size correctly.
  	 */
  	size = end - start;
@@ -63,7 +63,7 @@ index 440ad8cc07de..f1f8e01a7e91 100644
  }
  
  static void arm_smmu_mm_release(struct mmu_notifier *mn, struct mm_struct *mm)
-@@ -191,8 +169,7 @@ static void arm_smmu_mm_release(struct mmu_notifier *mn, struct mm_struct *mm)
+@@ -202,8 +180,7 @@ static void arm_smmu_mm_release(struct mmu_notifier *mn, struct mm_struct *mm)
  	}
  	spin_unlock_irqrestore(&smmu_domain->devices_lock, flags);
  
@@ -73,7 +73,7 @@ index 440ad8cc07de..f1f8e01a7e91 100644
  }
  
  static void arm_smmu_mmu_notifier_free(struct mmu_notifier *mn)
-@@ -302,7 +279,7 @@ static void arm_smmu_sva_domain_free(struct iommu_domain *domain)
+@@ -316,7 +293,7 @@ static void arm_smmu_sva_domain_free(struct iommu_domain *domain)
  	/*
  	 * Ensure the ASID is empty in the iommu cache before allowing reuse.
  	 */
@@ -83,7 +83,7 @@ index 440ad8cc07de..f1f8e01a7e91 100644
  	/*
  	 * Notice that the arm_smmu_mm_arch_invalidate_secondary_tlbs op can
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index ed46b90ecc18..0840ec1ea697 100644
+index 4638e3dcf23e..b01263796aad 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -1289,16 +1289,6 @@ struct arm_smmu_invs *arm_smmu_invs_purge(struct arm_smmu_invs *invs)
@@ -319,10 +319,10 @@ index ed46b90ecc18..0840ec1ea697 100644
  
  static phys_addr_t
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 0522ea6aaae8..997c266370c3 100644
+index a72bbe87f6ab..c54b95d05a9d 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -1082,13 +1082,6 @@ int arm_smmu_set_pasid(struct arm_smmu_master *master,
+@@ -1086,13 +1086,6 @@ int arm_smmu_set_pasid(struct arm_smmu_master *master,
  		       struct arm_smmu_domain *smmu_domain, ioasid_t pasid,
  		       struct arm_smmu_cd *cd, struct iommu_domain *old);
  

@@ -66,7 +66,7 @@ index dc540e254480..fdef1c735248 100644
  	if (!tegra_host->skip_clk_rst) {
  		clk = devm_clk_get(mmc_dev(host->mmc), NULL);
 diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
-index ea24ae91cb45..2b8feb794fa5 100644
+index a03cee8af961..e3a7855ff6c9 100644
 --- a/drivers/mmc/host/sdhci.h
 +++ b/drivers/mmc/host/sdhci.h
 @@ -732,7 +732,7 @@ struct sdhci_ops {

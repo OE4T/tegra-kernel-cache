@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Suneel Garapati <suneelg@nvidia.com>
 Date: Wed, 8 Apr 2026 21:24:12 +0000
-Subject: [PATCH 035/220] hte: tegra194: Add Tegra264 GTE support
+Subject: [PATCH 035/219] hte: tegra194: Add Tegra264 GTE support
 
 Add AON-GTE mapping and LIC GTE instance support for the Tegra264.
 Move TSC clock parameters from macros to members of SoC data

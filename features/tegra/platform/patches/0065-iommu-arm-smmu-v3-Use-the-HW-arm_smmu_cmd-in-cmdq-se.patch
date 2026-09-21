@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:41 -0300
-Subject: [PATCH 065/220] iommu/arm-smmu-v3: Use the HW arm_smmu_cmd in cmdq
+Subject: [PATCH 065/219] iommu/arm-smmu-v3: Use the HW arm_smmu_cmd in cmdq
  selection functions
 
 Start removing the use of struct arm_smmu_cmdq_ent, starting at the
@@ -19,7 +19,7 @@ Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 9cf0609fd14e..e9aba1b536a8 100644
+index f0247264acd3..9d4ca9ca1705 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -370,12 +370,12 @@ static int arm_smmu_cmdq_build_cmd(u64 *cmd, struct arm_smmu_cmdq_ent *ent)
@@ -126,10 +126,10 @@ index 9cf0609fd14e..e9aba1b536a8 100644
  }
  
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index b649fe90eb3d..455a84b7e091 100644
+index c31c899a9766..15294bb1cf3a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -642,13 +642,13 @@ struct arm_smmu_cmdq {
+@@ -644,13 +644,13 @@ struct arm_smmu_cmdq {
  	atomic_long_t			*valid_map;
  	atomic_t			owner_prod;
  	atomic_t			lock;
@@ -146,7 +146,7 @@ index b649fe90eb3d..455a84b7e091 100644
  }
  
  struct arm_smmu_cmdq_batch {
-@@ -816,7 +816,7 @@ struct arm_smmu_impl_ops {
+@@ -819,7 +819,7 @@ struct arm_smmu_impl_ops {
  	void (*device_remove)(struct arm_smmu_device *smmu);
  	int (*init_structures)(struct arm_smmu_device *smmu);
  	struct arm_smmu_cmdq *(*get_secondary_cmdq)(
@@ -156,10 +156,10 @@ index b649fe90eb3d..455a84b7e091 100644
  	 * An implementation should define its own type other than the default
  	 * IOMMU_HW_INFO_TYPE_ARM_SMMUV3. And it must validate the input @type
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 80713977085a..bbba3918d51d 100644
+index d5af60f92bc0..6ca3eac24a34 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -367,9 +367,9 @@ static irqreturn_t tegra241_cmdqv_isr(int irq, void *devid)
+@@ -394,9 +394,9 @@ static irqreturn_t tegra241_cmdqv_isr(int irq, void *devid)
  
  /* Command Queue Function */
  
@@ -171,7 +171,7 @@ index 80713977085a..bbba3918d51d 100644
  	case CMDQ_OP_TLBI_NH_ASID:
  	case CMDQ_OP_TLBI_NH_VA:
  	case CMDQ_OP_ATC_INV:
-@@ -381,7 +381,7 @@ static bool tegra241_guest_vcmdq_supports_cmd(struct arm_smmu_cmdq_ent *ent)
+@@ -408,7 +408,7 @@ static bool tegra241_guest_vcmdq_supports_cmd(struct arm_smmu_cmdq_ent *ent)
  
  static struct arm_smmu_cmdq *
  tegra241_cmdqv_get_cmdq(struct arm_smmu_device *smmu,
@@ -180,7 +180,7 @@ index 80713977085a..bbba3918d51d 100644
  {
  	struct tegra241_cmdqv *cmdqv =
  		container_of(smmu, struct tegra241_cmdqv, smmu);
-@@ -409,7 +409,7 @@ tegra241_cmdqv_get_cmdq(struct arm_smmu_device *smmu,
+@@ -436,7 +436,7 @@ tegra241_cmdqv_get_cmdq(struct arm_smmu_device *smmu,
  		return NULL;
  
  	/* Unsupported CMD goes for smmu->cmdq pathway */

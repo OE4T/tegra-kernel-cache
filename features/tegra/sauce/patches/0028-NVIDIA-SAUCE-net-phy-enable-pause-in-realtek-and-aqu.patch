@@ -49,7 +49,7 @@ index 6b7009e6d4ff..d71758eb67e6 100644
  	if (phydev->interface != PHY_INTERFACE_MODE_SGMII &&
  	    phydev->interface != PHY_INTERFACE_MODE_1000BASEKX &&
 diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index 05df1a33b0e2..125006892b11 100644
+index ef8c3b23bee8..ef8f365a6ee3 100644
 --- a/drivers/net/phy/realtek/realtek_main.c
 +++ b/drivers/net/phy/realtek/realtek_main.c
 @@ -89,14 +89,6 @@
