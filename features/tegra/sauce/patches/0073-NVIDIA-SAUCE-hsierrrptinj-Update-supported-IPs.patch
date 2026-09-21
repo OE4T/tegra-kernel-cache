@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prasun Kumar <prasunk@nvidia.com>
 Date: Thu, 15 Dec 2022 16:35:46 +0530
-Subject: [PATCH 073/243] NVIDIA: SAUCE: hsierrrptinj: Update supported IPs
+Subject: [PATCH 073/241] NVIDIA: SAUCE: hsierrrptinj: Update supported IPs
 
 Add support to inject errors to error collator from guestOS
 

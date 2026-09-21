@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Mon, 4 Aug 2025 10:37:03 +0530
-Subject: [PATCH 199/243] NVIDIA: SAUCE: i2c: tegra: Register Err Injection
+Subject: [PATCH 199/241] NVIDIA: SAUCE: i2c: tegra: Register Err Injection
  driver based on DT
 
 Register the error injection driver only if there is a reporter

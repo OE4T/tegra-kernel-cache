@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Wed, 21 May 2025 05:03:17 +0000
-Subject: [PATCH 130/243] NVIDIA: SAUCE: pinctrl: tegra: Enhance suspend/resume
+Subject: [PATCH 130/241] NVIDIA: SAUCE: pinctrl: tegra: Enhance suspend/resume
  to save per-pingroup configuration
 
 Previously, the Tegra pinctrl suspend/resume logic saved and restored

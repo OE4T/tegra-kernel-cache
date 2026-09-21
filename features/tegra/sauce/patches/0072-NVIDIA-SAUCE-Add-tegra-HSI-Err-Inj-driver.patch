@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prasun Kumar <prasunk@nvidia.com>
 Date: Mon, 21 Nov 2022 09:12:31 +0000
-Subject: [PATCH 072/243] NVIDIA: SAUCE: Add tegra HSI Err Inj driver
+Subject: [PATCH 072/241] NVIDIA: SAUCE: Add tegra HSI Err Inj driver
 
 Add tegra HSI Err Inj as platform driver.
 The tegra-hsierrrptinj driver provides a

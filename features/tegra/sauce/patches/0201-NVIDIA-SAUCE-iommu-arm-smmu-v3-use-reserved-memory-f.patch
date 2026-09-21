@@ -1,0 +1,63 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Pritesh Raithatha <praithatha@nvidia.com>
+Date: Thu, 17 Apr 2025 03:04:36 -0700
+Subject: [PATCH 201/241] NVIDIA: SAUCE: iommu/arm-smmu-v3: use reserved memory
+ for allocations
+
+CMA allocations are reusable. When not allocated, it can be used
+for temporary allocations. When there is allocation request,
+temporary allocations will be reclaimed and that takes time.
+
+SMMU uses CMA allocations and causing boot time increase. To avoid
+this, add reserved memory pool and use for SMMU allocations instead
+of CMA.
+
+With reserved memory 1MB allocation time is reduced from 17999343ns
+to 166037ns.
+
+Bug 5115195
+
+Change-Id: I34febac4235da68027908969b9348cbfd2feffc4
+Signed-off-by: Pritesh Raithatha <praithatha@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3446227
+Reviewed-by: svcacv <svcacv@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Bharat Nihalani <bnihalani@nvidia.com>
+Tested-by: Bharat Nihalani <bnihalani@nvidia.com>
+(cherry picked from commit 415c7fb8e350ea1d28d8955de03faf174f575d1b)
+
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index a9e235e7ab05..f83a57a38ab5 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2,7 +2,8 @@
+ /*
+  * IOMMU API for ARM architected SMMUv3 implementations.
+  *
+- * Copyright (C) 2015 ARM Limited
++ * SPDX-FileCopyrightText: Copyright (C) 2015 ARM Limited
++ * SPDX-FileCopyrightText: Copyright (c) 2023-2025, NVIDIA CORPORATION. All rights reserved.
+  *
+  * Author: Will Deacon <will.deacon@arm.com>
+  *
+@@ -24,6 +25,7 @@
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+ #include <linux/of_platform.h>
++#include <linux/of_reserved_mem.h>
+ #include <linux/pci.h>
+ #include <linux/pci-ats.h>
+ #include <linux/platform_device.h>
+@@ -5313,6 +5315,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
+ 	u32 cells;
+ 	int ret = -EINVAL;
+ 
++	if (!of_reserved_mem_device_init(dev))
++		dev_info(dev, "using device-specific reserved memory\n");
++
+ 	if (of_property_read_u32(dev->of_node, "#iommu-cells", &cells))
+ 		dev_err(dev, "missing #iommu-cells property\n");
+ 	else if (cells != 1)
+-- 
+2.43.0
+

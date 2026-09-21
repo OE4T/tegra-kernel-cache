@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Daniel Jurgens <danielj@nvidia.com>
 Date: Sat, 10 Jan 2026 04:11:49 +0000
-Subject: [PATCH 118/243] NVIDIA: SAUCE: tegra_hv_ivc: Add API to reserve an
+Subject: [PATCH 118/241] NVIDIA: SAUCE: tegra_hv_ivc: Add API to reserve an
  IVC queue
 
 There is a new driver to handle nvscicom queues. In order to prevent

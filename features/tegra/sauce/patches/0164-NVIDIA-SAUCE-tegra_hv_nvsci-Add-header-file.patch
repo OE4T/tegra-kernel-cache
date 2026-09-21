@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Daniel Jurgens <danielj@nvidia.com>
 Date: Sat, 10 Jan 2026 04:12:36 +0000
-Subject: [PATCH 164/243] NVIDIA: SAUCE: tegra_hv_nvsci: Add header file
+Subject: [PATCH 164/241] NVIDIA: SAUCE: tegra_hv_nvsci: Add header file
 
 Add the header file for the tegra_hv_nvsci driver.
 

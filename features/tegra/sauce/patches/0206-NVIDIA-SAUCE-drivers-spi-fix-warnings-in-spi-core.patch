@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Vishwaroop A <va@nvidia.com>
+Date: Wed, 13 Dec 2023 09:13:37 +0000
+Subject: [PATCH 206/241] NVIDIA: SAUCE: drivers: spi: fix warnings in spi
+ core.
+
+Fix the below listed warnings in SPI core framework
+by adding check for prod.
+
+>>spi_master spi0: cannot find modalias for
+/bus@0/spi@3210000/prod-settings
+
+Bug 4346767
+
+Signed-off-by: Vishwaroop A <va@nvidia.com>
+Change-Id: Iffb7baa5cb8815e3d77b7a87fd6e07d40358569b
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3033724
+Tested-by: Laxman Dewangan <ldewangan@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
+
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 6900514e7329..e9589c0353db 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2525,6 +2525,8 @@ static void of_register_spi_devices(struct spi_controller *ctlr)
+ 	for_each_available_child_of_node(ctlr->dev.of_node, nc) {
+ 		if (of_node_test_and_set_flag(nc, OF_POPULATED))
+ 			continue;
++		if (!strcmp(nc->name, "prod-settings"))
++			continue;
+ 		spi = of_register_spi_device(ctlr, nc);
+ 		if (IS_ERR(spi)) {
+ 			dev_warn(&ctlr->dev,
+-- 
+2.43.0
+

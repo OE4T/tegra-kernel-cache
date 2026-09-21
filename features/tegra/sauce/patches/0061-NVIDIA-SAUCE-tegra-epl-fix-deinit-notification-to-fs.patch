@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Praveen James <pjames@nvidia.com>
 Date: Sat, 29 Apr 2023 03:52:44 +0000
-Subject: [PATCH 061/243] NVIDIA: SAUCE: tegra-epl: fix deinit notification to
+Subject: [PATCH 061/241] NVIDIA: SAUCE: tegra-epl: fix deinit notification to
  fsi driver
 
 fix for sc7 failure with FSI disabled build

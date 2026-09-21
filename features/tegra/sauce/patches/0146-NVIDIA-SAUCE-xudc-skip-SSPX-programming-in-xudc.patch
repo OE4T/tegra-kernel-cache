@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sing-Han Chen <singhanc@nvidia.com>
 Date: Thu, 20 Jun 2024 10:07:53 +0000
-Subject: [PATCH 146/243] NVIDIA: SAUCE: xudc: skip SSPX programming in xudc
+Subject: [PATCH 146/241] NVIDIA: SAUCE: xudc: skip SSPX programming in xudc
 
 This is a temporary change to skip SSPX programming.
 For poject with different settings, these registers

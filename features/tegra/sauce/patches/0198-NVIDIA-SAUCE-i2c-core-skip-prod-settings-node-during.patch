@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Shardar Shariff Md <smohammed@nvidia.com>
 Date: Fri, 9 Mar 2018 00:49:38 +0530
-Subject: [PATCH 198/243] NVIDIA: SAUCE: i2c: core: skip prod-settings node
+Subject: [PATCH 198/241] NVIDIA: SAUCE: i2c: core: skip prod-settings node
  during i2c device registration
 
 skip prod-settings node during i2c device registration as

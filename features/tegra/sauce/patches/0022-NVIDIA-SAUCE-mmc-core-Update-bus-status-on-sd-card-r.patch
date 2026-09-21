@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Aniruddha Tvs Rao <anrao@nvidia.com>
 Date: Tue, 3 Jul 2018 10:28:40 +0530
-Subject: [PATCH 022/243] NVIDIA: SAUCE: mmc: core: Update bus status on sd
+Subject: [PATCH 022/241] NVIDIA: SAUCE: mmc: core: Update bus status on sd
  card removal
 
 Update card status in mmc_bus_remove on card removal.

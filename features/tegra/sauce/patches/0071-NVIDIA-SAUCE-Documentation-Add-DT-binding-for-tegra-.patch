@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rahul Bedarkar <rabedarkar@nvidia.com>
 Date: Fri, 2 Jan 2026 04:57:52 +0000
-Subject: [PATCH 071/243] NVIDIA: SAUCE:Documentation: Add DT binding for
+Subject: [PATCH 071/241] NVIDIA: SAUCE:Documentation: Add DT binding for
  tegra-epl driver
 
 JIRA FSIS-3376

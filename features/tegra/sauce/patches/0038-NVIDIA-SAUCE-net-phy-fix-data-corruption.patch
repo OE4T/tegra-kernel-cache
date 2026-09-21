@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: David Yu <davyu@nvidia.com>
 Date: Fri, 8 Oct 2021 02:29:25 +0000
-Subject: [PATCH 038/243] NVIDIA: SAUCE: net: phy: fix data corruption
+Subject: [PATCH 038/241] NVIDIA: SAUCE: net: phy: fix data corruption
 
 Data corruption is happening in aqr107_config_init().
 It's accessing address offset across struct phy_device boundary.

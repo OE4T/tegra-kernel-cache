@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Karl Ding <kding@nvidia.com>
 Date: Tue, 3 Feb 2026 21:09:14 +0000
-Subject: [PATCH 169/243] NVIDIA: SAUCE: virt: tegra: Bump max IVC queues
+Subject: [PATCH 169/241] NVIDIA: SAUCE: virt: tegra: Bump max IVC queues
 
 The maximum number of IVC queues was increased in the PCT as part of
 change Icf6930869a2050495c74dadbba502f530675d743 to reserve a range for

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Henry Lin <henryl@nvidia.com>
 Date: Fri, 14 Nov 2025 06:23:49 +0000
-Subject: [PATCH 154/243] NVIDIA: SAUCE: usb: host: xhci: Add ELPG support in
+Subject: [PATCH 154/241] NVIDIA: SAUCE: usb: host: xhci: Add ELPG support in
  virtualization env
 
 In virtualization environment, the padctl interrupt will be owned

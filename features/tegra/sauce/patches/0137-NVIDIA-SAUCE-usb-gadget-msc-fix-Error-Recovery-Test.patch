@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Henry Lin <henryl@nvidia.com>
 Date: Wed, 11 Dec 2019 17:06:53 +0800
-Subject: [PATCH 137/243] NVIDIA: SAUCE: usb: gadget: msc: fix Error Recovery
+Subject: [PATCH 137/241] NVIDIA: SAUCE: usb: gadget: msc: fix Error Recovery
  Test
 
 Also wedge bulk out endpoint while encountering error.

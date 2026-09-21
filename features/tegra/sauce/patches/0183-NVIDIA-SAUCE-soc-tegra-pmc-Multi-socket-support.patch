@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Tue, 17 Feb 2026 15:46:55 +0000
-Subject: [PATCH 183/243] NVIDIA: SAUCE: soc/tegra: pmc: Multi-socket support
+Subject: [PATCH 183/241] NVIDIA: SAUCE: soc/tegra: pmc: Multi-socket support
 
 Add support for multi-socket devices.
 
