@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Eric Funsten <efunsten@nvidia.com>
 Date: Tue, 7 May 2024 16:01:58 +0000
-Subject: [PATCH 050/243] NVIDIA: SAUCE: perf: arm_cspmu: NVIDIA T264 PMU
+Subject: [PATCH 050/241] NVIDIA: SAUCE: perf: arm_cspmu: NVIDIA T264 PMU
  leakage workaround
 
 The NVIDIA Tegra T264 SOC has a HW issue where events captured on a

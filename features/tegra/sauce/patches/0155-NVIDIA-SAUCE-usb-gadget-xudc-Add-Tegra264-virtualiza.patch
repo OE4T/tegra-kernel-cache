@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Henry Lin <henryl@nvidia.com>
 Date: Tue, 11 Nov 2025 07:40:21 +0000
-Subject: [PATCH 155/243] NVIDIA: SAUCE: usb: gadget: xudc: Add Tegra264
+Subject: [PATCH 155/241] NVIDIA: SAUCE: usb: gadget: xudc: Add Tegra264
  virtualization config
 
 Add SOC data for Tegra264 virtualization config.

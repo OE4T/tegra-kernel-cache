@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Wayne Chang <waynec@nvidia.com>
 Date: Mon, 27 Oct 2025 02:37:59 +0000
-Subject: [PATCH 142/243] NVIDIA: SAUCE: usb: xhci: Check PSIM value to
+Subject: [PATCH 142/241] NVIDIA: SAUCE: usb: xhci: Check PSIM value to
  determine USB 3.2 Gen rate
 
 The current implementation assumes all USB 3.2 (xHCI minor_rev == 2)

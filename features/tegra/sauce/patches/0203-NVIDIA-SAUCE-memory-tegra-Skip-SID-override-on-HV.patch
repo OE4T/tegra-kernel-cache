@@ -1,0 +1,39 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ashish Mhetre <amhetre@nvidia.com>
+Date: Fri, 12 May 2023 10:49:26 +0000
+Subject: [PATCH 203/241] NVIDIA: SAUCE: memory: tegra: Skip SID override on HV
+
+HV has blocked access to MC registers.
+SID override programming is required on L4T.
+Add a function to check if HV is present and skip SID override
+programming in that case.
+
+Bug 4062998
+
+Change-Id: I409b4054f03b536de21789059d6874378bf0f7d5
+Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-jammy/+/2902819
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2964961
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
+Tested-by: Prathamesh Shete <pshete@nvidia.com>
+
+diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra186.c
+index 579d058da220..99930a084865 100644
+--- a/drivers/memory/tegra/tegra186.c
++++ b/drivers/memory/tegra/tegra186.c
+@@ -134,6 +134,11 @@ static int tegra186_mc_probe_device(struct tegra_mc *mc, struct device *dev)
+ 	if (!tegra_dev_iommu_get_stream_id(dev, &sid))
+ 		return 0;
+ 
++	if (of_property_present(of_chosen, "nvidia,tegra-hypervisor-mode")) {
++		pr_debug("MC register access not allowed in Guest Linux\n");
++		return 0;
++	}
++
+ 	while (!of_parse_phandle_with_args(dev->of_node, "interconnects", "#interconnect-cells",
+ 					   index, &args)) {
+ 		if (args.np == mc->dev->of_node && args.args_count != 0) {
+-- 
+2.43.0
+

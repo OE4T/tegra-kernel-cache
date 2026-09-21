@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik <kkartik@nvidia.com>
 Date: Wed, 12 Jul 2023 18:20:29 +0000
-Subject: [PATCH 012/243] NVIDIA: SAUCE: mailbox: tegra-hsp: Add support for
+Subject: [PATCH 012/241] NVIDIA: SAUCE: mailbox: tegra-hsp: Add support for
  virtualization
 
 Tegra Hypervisor configures the IE registers before the Guest OS boots.

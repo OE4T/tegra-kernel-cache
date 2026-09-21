@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Narayan Reddy <narayanr@nvidia.com>
 Date: Wed, 13 Apr 2022 07:15:18 +0000
-Subject: [PATCH 031/243] NVIDIA: SAUCE: net: phy: aqr: add phy_mode support
+Subject: [PATCH 031/241] NVIDIA: SAUCE: net: phy: aqr: add phy_mode support
 
 provide phy_mode support in PHY DT.
 read phy_mode from DT and apply the

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Tue, 14 Apr 2026 13:56:38 +0100
-Subject: [PATCH 174/243] NVIDIA: SAUCE: hsierrrptinj: Enable by default for
+Subject: [PATCH 174/241] NVIDIA: SAUCE: hsierrrptinj: Enable by default for
  Tegra
 
 Enable CONFIG_TEGRA_HSIERRRPTINJ by default for Tegra devices to avoid

@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Date: Mon, 23 Feb 2026 11:09:25 +0530
+Subject: [PATCH 231/241] NVIDIA: SAUCE: PCI: tegra194: Disable pex_rst_irq
+ only if suspend is allowed
+
+The pex_rst_irq interrupt is always disabled when entering suspend if in
+endpoint mode. However, if endpoint state is enabled, then suspend is not
+permitted and we will never re-enable the pex_rst_irq interrupt. Fix this
+by only disabling the pex_rst_irq interrupt if we are going to suspend
+the device.
+
+Bug 5921046
+
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Change-Id: Icd580888e6d06656b65bc23d4e769cb1d444953c
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3561579
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+(cherry picked from commit 0b978886ee1e220cd505b2a1c5a196ffb0f6b128)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3582749
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
+APS-Inflight: svcenomis <svcenomis@nvidia.com>
+Tested-by: Prathamesh Shete <pshete@nvidia.com>
+(cherry picked from commit 5c5d7f5605fd989b0fa5cd0b16c0b712a1bf1556)
+
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index bb96b14a3737..23db64b40255 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -2526,6 +2526,16 @@ static int tegra_pcie_dw_suspend_late(struct device *dev)
+ 	struct tegra_pcie_dw *pcie = dev_get_drvdata(dev);
+ 	u32 val;
+ 
++	if (pcie->of_data->mode == DW_PCIE_EP_TYPE) {
++		if (pcie->ep_state == EP_STATE_ENABLED) {
++			dev_err(dev, "Tegra PCIe is in EP mode, suspend not allowed");
++			return -EPERM;
++		}
++
++		disable_irq(pcie->pex_rst_irq);
++		return 0;
++	}
++
+ 	if (!pcie->link_state)
+ 		return 0;
+ 
+-- 
+2.43.0
+

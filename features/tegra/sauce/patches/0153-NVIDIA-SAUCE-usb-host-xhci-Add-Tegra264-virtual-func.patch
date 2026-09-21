@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: EJ Hsu <ejh@nvidia.com>
 Date: Thu, 4 Jul 2024 12:52:30 +0000
-Subject: [PATCH 153/243] NVIDIA: SAUCE: usb: host: xhci: Add Tegra264 virtual
+Subject: [PATCH 153/241] NVIDIA: SAUCE: usb: host: xhci: Add Tegra264 virtual
  function configs
 
 Add SOC data for Tegra264 VFs. XHCI driver use this info to know which

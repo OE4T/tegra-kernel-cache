@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manish Bhardwaj <mbhardwaj@nvidia.com>
 Date: Fri, 12 Sep 2025 08:23:40 +0000
-Subject: [PATCH 105/243] NVIDIA: SAUCE: tegra_hv: doxygen comment fixes in hv
+Subject: [PATCH 105/241] NVIDIA: SAUCE: tegra_hv: doxygen comment fixes in hv
  drivers
 
 - add doxygen comment fixes in hv driver

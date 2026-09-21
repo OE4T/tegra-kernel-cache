@@ -1,0 +1,172 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Vikram Kanigiri <vkanigiri@nvidia.com>
+Date: Mon, 13 Jan 2025 18:59:13 +0530
+Subject: [PATCH 236/241] NVIDIA: SAUCE: pci: Move dw_pcie_ep_linkup to
+ threaded_irq handler
+
+dw_pcie_ep_linkup() may take more time to execute depending on the EPF
+driver implementation. Calling this API in the hard IRQ handler is not
+encouraged since the hard IRQ handlers are supposed to complete quickly.
+
+So move the dw_pcie_ep_linkup() call to threaded IRQ handler.
+
+This change also fixes the possibility of missing the link_up/bme
+event handling in bottom half if interrupt is triggered before the
+bottom half processing.
+
+Bug 5017044
+
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Change-Id: I4b27c309341f3d227d6f60305f75d447aa965d86
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3323707
+(cherry picked from commit 3679121a3a712e4657e0bcbee71d42d474125174)
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3456626
+Reviewed-by: Bibek Basu <bbasu@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: Nagarjuna Kristam <nkristam@nvidia.com>
+(cherry picked from commit 6fcabce96ac8ebd9c01d4618cfde0f617d392115)
+
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 5ff623b4ba83..c1c6c99799c7 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -384,9 +384,9 @@ struct tegra_pcie_dw {
+ 	bool enable_ext_refclk;
+ 	bool is_safety_platform;
+ 
+-	atomic_t report_epl_error;
+-	atomic_t bme_state_change;
+-	atomic_t ep_link_up;
++	long report_epl_error;
++	long bme_state_change;
++	long ep_link_up;
+ 
+ 	u8 init_link_width;
+ 	u32 msi_ctrl_int;
+@@ -511,7 +511,6 @@ static int tegra_pcie_safety_irq_handler(struct tegra_pcie_dw *pcie, u32 status_
+ 	u32 val, status_l1, en_l0;
+ 	int irq_ret = IRQ_HANDLED;
+ 
+-	atomic_set(&pcie->report_epl_error, 0);
+ 	en_l0 = appl_readl(pcie, APPL_INTR_EN_L0_0);
+ 
+ 	/* Consistency Monitor for Configuration Registers(CDM) */
+@@ -552,7 +551,7 @@ static int tegra_pcie_safety_irq_handler(struct tegra_pcie_dw *pcie, u32 status_
+ 			val &= ~APPL_FAULT_EN_L0_CDM_REG_CHK_FAULT_EN;
+ 			appl_writel(pcie, val, APPL_FAULT_EN_L0);
+ 
+-			atomic_set(&pcie->report_epl_error, 1);
++			set_bit(0, &pcie->report_epl_error);
+ 			irq_ret = IRQ_WAKE_THREAD;
+ 		}
+ 	}
+@@ -578,7 +577,7 @@ static int tegra_pcie_safety_irq_handler(struct tegra_pcie_dw *pcie, u32 status_
+ 			val &= ~APPL_FAULT_EN_L0_TLP_ERR_FAULT_EN;
+ 			appl_writel(pcie, val, APPL_FAULT_EN_L0);
+ 
+-			atomic_set(&pcie->report_epl_error, 1);
++			set_bit(0, &pcie->report_epl_error);
+ 			irq_ret = IRQ_WAKE_THREAD;
+ 		}
+ 	}
+@@ -602,7 +601,7 @@ static int tegra_pcie_safety_irq_handler(struct tegra_pcie_dw *pcie, u32 status_
+ 			val &= ~APPL_FAULT_EN_L0_RASDP_FAULT_EN;
+ 			appl_writel(pcie, val, APPL_FAULT_EN_L0);
+ 
+-			atomic_set(&pcie->report_epl_error, 1);
++			set_bit(0, &pcie->report_epl_error);
+ 			irq_ret = IRQ_WAKE_THREAD;
+ 		}
+ 	}
+@@ -625,7 +624,7 @@ static int tegra_pcie_safety_irq_handler(struct tegra_pcie_dw *pcie, u32 status_
+ 				val &= ~APPL_FAULT_EN_L0_PARITY_ERR_FAULT_EN;
+ 				appl_writel(pcie, val, APPL_FAULT_EN_L0);
+ 
+-				atomic_set(&pcie->report_epl_error, 1);
++				set_bit(0, &pcie->report_epl_error);
+ 				irq_ret = IRQ_WAKE_THREAD;
+ 			}
+ 		}
+@@ -662,7 +661,7 @@ static int tegra_pcie_safety_irq_handler(struct tegra_pcie_dw *pcie, u32 status_
+ 			val &= ~APPL_FAULT_EN_L0_SAFETY_UNCORR_FAULT_EN;
+ 			appl_writel(pcie, val, APPL_FAULT_EN_L0);
+ 
+-			atomic_set(&pcie->report_epl_error, 1);
++			set_bit(0, &pcie->report_epl_error);
+ 			irq_ret = IRQ_WAKE_THREAD;
+ 		}
+ 	}
+@@ -747,7 +746,7 @@ static irqreturn_t tegra_pcie_rp_irq_thread(int irq, void *arg)
+ 	struct pci_bus *bus;
+ 
+ #if IS_ENABLED(CONFIG_TEGRA_EPL)
+-	if (atomic_dec_and_test(&pcie->report_epl_error)) {
++	if (test_and_clear_bit(0, &pcie->report_epl_error)) {
+ 		struct epl_error_report_frame error_report;
+ 		struct dw_pcie *pci = &pcie->pci;
+ 		int ret;
+@@ -846,11 +845,12 @@ static void pex_ep_event_hot_rst_done(struct tegra_pcie_dw *pcie)
+ static irqreturn_t tegra_pcie_ep_irq_thread(int irq, void *arg)
+ {
+ 	struct tegra_pcie_dw *pcie = arg;
++	struct dw_pcie_ep *ep = &pcie->pci.ep;
+ 	struct dw_pcie *pci = &pcie->pci;
+ 	u32 val;
+ 
+ #if IS_ENABLED(CONFIG_TEGRA_EPL)
+-	if (atomic_dec_and_test(&pcie->report_epl_error)) {
++	if (test_and_clear_bit(0, &pcie->report_epl_error)) {
+ 		struct epl_error_report_frame error_report;
+ 		int ret;
+ 
+@@ -864,10 +864,12 @@ static irqreturn_t tegra_pcie_ep_irq_thread(int irq, void *arg)
+ 	}
+ #endif
+ 
+-	if (atomic_dec_and_test(&pcie->ep_link_up))
++	if (test_and_clear_bit(0, &pcie->ep_link_up)) {
++		dw_pcie_ep_linkup(ep);
+ 		tegra_pcie_icc_set(pcie);
++	}
+ 
+-	if (atomic_dec_and_test(&pcie->bme_state_change)) {
++	if (test_and_clear_bit(0, &pcie->bme_state_change)) {
+ 		if (pcie->of_data->has_ltr_req_fix)
+ 			return IRQ_HANDLED;
+ 
+@@ -906,13 +908,9 @@ static irqreturn_t tegra_pcie_ep_hard_irq(int irq, void *arg)
+ {
+ 	struct tegra_pcie_dw *pcie = arg;
+ 	int spurious = 1;
+-	struct dw_pcie_ep *ep = &pcie->pci.ep;
+ 	int irq_ret = IRQ_HANDLED;
+ 	u32 status_l0, status_l1, link_status;
+ 
+-	atomic_set(&pcie->ep_link_up, 0);
+-	atomic_set(&pcie->bme_state_change, 0);
+-
+ 	status_l0 = appl_readl(pcie, APPL_INTR_STATUS_L0);
+ 	if (status_l0 & APPL_INTR_STATUS_L0_LINK_STATE_INT) {
+ 		status_l1 = appl_readl(pcie, APPL_INTR_STATUS_L1_0_0);
+@@ -925,8 +923,7 @@ static irqreturn_t tegra_pcie_ep_hard_irq(int irq, void *arg)
+ 			link_status = appl_readl(pcie, APPL_LINK_STATUS);
+ 			if (link_status & APPL_LINK_STATUS_RDLH_LINK_UP) {
+ 				dev_dbg(pcie->dev, "Link is up with Host\n");
+-				dw_pcie_ep_linkup(ep);
+-				atomic_set(&pcie->ep_link_up, 1);
++				set_bit(0, &pcie->ep_link_up);
+ 				irq_ret = IRQ_WAKE_THREAD;
+ 			}
+ 		}
+@@ -939,7 +936,7 @@ static irqreturn_t tegra_pcie_ep_hard_irq(int irq, void *arg)
+ 		appl_writel(pcie, status_l1, APPL_INTR_STATUS_L1_15);
+ 
+ 		if (status_l1 & APPL_INTR_STATUS_L1_15_CFG_BME_CHGED) {
+-			atomic_set(&pcie->bme_state_change, 1);
++			set_bit(0, &pcie->bme_state_change);
+ 			irq_ret = IRQ_WAKE_THREAD;
+ 		}
+ 		spurious = 0;
+-- 
+2.43.0
+

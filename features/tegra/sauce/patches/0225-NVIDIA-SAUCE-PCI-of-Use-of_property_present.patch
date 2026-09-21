@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Mon, 15 Sep 2025 13:45:07 +0100
+Subject: [PATCH 225/241] NVIDIA: SAUCE: PCI: of: Use of_property_present()
+
+Traditionally, the function of_property_read_bool() has been used to
+determine if a property is present. In Linux v6.3, of_property_present()
+was then added, which internally called of_property_read_bool(), to make
+the code clearer. However, since Linux v6.14, of_property_present() has
+been updated so that it no longer calls of_property_read_bool, and now
+of_property_read_bool() warns if called for a non-boolean property. For
+Linux v6.14+ kernels, the following warnings are seen ...
+
+ OF: /bus@0/pcie@14100000: Read of boolean property 'iommu-map' with a
+     value.
+
+Given that of_property_present() has been present since Linux v6.3,
+update the PCI OF code to use of_property_present(). This will help
+maintain the code as we migrate to newer kernels.
+
+Bug 5489491
+
+Change-Id: I96e48d30004ffce60b9eb8108cf302386e78290d
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3452019
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+(cherry picked from commit 3a955f68fd3c02b814a44823679f1f9807299940)
+
+diff --git a/drivers/pci/of.c b/drivers/pci/of.c
+index 8ecd72fa318c..568e73c71544 100644
+--- a/drivers/pci/of.c
++++ b/drivers/pci/of.c
+@@ -652,7 +652,7 @@ int devm_of_pci_bridge_init(struct device *dev, struct pci_host_bridge *bridge)
+ 		return 0;
+ 
+ 	/* Detect IOMMU and make sure ACS will be enabled */
+-	if (of_property_read_bool(node, "iommu-map"))
++	if (of_property_present(node, "iommu-map"))
+ 		pci_request_acs();
+ 
+ 	bridge->swizzle_irq = pci_common_swizzle;
+-- 
+2.43.0
+

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Wayne Chang <waynec@nvidia.com>
 Date: Fri, 22 Sep 2023 19:45:51 +0800
-Subject: [PATCH 148/243] NVIDIA: SAUCE: usb: gadget: xudc: Set the u1 timeout
+Subject: [PATCH 148/241] NVIDIA: SAUCE: usb: gadget: xudc: Set the u1 timeout
  default value to 0xff
 
 The default value of u1 timeout shall be set to 0xff

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Bharat Nihalani <bnihalani@nvidia.com>
 Date: Tue, 13 Jan 2026 08:43:32 +0000
-Subject: [PATCH 182/243] NVIDIA: SAUCE: soc/tegra: cbb: Fix build with ACPI
+Subject: [PATCH 182/241] NVIDIA: SAUCE: soc/tegra: cbb: Fix build with ACPI
  disabled
 
 CONFIG_ACPI is not used for embedded-linux and hence needs to be

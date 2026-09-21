@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mallikarjun Kasoju <mkasoju@nvidia.com>
 Date: Mon, 27 Jan 2025 10:25:23 +0000
-Subject: [PATCH 084/243] NVIDIA: SAUCE: scsi: ufs: skip ufs init if already
+Subject: [PATCH 084/241] NVIDIA: SAUCE: scsi: ufs: skip ufs init if already
  initialised in earlier boot flow
 
 Bug 4757621

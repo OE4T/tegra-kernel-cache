@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Wed, 4 Feb 2026 15:00:52 +0000
-Subject: [PATCH 163/243] NVIDIA: SAUCE: tegra_hv_ivc: Fix build for Linux
+Subject: [PATCH 163/241] NVIDIA: SAUCE: tegra_hv_ivc: Fix build for Linux
  v6.11
 
 In Linux v6.11, the 'platform_driver' structure 'remove' callback was

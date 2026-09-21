@@ -1,0 +1,102 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Date: Tue, 6 Jul 2021 16:46:56 +0530
+Subject: [PATCH 215/241] NVIDIA: SAUCE: PCI: dwc: Use pci_alloc_host_bridge()
+ in place of devm_*()
+
+PCIe host bridge structure is freed during hot unplug and same strcuture
+free is attempted during Tegra PCIe driver remove because it is allocated
+with devm_pci_alloc_host_bridge() function. Use equivalent non devm
+function pci_alloc_host_bridge() to fix this issue.
+
+pci_free_resource_list() is done in pci_release_host_bridge_dev(), remove
+it from dw_pcie_host_deinit().
+
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 0 PID: 948 at lib/refcount.c:28 refcount_warn_saturate+0x11c/0x220
+CPU: 0 PID: 948 Comm: bash Tainted: G        W         5.10.35-tegra #76
+Hardware name: Jetson-AGX (DT)
+pstate: 40400009 (nZcv daif +PAN -UAO -TCO BTYPE=--)
+pc : refcount_warn_saturate+0x11c/0x220
+lr : refcount_warn_saturate+0x11c/0x220
+sp : ffff800013dbba50
+x29: ffff800013dbba50 x28: ffff00009b65bc00
+x27: 0000000000000000 x26: 0000000000000000
+x25: ffff0000824cb328 x24: 000000000000001b
+x23: ffff800013dbbb78 x22: ffff000087a19e00
+x21: ffff00009b65bc00 x20: 0000000000000000
+x19: ffff8000126ffca6 x18: 0000000000000061
+x17: 0000000000000000 x16: 0000000000000000
+x15: ffff800012436c70 x14: 6631313133366130
+x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000010 x10: 6a626f6b20746579
+x9 : 000000000000000a x8 : 65646e75203a745f
+x7 : ffff8000105b7130 x6 : 0000000000000015
+x5 : 0000000000000000 x4 : ffff0003ffb919c8
+x3 : ffff0003ffba0ce0 x2 : ffff8000101f0ea0
+x1 : a95d7af483d93b00 x0 : 0000000000000000
+Call trace:
+ refcount_warn_saturate+0x11c/0x220
+ kobject_put+0x154/0x210
+ put_device+0x24/0x30
+ pci_free_host_bridge+0x20/0x50
+ devm_pci_alloc_host_bridge_release+0x20/0x30
+ devm_action_release+0x20/0x30
+ release_nodes+0x1d0/0x260
+ devres_release_all+0x40/0x60
+ device_release_driver_internal+0x12c/0x1f0
+ device_driver_detach+0x28/0x40
+ unbind_store+0xdc/0x100
+ drv_attr_store+0x40/0x60
+ sysfs_kf_write+0x5c/0x70
+ kernfs_fop_write_iter+0x128/0x1c0
+ new_sync_write+0xf8/0x1b0
+ vfs_write+0x264/0x3a0
+ ksys_write+0x78/0x100
+ __arm64_sys_write+0x24/0x30
+ el0_svc_common.constprop.0+0x7c/0x1a0
+ do_el0_svc+0x34/0xa0
+ el0_svc+0x1c/0x30
+ el0_sync_handler+0xa8/0xb0
+ el0_sync+0x164/0x180
+
+Bug 3330575
+
+Change-Id: I818d86a6eba38425aa39d910559ef303c325d924
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
+Reviewed-by: Om Prakash Singh <omp@nvidia.com>
+Reviewed-by: Bibek Basu <bbasu@nvidia.com>
+Reviewed-by: Nagarjuna Kristam <nkristam@nvidia.com>
+Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
+Tested-by: Nagarjuna Kristam <nkristam@nvidia.com>
+(cherry picked from commit 05c3a517aedff9ec9c343133fd5d337859d7eaf1)
+Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2897677
+Tested-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Abhilash G <abhilashg@nvidia.com>
+Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
+
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 48e4a887bb1b..20778b85afde 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -575,10 +575,15 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+ 
+ 	raw_spin_lock_init(&pp->lock);
+ 
+-	bridge = devm_pci_alloc_host_bridge(dev, 0);
++	bridge = pci_alloc_host_bridge(0);
+ 	if (!bridge)
+ 		return -ENOMEM;
+ 
++	ret = devm_of_pci_bridge_init(dev, bridge);
++	if (ret)
++		return -ENOMEM;
++
++	bridge->dev.parent = dev;
+ 	pp->bridge = bridge;
+ 
+ 	ret = dw_pcie_host_get_resources(pp);
+-- 
+2.43.0
+

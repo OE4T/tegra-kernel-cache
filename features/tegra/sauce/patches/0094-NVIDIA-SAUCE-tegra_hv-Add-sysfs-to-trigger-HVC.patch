@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronak Pithadiya <rpithadiya@nvidia.com>
 Date: Wed, 13 Aug 2025 07:31:03 +0000
-Subject: [PATCH 094/243] NVIDIA: SAUCE: tegra_hv: Add sysfs to trigger HVC
+Subject: [PATCH 094/241] NVIDIA: SAUCE: tegra_hv: Add sysfs to trigger HVC
 
 Added hyp_guest_enter_vm_op function to trigger
 hypercall to update VM_OP transition completed

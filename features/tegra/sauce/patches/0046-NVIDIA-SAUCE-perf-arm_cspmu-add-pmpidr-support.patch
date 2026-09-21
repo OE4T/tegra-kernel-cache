@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Besar Wicaksono <bwicaksono@nvidia.com>
 Date: Fri, 3 Nov 2023 18:48:40 -0500
-Subject: [PATCH 046/243] NVIDIA: SAUCE: perf: arm_cspmu: add pmpidr support
+Subject: [PATCH 046/241] NVIDIA: SAUCE: perf: arm_cspmu: add pmpidr support
 
 The PMIIDR value is composed by the values spread access
 in PMPIDR registers. We can use PMPIDR registers as
