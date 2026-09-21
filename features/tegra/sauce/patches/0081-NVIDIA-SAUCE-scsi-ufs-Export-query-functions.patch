@@ -14,10 +14,10 @@ Signed-off-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2914025
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index bf28a3d7b1dd..bc25888caf00 100644
+index eb7bff38f76b..e4ed6fa96f21 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -3530,6 +3530,7 @@ int ufshcd_query_attr(struct ufs_hba *hba, enum query_opcode opcode,
+@@ -3531,6 +3531,7 @@ int ufshcd_query_attr(struct ufs_hba *hba, enum query_opcode opcode,
  	ufshcd_dev_man_unlock(hba);
  	return err;
  }
@@ -25,7 +25,7 @@ index bf28a3d7b1dd..bc25888caf00 100644
  
  /**
   * ufshcd_query_attr_retry() - API function for sending query
-@@ -3667,6 +3668,7 @@ int ufshcd_query_descriptor_retry(struct ufs_hba *hba,
+@@ -3668,6 +3669,7 @@ int ufshcd_query_descriptor_retry(struct ufs_hba *hba,
  
  	return err;
  }

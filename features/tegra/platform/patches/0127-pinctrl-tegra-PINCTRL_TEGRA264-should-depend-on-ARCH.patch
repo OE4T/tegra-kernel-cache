@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 Date: Tue, 9 Jun 2026 17:08:35 +0200
-Subject: [PATCH 127/220] pinctrl: tegra: PINCTRL_TEGRA264 should depend on
+Subject: [PATCH 127/219] pinctrl: tegra: PINCTRL_TEGRA264 should depend on
  ARCH_TEGRA
 
 The NVIDIA Tegra264 MAIN, AON, and UPHY pin controllers are only present

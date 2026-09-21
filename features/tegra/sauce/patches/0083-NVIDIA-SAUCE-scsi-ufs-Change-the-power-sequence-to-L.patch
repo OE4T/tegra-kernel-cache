@@ -15,10 +15,10 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index bc25888caf00..c3c119714583 100644
+index e4ed6fa96f21..ba9a72d17bd2 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -4693,7 +4693,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
+@@ -4694,7 +4694,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
  	 * - PA_TXGEAR, PA_ACTIVETXDATALANES, PA_TXTERMINATION,
  	 * - PA_HSSERIES
  	 */
@@ -46,7 +46,7 @@ index bc25888caf00..c3c119714583 100644
  	if (pwr_mode->pwr_rx == FASTAUTO_MODE ||
  			pwr_mode->pwr_rx == FAST_MODE)
  		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_RXTERMINATION), true);
-@@ -4745,23 +4765,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
+@@ -4746,23 +4766,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
  		return ret;
  	}
  

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Suneel Garapati <suneelg@nvidia.com>
 Date: Thu, 21 May 2026 01:20:30 +0000
-Subject: [PATCH 031/220] gpio: tegra186: Enable GTE for Tegra264
+Subject: [PATCH 031/219] gpio: tegra186: Enable GTE for Tegra264
 
 Set has_gte flag to enable GTE for Tegra264 AON pins.
 

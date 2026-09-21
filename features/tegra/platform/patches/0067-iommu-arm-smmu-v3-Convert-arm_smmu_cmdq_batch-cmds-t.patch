@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:43 -0300
-Subject: [PATCH 067/220] iommu/arm-smmu-v3: Convert arm_smmu_cmdq_batch cmds
+Subject: [PATCH 067/219] iommu/arm-smmu-v3: Convert arm_smmu_cmdq_batch cmds
  to struct arm_smmu_cmd
 
 Convert the batch's type to also get the remaining helper functions to
@@ -87,7 +87,7 @@ index a52f86454f77..7cf6de10c320 100644
  		if (ret) {
  			cur--;
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 1edae81c13b7..757ebc2c6d4c 100644
+index 24231017a7fe..d9fae5cdc751 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -267,9 +267,12 @@ static int queue_remove_raw(struct arm_smmu_queue *q, u64 *ent)
@@ -295,7 +295,7 @@ index 1edae81c13b7..757ebc2c6d4c 100644
  	arm_smmu_cmdq_issue_cmd_with_sync(inv->smmu, &hw_cmd);
  }
  
-@@ -4872,18 +4876,18 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
+@@ -4900,18 +4904,18 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
  
  	/* Invalidate any cached configuration */
  	ent.opcode = CMDQ_OP_CFGI_ALL;
@@ -318,10 +318,10 @@ index 1edae81c13b7..757ebc2c6d4c 100644
  
  	/* Event queue */
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 455a84b7e091..094419c9f944 100644
+index 15294bb1cf3a..1be1073d0963 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -652,7 +652,7 @@ static inline bool arm_smmu_cmdq_supports_cmd(struct arm_smmu_cmdq *cmdq,
+@@ -654,7 +654,7 @@ static inline bool arm_smmu_cmdq_supports_cmd(struct arm_smmu_cmdq *cmdq,
  }
  
  struct arm_smmu_cmdq_batch {
@@ -330,7 +330,7 @@ index 455a84b7e091..094419c9f944 100644
  	struct arm_smmu_cmdq		*cmdq;
  	int				num;
  };
-@@ -1150,7 +1150,8 @@ void arm_smmu_install_ste_for_dev(struct arm_smmu_master *master,
+@@ -1154,7 +1154,8 @@ void arm_smmu_install_ste_for_dev(struct arm_smmu_master *master,
  				  const struct arm_smmu_ste *target);
  
  int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
@@ -341,10 +341,10 @@ index 455a84b7e091..094419c9f944 100644
  
  #ifdef CONFIG_ARM_SMMU_V3_SVA
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index bbba3918d51d..2b8f6a45bc56 100644
+index 6ca3eac24a34..cc81f8fd2292 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -427,16 +427,16 @@ tegra241_cmdqv_get_cmdq(struct arm_smmu_device *smmu,
+@@ -454,16 +454,16 @@ tegra241_cmdqv_get_cmdq(struct arm_smmu_device *smmu,
  static void tegra241_vcmdq_hw_flush_timeout(struct tegra241_vcmdq *vcmdq)
  {
  	struct arm_smmu_device *smmu = &vcmdq->cmdqv->smmu;

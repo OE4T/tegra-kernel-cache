@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 13 Jan 2026 05:49:32 +0000
-Subject: [PATCH 053/220] iommu/tegra241-cmdqv: Decouple driver from ACPI
+Subject: [PATCH 053/219] iommu/tegra241-cmdqv: Decouple driver from ACPI
 
 A platform device is created by acpi_create_platform_device() per CMDQV's
 adev. That means there is no point in going through _CRS of ACPI.
@@ -27,10 +27,10 @@ index ef42bbe07dbe..5fac08b89dee 100644
  	  Support for NVIDIA CMDQ-Virtualization extension for ARM SMMUv3. The
  	  CMDQ-V extension is similar to v3.3 ECMDQ for multi command queues
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 10c8a29db802..d72cf9eca0fc 100644
+index b677390e95bb..4e599d6ebdb6 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -4609,10 +4609,11 @@ static void acpi_smmu_dsdt_probe_tegra241_cmdqv(struct acpi_iort_node *node,
+@@ -4641,10 +4641,11 @@ static void acpi_smmu_dsdt_probe_tegra241_cmdqv(struct acpi_iort_node *node,
  	adev = acpi_dev_get_first_match_dev("NVDA200C", uid, -1);
  	if (adev) {
  		/* Tegra241 CMDQV driver is responsible for put_device() */
@@ -44,7 +44,7 @@ index 10c8a29db802..d72cf9eca0fc 100644
  	kfree(uid);
  }
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 17591d8eb64b..80713977085a 100644
+index 2b55a221c35a..d5af60f92bc0 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 @@ -3,17 +3,15 @@
@@ -66,7 +66,7 @@ index 17591d8eb64b..80713977085a 100644
  #include "arm-smmu-v3.h"
  
  /* CMDQV register page base and size defines */
-@@ -855,69 +853,6 @@ static struct arm_smmu_impl_ops tegra241_cmdqv_impl_ops = {
+@@ -909,69 +907,6 @@ static struct arm_smmu_impl_ops tegra241_cmdqv_impl_ops = {
  
  /* Probe Functions */
  
@@ -136,7 +136,7 @@ index 17591d8eb64b..80713977085a 100644
  static int tegra241_cmdqv_init_structures(struct arm_smmu_device *smmu)
  {
  	struct tegra241_cmdqv *cmdqv =
-@@ -1043,18 +978,23 @@ __tegra241_cmdqv_probe(struct arm_smmu_device *smmu, struct resource *res,
+@@ -1107,18 +1042,23 @@ __tegra241_cmdqv_probe(struct arm_smmu_device *smmu, struct resource *res,
  
  struct arm_smmu_device *tegra241_cmdqv_probe(struct arm_smmu_device *smmu)
  {

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Sat, 21 Mar 2026 15:50:41 -0700
-Subject: [PATCH 063/220] iommu/arm-smmu-v3: Fix typos introduced by
+Subject: [PATCH 063/219] iommu/arm-smmu-v3: Fix typos introduced by
  arm_smmu_invs
 
 These are introduced by separate commits, so not submitting with a "Fixes"
@@ -12,7 +12,7 @@ Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index e755c2569c87..9cf0609fd14e 100644
+index c1f3857964a5..f0247264acd3 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -1128,7 +1128,7 @@ static inline int arm_smmu_invs_iter_next_cmp(struct arm_smmu_invs *invs_l,
@@ -43,10 +43,10 @@ index e755c2569c87..9cf0609fd14e 100644
  	 *
  	 *  [CPU0]                        | [CPU1]
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 997c266370c3..df93ebff0c39 100644
+index c54b95d05a9d..47c5e1f12631 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -688,7 +688,7 @@ static inline bool arm_smmu_inv_is_ats(const struct arm_smmu_inv *inv)
+@@ -690,7 +690,7 @@ static inline bool arm_smmu_inv_is_ats(const struct arm_smmu_inv *inv)
   *            greater than @max_invs
   * @num_trashes: number of trash entries in the array for arm_smmu_invs_purge().
   *               Must not be greater than @num_invs

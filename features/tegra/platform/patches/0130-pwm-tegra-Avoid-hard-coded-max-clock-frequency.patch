@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yi-Wei Wang <yiweiw@nvidia.com>
 Date: Tue, 31 Mar 2026 11:12:14 +0900
-Subject: [PATCH 130/220] pwm: tegra: Avoid hard-coded max clock frequency
+Subject: [PATCH 130/219] pwm: tegra: Avoid hard-coded max clock frequency
 
 The clock driving the Tegra PWM IP can be sourced from different parent
 clocks. Hence, let dev_pm_opp_set_rate() set the max clock rate based

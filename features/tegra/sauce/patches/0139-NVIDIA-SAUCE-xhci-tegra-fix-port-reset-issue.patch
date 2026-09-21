@@ -33,7 +33,7 @@ Reviewed-by: HaoTien Hsu <haotienh@nvidia.com>
 (cherry picked from commit 2313d1badb3c649c772874966fef1ed3a3da84f8)
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index 01c686e8b384..7434bda68713 100644
+index 6b6bba97385b..5d5e115ec5ef 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -2915,6 +2915,26 @@ static void tegra_xhci_disable_phy_sleepwalk(struct tegra_xusb *tegra)
@@ -50,7 +50,7 @@ index 01c686e8b384..7434bda68713 100644
 +	for (i = 0; i < xhci->usb2_rhub.num_ports; i++) {
 +		if (!xhci->usb2_rhub.ports[i])
 +			continue;
-+		portsc = readl(xhci->usb2_rhub.ports[i]->addr);
++		portsc = xhci_portsc_readl(xhci->usb2_rhub.ports[i]);
 +		tegra->lp0_utmi_pad_mask &= ~BIT(i);
 +		if (((portsc & PORT_PLS_MASK) == XDEV_U3) || ((portsc & DEV_SPEED_MASK) == XDEV_FS)) {
 +			tegra->lp0_utmi_pad_mask |= BIT(i);
@@ -78,7 +78,7 @@ index 01c686e8b384..7434bda68713 100644
 -	for (i = 0; i < xhci->usb2_rhub.num_ports; i++) {
 -		if (!xhci->usb2_rhub.ports[i])
 -			continue;
--		portsc = readl(xhci->usb2_rhub.ports[i]->addr);
+-		portsc = xhci_portsc_readl(xhci->usb2_rhub.ports[i]);
 -		tegra->lp0_utmi_pad_mask &= ~BIT(i);
 -		if (((portsc & PORT_PLS_MASK) == XDEV_U3) || ((portsc & DEV_SPEED_MASK) == XDEV_FS))
 -			tegra->lp0_utmi_pad_mask |= BIT(i);
@@ -98,25 +98,28 @@ index 01c686e8b384..7434bda68713 100644
  
  	tegra_xusb_config(tegra);
  	tegra_xusb_restore_context(tegra);
-@@ -3573,7 +3585,6 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
+@@ -3571,9 +3583,7 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
+ 	struct tegra_xusb *tegra = dev_get_drvdata(hcd->self.controller);
+ 	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
  	struct xhci_hub *rhub;
- 	struct xhci_bus_state *bus_state;
+-	struct xhci_bus_state *bus_state;
  	int port = (index & 0xff) - 1;
 -	unsigned int i;
  	struct xhci_port **ports;
  	u32 portsc;
  	int ret;
-@@ -3588,28 +3599,9 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
+@@ -3587,29 +3597,9 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
+ 	atomic_inc(&tegra->hub_ctrl_use_cnt);
  
  	rhub = &xhci->usb2_rhub;
- 	bus_state = &rhub->bus_state;
+-	bus_state = &rhub->bus_state;
 -	if (bus_state->resuming_ports && hcd->speed == HCD_USB2) {
 -		ports = rhub->ports;
 -		i = rhub->num_ports;
 -		while (i--) {
 -			if (!test_bit(i, &bus_state->resuming_ports))
 -				continue;
--			portsc = readl(ports[i]->addr);
+-			portsc = xhci_portsc_readl(ports[i]);
 -			if ((portsc & PORT_PLS_MASK) == XDEV_RESUME)
 -				tegra_phy_xusb_utmi_pad_power_on(
 -					tegra_xusb_get_phy(tegra, "usb2", (int) i));
@@ -135,7 +138,7 @@ index 01c686e8b384..7434bda68713 100644
  		if ((type_req == SetPortFeature) && (value == USB_PORT_FEAT_RESET)) {
  			if (!index || index > rhub->num_ports) {
  				ret = -EPIPE;
-@@ -3628,11 +3620,6 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
+@@ -3628,11 +3618,6 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
  
  	if (hcd->speed == HCD_USB2) {
  		/* Use phy where we set previously */
@@ -146,7 +149,7 @@ index 01c686e8b384..7434bda68713 100644
 -
  		if ((type_req == ClearPortFeature) && (value == USB_PORT_FEAT_C_CONNECTION)) {
  			ports = rhub->ports;
- 			portsc = readl(ports[port]->addr);
+ 			portsc = xhci_portsc_readl(ports[port]);
 -- 
 2.43.0
 

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik Rajput <kkartik@nvidia.com>
 Date: Tue, 24 Mar 2026 11:28:43 +0530
-Subject: [PATCH 045/220] i2c: tegra: Add support for Tegra410
+Subject: [PATCH 045/219] i2c: tegra: Add support for Tegra410
 
 Add support for the Tegra410 SoC, which has 4 I2C controllers. The
 controllers are feature-equivalent to Tegra264; only the register

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sumit Gupta <sumitg@nvidia.com>
 Date: Wed, 27 May 2026 19:31:26 +0530
-Subject: [PATCH 101/220] memory: tegra264: drop redundant
+Subject: [PATCH 101/219] memory: tegra264: drop redundant
  tegra264_mc_icc_aggregate()
 
 tegra264_mc_icc_aggregate() does nothing on top of icc_std_aggregate

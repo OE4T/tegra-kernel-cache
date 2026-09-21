@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Date: Thu, 11 Sep 2025 11:43:14 +0200
-Subject: [PATCH 082/220] memory: tegra186-emc: Do not print error on
+Subject: [PATCH 082/219] memory: tegra186-emc: Do not print error on
  icc_node_create() failure
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

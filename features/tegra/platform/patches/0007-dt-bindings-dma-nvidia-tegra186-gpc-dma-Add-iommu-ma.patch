@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 31 Mar 2026 15:52:56 +0530
-Subject: [PATCH 007/220] dt-bindings: dma: nvidia,tegra186-gpc-dma: Add
+Subject: [PATCH 007/219] dt-bindings: dma: nvidia,tegra186-gpc-dma: Add
  iommu-map property
 
 Add iommu-map property to specify separate stream IDs for each DMA

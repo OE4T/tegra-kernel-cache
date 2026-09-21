@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:17 -0700
-Subject: [PATCH 055/220] iommu/arm-smmu-v3: Explicitly set smmu_domain->stage
+Subject: [PATCH 055/219] iommu/arm-smmu-v3: Explicitly set smmu_domain->stage
  for SVA
 
 Both the ARM_SMMU_DOMAIN_S1 case and the SVA case use ASID, requiring ASID
@@ -21,10 +21,10 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-index 59a480974d80..6097f1f540d8 100644
+index 80b56d1501b1..c1eb2ae2023f 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-@@ -346,6 +346,7 @@ struct iommu_domain *arm_smmu_sva_domain_alloc(struct device *dev,
+@@ -360,6 +360,7 @@ struct iommu_domain *arm_smmu_sva_domain_alloc(struct device *dev,
  	 * ARM_SMMU_FEAT_RANGE_INV is present
  	 */
  	smmu_domain->domain.pgsize_bitmap = PAGE_SIZE;
@@ -33,7 +33,7 @@ index 59a480974d80..6097f1f540d8 100644
  
  	ret = xa_alloc(&arm_smmu_asid_xa, &asid, smmu_domain,
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 991377419ee3..0bfa94da2f66 100644
+index 7246d2514808..3e3c551adf98 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -3132,6 +3132,9 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
@@ -47,10 +47,10 @@ index 991377419ee3..0bfa94da2f66 100644
  
  	arm_smmu_attach_commit(&state);
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 287e223c054d..2e79fd2f56a8 100644
+index d65bbda8aac3..026b1145b0bb 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -858,6 +858,7 @@ struct arm_smmu_master {
+@@ -862,6 +862,7 @@ struct arm_smmu_master {
  enum arm_smmu_domain_stage {
  	ARM_SMMU_DOMAIN_S1 = 0,
  	ARM_SMMU_DOMAIN_S2,

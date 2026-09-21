@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vidya Sagar <vidyas@nvidia.com>
 Date: Wed, 25 Mar 2026 00:39:55 +0530
-Subject: [PATCH 118/220] PCI: tegra194: Enable DMA interrupt
+Subject: [PATCH 118/219] PCI: tegra194: Enable DMA interrupt
 
 Enable DMA interrupt to support Tegra PCIe DMA in both Root Port and
 Endpoint modes.

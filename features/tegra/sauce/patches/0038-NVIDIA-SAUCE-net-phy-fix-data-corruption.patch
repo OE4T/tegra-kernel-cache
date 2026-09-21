@@ -36,7 +36,7 @@ index d492d5b99f9a..922fd352d2c3 100644
  
  	/* Configure flow control */
 diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index d011d10cfaf4..dddda6f5730d 100644
+index 191e258abd0c..2a0f7969d6ae 100644
 --- a/drivers/net/phy/realtek/realtek_main.c
 +++ b/drivers/net/phy/realtek/realtek_main.c
 @@ -661,8 +661,8 @@ static int rtl8211f_config_init(struct phy_device *phydev)

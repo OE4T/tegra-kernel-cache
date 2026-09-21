@@ -97,7 +97,7 @@ index c69262b3cc66..dc540e254480 100644
  		clk = devm_clk_get(mmc_dev(host->mmc), NULL);
  		if (IS_ERR(clk)) {
 diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
-index b6a571d866fa..ea24ae91cb45 100644
+index f0fd81409a86..a03cee8af961 100644
 --- a/drivers/mmc/host/sdhci.h
 +++ b/drivers/mmc/host/sdhci.h
 @@ -19,6 +19,8 @@

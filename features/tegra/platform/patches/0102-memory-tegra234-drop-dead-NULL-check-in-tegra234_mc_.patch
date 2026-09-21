@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sumit Gupta <sumitg@nvidia.com>
 Date: Wed, 27 May 2026 19:31:27 +0530
-Subject: [PATCH 102/220] memory: tegra234: drop dead NULL check in
+Subject: [PATCH 102/219] memory: tegra234: drop dead NULL check in
  tegra234_mc_icc_aggregate()
 
 In tegra234_mc_icc_aggregate(), the 'if (mc)' check inside the

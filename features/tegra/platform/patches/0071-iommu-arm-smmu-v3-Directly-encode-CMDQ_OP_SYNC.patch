@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:47 -0300
-Subject: [PATCH 071/220] iommu/arm-smmu-v3: Directly encode CMDQ_OP_SYNC
+Subject: [PATCH 071/219] iommu/arm-smmu-v3: Directly encode CMDQ_OP_SYNC
 
 Change the flow so the caller controls the CS field and remove the
 weird u64p_replace_bits() thing to override it.
@@ -17,7 +17,7 @@ Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index b182ad81e707..8d2b2231a6c1 100644
+index 5f7a96f30238..fd90d77c21bf 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -307,16 +307,6 @@ static int arm_smmu_cmdq_build_cmd(struct arm_smmu_cmd *cmd_out,
@@ -98,10 +98,10 @@ index b182ad81e707..8d2b2231a6c1 100644
  	queue_write(Q_ENT(q, cons), cmd.data, q->ent_dwords);
  }
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 5cb8c7e03b5d..5b24a318921f 100644
+index cf544af2b263..ac622857b4e5 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -572,6 +572,18 @@ static inline struct arm_smmu_cmd arm_smmu_make_cmd_atc_inv_all(u32 sid,
+@@ -574,6 +574,18 @@ static inline struct arm_smmu_cmd arm_smmu_make_cmd_atc_inv_all(u32 sid,
  	return arm_smmu_make_cmd_atc_inv(sid, ssid, 0, ATC_INV_SIZE_ALL);
  }
  
@@ -120,7 +120,7 @@ index 5cb8c7e03b5d..5b24a318921f 100644
  /* Event queue */
  #define EVTQ_ENT_SZ_SHIFT		5
  #define EVTQ_ENT_DWORDS			((1 << EVTQ_ENT_SZ_SHIFT) >> 3)
-@@ -649,10 +661,6 @@ struct arm_smmu_cmdq_ent {
+@@ -651,10 +663,6 @@ struct arm_smmu_cmdq_ent {
  			u8			tg;
  			u64			addr;
  		} tlbi;

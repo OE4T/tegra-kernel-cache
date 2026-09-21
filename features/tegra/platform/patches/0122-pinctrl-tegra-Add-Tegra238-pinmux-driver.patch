@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Mon, 27 Apr 2026 13:42:28 +0000
-Subject: [PATCH 122/220] pinctrl: tegra: Add Tegra238 pinmux driver
+Subject: [PATCH 122/219] pinctrl: tegra: Add Tegra238 pinmux driver
 
 Add support for the two pin controllers (MAIN and AON) found on Tegra238.
 

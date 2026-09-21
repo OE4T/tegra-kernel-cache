@@ -1,0 +1,44 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Prathamesh Shete <pshete@nvidia.com>
+Date: Fri, 14 Nov 2025 16:17:11 +0000
+Subject: [PATCH 135/219] soc/tegra: pmc: Don't fail if "aotag" is not present
+
+The "aotog" is an optional aperture, so if that aperture is not defined
+for a given device, then initialise the 'aotag' pointer to NULL instead
+of returning an error. Note that the PMC driver will not use 'aotag'
+pointer if initialised to NULL.
+
+Co-developed-by: Shardar Mohammed <smohammed@nvidia.com>
+Signed-off-by: Shardar Mohammed <smohammed@nvidia.com>
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+(cherry picked from commit 1c458bbe4b335d1675c47d64df0c8cd34961d2bf)
+
+diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
+index 93bbebd68001..ac6b3fac9851 100644
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -2897,9 +2897,16 @@ static int tegra_pmc_probe(struct platform_device *pdev)
+ 		if (IS_ERR(pmc->wake))
+ 			return PTR_ERR(pmc->wake);
+ 
+-		pmc->aotag = devm_platform_ioremap_resource_byname(pdev, "aotag");
+-		if (IS_ERR(pmc->aotag))
+-			return PTR_ERR(pmc->aotag);
++		/* "aotag" is an optional aperture */
++		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
++						   "aotag");
++		if (res) {
++			pmc->aotag = devm_ioremap_resource(&pdev->dev, res);
++			if (IS_ERR(pmc->aotag))
++				return PTR_ERR(pmc->aotag);
++		} else {
++			pmc->aotag = NULL;
++		}
+ 
+ 		/* "scratch" is an optional aperture */
+ 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
+-- 
+2.43.0
+

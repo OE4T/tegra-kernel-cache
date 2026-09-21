@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Date: Tue, 24 Mar 2026 13:38:55 +0530
-Subject: [PATCH 113/220] PCI: tegra194: Make BAR0 programmable and remove 1MB
+Subject: [PATCH 113/219] PCI: tegra194: Make BAR0 programmable and remove 1MB
  size limit
 
 The Tegra194/234 Endpoint does not support the Resizable BAR capability,

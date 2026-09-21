@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:19 -0700
-Subject: [PATCH 057/220] iommu/arm-smmu-v3: Introduce a per-domain
+Subject: [PATCH 057/219] iommu/arm-smmu-v3: Introduce a per-domain
  arm_smmu_invs array
 
 Create a new data structure to hold an array of invalidations that need to
@@ -186,7 +186,7 @@ index b254a94b2003..af3b9eec897b 100644
  };
  
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 5e14ed85ac02..4e1cb62e202d 100644
+index 3c2e6acadecc..347adc1d45ed 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -26,6 +26,7 @@
@@ -488,10 +488,10 @@ index 5e14ed85ac02..4e1cb62e202d 100644
  	return smmu_domain;
  }
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 094bcbb1c7b4..8c36c655b1b3 100644
+index 03e924a2725c..ce2665034374 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -649,6 +649,93 @@ struct arm_smmu_cmdq_batch {
+@@ -651,6 +651,93 @@ struct arm_smmu_cmdq_batch {
  	int				num;
  };
  
@@ -585,7 +585,7 @@ index 094bcbb1c7b4..8c36c655b1b3 100644
  struct arm_smmu_evtq {
  	struct arm_smmu_queue		q;
  	struct iopf_queue		*iopf;
-@@ -875,6 +962,8 @@ struct arm_smmu_domain {
+@@ -879,6 +966,8 @@ struct arm_smmu_domain {
  
  	struct iommu_domain		domain;
  
@@ -594,7 +594,7 @@ index 094bcbb1c7b4..8c36c655b1b3 100644
  	/* List of struct arm_smmu_master_domain */
  	struct list_head		devices;
  	spinlock_t			devices_lock;
-@@ -927,6 +1016,12 @@ void arm_smmu_make_cdtable_ste(struct arm_smmu_ste *target,
+@@ -931,6 +1020,12 @@ void arm_smmu_make_cdtable_ste(struct arm_smmu_ste *target,
  void arm_smmu_make_sva_cd(struct arm_smmu_cd *target,
  			  struct arm_smmu_master *master, struct mm_struct *mm,
  			  u16 asid);
@@ -607,7 +607,7 @@ index 094bcbb1c7b4..8c36c655b1b3 100644
  #endif
  
  struct arm_smmu_master_domain {
-@@ -960,6 +1055,8 @@ struct arm_smmu_domain *arm_smmu_domain_alloc(void);
+@@ -964,6 +1059,8 @@ struct arm_smmu_domain *arm_smmu_domain_alloc(void);
  
  static inline void arm_smmu_domain_free(struct arm_smmu_domain *smmu_domain)
  {

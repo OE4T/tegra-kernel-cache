@@ -25,7 +25,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit c9eb60a3eed93dfb1693b7168893805b016a85c8)
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index ea077047bd75..ab0275bd3db0 100644
+index 9b02258cfdac..d5059b2ba0cd 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -2610,7 +2610,7 @@ static int tegra_xusb_probe(struct platform_device *pdev)

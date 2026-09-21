@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:22 -0700
-Subject: [PATCH 060/220] iommu/arm-smmu-v3: Add arm_smmu_invs based
+Subject: [PATCH 060/219] iommu/arm-smmu-v3: Add arm_smmu_invs based
  arm_smmu_domain_inv_range()
 
 Each smmu_domain now has an arm_smmu_invs that specifies the invalidation
@@ -29,7 +29,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 409b7f914704..ed46b90ecc18 100644
+index b57a6fb68f3b..4638e3dcf23e 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -2596,23 +2596,19 @@ static void arm_smmu_tlb_inv_context(void *cookie)
@@ -295,10 +295,10 @@ index 409b7f914704..ed46b90ecc18 100644
  					 unsigned long iova, size_t granule,
  					 void *cookie)
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 834500adc2d9..0522ea6aaae8 100644
+index 9ab3a8498190..a72bbe87f6ab 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -1089,6 +1089,15 @@ void arm_smmu_tlb_inv_range_asid(unsigned long iova, size_t size, int asid,
+@@ -1093,6 +1093,15 @@ void arm_smmu_tlb_inv_range_asid(unsigned long iova, size_t size, int asid,
  int arm_smmu_atc_inv_domain(struct arm_smmu_domain *smmu_domain,
  			    unsigned long iova, size_t size);
  

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Mon, 27 Apr 2026 07:34:18 +0000
-Subject: [PATCH 095/220] dt-bindings: memory: tegra: Add nvidia,tegra238-mc
+Subject: [PATCH 095/219] dt-bindings: memory: tegra: Add nvidia,tegra238-mc
  compatible
 
 Document the device tree binding for the Tegra238 memory controller.

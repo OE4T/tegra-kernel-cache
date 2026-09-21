@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 29 May 2026 11:41:20 +0200
-Subject: [PATCH 124/220] pinctrl: tegra238: remove unused entries
+Subject: [PATCH 124/219] pinctrl: tegra238: remove unused entries
 
 The -Wunused-const-variable check points out a number of added
 entries that are currently not referenced:

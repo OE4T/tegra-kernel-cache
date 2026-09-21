@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 Date: Tue, 9 Jun 2026 17:08:34 +0200
-Subject: [PATCH 126/220] pinctrl: tegra: PINCTRL_TEGRA238 should depend on
+Subject: [PATCH 126/219] pinctrl: tegra: PINCTRL_TEGRA238 should depend on
  ARCH_TEGRA
 
 The NVIDIA Tegra238 MAIN and AON pin controllers are only present on

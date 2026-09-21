@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Mon, 27 Apr 2026 07:34:19 +0000
-Subject: [PATCH 096/220] memory: tegra: Add Tegra238 MC support
+Subject: [PATCH 096/219] memory: tegra: Add Tegra238 MC support
 
 Add Memory Controller driver support for Tegra238 SOC, including:
 - MC client definitions with Tegra238-specific stream IDs

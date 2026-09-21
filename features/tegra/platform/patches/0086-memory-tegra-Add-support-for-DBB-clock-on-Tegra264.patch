@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Fri, 16 Jan 2026 13:37:32 +0100
-Subject: [PATCH 086/220] memory: tegra: Add support for DBB clock on Tegra264
+Subject: [PATCH 086/219] memory: tegra: Add support for DBB clock on Tegra264
 
 The DBB clock is needed by many IP blocks in order to access system
 memory via the data backbone. The memory controller and external memory

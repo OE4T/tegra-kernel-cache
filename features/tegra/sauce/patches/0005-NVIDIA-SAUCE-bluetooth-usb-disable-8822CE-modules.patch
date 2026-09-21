@@ -17,10 +17,10 @@ Reviewed-by: Revanth Kumar Uppala <ruppala@nvidia.com>
 (cherry picked from commit f672a3817b827a131011dac4ed5ae6f6904eef90)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index e751c6b6e92c..cd58e93da117 100644
+index 8c1c15a94512..e8104b78cb9d 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -510,12 +510,10 @@ static const struct usb_device_id quirks_table[] = {
+@@ -511,12 +511,10 @@ static const struct usb_device_id quirks_table[] = {
  	/* Realtek 8822CE Bluetooth devices */
  	{ USB_DEVICE(0x0bda, 0xb00c), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },

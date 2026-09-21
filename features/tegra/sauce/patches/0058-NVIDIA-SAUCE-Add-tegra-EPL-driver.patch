@@ -18,10 +18,10 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index bd8af95b6f95..140534d53c02 100644
+index 35e8cd935ee0..9def2a20b428 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -25292,6 +25292,14 @@ M:	Jon Hunter <jonathanh@nvidia.com>
+@@ -25300,6 +25300,14 @@ M:	Jon Hunter <jonathanh@nvidia.com>
  S:	Supported
  F:	drivers/dma/tegra*
  

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nirmoy Das <nirmoyd@nvidia.com>
 Date: Wed, 17 Dec 2025 07:45:29 -0800
-Subject: [PATCH 105/220] PCI: Add PCI_BRIDGE_NO_ALIAS quirk for ASPEED AST1150
+Subject: [PATCH 105/219] PCI: Add PCI_BRIDGE_NO_ALIAS quirk for ASPEED AST1150
 
 ASPEED BMC controllers have VGA and USB functions behind a PCIe-to-PCI
 bridge that causes them to share the same StreamID:
@@ -28,10 +28,10 @@ Link: https://patch.msgid.link/20251217154529.377586-2-nirmoyd@nvidia.com
 (cherry picked from commit 550a190494a0d3e933dd6f3b2e9c430f94a30a8c)
 
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index f6001be94955..fb529b7034ff 100644
+index af58057665d9..91a9de11c9c2 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -4466,6 +4466,16 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_BROADCOM, 0x9000,
+@@ -4469,6 +4469,16 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_BROADCOM, 0x9000,
  DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_BROADCOM, 0x9084,
  				quirk_bridge_cavm_thrx2_pcie_root);
  
@@ -62,10 +62,10 @@ index 53840634fbfc..b3c9e3d82201 100644
  					 PCI_DEVID(tmp->subordinate->number,
  						   PCI_DEVFN(0, 0)), data);
 diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 505bf6e009b1..3a928646faa5 100644
+index 148b71af80b3..a5a6cae9f9f9 100644
 --- a/include/linux/pci.h
 +++ b/include/linux/pci.h
-@@ -248,6 +248,11 @@ enum pci_dev_flags {
+@@ -260,6 +260,11 @@ enum pci_dev_flags {
  	PCI_DEV_FLAGS_HAS_MSI_MASKING = (__force pci_dev_flags_t) (1 << 12),
  	/* Device requires write to PCI_MSIX_ENTRY_DATA before any MSIX reads */
  	PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST = (__force pci_dev_flags_t) (1 << 13),

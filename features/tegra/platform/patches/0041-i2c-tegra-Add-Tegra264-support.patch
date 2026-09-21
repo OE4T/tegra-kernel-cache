@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Akhil R <akhilrajeev@nvidia.com>
 Date: Tue, 18 Nov 2025 19:36:20 +0530
-Subject: [PATCH 041/220] i2c: tegra: Add Tegra264 support
+Subject: [PATCH 041/219] i2c: tegra: Add Tegra264 support
 
 Add support for Tegra264 SoC which supports 17 generic I2C controllers,
 two of which are in the AON (always-on) partition of the SoC. In

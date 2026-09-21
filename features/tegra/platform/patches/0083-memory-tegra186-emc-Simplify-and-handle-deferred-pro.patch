@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Date: Thu, 11 Sep 2025 11:43:19 +0200
-Subject: [PATCH 083/220] memory: tegra186-emc: Simplify and handle deferred
+Subject: [PATCH 083/219] memory: tegra186-emc: Simplify and handle deferred
  probe with dev_err_probe()
 
 Certain calls, like clk_get, can cause probe deferral and driver should

@@ -35,10 +35,10 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit c9281038797f8b5b356137a0ec8a96840735a6a3)
 
 diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 23b104c2956c..39527c98526f 100644
+index 72f7da2ed5c4..a9d74f2fc64d 100644
 --- a/drivers/usb/host/xhci.c
 +++ b/drivers/usb/host/xhci.c
-@@ -5399,11 +5399,58 @@ static void xhci_hcd_init_usb3_data(struct xhci_hcd *xhci, struct usb_hcd *hcd)
+@@ -5407,11 +5407,58 @@ static void xhci_hcd_init_usb3_data(struct xhci_hcd *xhci, struct usb_hcd *hcd)
  
  	switch (minor_rev) {
  	case 2:

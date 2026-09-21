@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vidya Sagar <vidyas@nvidia.com>
 Date: Wed, 25 Mar 2026 00:39:54 +0530
-Subject: [PATCH 117/220] PCI: tegra194: Remove IRQF_ONESHOT flag during
+Subject: [PATCH 117/219] PCI: tegra194: Remove IRQF_ONESHOT flag during
  Endpoint interrupt registration
 
 The Tegra PCIe Endpoint controller has a single interrupt line that is

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mikko Perttunen <mperttunen@nvidia.com>
 Date: Tue, 31 Mar 2026 11:12:16 +0900
-Subject: [PATCH 132/220] pwm: tegra: Parametrize enable register offset
+Subject: [PATCH 132/219] pwm: tegra: Parametrize enable register offset
 
 On Tegra264, the PWM enablement bit is not located at the base address
 of the PWM controller. Hence, introduce an enablement offset field in

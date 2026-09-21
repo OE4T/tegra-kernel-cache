@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Tue, 2 Jun 2026 20:32:48 +0100
-Subject: [PATCH 128/220] NVIDIA: SAUCE: pmdomain: tegra: Add support for
+Subject: [PATCH 128/219] NVIDIA: SAUCE: pmdomain: tegra: Add support for
  multi-socket platforms
 
 On multi-socket platforms each socket has its own BPMP that is

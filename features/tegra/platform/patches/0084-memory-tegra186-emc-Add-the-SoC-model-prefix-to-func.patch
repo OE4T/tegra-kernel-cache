@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Date: Thu, 11 Sep 2025 11:43:22 +0200
-Subject: [PATCH 084/220] memory: tegra186-emc: Add the SoC model prefix to
+Subject: [PATCH 084/219] memory: tegra186-emc: Add the SoC model prefix to
  functions
 
 Replace "tegra_emc" with "tegra186_emc" in all functions to:

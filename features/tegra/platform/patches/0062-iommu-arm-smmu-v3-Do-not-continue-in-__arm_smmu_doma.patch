@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Sat, 21 Mar 2026 15:50:40 -0700
-Subject: [PATCH 062/220] iommu/arm-smmu-v3: Do not continue in
+Subject: [PATCH 062/219] iommu/arm-smmu-v3: Do not continue in
  __arm_smmu_domain_inv_range()
 
 The loop in the __arm_smmu_domain_inv_range() is a while loop, not a for
@@ -18,7 +18,7 @@ Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 0840ec1ea697..e755c2569c87 100644
+index b01263796aad..c1f3857964a5 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -2689,7 +2689,7 @@ static void __arm_smmu_domain_inv_range(struct arm_smmu_invs *invs,

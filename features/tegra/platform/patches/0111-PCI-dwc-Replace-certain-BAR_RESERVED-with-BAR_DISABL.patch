@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
 Date: Thu, 12 Mar 2026 14:02:34 +0100
-Subject: [PATCH 111/220] PCI: dwc: Replace certain BAR_RESERVED with
+Subject: [PATCH 111/219] PCI: dwc: Replace certain BAR_RESERVED with
  BAR_DISABLED in glue drivers
 
 Most DWC based EPC glue drivers that have BARs marked as BAR_RESERVED in

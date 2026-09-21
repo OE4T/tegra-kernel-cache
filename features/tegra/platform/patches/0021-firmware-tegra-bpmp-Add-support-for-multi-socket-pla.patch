@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Fri, 29 May 2026 18:33:37 +0100
-Subject: [PATCH 021/220] firmware: tegra: bpmp: Add support for multi-socket
+Subject: [PATCH 021/219] firmware: tegra: bpmp: Add support for multi-socket
  platforms
 
 On multi-socket platforms each socket has its own BPMP that is

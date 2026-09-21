@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Thierry Reding <treding@nvidia.com>
+Date: Thu, 26 Feb 2026 16:09:32 +0100
+Subject: [PATCH 176/219] soc/tegra: Add Tegra238 Kconfig symbol
+
+The NVIDIA Tegra238 SoC is an upcoming new chip. Add a Kconfig symbol to
+allow fine-grained selection of support code for this chip.
+
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+(cherry picked from commit 9514d3f2dd4b8df4505c9104da8ac12fefb0d871)
+
+diff --git a/drivers/soc/tegra/Kconfig b/drivers/soc/tegra/Kconfig
+index c0fc54c3cd35..0a84bfd5c657 100644
+--- a/drivers/soc/tegra/Kconfig
++++ b/drivers/soc/tegra/Kconfig
+@@ -125,6 +125,15 @@ config ARCH_TEGRA_234_SOC
+ 	help
+ 	  Enable support for the NVIDIA Tegra234 SoC.
+ 
++config ARCH_TEGRA_238_SOC
++	bool "NVIDIA Tegra238 SoC"
++	default ARCH_TEGRA
++	depends on !CPU_BIG_ENDIAN
++	select MAILBOX
++	select SOC_TEGRA_PMC
++	help
++	  Enable support for the NVIDIA Tegra238 SoC.
++
+ config ARCH_TEGRA_241_SOC
+ 	bool "NVIDIA Tegra241 SoC"
+ 	help
+-- 
+2.43.0
+

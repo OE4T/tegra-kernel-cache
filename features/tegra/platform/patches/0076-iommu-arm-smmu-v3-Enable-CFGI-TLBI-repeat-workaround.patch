@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Sun, 26 Jul 2026 08:19:04 +0000
-Subject: [PATCH 076/220] iommu/arm-smmu-v3: Enable CFGI/TLBI-repeat workaround
+Subject: [PATCH 076/219] iommu/arm-smmu-v3: Enable CFGI/TLBI-repeat workaround
  on Tegra264
 
 Nvidia Tegra264 SMMU is affected by an erratum where a TLB entry can
@@ -41,10 +41,10 @@ index 1c5accd6dec4..5e1539ca4030 100644
  | Freescale/NXP  | LS2080A/LS1043A | A-008585        | FSL_ERRATUM_A008585         |
  +----------------+-----------------+-----------------+-----------------------------+
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 556c9e878d2b..6218da6ec6c9 100644
+index 9b65fccaaa72..abdf29800c2b 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -5289,8 +5289,10 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
+@@ -5324,8 +5324,10 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
  	if (of_dma_is_coherent(dev->of_node))
  		smmu->features |= ARM_SMMU_FEAT_COHERENCY;
  

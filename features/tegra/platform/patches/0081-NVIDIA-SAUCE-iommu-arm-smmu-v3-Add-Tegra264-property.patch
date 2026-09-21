@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Fri, 31 Jul 2026 09:54:31 +0000
-Subject: [PATCH 081/220] NVIDIA: SAUCE: iommu/arm-smmu-v3: Add Tegra264
+Subject: [PATCH 081/219] NVIDIA: SAUCE: iommu/arm-smmu-v3: Add Tegra264
  property for TLBI issue
 
 Add the downstream device-tree property 'nvidia,tegra264-tlbi-race-fix',
@@ -18,10 +18,10 @@ Change-Id: Ifa63d0d5f13b997b7f9d5ce5623b7a20a234592a
 Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 05f4816e7bca..93ee43b12ba8 100644
+index 0a7f337c6665..a9e235e7ab05 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -5293,6 +5293,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
+@@ -5328,6 +5328,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
  	if (of_device_is_compatible(dev->of_node, "nvidia,tegra264-smmu")) {
  		tegra_cmdqv_dt_probe(dev->of_node, smmu);
  		static_branch_enable(&arm_smmu_erratum_repeat_tlbi_cfgi_key);

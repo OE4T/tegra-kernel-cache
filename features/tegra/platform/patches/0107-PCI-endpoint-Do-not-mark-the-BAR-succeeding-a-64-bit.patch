@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
 Date: Thu, 12 Mar 2026 14:02:29 +0100
-Subject: [PATCH 107/220] PCI: endpoint: Do not mark the BAR succeeding a
+Subject: [PATCH 107/219] PCI: endpoint: Do not mark the BAR succeeding a
  64-bit BAR as BAR_RESERVED
 
 A BAR that can only be configured as a 64-bit BAR by an EPC driver is

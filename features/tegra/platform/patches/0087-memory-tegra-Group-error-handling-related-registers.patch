@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ketan Patil <ketanp@nvidia.com>
 Date: Thu, 26 Feb 2026 16:31:10 +0000
-Subject: [PATCH 087/220] memory: tegra: Group error handling related registers
+Subject: [PATCH 087/219] memory: tegra: Group error handling related registers
 
 Group MC error related registers into a struct as they could have SoC
 specific values. Tegra264 has different register offsets than the

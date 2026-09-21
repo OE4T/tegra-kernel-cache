@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Fri, 29 May 2026 18:33:36 +0100
-Subject: [PATCH 020/220] firmware: tegra: bpmp: Propagate debugfs errors
+Subject: [PATCH 020/219] firmware: tegra: bpmp: Propagate debugfs errors
 
 The Tegra BPMP debugfs code returns -ENOMEM for most cases where calls
 to debugfs_create_dir() or debugfs_create_file() fail. These debugfs

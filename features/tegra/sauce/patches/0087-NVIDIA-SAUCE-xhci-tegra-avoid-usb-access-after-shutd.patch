@@ -33,7 +33,7 @@ Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index 97644ec915f4..98e2b182c0bc 100644
+index 14268337415a..36533bab4d42 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -2,7 +2,7 @@
@@ -110,7 +110,7 @@ index 97644ec915f4..98e2b182c0bc 100644
 +				goto out;
 +			}
  			ports = rhub->ports;
- 			portsc = readl(ports[port]->addr);
+ 			portsc = xhci_portsc_readl(ports[port]);
  			if (portsc & PORT_CONNECT)
 @@ -2823,7 +2847,7 @@ static int tegra_xhci_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value,
  

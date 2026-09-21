@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ketan Patil <ketanp@nvidia.com>
 Date: Thu, 26 Feb 2026 16:31:12 +0000
-Subject: [PATCH 089/220] memory: tegra: Add support for multiple IRQs
+Subject: [PATCH 089/219] memory: tegra: Add support for multiple IRQs
 
 Add support to handle multiple MC interrupts lines, as supported by
 Tegra264. Turn the single IRQ handler callback into a counted array to

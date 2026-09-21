@@ -1,0 +1,81 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Date: Thu, 21 May 2026 15:48:48 +0200
+Subject: [PATCH 173/219] soc/tegra: pmc: Restrict power-off handler to Nexus 7
+
+The Tegra PMC power-off handler exists solely to reboot the Nexus 7 into
+a special bootloader mode when a USB cable is connected, so that the
+bootloader can display battery status instead of powering off. There is
+no reason to register it on any other Tegra board.
+
+Guard the registration behind of_machine_is_compatible("asus,grouper")
+and rename the handler to tegra_pmc_grouper_power_off_handler to make
+its scope explicit. The of_machine_is_compatible() check inside the
+handler itself is now redundant and is removed.
+
+This also avoids occupying SYS_OFF_PRIO_FIRMWARE on boards that have
+other handlers at that priority level.
+
+Assisted-by: Claude:claude-sonnet-4-6
+Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+(cherry picked from commit 2545b16e3ea049a266ec8b0e509d4e093b26b906)
+
+diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
+index 37a6f56b1631..b4d0e0443b2f 100644
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -1207,7 +1207,7 @@ static int tegra_pmc_restart_handler(struct sys_off_data *data)
+ 	return NOTIFY_DONE;
+ }
+ 
+-static int tegra_pmc_power_off_handler(struct sys_off_data *data)
++static int tegra_pmc_grouper_power_off_handler(struct sys_off_data *data)
+ {
+ 	struct tegra_pmc *pmc = data->cb_data;
+ 
+@@ -1215,8 +1215,7 @@ static int tegra_pmc_power_off_handler(struct sys_off_data *data)
+ 	 * Reboot Nexus 7 into special bootloader mode if USB cable is
+ 	 * connected in order to display battery status and power off.
+ 	 */
+-	if (of_machine_is_compatible("asus,grouper") &&
+-	    power_supply_is_system_supplied()) {
++	if (power_supply_is_system_supplied()) {
+ 		const u32 go_to_charger_mode = 0xa5a55a5a;
+ 
+ 		tegra_pmc_writel(pmc, go_to_charger_mode, PMC_SCRATCH37);
+@@ -3087,18 +3086,20 @@ static int tegra_pmc_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	/*
+-	 * PMC should be primary power-off method if it soft-resets CPU,
+-	 * asking bootloader to shutdown hardware.
++	 * PMC should be primary power-off method on Grouper if it soft-resets
++	 * CPU, asking bootloader to shutdown hardware.
+ 	 */
+-	err = devm_register_sys_off_handler(&pdev->dev,
+-					    SYS_OFF_MODE_POWER_OFF,
+-					    SYS_OFF_PRIO_FIRMWARE,
+-					    tegra_pmc_power_off_handler,
+-					    pmc);
+-	if (err) {
+-		dev_err(&pdev->dev, "failed to register sys-off handler: %d\n",
+-			err);
+-		return err;
++	if (of_machine_is_compatible("asus,grouper")) {
++		err = devm_register_sys_off_handler(&pdev->dev,
++						    SYS_OFF_MODE_POWER_OFF,
++						    SYS_OFF_PRIO_FIRMWARE,
++						    tegra_pmc_grouper_power_off_handler,
++						    pmc);
++		if (err) {
++			dev_err(&pdev->dev, "failed to register sys-off handler: %d\n",
++				err);
++			return err;
++		}
+ 	}
+ 
+ 	/*
+-- 
+2.43.0
+

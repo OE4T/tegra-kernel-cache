@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Sun, 26 Jul 2026 08:19:03 +0000
-Subject: [PATCH 075/220] iommu/arm-smmu-v3-iommufd: Report CFGI/TLBI-repeat
+Subject: [PATCH 075/219] iommu/arm-smmu-v3-iommufd: Report CFGI/TLBI-repeat
  erratum
 
 A guest with access to VCMDQ generates its own invalidation commands
@@ -49,7 +49,7 @@ index 7cf6de10c320..0c65ff420f57 100644
  			cur--;
  			goto out;
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index b927ca46b299..556c9e878d2b 100644
+index c98c1e81a804..9b65fccaaa72 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -828,11 +828,16 @@ int __arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
@@ -71,10 +71,10 @@ index b927ca46b299..556c9e878d2b 100644
  
  	opcode = FIELD_GET(CMDQ_0_OP, cmd->data[0]);
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index e1d4d228d572..9739db5f8a7f 100644
+index ba0e2cbe1fdb..b0fe749b3320 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -1216,6 +1216,7 @@ int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
+@@ -1220,6 +1220,7 @@ int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
  				struct arm_smmu_cmdq *cmdq,
  				struct arm_smmu_cmd *cmds, int n,
  				bool sync);

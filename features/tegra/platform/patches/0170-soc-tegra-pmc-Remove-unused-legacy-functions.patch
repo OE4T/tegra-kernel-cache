@@ -1,0 +1,196 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Thierry Reding <treding@nvidia.com>
+Date: Tue, 4 Feb 2025 19:45:19 +0100
+Subject: [PATCH 170/219] soc/tegra: pmc: Remove unused legacy functions
+
+All callers of these functions have been replaced by their variants
+taking a PMC context as an input, so they are no longer used and can be
+removed.
+
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+(cherry picked from commit 72a2a9023c329aca7e7f8d3997c9a26aa317a1fd)
+
+diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
+index 1388e187832d..c829fbdb7aa8 100644
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -1065,16 +1065,6 @@ int tegra_pmc_powergate_power_on(struct tegra_pmc *pmc, unsigned int id)
+ }
+ EXPORT_SYMBOL(tegra_pmc_powergate_power_on);
+ 
+-/**
+- * tegra_powergate_power_on() - power on partition
+- * @id: partition ID
+- */
+-int tegra_powergate_power_on(unsigned int id)
+-{
+-	return tegra_pmc_powergate_power_on(early_pmc, id);
+-}
+-EXPORT_SYMBOL(tegra_powergate_power_on);
+-
+ /**
+  * tegra_pmc_powergate_power_off() - power off partition
+  * @pmc: power management controller
+@@ -1089,16 +1079,6 @@ int tegra_pmc_powergate_power_off(struct tegra_pmc *pmc, unsigned int id)
+ }
+ EXPORT_SYMBOL(tegra_pmc_powergate_power_off);
+ 
+-/**
+- * tegra_powergate_power_off() - power off partition
+- * @id: partition ID
+- */
+-int tegra_powergate_power_off(unsigned int id)
+-{
+-	return tegra_pmc_powergate_power_off(early_pmc, id);
+-}
+-EXPORT_SYMBOL(tegra_powergate_power_off);
+-
+ /**
+  * tegra_powergate_is_powered() - check if partition is powered
+  * @pmc: power management controller
+@@ -1126,16 +1106,6 @@ int tegra_pmc_powergate_remove_clamping(struct tegra_pmc *pmc, unsigned int id)
+ }
+ EXPORT_SYMBOL(tegra_pmc_powergate_remove_clamping);
+ 
+-/**
+- * tegra_powergate_remove_clamping() - remove power clamps for partition
+- * @id: partition ID
+- */
+-int tegra_powergate_remove_clamping(unsigned int id)
+-{
+-	return tegra_pmc_powergate_remove_clamping(early_pmc, id);
+-}
+-EXPORT_SYMBOL(tegra_powergate_remove_clamping);
+-
+ /**
+  * tegra_pmc_powergate_sequence_power_up() - power up partition
+  * @pmc: power management controller
+@@ -1183,21 +1153,6 @@ int tegra_pmc_powergate_sequence_power_up(struct tegra_pmc *pmc,
+ }
+ EXPORT_SYMBOL(tegra_pmc_powergate_sequence_power_up);
+ 
+-/**
+- * tegra_powergate_sequence_power_up() - power up partition
+- * @id: partition ID
+- * @clk: clock for partition
+- * @rst: reset for partition
+- *
+- * Must be called with clk disabled, and returns with clk enabled.
+- */
+-int tegra_powergate_sequence_power_up(unsigned int id, struct clk *clk,
+-				      struct reset_control *rst)
+-{
+-	return tegra_pmc_powergate_sequence_power_up(early_pmc, id, clk, rst);
+-}
+-EXPORT_SYMBOL(tegra_powergate_sequence_power_up);
+-
+ /**
+  * tegra_get_cpu_powergate_id() - convert from CPU ID to partition ID
+  * @pmc: power management controller
+@@ -1825,18 +1780,6 @@ int tegra_pmc_io_pad_power_enable(struct tegra_pmc *pmc, enum tegra_io_pad id)
+ }
+ EXPORT_SYMBOL(tegra_pmc_io_pad_power_enable);
+ 
+-/**
+- * tegra_io_pad_power_enable() - enable power to I/O pad
+- * @id: Tegra I/O pad ID for which to enable power
+- *
+- * Returns: 0 on success or a negative error code on failure.
+- */
+-int tegra_io_pad_power_enable(enum tegra_io_pad id)
+-{
+-	return tegra_pmc_io_pad_power_enable(early_pmc, id);
+-}
+-EXPORT_SYMBOL(tegra_io_pad_power_enable);
+-
+ /**
+  * tegra_pmc_io_pad_power_disable() - disable power to I/O pad
+  * @pmc: power management controller
+@@ -1881,18 +1824,6 @@ int tegra_pmc_io_pad_power_disable(struct tegra_pmc *pmc, enum tegra_io_pad id)
+ }
+ EXPORT_SYMBOL(tegra_pmc_io_pad_power_disable);
+ 
+-/**
+- * tegra_io_pad_power_disable() - disable power to I/O pad
+- * @id: Tegra I/O pad ID for which to disable power
+- *
+- * Returns: 0 on success or a negative error code on failure.
+- */
+-int tegra_io_pad_power_disable(enum tegra_io_pad id)
+-{
+-	return tegra_pmc_io_pad_power_disable(early_pmc, id);
+-}
+-EXPORT_SYMBOL(tegra_io_pad_power_disable);
+-
+ static int tegra_io_pad_is_powered(struct tegra_pmc *pmc, enum tegra_io_pad id)
+ {
+ 	const struct tegra_io_pad_soc *pad;
+diff --git a/include/soc/tegra/pmc.h b/include/soc/tegra/pmc.h
+index 1fd21be02577..8b4bcdea849e 100644
+--- a/include/soc/tegra/pmc.h
++++ b/include/soc/tegra/pmc.h
+@@ -164,16 +164,6 @@ int tegra_pmc_io_pad_power_enable(struct tegra_pmc *pmc, enum tegra_io_pad id);
+ int tegra_pmc_io_pad_power_disable(struct tegra_pmc *pmc, enum tegra_io_pad id);
+ 
+ /* legacy */
+-int tegra_powergate_power_on(unsigned int id);
+-int tegra_powergate_power_off(unsigned int id);
+-int tegra_powergate_remove_clamping(unsigned int id);
+-
+-int tegra_powergate_sequence_power_up(unsigned int id, struct clk *clk,
+-				      struct reset_control *rst);
+-
+-int tegra_io_pad_power_enable(enum tegra_io_pad id);
+-int tegra_io_pad_power_disable(enum tegra_io_pad id);
+-
+ void tegra_pmc_set_suspend_mode(enum tegra_suspend_mode mode);
+ void tegra_pmc_enter_suspend_mode(enum tegra_suspend_mode mode);
+ 
+@@ -224,43 +214,6 @@ tegra_pmc_io_pad_power_disable(struct tegra_pmc *pmc, enum tegra_io_pad id)
+ 	return -ENOSYS;
+ }
+ 
+-static inline int tegra_powergate_power_on(unsigned int id)
+-{
+-	return -ENOSYS;
+-}
+-
+-static inline int tegra_powergate_power_off(unsigned int id)
+-{
+-	return -ENOSYS;
+-}
+-
+-static inline int tegra_powergate_remove_clamping(unsigned int id)
+-{
+-	return -ENOSYS;
+-}
+-
+-static inline int tegra_powergate_sequence_power_up(unsigned int id,
+-						    struct clk *clk,
+-						    struct reset_control *rst)
+-{
+-	return -ENOSYS;
+-}
+-
+-static inline int tegra_io_pad_power_enable(enum tegra_io_pad id)
+-{
+-	return -ENOSYS;
+-}
+-
+-static inline int tegra_io_pad_power_disable(enum tegra_io_pad id)
+-{
+-	return -ENOSYS;
+-}
+-
+-static inline int tegra_io_pad_get_voltage(enum tegra_io_pad id)
+-{
+-	return -ENOSYS;
+-}
+-
+ static inline void tegra_pmc_set_suspend_mode(enum tegra_suspend_mode mode)
+ {
+ }
+-- 
+2.43.0
+

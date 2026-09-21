@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Tue, 13 Jan 2026 05:49:33 +0000
-Subject: [PATCH 054/220] iommu/arm-smmu-v3: Add device-tree support for CMDQV
+Subject: [PATCH 054/219] iommu/arm-smmu-v3: Add device-tree support for CMDQV
  driver
 
 Add device tree support to the CMDQV driver to enable usage on Tegra264
@@ -16,10 +16,10 @@ Signed-off-by: Will Deacon <will@kernel.org>
 (cherry picked from commit ea69dc4e207b09fb9adb6dab1901739d64853090)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index d72cf9eca0fc..991377419ee3 100644
+index 4e599d6ebdb6..7246d2514808 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -4597,6 +4597,35 @@ static int arm_smmu_device_hw_probe(struct arm_smmu_device *smmu)
+@@ -4629,6 +4629,35 @@ static int arm_smmu_device_hw_probe(struct arm_smmu_device *smmu)
  	return 0;
  }
  
@@ -55,7 +55,7 @@ index d72cf9eca0fc..991377419ee3 100644
  #ifdef CONFIG_ACPI
  #ifdef CONFIG_TEGRA241_CMDQV
  static void acpi_smmu_dsdt_probe_tegra241_cmdqv(struct acpi_iort_node *node,
-@@ -4702,6 +4731,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
+@@ -4737,6 +4766,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
  	if (of_dma_is_coherent(dev->of_node))
  		smmu->features |= ARM_SMMU_FEAT_COHERENCY;
  
