@@ -26,7 +26,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit dc65b1ed4bb34ab6235ff2cc6a917b9295c04c2c)
 
 diff --git a/drivers/base/regmap/internal.h b/drivers/base/regmap/internal.h
-index 1477329410ec..5bf993165438 100644
+index 1477329410ec4..5bf9931654387 100644
 --- a/drivers/base/regmap/internal.h
 +++ b/drivers/base/regmap/internal.h
 @@ -117,6 +117,9 @@ struct regmap {
@@ -40,7 +40,7 @@ index 1477329410ec..5bf993165438 100644
  	unsigned long write_flag_mask;
  
 diff --git a/drivers/base/regmap/regcache-flat.c b/drivers/base/regmap/regcache-flat.c
-index 53cc59c84e2f..c924817e19b1 100644
+index 53cc59c84e2f0..c924817e19b1c 100644
 --- a/drivers/base/regmap/regcache-flat.c
 +++ b/drivers/base/regmap/regcache-flat.c
 @@ -79,6 +79,25 @@ static int regcache_flat_populate(struct regmap *map)
@@ -70,7 +70,7 @@ index 53cc59c84e2f..c924817e19b1 100644
  }
  
 diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
-index 319c342bf5a0..31bdbf37dbed 100644
+index 319c342bf5a06..31bdbf37dbed5 100644
 --- a/drivers/base/regmap/regcache.c
 +++ b/drivers/base/regmap/regcache.c
 @@ -223,7 +223,8 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
@@ -84,7 +84,7 @@ index 319c342bf5a0..31bdbf37dbed 100644
  		map->lock(map->lock_arg);
  		ret = map->cache_ops->populate(map);
 diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index a64821850723..a85cfafccec1 100644
+index a648218507236..a85cfafccec12 100644
 --- a/drivers/base/regmap/regmap.c
 +++ b/drivers/base/regmap/regmap.c
 @@ -813,6 +813,7 @@ struct regmap *__regmap_init(struct device *dev,
@@ -104,7 +104,7 @@ index a64821850723..a85cfafccec1 100644
  
  	ret = regmap_set_name(map, config);
 diff --git a/include/linux/regmap.h b/include/linux/regmap.h
-index bbb8b1b11a4f..df7640ce0d8e 100644
+index bbb8b1b11a4fb..df7640ce0d8ea 100644
 --- a/include/linux/regmap.h
 +++ b/include/linux/regmap.h
 @@ -359,6 +359,10 @@ typedef void (*regmap_unlock)(void *);

@@ -15,7 +15,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit bb946b0e118dc95160d2313474b2ca4de771f82b)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index f215396206f1..da8890520fc8 100644
+index f215396206f10..da8890520fc8d 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -268,6 +268,17 @@ static const struct pmc_clk_init_data tegra_pmc_clks_data[] = {

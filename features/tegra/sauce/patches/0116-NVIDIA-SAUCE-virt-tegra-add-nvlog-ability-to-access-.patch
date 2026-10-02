@@ -29,7 +29,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 9c721fdd8b2412f407b9ef9c5847bd5bcb67c237)
 
 diff --git a/include/soc/tegra/virt/syscalls.h b/include/soc/tegra/virt/syscalls.h
-index bb9203945305..e087b25173aa 100644
+index bb92039453059..e087b25173aab 100644
 --- a/include/soc/tegra/virt/syscalls.h
 +++ b/include/soc/tegra/virt/syscalls.h
 @@ -1,6 +1,6 @@

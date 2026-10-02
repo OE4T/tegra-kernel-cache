@@ -14,7 +14,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit 258cff9857918615897bd5b57c588dc13c0058b6)
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index 4620c2e23b88..c28e237f4dee 100644
+index 4620c2e23b887..c28e237f4deee 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -293,6 +293,7 @@ struct tegra_xusb {

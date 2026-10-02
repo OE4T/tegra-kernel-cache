@@ -19,7 +19,7 @@ critical.
 Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index ef1896d567ec..f5759a19b6e5 100644
+index ef1896d567ec0..f5759a19b6e5b 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -3074,15 +3074,18 @@ static int tegra_pmc_probe(struct platform_device *pdev)

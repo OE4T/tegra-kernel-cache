@@ -33,10 +33,10 @@ Reviewed-by: Robert Lin <robelin@nvidia.com>
 (cherry picked from commit 458f31b6eab3ffe60c148802709eff618c8c9b15)
 
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 91a9de11c9c2..e6f06dce0d4b 100644
+index f81b24953afbf..24c1b989a0582 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -6380,3 +6380,50 @@ static void pci_mask_replay_timer_timeout(struct pci_dev *pdev)
+@@ -6385,3 +6385,50 @@ static void pci_mask_replay_timer_timeout(struct pci_dev *pdev)
  DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_GLI, 0x9750, pci_mask_replay_timer_timeout);
  DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_GLI, 0x9755, pci_mask_replay_timer_timeout);
  #endif

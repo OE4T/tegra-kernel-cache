@@ -19,7 +19,7 @@ Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
 (cherry picked from commit 01eb59a1fb89d76420f9b5edc2ab006c4f66787b)
 
 diff --git a/drivers/firmware/tegra/ivc.c b/drivers/firmware/tegra/ivc.c
-index 1d2166dae9e1..d3bc1d435b2f 100644
+index 1d2166dae9e16..d3bc1d435b2f5 100644
 --- a/drivers/firmware/tegra/ivc.c
 +++ b/drivers/firmware/tegra/ivc.c
 @@ -638,7 +638,7 @@ int tegra_ivc_read(struct tegra_ivc *ivc, void __user *usr_buf, void *buf, size_

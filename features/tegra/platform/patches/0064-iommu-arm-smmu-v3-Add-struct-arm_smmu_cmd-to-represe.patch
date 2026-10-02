@@ -27,7 +27,7 @@ Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 47c5e1f12631..c31c899a9766 100644
+index 47c5e1f12631b..c31c899a97669 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -393,6 +393,10 @@ static inline unsigned int arm_smmu_cdtab_l2_idx(unsigned int ssid)

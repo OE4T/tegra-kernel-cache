@@ -16,7 +16,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit 95b714bd8c39d65b241aa1c346625b9c942af403)
 
 diff --git a/drivers/memory/tegra/mc.h b/drivers/memory/tegra/mc.h
-index bbe3e2690c64..5f816d703d81 100644
+index bbe3e2690c647..5f816d703d815 100644
 --- a/drivers/memory/tegra/mc.h
 +++ b/drivers/memory/tegra/mc.h
 @@ -13,13 +13,35 @@

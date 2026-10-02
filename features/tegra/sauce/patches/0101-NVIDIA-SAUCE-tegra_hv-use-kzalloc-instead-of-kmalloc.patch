@@ -18,7 +18,7 @@ Reviewed-by: Sandeep Trasi <strasi@nvidia.com>
 (cherry picked from commit 04247506dbdf9e914609dedd42e84a88182984c2)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 19ba8d544acf..869380d30753 100644
+index 19ba8d544acf8..869380d307532 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -678,7 +678,7 @@ static int tegra_hv_setup(struct tegra_hv_data *hvd)

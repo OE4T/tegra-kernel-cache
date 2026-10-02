@@ -19,7 +19,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I6881b0f9cdc050e7232defdf1fb75cb0ff39980d
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 07e16a379d12..249838353318 100644
+index 07e16a379d128..2498383533188 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -449,6 +449,11 @@ static int tegra_i2c_init_dma(struct tegra_i2c_dev *i2c_dev)

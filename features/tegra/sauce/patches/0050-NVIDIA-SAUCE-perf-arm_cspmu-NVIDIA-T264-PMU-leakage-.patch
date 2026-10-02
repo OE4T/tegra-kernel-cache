@@ -17,7 +17,7 @@ Change-Id: Ie5885b9bb9495aa0cfb1844a88cbdc7e0509ce67
 Signed-off-by: Eric Funsten <efunsten@nvidia.com>
 
 diff --git a/drivers/perf/arm_cspmu/nvidia_cspmu.c b/drivers/perf/arm_cspmu/nvidia_cspmu.c
-index eee3da896fb8..3754e1479470 100644
+index eee3da896fb82..3754e14794700 100644
 --- a/drivers/perf/arm_cspmu/nvidia_cspmu.c
 +++ b/drivers/perf/arm_cspmu/nvidia_cspmu.c
 @@ -12,6 +12,12 @@

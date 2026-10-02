@@ -12,7 +12,7 @@ Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/arch/arm64/boot/dts/nvidia/tegra264-p3834.dtsi b/arch/arm64/boot/dts/nvidia/tegra264-p3834.dtsi
-index 06795c82427a..19aa923ffdac 100644
+index 06795c82427ad..19aa923ffdac7 100644
 --- a/arch/arm64/boot/dts/nvidia/tegra264-p3834.dtsi
 +++ b/arch/arm64/boot/dts/nvidia/tegra264-p3834.dtsi
 @@ -9,6 +9,10 @@ aliases {
@@ -27,7 +27,7 @@ index 06795c82427a..19aa923ffdac 100644
  			status = "okay";
  		};
 diff --git a/arch/arm64/boot/dts/nvidia/tegra264.dtsi b/arch/arm64/boot/dts/nvidia/tegra264.dtsi
-index b16d380209a5..54aa57748e7c 100644
+index b16d380209a50..54aa57748e7c8 100644
 --- a/arch/arm64/boot/dts/nvidia/tegra264.dtsi
 +++ b/arch/arm64/boot/dts/nvidia/tegra264.dtsi
 @@ -86,6 +86,7 @@ gpcdma: dma-controller@8400000 {

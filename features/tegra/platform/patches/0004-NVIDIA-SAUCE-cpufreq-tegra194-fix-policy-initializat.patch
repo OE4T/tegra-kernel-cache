@@ -18,7 +18,7 @@ Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/
 (cherry picked from commit c7e345eedd65f65a9fcc09805c1feb7afd3e6942)
 
 diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
-index e25a51b60fd4..de989cef6d64 100644
+index e25a51b60fd4e..de989cef6d649 100644
 --- a/drivers/cpufreq/tegra194-cpufreq.c
 +++ b/drivers/cpufreq/tegra194-cpufreq.c
 @@ -683,17 +683,24 @@ static int tegra194_cpufreq_init(struct cpufreq_policy *policy)

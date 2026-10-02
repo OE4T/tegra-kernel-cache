@@ -18,7 +18,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 423df67df668f3ef1c4a71e3a4195605e0f967c1)
 
 diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 522a8b89b818..6dea5b07e188 100644
+index 522a8b89b8184..6dea5b07e1886 100644
 --- a/drivers/usb/gadget/udc/tegra-xudc.c
 +++ b/drivers/usb/gadget/udc/tegra-xudc.c
 @@ -3833,6 +3833,21 @@ static struct tegra_xudc_soc tegra264_xudc_soc_data = {

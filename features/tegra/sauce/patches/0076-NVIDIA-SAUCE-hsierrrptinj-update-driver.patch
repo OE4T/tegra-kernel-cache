@@ -18,7 +18,7 @@ Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
 Tested-by: Prathamesh Shete <pshete@nvidia.com>
 
 diff --git a/drivers/platform/tegra/tegra-hsierrrptinj.c b/drivers/platform/tegra/tegra-hsierrrptinj.c
-index 79cf0b6b13b7..22e2d6578641 100644
+index 79cf0b6b13b7c..22e2d65786416 100644
 --- a/drivers/platform/tegra/tegra-hsierrrptinj.c
 +++ b/drivers/platform/tegra/tegra-hsierrrptinj.c
 @@ -70,13 +70,13 @@ struct hsm_error_report_frame {

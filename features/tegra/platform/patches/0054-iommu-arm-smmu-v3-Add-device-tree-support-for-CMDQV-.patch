@@ -16,10 +16,10 @@ Signed-off-by: Will Deacon <will@kernel.org>
 (cherry picked from commit ea69dc4e207b09fb9adb6dab1901739d64853090)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 4e599d6ebdb6..7246d2514808 100644
+index 17fbc4a24abb8..c671ac2322456 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -4629,6 +4629,35 @@ static int arm_smmu_device_hw_probe(struct arm_smmu_device *smmu)
+@@ -4631,6 +4631,35 @@ static int arm_smmu_device_hw_probe(struct arm_smmu_device *smmu)
  	return 0;
  }
  
@@ -55,7 +55,7 @@ index 4e599d6ebdb6..7246d2514808 100644
  #ifdef CONFIG_ACPI
  #ifdef CONFIG_TEGRA241_CMDQV
  static void acpi_smmu_dsdt_probe_tegra241_cmdqv(struct acpi_iort_node *node,
-@@ -4737,6 +4766,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
+@@ -4739,6 +4768,9 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
  	if (of_dma_is_coherent(dev->of_node))
  		smmu->features |= ARM_SMMU_FEAT_COHERENCY;
  

@@ -11,7 +11,7 @@ Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 (cherry picked from commit 2d14bf98e6b445afbb799b170448f628f6d4ab69)
 
 diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
-index 9b4f516f313e..6fe8a3f9797a 100644
+index 9b4f516f313e0..6fe8a3f9797a2 100644
 --- a/drivers/cpufreq/tegra194-cpufreq.c
 +++ b/drivers/cpufreq/tegra194-cpufreq.c
 @@ -196,7 +196,7 @@ static const struct tegra_cpufreq_soc tegra234_cpufreq_soc = {

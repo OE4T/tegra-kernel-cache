@@ -18,7 +18,7 @@ Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 (cherry picked from commit 4ebcacbb4447cd3b05289e1e0e199a5e8ea0c6de)
 
 diff --git a/drivers/memory/tegra/tegra186-emc.c b/drivers/memory/tegra/tegra186-emc.c
-index a0de80afe3e9..9959ad5804b4 100644
+index a0de80afe3e90..9959ad5804b44 100644
 --- a/drivers/memory/tegra/tegra186-emc.c
 +++ b/drivers/memory/tegra/tegra186-emc.c
 @@ -218,20 +218,20 @@ static int tegra186_emc_get_emc_dvfs_latency(struct tegra186_emc *emc)

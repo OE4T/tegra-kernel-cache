@@ -19,7 +19,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index c28e237f4dee..14268337415a 100644
+index c28e237f4deee..14268337415ad 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -2,7 +2,7 @@

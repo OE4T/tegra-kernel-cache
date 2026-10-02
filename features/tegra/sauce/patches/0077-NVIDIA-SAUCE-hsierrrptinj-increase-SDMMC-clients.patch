@@ -20,7 +20,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
 
 diff --git a/drivers/platform/tegra/tegra-hsierrrptinj.c b/drivers/platform/tegra/tegra-hsierrrptinj.c
-index 22e2d6578641..3249832fea52 100644
+index 22e2d65786416..3249832fea52d 100644
 --- a/drivers/platform/tegra/tegra-hsierrrptinj.c
 +++ b/drivers/platform/tegra/tegra-hsierrrptinj.c
 @@ -1,5 +1,5 @@

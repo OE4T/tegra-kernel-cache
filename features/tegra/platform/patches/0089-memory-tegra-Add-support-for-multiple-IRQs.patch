@@ -17,7 +17,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit 4d865a2374037d2d0842f88822fd753f0918b370)
 
 diff --git a/drivers/memory/tegra/mc.c b/drivers/memory/tegra/mc.c
-index 40b2b803f800..1f376b4fdf89 100644
+index 40b2b803f800c..1f376b4fdf89a 100644
 --- a/drivers/memory/tegra/mc.c
 +++ b/drivers/memory/tegra/mc.c
 @@ -399,6 +399,10 @@ unsigned int tegra_mc_get_emem_device_count(struct tegra_mc *mc)
@@ -84,7 +84,7 @@ index 40b2b803f800..1f376b4fdf89 100644
  
  	if (mc->soc->reset_ops) {
 diff --git a/drivers/memory/tegra/mc.h b/drivers/memory/tegra/mc.h
-index 5f816d703d81..34ce03ebc51c 100644
+index 5f816d703d815..34ce03ebc51ca 100644
 --- a/drivers/memory/tegra/mc.h
 +++ b/drivers/memory/tegra/mc.h
 @@ -193,6 +193,7 @@ extern const struct tegra_mc_ops tegra186_mc_ops;
@@ -96,7 +96,7 @@ index 5f816d703d81..34ce03ebc51c 100644
  extern const char * const tegra_mc_error_names[8];
  
 diff --git a/drivers/memory/tegra/tegra114.c b/drivers/memory/tegra/tegra114.c
-index ea7e4c7bb5f8..fffb28eea57f 100644
+index ea7e4c7bb5f83..fffb28eea57f0 100644
 --- a/drivers/memory/tegra/tegra114.c
 +++ b/drivers/memory/tegra/tegra114.c
 @@ -1115,4 +1115,6 @@ const struct tegra_mc_soc tegra114_mc_soc = {
@@ -107,7 +107,7 @@ index ea7e4c7bb5f8..fffb28eea57f 100644
 +	.num_interrupts = ARRAY_SIZE(tegra30_mc_irq_handlers),
  };
 diff --git a/drivers/memory/tegra/tegra124.c b/drivers/memory/tegra/tegra124.c
-index c5529f79fbb4..d8d9fd241443 100644
+index c5529f79fbb42..d8d9fd2414436 100644
 --- a/drivers/memory/tegra/tegra124.c
 +++ b/drivers/memory/tegra/tegra124.c
 @@ -1276,6 +1276,8 @@ const struct tegra_mc_soc tegra124_mc_soc = {
@@ -128,7 +128,7 @@ index c5529f79fbb4..d8d9fd241443 100644
  };
  #endif /* CONFIG_ARCH_TEGRA_132_SOC */
 diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra186.c
-index 51e2dd628fb4..eb1eaaffc79a 100644
+index 51e2dd628fb47..eb1eaaffc79a8 100644
 --- a/drivers/memory/tegra/tegra186.c
 +++ b/drivers/memory/tegra/tegra186.c
 @@ -174,7 +174,6 @@ const struct tegra_mc_ops tegra186_mc_ops = {
@@ -148,7 +148,7 @@ index 51e2dd628fb4..eb1eaaffc79a 100644
  };
  #endif
 diff --git a/drivers/memory/tegra/tegra194.c b/drivers/memory/tegra/tegra194.c
-index 5b7ff2dd6812..cb0e7886857d 100644
+index 5b7ff2dd68122..cb0e7886857d9 100644
 --- a/drivers/memory/tegra/tegra194.c
 +++ b/drivers/memory/tegra/tegra194.c
 @@ -1359,4 +1359,6 @@ const struct tegra_mc_soc tegra194_mc_soc = {
@@ -159,7 +159,7 @@ index 5b7ff2dd6812..cb0e7886857d 100644
 +	.num_interrupts = ARRAY_SIZE(tegra30_mc_irq_handlers),
  };
 diff --git a/drivers/memory/tegra/tegra20.c b/drivers/memory/tegra/tegra20.c
-index 227c3336974d..9bce1c0561ce 100644
+index 227c3336974de..9bce1c0561ce8 100644
 --- a/drivers/memory/tegra/tegra20.c
 +++ b/drivers/memory/tegra/tegra20.c
 @@ -761,9 +761,12 @@ static irqreturn_t tegra20_mc_handle_irq(int irq, void *data)
@@ -184,7 +184,7 @@ index 227c3336974d..9bce1c0561ce 100644
 +	.num_interrupts = ARRAY_SIZE(tegra20_mc_irq_handlers),
  };
 diff --git a/drivers/memory/tegra/tegra210.c b/drivers/memory/tegra/tegra210.c
-index e166b33848e9..8283601ab52c 100644
+index e166b33848e95..8283601ab52cd 100644
 --- a/drivers/memory/tegra/tegra210.c
 +++ b/drivers/memory/tegra/tegra210.c
 @@ -1288,4 +1288,6 @@ const struct tegra_mc_soc tegra210_mc_soc = {
@@ -195,7 +195,7 @@ index e166b33848e9..8283601ab52c 100644
 +	.num_interrupts = ARRAY_SIZE(tegra30_mc_irq_handlers),
  };
 diff --git a/drivers/memory/tegra/tegra234.c b/drivers/memory/tegra/tegra234.c
-index 512d054d7592..9586d7528fb7 100644
+index 512d054d75924..9586d7528fb70 100644
 --- a/drivers/memory/tegra/tegra234.c
 +++ b/drivers/memory/tegra/tegra234.c
 @@ -1153,4 +1153,6 @@ const struct tegra_mc_soc tegra234_mc_soc = {
@@ -206,7 +206,7 @@ index 512d054d7592..9586d7528fb7 100644
 +	.num_interrupts = ARRAY_SIZE(tegra30_mc_irq_handlers),
  };
 diff --git a/drivers/memory/tegra/tegra30.c b/drivers/memory/tegra/tegra30.c
-index 3f3c7d996b49..21b5f902276b 100644
+index 3f3c7d996b49b..21b5f902276b3 100644
 --- a/drivers/memory/tegra/tegra30.c
 +++ b/drivers/memory/tegra/tegra30.c
 @@ -1401,4 +1401,6 @@ const struct tegra_mc_soc tegra30_mc_soc = {
@@ -217,7 +217,7 @@ index 3f3c7d996b49..21b5f902276b 100644
 +	.num_interrupts = ARRAY_SIZE(tegra30_mc_irq_handlers),
  };
 diff --git a/include/soc/tegra/mc.h b/include/soc/tegra/mc.h
-index 372f47e824d5..d07de04c0f33 100644
+index 372f47e824d53..d07de04c0f337 100644
 --- a/include/soc/tegra/mc.h
 +++ b/include/soc/tegra/mc.h
 @@ -10,10 +10,11 @@

@@ -19,7 +19,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit dc374ea86ae26744401eaaa513d19f37d15a5c9f)
 
 diff --git a/drivers/phy/tegra/xusb-tegra186.c b/drivers/phy/tegra/xusb-tegra186.c
-index 4452e73fb82a..1d8a9e57ecf6 100644
+index 4452e73fb82a6..1d8a9e57ecf67 100644
 --- a/drivers/phy/tegra/xusb-tegra186.c
 +++ b/drivers/phy/tegra/xusb-tegra186.c
 @@ -609,9 +609,11 @@ static void tegra186_utmi_bias_pad_power_on(struct tegra_xusb_padctl *padctl)
@@ -134,7 +134,7 @@ index 4452e73fb82a..1d8a9e57ecf6 100644
  	return &priv->base;
  }
 diff --git a/drivers/phy/tegra/xusb.c b/drivers/phy/tegra/xusb.c
-index c89df95aa6ca..f7bd83e5f350 100644
+index c89df95aa6ca9..f7bd83e5f3504 100644
 --- a/drivers/phy/tegra/xusb.c
 +++ b/drivers/phy/tegra/xusb.c
 @@ -1,6 +1,6 @@
@@ -291,7 +291,7 @@ index c89df95aa6ca..f7bd83e5f350 100644
  					unsigned int port)
  {
 diff --git a/drivers/phy/tegra/xusb.h b/drivers/phy/tegra/xusb.h
-index 810b410672f3..7e7774ef2668 100644
+index 810b410672f37..7e7774ef2668a 100644
 --- a/drivers/phy/tegra/xusb.h
 +++ b/drivers/phy/tegra/xusb.h
 @@ -1,6 +1,6 @@
@@ -325,7 +325,7 @@ index 810b410672f3..7e7774ef2668 100644
  
  static inline void padctl_writel(struct tegra_xusb_padctl *padctl, u32 value,
 diff --git a/include/linux/phy/tegra/xusb.h b/include/linux/phy/tegra/xusb.h
-index 6ca51e0080ec..bcb0e9ee3d46 100644
+index 6ca51e0080ec0..bcb0e9ee3d468 100644
 --- a/include/linux/phy/tegra/xusb.h
 +++ b/include/linux/phy/tegra/xusb.h
 @@ -8,11 +8,20 @@

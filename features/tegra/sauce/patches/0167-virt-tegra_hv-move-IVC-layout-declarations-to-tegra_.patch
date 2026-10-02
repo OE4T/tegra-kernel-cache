@@ -30,7 +30,7 @@ Reviewed-by: Aparna Das <aparnad@nvidia.com>
 (cherry picked from commit 6875009f39ed9fc696a990b3377d2def495912f9)
 
 diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
-index 035d2546d28d..6fefb333bf09 100644
+index 035d2546d28d7..6fefb333bf095 100644
 --- a/include/soc/tegra/virt/tegra_hv.h
 +++ b/include/soc/tegra/virt/tegra_hv.h
 @@ -27,44 +27,6 @@
@@ -248,7 +248,7 @@ index 035d2546d28d..6fefb333bf09 100644
  
  #endif /* TEGRA_HV_H */
 diff --git a/include/soc/tegra/virt/tegra_hv_ivc.h b/include/soc/tegra/virt/tegra_hv_ivc.h
-index d88650786019..27a1e3c9e988 100644
+index d88650786019f..27a1e3c9e9881 100644
 --- a/include/soc/tegra/virt/tegra_hv_ivc.h
 +++ b/include/soc/tegra/virt/tegra_hv_ivc.h
 @@ -7,13 +7,215 @@

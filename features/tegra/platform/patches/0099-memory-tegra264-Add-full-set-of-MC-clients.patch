@@ -17,7 +17,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit d530ed059dac445dc5b81d564adf1952b5c4adba)
 
 diff --git a/drivers/memory/tegra/tegra264.c b/drivers/memory/tegra/tegra264.c
-index e62890841725..b8d6c4ce4836 100644
+index e628908417255..b8d6c4ce48369 100644
 --- a/drivers/memory/tegra/tegra264.c
 +++ b/drivers/memory/tegra/tegra264.c
 @@ -21,45 +21,62 @@

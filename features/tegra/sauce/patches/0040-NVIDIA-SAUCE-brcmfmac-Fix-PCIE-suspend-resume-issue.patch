@@ -21,7 +21,7 @@ Signed-off-by: Revanth Kumar Uppala <ruppala@nvidia.com>
 Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2914037
 
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-index 45fbcbdc7d9e..00d53d659685 100644
+index 45fbcbdc7d9e4..00d53d6596851 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
 @@ -23,6 +23,7 @@
@@ -147,7 +147,7 @@ index 45fbcbdc7d9e..00d53d659685 100644
  		bphy_err(drvr, "Unsupported msgtype %d\n", msg->msgtype);
  		break;
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.h
-index 6a849f4a94dd..99359a152345 100644
+index 6a849f4a94dd7..99359a1523451 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.h
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.h
 @@ -39,5 +39,6 @@ static inline int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
@@ -158,7 +158,7 @@ index 6a849f4a94dd..99359a152345 100644
  
  #endif /* BRCMFMAC_MSGBUF_H */
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index d2a1770540b0..56db88a025db 100644
+index d2a1770540b00..56db88a025db2 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
 @@ -213,12 +213,14 @@ static const struct brcmf_firmware_mapping brcmf_pcie_fwnames[] = {
@@ -447,7 +447,7 @@ index d2a1770540b0..56db88a025db 100644
  {
  	brcmf_dbg(PCIE, "Enter\n");
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.h
-index 8e6c227e8315..8e4f48637894 100644
+index 8e6c227e8315c..8e4f486378944 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.h
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.h
 @@ -11,4 +11,6 @@ struct brcmf_pciedev {

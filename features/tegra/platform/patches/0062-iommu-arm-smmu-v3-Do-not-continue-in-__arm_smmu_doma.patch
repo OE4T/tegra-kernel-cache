@@ -18,7 +18,7 @@ Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index b01263796aad..c1f3857964a5 100644
+index d0eb3a46a5de0..6d5858de275ff 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -2689,7 +2689,7 @@ static void __arm_smmu_domain_inv_range(struct arm_smmu_invs *invs,

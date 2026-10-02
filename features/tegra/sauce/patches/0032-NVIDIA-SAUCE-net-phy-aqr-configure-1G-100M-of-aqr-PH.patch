@@ -25,7 +25,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 56752e0d277f..7ee9eb6cbc4b 100644
+index 56752e0d277fa..7ee9eb6cbc4bb 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -295,14 +295,59 @@ static int aqr_config_aneg(struct phy_device *phydev)

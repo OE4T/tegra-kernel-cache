@@ -20,7 +20,7 @@ Reviewed-by: Revanth Kumar Uppala <ruppala@nvidia.com>
 (cherry picked from commit 65b5dbebef09b42543c3e74da4f63a18fc2b3e8a)
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index e956d29b6493..2ae16db806da 100644
+index e956d29b6493b..2ae16db806da5 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -918,11 +918,15 @@ static int aqr_gen1_config_init(struct phy_device *phydev)

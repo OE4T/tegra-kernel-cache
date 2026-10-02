@@ -14,7 +14,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 00d6070ec02c55731c7655b3227edd8b84bbcdbc)
 
 diff --git a/sound/soc/tegra/tegra210_admaif.c b/sound/soc/tegra/tegra210_admaif.c
-index ea7bee4c0a89..291de8da57a1 100644
+index ea7bee4c0a890..291de8da57a18 100644
 --- a/sound/soc/tegra/tegra210_admaif.c
 +++ b/sound/soc/tegra/tegra210_admaif.c
 @@ -408,6 +408,7 @@ static int tegra_admaif_start(struct snd_soc_dai *dai, int direction)

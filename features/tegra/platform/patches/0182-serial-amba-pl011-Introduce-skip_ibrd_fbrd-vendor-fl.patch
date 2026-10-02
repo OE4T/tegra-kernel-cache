@@ -18,7 +18,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 (cherry picked from commit 42157639ddc797053e0f16e6fe0f6b64034fe559)
 
 diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index 4b213d0c6133..ad4740afb721 100644
+index 4b213d0c61336..ad4740afb7219 100644
 --- a/drivers/tty/serial/amba-pl011.c
 +++ b/drivers/tty/serial/amba-pl011.c
 @@ -114,6 +114,7 @@ struct vendor_data {

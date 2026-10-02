@@ -21,7 +21,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit 0a34c5692db7b568c26d6cbefa73c47e6f7dcaea)
 
 diff --git a/drivers/firmware/tegra/ivc.c b/drivers/firmware/tegra/ivc.c
-index bf2b45ad1980..1d2166dae9e1 100644
+index bf2b45ad19807..1d2166dae9e16 100644
 --- a/drivers/firmware/tegra/ivc.c
 +++ b/drivers/firmware/tegra/ivc.c
 @@ -1,7 +1,5 @@
@@ -180,7 +180,7 @@ index bf2b45ad1980..1d2166dae9e1 100644
  {
  	*dst = *src;
 diff --git a/include/soc/tegra/ivc.h b/include/soc/tegra/ivc.h
-index 736590774114..739594225b5b 100644
+index 736590774114d..739594225b5be 100644
 --- a/include/soc/tegra/ivc.h
 +++ b/include/soc/tegra/ivc.h
 @@ -1,7 +1,5 @@

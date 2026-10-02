@@ -12,7 +12,7 @@ Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index c1f3857964a5..f0247264acd3 100644
+index 6d5858de275ff..8637282a24725 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -1128,7 +1128,7 @@ static inline int arm_smmu_invs_iter_next_cmp(struct arm_smmu_invs *invs_l,
@@ -43,7 +43,7 @@ index c1f3857964a5..f0247264acd3 100644
  	 *
  	 *  [CPU0]                        | [CPU1]
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index c54b95d05a9d..47c5e1f12631 100644
+index c54b95d05a9dc..47c5e1f12631b 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -690,7 +690,7 @@ static inline bool arm_smmu_inv_is_ats(const struct arm_smmu_inv *inv)

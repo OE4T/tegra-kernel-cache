@@ -20,7 +20,7 @@ Link: https://lore.kernel.org/r/20260518114013.62065-3-akhilrajeev@nvidia.com
 (cherry picked from commit aa0f846f61d45e83e126f3c16234cbec66ec92e8)
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 4f560a6dd457..9c281b4905eb 100644
+index 4f560a6dd457e..9c281b4905ebd 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -164,6 +164,7 @@ struct tegra_i2c_regs {

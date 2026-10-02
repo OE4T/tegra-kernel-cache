@@ -17,7 +17,7 @@ Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 (cherry picked from commit ecfcc6a825dfacdb4f3cf38fe4b463396fa0d029)
 
 diff --git a/tools/perf/tests/parse-events.c b/tools/perf/tests/parse-events.c
-index 67550cc60555..30e5cf124bda 100644
+index 67550cc60555d..30e5cf124bda6 100644
 --- a/tools/perf/tests/parse-events.c
 +++ b/tools/perf/tests/parse-events.c
 @@ -155,60 +155,38 @@ static int test__checkevent_numeric(struct evlist *evlist)

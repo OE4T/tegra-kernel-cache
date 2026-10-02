@@ -12,7 +12,7 @@ Signed-off-by: Linus Walleij <linusw@kernel.org>
 (cherry picked from commit c98506206912dd0ddea94f844b65b0209a57e372)
 
 diff --git a/drivers/pinctrl/tegra/Kconfig b/drivers/pinctrl/tegra/Kconfig
-index cb3a7ab02e72..54263b4554c0 100644
+index cb3a7ab02e722..54263b4554c07 100644
 --- a/drivers/pinctrl/tegra/Kconfig
 +++ b/drivers/pinctrl/tegra/Kconfig
 @@ -46,6 +46,16 @@ config PINCTRL_TEGRA238
@@ -33,7 +33,7 @@ index cb3a7ab02e72..54263b4554c0 100644
  	def_bool y if ARCH_TEGRA
  	select GENERIC_PHY
 diff --git a/drivers/pinctrl/tegra/Makefile b/drivers/pinctrl/tegra/Makefile
-index ce700bbcbf6e..71ade768bf9c 100644
+index ce700bbcbf6ec..71ade768bf9c4 100644
 --- a/drivers/pinctrl/tegra/Makefile
 +++ b/drivers/pinctrl/tegra/Makefile
 @@ -9,4 +9,5 @@ obj-$(CONFIG_PINCTRL_TEGRA186)		+= pinctrl-tegra186.o
@@ -44,7 +44,7 @@ index ce700bbcbf6e..71ade768bf9c 100644
  obj-$(CONFIG_PINCTRL_TEGRA_XUSB)	+= pinctrl-tegra-xusb.o
 diff --git a/drivers/pinctrl/tegra/pinctrl-tegra264.c b/drivers/pinctrl/tegra/pinctrl-tegra264.c
 new file mode 100644
-index 000000000000..5a0c91aaba3a
+index 0000000000000..5a0c91aaba3a8
 --- /dev/null
 +++ b/drivers/pinctrl/tegra/pinctrl-tegra264.c
 @@ -0,0 +1,2216 @@

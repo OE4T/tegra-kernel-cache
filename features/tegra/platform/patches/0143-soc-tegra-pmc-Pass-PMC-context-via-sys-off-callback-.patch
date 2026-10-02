@@ -11,7 +11,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit a9f822b3ff7b47a5b78f1258b998cbeb29089a62)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index 9ec033d539e9..cd7c557c886b 100644
+index 9ec033d539e9a..cd7c557c886b5 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -1138,7 +1138,7 @@ static int tegra_pmc_reboot_notify(struct notifier_block *this,

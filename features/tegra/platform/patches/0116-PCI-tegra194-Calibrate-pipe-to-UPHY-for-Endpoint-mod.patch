@@ -21,7 +21,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: Ifb6e0515fe6365a160db9157863e32fa7cfcdfdd
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 5e88158f7f15..cb0b1490d45e 100644
+index 5e88158f7f15b..cb0b1490d45eb 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -1072,6 +1072,9 @@ static int tegra_pcie_enable_phy(struct tegra_pcie_dw *pcie)

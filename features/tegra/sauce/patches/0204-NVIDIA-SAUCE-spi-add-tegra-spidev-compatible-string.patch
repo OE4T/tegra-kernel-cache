@@ -16,7 +16,7 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index 4d53c394101a..769942ede87d 100644
+index 4d53c394101a4..769942ede87df 100644
 --- a/drivers/spi/spidev.c
 +++ b/drivers/spi/spidev.c
 @@ -733,6 +733,8 @@ static const struct of_device_id spidev_dt_ids[] = {

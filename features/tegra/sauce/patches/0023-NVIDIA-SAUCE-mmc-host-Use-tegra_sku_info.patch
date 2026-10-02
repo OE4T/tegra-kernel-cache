@@ -17,7 +17,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit fe4b44eff754dace658a95335d7dbcb2deac8189)
 
 diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
-index dc540e254480..fdef1c735248 100644
+index dc540e2544801..fdef1c7352481 100644
 --- a/drivers/mmc/host/sdhci-tegra.c
 +++ b/drivers/mmc/host/sdhci-tegra.c
 @@ -193,7 +193,7 @@ static u16 tegra_sdhci_readw(struct sdhci_host *host, int reg)
@@ -66,7 +66,7 @@ index dc540e254480..fdef1c735248 100644
  	if (!tegra_host->skip_clk_rst) {
  		clk = devm_clk_get(mmc_dev(host->mmc), NULL);
 diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
-index a03cee8af961..e3a7855ff6c9 100644
+index a03cee8af9618..e3a7855ff6c9f 100644
 --- a/drivers/mmc/host/sdhci.h
 +++ b/drivers/mmc/host/sdhci.h
 @@ -732,7 +732,7 @@ struct sdhci_ops {

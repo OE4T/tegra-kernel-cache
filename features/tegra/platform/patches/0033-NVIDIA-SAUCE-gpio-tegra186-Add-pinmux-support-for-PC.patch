@@ -14,7 +14,7 @@ Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
 Change-Id: I58ce112669e33a69ce100f4f5c7f1fe84b837607
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index 4a3c816ceb68..420ca3e77b30 100644
+index 4a3c816ceb680..420ca3e77b30b 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -1486,11 +1486,27 @@ static const struct tegra_gpio_port tegra264_uphy_ports[] = {

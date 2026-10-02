@@ -49,7 +49,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I39952a3fac403269fb28e4983f9ab8052b8f3d19
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index cb0b1490d45e..dc4fd75a5167 100644
+index cb0b1490d45eb..dc4fd75a51679 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -2275,7 +2275,7 @@ static int tegra_pcie_dw_probe(struct platform_device *pdev)

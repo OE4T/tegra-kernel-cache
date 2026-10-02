@@ -17,7 +17,7 @@ Reviewed-by: svc-mobile-coverity <svc-mobile-coverity@nvidia.com>
 (cherry picked from commit 91997a2a5cb7f0a84a1c61ab504abdfc9c09636e)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index a0bfee379224..43d5d8873d8f 100644
+index a0bfee3792247..43d5d8873d8ff 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -103,6 +103,8 @@ struct tegra_hv_data {
@@ -156,7 +156,7 @@ index a0bfee379224..43d5d8873d8f 100644
  	if (ret != 0) {
  		tegra_hv_cleanup(hvd);
 diff --git a/include/soc/tegra/virt/syscalls.h b/include/soc/tegra/virt/syscalls.h
-index c33a01fc6714..03f97c46976a 100644
+index c33a01fc6714c..03f97c46976ae 100644
 --- a/include/soc/tegra/virt/syscalls.h
 +++ b/include/soc/tegra/virt/syscalls.h
 @@ -18,9 +18,13 @@

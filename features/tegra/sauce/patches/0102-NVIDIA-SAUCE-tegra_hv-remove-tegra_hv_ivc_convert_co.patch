@@ -19,7 +19,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit bb8edf1919e49386ff52e5dd3849a24e2f0d88f4)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 869380d30753..9b1be4d1db2b 100644
+index 869380d307532..9b1be4d1db2b5 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -1033,12 +1033,6 @@ int tegra_hv_ivc_read_advance(struct tegra_hv_ivc_cookie *ivck)
@@ -36,7 +36,7 @@ index 869380d30753..9b1be4d1db2b 100644
  {
  	uint32_t i;
 diff --git a/include/soc/tegra/virt/hv-ivc.h b/include/soc/tegra/virt/hv-ivc.h
-index dab9b26bc39a..35fdb9876e1f 100644
+index dab9b26bc39a7..35fdb9876e1fd 100644
 --- a/include/soc/tegra/virt/hv-ivc.h
 +++ b/include/soc/tegra/virt/hv-ivc.h
 @@ -306,6 +306,4 @@ int tegra_hv_ivc_get_info(struct tegra_hv_ivc_cookie *ivck, uint64_t *pa,

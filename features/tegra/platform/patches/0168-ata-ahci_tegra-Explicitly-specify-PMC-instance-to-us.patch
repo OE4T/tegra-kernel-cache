@@ -14,7 +14,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit 64e609f9299d457a88dec0bce68b42a434a78502)
 
 diff --git a/drivers/ata/ahci_tegra.c b/drivers/ata/ahci_tegra.c
-index 44584eed6374..554f05e09f98 100644
+index 44584eed63744..554f05e09f983 100644
 --- a/drivers/ata/ahci_tegra.c
 +++ b/drivers/ata/ahci_tegra.c
 @@ -175,6 +175,7 @@ struct tegra_ahci_priv {

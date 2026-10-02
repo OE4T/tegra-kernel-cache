@@ -12,7 +12,7 @@ Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
-index 19568aed3698..90a10198c74b 100644
+index 19568aed36989..90a10198c74be 100644
 --- a/drivers/dma/tegra186-gpc-dma.c
 +++ b/drivers/dma/tegra186-gpc-dma.c
 @@ -1327,6 +1327,23 @@ static const struct tegra_dma_channel_regs tegra186_reg_offsets = {

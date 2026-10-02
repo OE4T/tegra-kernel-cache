@@ -10,7 +10,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit 83c18a324570193140cafc12c88eb1e370564078)
 
 diff --git a/include/soc/tegra/bpmp-abi.h b/include/soc/tegra/bpmp-abi.h
-index 39bb3f87e28d..5c64b3e02211 100644
+index 39bb3f87e28d4..5c64b3e022110 100644
 --- a/include/soc/tegra/bpmp-abi.h
 +++ b/include/soc/tegra/bpmp-abi.h
 @@ -1,6 +1,6 @@

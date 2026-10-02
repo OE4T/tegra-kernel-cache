@@ -10,7 +10,7 @@ Change-Id: I8e5de37cf0f1e73aa1ea00e42f6c90ddc304e586
 Signed-off-by: Kartik <kkartik@nvidia.com>
 
 diff --git a/drivers/mailbox/tegra-hsp.c b/drivers/mailbox/tegra-hsp.c
-index f89ed6d0646d..4abcf77ae22b 100644
+index f89ed6d0646df..4abcf77ae22b7 100644
 --- a/drivers/mailbox/tegra-hsp.c
 +++ b/drivers/mailbox/tegra-hsp.c
 @@ -1149,12 +1149,31 @@ static const struct tegra_hsp_soc tegra234_hv_hsp_soc = {

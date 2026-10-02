@@ -11,7 +11,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit dd03d34d6d8e7a3f62450fb7a1408d86fb35487c)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index af65cc409694..f3760a3b3026 100644
+index af65cc409694f..f3760a3b3026d 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -4225,6 +4225,13 @@ static const struct tegra_wake_event tegra234_wake_events[] = {

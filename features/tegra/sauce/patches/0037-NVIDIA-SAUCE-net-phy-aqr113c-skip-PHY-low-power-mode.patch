@@ -23,7 +23,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia.h b/drivers/net/phy/aquantia/aquantia.h
-index 89655b6e4004..666755125df6 100644
+index 89655b6e40048..666755125df6c 100644
 --- a/drivers/net/phy/aquantia/aquantia.h
 +++ b/drivers/net/phy/aquantia/aquantia.h
 @@ -231,6 +231,7 @@ struct aqr107_priv {
@@ -35,7 +35,7 @@ index 89655b6e4004..666755125df6 100644
  
  #if IS_REACHABLE(CONFIG_HWMON)
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 1143efd50a91..d492d5b99f9a 100644
+index 1143efd50a91f..d492d5b99f9ac 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -1223,8 +1223,12 @@ static int aqr_gen2_get_rate_matching(struct phy_device *phydev,

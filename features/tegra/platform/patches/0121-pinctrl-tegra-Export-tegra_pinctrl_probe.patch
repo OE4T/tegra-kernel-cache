@@ -12,7 +12,7 @@ Signed-off-by: Linus Walleij <linusw@kernel.org>
 (cherry picked from commit e624fb83ccb44e202e1d6d4dc74681bec4f8a597)
 
 diff --git a/drivers/pinctrl/tegra/pinctrl-tegra.c b/drivers/pinctrl/tegra/pinctrl-tegra.c
-index 11ecbd6a9b2a..0cb7a705a524 100644
+index 11ecbd6a9b2a1..0cb7a705a5243 100644
 --- a/drivers/pinctrl/tegra/pinctrl-tegra.c
 +++ b/drivers/pinctrl/tegra/pinctrl-tegra.c
 @@ -13,6 +13,7 @@

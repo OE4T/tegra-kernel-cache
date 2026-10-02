@@ -32,7 +32,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 36645381b864b53ae976221854bbfc23da6abba3)
 
 diff --git a/sound/soc/tegra/tegra210_mixer.c b/sound/soc/tegra/tegra210_mixer.c
-index 9066884daac6..aab414af6d0d 100644
+index 9066884daac66..aab414af6d0db 100644
 --- a/sound/soc/tegra/tegra210_mixer.c
 +++ b/sound/soc/tegra/tegra210_mixer.c
 @@ -151,10 +151,17 @@ static int tegra210_mixer_configure_gain(struct snd_soc_component *cmpnt,
@@ -352,7 +352,7 @@ index 9066884daac6..aab414af6d0d 100644
  	regs = devm_platform_ioremap_resource(pdev, 0);
  	if (IS_ERR(regs))
 diff --git a/sound/soc/tegra/tegra210_mixer.h b/sound/soc/tegra/tegra210_mixer.h
-index a330530fbc61..bcbad08cbb9d 100644
+index a330530fbc613..bcbad08cbb9d3 100644
 --- a/sound/soc/tegra/tegra210_mixer.h
 +++ b/sound/soc/tegra/tegra210_mixer.h
 @@ -79,12 +79,25 @@

@@ -28,7 +28,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit 82169065ffb07577075a5088b313d78673ded331)
 
 diff --git a/drivers/memory/tegra/mc.c b/drivers/memory/tegra/mc.c
-index abd11aa9141c..b736e79d6c08 100644
+index abd11aa9141c5..b736e79d6c087 100644
 --- a/drivers/memory/tegra/mc.c
 +++ b/drivers/memory/tegra/mc.c
 @@ -700,7 +700,7 @@ irqreturn_t tegra30_mc_handle_irq(int irq, void *data)
@@ -53,7 +53,7 @@ index abd11aa9141c..b736e79d6c08 100644
  	[3] = "TrustZone violation",
  	[4] = "Carveout violation",
 diff --git a/drivers/memory/tegra/mc.h b/drivers/memory/tegra/mc.h
-index b286c2558fd5..649b54369263 100644
+index b286c2558fd52..649b54369263a 100644
 --- a/drivers/memory/tegra/mc.h
 +++ b/drivers/memory/tegra/mc.h
 @@ -25,6 +25,7 @@
@@ -157,7 +157,7 @@ index b286c2558fd5..649b54369263 100644
  /*
   * These IDs are for internal use of Tegra ICC drivers. The ID numbers are
 diff --git a/drivers/memory/tegra/tegra20.c b/drivers/memory/tegra/tegra20.c
-index f7eb9e53c9fa..e352c370727e 100644
+index f7eb9e53c9fab..e352c370727e3 100644
 --- a/drivers/memory/tegra/tegra20.c
 +++ b/drivers/memory/tegra/tegra20.c
 @@ -713,7 +713,7 @@ static irqreturn_t tegra20_mc_handle_irq(int irq, void *data)
@@ -188,7 +188,7 @@ index f7eb9e53c9fa..e352c370727e 100644
  
  			if (value & BIT(31))
 diff --git a/drivers/memory/tegra/tegra264.c b/drivers/memory/tegra/tegra264.c
-index 172a48b56484..e43ef14da1ee 100644
+index 172a48b56484a..e43ef14da1ee7 100644
 --- a/drivers/memory/tegra/tegra264.c
 +++ b/drivers/memory/tegra/tegra264.c
 @@ -188,6 +188,41 @@ static const struct tegra_mc_client tegra264_mc_clients[] = {

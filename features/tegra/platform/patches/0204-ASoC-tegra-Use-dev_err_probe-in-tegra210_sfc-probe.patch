@@ -12,7 +12,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 856ffd8f4aae227dd008e718dbb1cf7d3474a626)
 
 diff --git a/sound/soc/tegra/tegra210_sfc.c b/sound/soc/tegra/tegra210_sfc.c
-index 24498efc39b6..30afea74e066 100644
+index 24498efc39b63..30afea74e066e 100644
 --- a/sound/soc/tegra/tegra210_sfc.c
 +++ b/sound/soc/tegra/tegra210_sfc.c
 @@ -3608,10 +3608,9 @@ static int tegra210_sfc_platform_probe(struct platform_device *pdev)

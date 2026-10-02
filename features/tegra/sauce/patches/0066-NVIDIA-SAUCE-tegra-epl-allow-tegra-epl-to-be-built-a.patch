@@ -23,7 +23,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 2a56160a9c270b5b411a88f9e79865e5442581d3)
 
 diff --git a/drivers/platform/tegra/Kconfig b/drivers/platform/tegra/Kconfig
-index 404281dc1e6e..344bf38dea5a 100644
+index 404281dc1e6eb..344bf38dea5a5 100644
 --- a/drivers/platform/tegra/Kconfig
 +++ b/drivers/platform/tegra/Kconfig
 @@ -16,7 +16,7 @@ menuconfig TEGRA_PLATFORM_DEVICES
@@ -36,7 +36,7 @@ index 404281dc1e6e..344bf38dea5a 100644
  	help
  	  The tegra-epl driver provides interface for reporting software detected
 diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
-index 49c8a94837a0..219dbc108f64 100644
+index 49c8a94837a03..219dbc108f64f 100644
 --- a/drivers/platform/tegra/tegra-epl.c
 +++ b/drivers/platform/tegra/tegra-epl.c
 @@ -22,9 +22,6 @@
@@ -93,7 +93,7 @@ index 49c8a94837a0..219dbc108f64 100644
  		mission_err_status_va = devm_platform_ioremap_resource(pdev, NUM_SW_GENERIC_ERR * 2);
  		if (IS_ERR(mission_err_status_va)) {
 diff --git a/include/linux/tegra-epl.h b/include/linux/tegra-epl.h
-index cd0447be1f74..1038f56712fb 100644
+index cd0447be1f748..1038f56712fbc 100644
 --- a/include/linux/tegra-epl.h
 +++ b/include/linux/tegra-epl.h
 @@ -25,7 +25,7 @@ struct epl_error_report_frame {

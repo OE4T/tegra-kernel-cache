@@ -18,7 +18,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit 9f2614510960f0761144d14e1b4c4d82e0c098e9)
 
 diff --git a/drivers/memory/tegra/mc.c b/drivers/memory/tegra/mc.c
-index 8d0f41793921..abd11aa9141c 100644
+index 8d0f41793921c..abd11aa9141c5 100644
 --- a/drivers/memory/tegra/mc.c
 +++ b/drivers/memory/tegra/mc.c
 @@ -596,9 +596,9 @@ irqreturn_t tegra30_mc_handle_irq(int irq, void *data)
@@ -53,7 +53,7 @@ index 8d0f41793921..abd11aa9141c 100644
  
  	if (mc->soc->reset_ops) {
 diff --git a/drivers/memory/tegra/tegra114.c b/drivers/memory/tegra/tegra114.c
-index 3a061a2d881e..02dd4e26288a 100644
+index 3a061a2d881ea..02dd4e26288a1 100644
 --- a/drivers/memory/tegra/tegra114.c
 +++ b/drivers/memory/tegra/tegra114.c
 @@ -1101,6 +1101,14 @@ static const struct tegra_mc_reset tegra114_mc_resets[] = {
@@ -83,7 +83,7 @@ index 3a061a2d881e..02dd4e26288a 100644
  	.resets = tegra114_mc_resets,
  	.num_resets = ARRAY_SIZE(tegra114_mc_resets),
 diff --git a/drivers/memory/tegra/tegra124.c b/drivers/memory/tegra/tegra124.c
-index 51bf844bee0b..0a77f50a2876 100644
+index 51bf844bee0bf..0a77f50a28769 100644
 --- a/drivers/memory/tegra/tegra124.c
 +++ b/drivers/memory/tegra/tegra124.c
 @@ -1258,6 +1258,15 @@ static const struct tegra_smmu_soc tegra124_smmu_soc = {
@@ -143,7 +143,7 @@ index 51bf844bee0b..0a77f50a2876 100644
  	.resets = tegra124_mc_resets,
  	.num_resets = ARRAY_SIZE(tegra124_mc_resets),
 diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra186.c
-index 94cad76c52ac..91d56165605f 100644
+index 94cad76c52ac8..91d56165605f6 100644
 --- a/drivers/memory/tegra/tegra186.c
 +++ b/drivers/memory/tegra/tegra186.c
 @@ -901,15 +901,23 @@ static const struct tegra_mc_client tegra186_mc_clients[] = {
@@ -174,7 +174,7 @@ index 94cad76c52ac..91d56165605f 100644
  	.ch_intmask = 0x0000000f,
  	.global_intstatus_channel_shift = 0,
 diff --git a/drivers/memory/tegra/tegra194.c b/drivers/memory/tegra/tegra194.c
-index 38852b2a0f44..a8cc57690696 100644
+index 38852b2a0f448..a8cc57690696d 100644
 --- a/drivers/memory/tegra/tegra194.c
 +++ b/drivers/memory/tegra/tegra194.c
 @@ -1343,16 +1343,23 @@ static const struct tegra_mc_client tegra194_mc_clients[] = {
@@ -206,7 +206,7 @@ index 38852b2a0f44..a8cc57690696 100644
  	.ops = &tegra186_mc_ops,
  	.icc_ops = &tegra_mc_icc_ops,
 diff --git a/drivers/memory/tegra/tegra20.c b/drivers/memory/tegra/tegra20.c
-index 59a9a2fdc401..f7eb9e53c9fa 100644
+index 59a9a2fdc401c..f7eb9e53c9fab 100644
 --- a/drivers/memory/tegra/tegra20.c
 +++ b/drivers/memory/tegra/tegra20.c
 @@ -695,7 +695,7 @@ static irqreturn_t tegra20_mc_handle_irq(int irq, void *data)
@@ -243,7 +243,7 @@ index 59a9a2fdc401..f7eb9e53c9fa 100644
  	.resets = tegra20_mc_resets,
  	.num_resets = ARRAY_SIZE(tegra20_mc_resets),
 diff --git a/drivers/memory/tegra/tegra210.c b/drivers/memory/tegra/tegra210.c
-index aa606df8a679..f58f3ef6f681 100644
+index aa606df8a6798..f58f3ef6f6819 100644
 --- a/drivers/memory/tegra/tegra210.c
 +++ b/drivers/memory/tegra/tegra210.c
 @@ -1273,6 +1273,15 @@ static const struct tegra_mc_reset tegra210_mc_resets[] = {
@@ -275,7 +275,7 @@ index aa606df8a679..f58f3ef6f681 100644
  	.resets = tegra210_mc_resets,
  	.num_resets = ARRAY_SIZE(tegra210_mc_resets),
 diff --git a/drivers/memory/tegra/tegra234.c b/drivers/memory/tegra/tegra234.c
-index 67d5d4e01a65..87b22038a5fb 100644
+index 67d5d4e01a65b..87b22038a5fbf 100644
 --- a/drivers/memory/tegra/tegra234.c
 +++ b/drivers/memory/tegra/tegra234.c
 @@ -1132,16 +1132,23 @@ static const struct tegra_mc_icc_ops tegra234_mc_icc_ops = {
@@ -307,7 +307,7 @@ index 67d5d4e01a65..87b22038a5fb 100644
  	.ops = &tegra186_mc_ops,
  	.icc_ops = &tegra234_mc_icc_ops,
 diff --git a/drivers/memory/tegra/tegra264.c b/drivers/memory/tegra/tegra264.c
-index 5203e6c11372..172a48b56484 100644
+index 5203e6c113727..172a48b56484a 100644
 --- a/drivers/memory/tegra/tegra264.c
 +++ b/drivers/memory/tegra/tegra264.c
 @@ -1,6 +1,6 @@
@@ -347,7 +347,7 @@ index 5203e6c11372..172a48b56484 100644
  	.ops = &tegra186_mc_ops,
  	.icc_ops = &tegra264_mc_icc_ops,
 diff --git a/drivers/memory/tegra/tegra30.c b/drivers/memory/tegra/tegra30.c
-index 66897c09c789..b07f6ede86a6 100644
+index 66897c09c789a..b07f6ede86a62 100644
 --- a/drivers/memory/tegra/tegra30.c
 +++ b/drivers/memory/tegra/tegra30.c
 @@ -1384,6 +1384,14 @@ static const struct tegra_mc_icc_ops tegra30_mc_icc_ops = {
@@ -377,7 +377,7 @@ index 66897c09c789..b07f6ede86a6 100644
  	.resets = tegra30_mc_resets,
  	.num_resets = ARRAY_SIZE(tegra30_mc_resets),
 diff --git a/include/soc/tegra/mc.h b/include/soc/tegra/mc.h
-index b9b1763b10b5..e6da035d1306 100644
+index b9b1763b10b5f..e6da035d1306d 100644
 --- a/include/soc/tegra/mc.h
 +++ b/include/soc/tegra/mc.h
 @@ -185,6 +185,11 @@ struct tegra_mc_regs {

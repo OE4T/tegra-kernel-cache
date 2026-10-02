@@ -23,7 +23,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Reviewed-by: Petlozu Pravareshwar <petlozup@nvidia.com>
 
 diff --git a/drivers/phy/tegra/xusb.c b/drivers/phy/tegra/xusb.c
-index f7bd83e5f350..e85341bdd549 100644
+index f7bd83e5f3504..e85341bdd5492 100644
 --- a/drivers/phy/tegra/xusb.c
 +++ b/drivers/phy/tegra/xusb.c
 @@ -1388,6 +1388,13 @@ int tegra_xusb_padctl_event_register(struct tegra_xusb_padctl *padctl,
@@ -41,7 +41,7 @@ index f7bd83e5f350..e85341bdd549 100644
  				     unsigned long val)
  {
 diff --git a/include/linux/phy/tegra/xusb.h b/include/linux/phy/tegra/xusb.h
-index bcb0e9ee3d46..e547490b3397 100644
+index bcb0e9ee3d468..e547490b33975 100644
 --- a/include/linux/phy/tegra/xusb.h
 +++ b/include/linux/phy/tegra/xusb.h
 @@ -1,6 +1,6 @@

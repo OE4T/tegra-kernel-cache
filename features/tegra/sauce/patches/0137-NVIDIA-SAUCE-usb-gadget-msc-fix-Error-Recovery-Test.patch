@@ -22,7 +22,7 @@ Reviewed-by: Sing-Han Chen <singhanc@nvidia.com>
 (cherry picked from commit f21d59ada4c11afa51b7fc89975568d5f48ae8cf)
 
 diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
-index 6970d0fa806b..18523770caf3 100644
+index 6970d0fa806b0..18523770caf3c 100644
 --- a/drivers/usb/gadget/function/f_mass_storage.c
 +++ b/drivers/usb/gadget/function/f_mass_storage.c
 @@ -5,6 +5,7 @@

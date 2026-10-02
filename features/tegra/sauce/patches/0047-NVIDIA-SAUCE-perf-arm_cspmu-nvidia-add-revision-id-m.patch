@@ -13,7 +13,7 @@ Change-Id: I12615f73b8c587165a3784f755916951f1cc425e
 Signed-off-by: Besar Wicaksono <bwicaksono@nvidia.com>
 
 diff --git a/drivers/perf/arm_cspmu/nvidia_cspmu.c b/drivers/perf/arm_cspmu/nvidia_cspmu.c
-index dc6d4e3e2a1b..bec9dda4e387 100644
+index dc6d4e3e2a1ba..bec9dda4e3877 100644
 --- a/drivers/perf/arm_cspmu/nvidia_cspmu.c
 +++ b/drivers/perf/arm_cspmu/nvidia_cspmu.c
 @@ -23,7 +23,9 @@

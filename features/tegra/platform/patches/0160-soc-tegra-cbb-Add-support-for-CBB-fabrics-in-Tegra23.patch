@@ -12,7 +12,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit ad7ffe102a52141a0da19ca766c5103bec28ddb6)
 
 diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
-index 7e387fc54c6b..fb26f085f691 100644
+index 7e387fc54c6b1..fb26f085f6914 100644
 --- a/drivers/soc/tegra/cbb/tegra234-cbb.c
 +++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
 @@ -89,6 +89,15 @@ enum tegra234_cbb_fabric_ids {

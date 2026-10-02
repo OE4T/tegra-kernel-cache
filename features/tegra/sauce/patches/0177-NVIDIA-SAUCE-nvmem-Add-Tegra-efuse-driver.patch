@@ -9,7 +9,7 @@ Change-Id: I4f0a4a9c4f9994b5147b545c7cf3f3a519f8fa3b
 Signed-off-by: Kartik <kkartik@nvidia.com>
 
 diff --git a/drivers/nvmem/Makefile b/drivers/nvmem/Makefile
-index 70a4464dcb1e..ea7545398728 100644
+index 70a4464dcb1e2..ea75453987286 100644
 --- a/drivers/nvmem/Makefile
 +++ b/drivers/nvmem/Makefile
 @@ -93,3 +93,5 @@ obj-$(CONFIG_NVMEM_ZYNQMP)		+= nvmem_zynqmp_nvmem.o
@@ -20,7 +20,7 @@ index 70a4464dcb1e..ea7545398728 100644
 +nvmem-tegra-efuse-y			:= tegra-efuse.o
 diff --git a/drivers/nvmem/tegra-efuse.c b/drivers/nvmem/tegra-efuse.c
 new file mode 100644
-index 000000000000..f3520fe7b6d4
+index 0000000000000..f3520fe7b6d44
 --- /dev/null
 +++ b/drivers/nvmem/tegra-efuse.c
 @@ -0,0 +1,328 @@
@@ -353,7 +353,7 @@ index 000000000000..f3520fe7b6d4
 +
 +MODULE_LICENSE("GPL v2");
 diff --git a/drivers/soc/tegra/Makefile b/drivers/soc/tegra/Makefile
-index a51a9a3b96ef..420748447159 100644
+index a51a9a3b96ef3..420748447159f 100644
 --- a/drivers/soc/tegra/Makefile
 +++ b/drivers/soc/tegra/Makefile
 @@ -3,6 +3,7 @@ obj-y += fuse/
@@ -365,7 +365,7 @@ index a51a9a3b96ef..420748447159 100644
  obj-$(CONFIG_SOC_TEGRA_PMC) += pmc.o
  obj-$(CONFIG_SOC_TEGRA20_VOLTAGE_COUPLER) += regulators-tegra20.o
 diff --git a/drivers/soc/tegra/common.c b/drivers/soc/tegra/common.c
-index dff6d5ef4e46..25a577fd0644 100644
+index dff6d5ef4e46b..25a577fd0644f 100644
 --- a/drivers/soc/tegra/common.c
 +++ b/drivers/soc/tegra/common.c
 @@ -22,6 +22,8 @@ static const struct of_device_id tegra_machine_match[] = {
@@ -378,7 +378,7 @@ index dff6d5ef4e46..25a577fd0644 100644
  };
  
 diff --git a/drivers/soc/tegra/fuse/Makefile b/drivers/soc/tegra/fuse/Makefile
-index ea8332cc3980..b2c15670761a 100644
+index ea8332cc39805..b2c15670761a6 100644
 --- a/drivers/soc/tegra/fuse/Makefile
 +++ b/drivers/soc/tegra/fuse/Makefile
 @@ -2,6 +2,7 @@
@@ -390,7 +390,7 @@ index ea8332cc3980..b2c15670761a 100644
  obj-$(CONFIG_ARCH_TEGRA_2x_SOC)		+= speedo-tegra20.o
  obj-$(CONFIG_ARCH_TEGRA_3x_SOC)		+= speedo-tegra30.o
 diff --git a/drivers/soc/tegra/fuse/fuse-tegra.c b/drivers/soc/tegra/fuse/fuse-tegra.c
-index 74d2fedea71c..4e292ecf8d7b 100644
+index 972a63993e1db..66c69b274f203 100644
 --- a/drivers/soc/tegra/fuse/fuse-tegra.c
 +++ b/drivers/soc/tegra/fuse/fuse-tegra.c
 @@ -37,19 +37,6 @@ static const char *tegra_revision_name[TEGRA_REVISION_MAX] = {
@@ -413,16 +413,7 @@ index 74d2fedea71c..4e292ecf8d7b 100644
  static const struct of_device_id car_match[] __initconst = {
  	{ .compatible = "nvidia,tegra20-car", },
  	{ .compatible = "nvidia,tegra30-car", },
-@@ -182,6 +169,8 @@ static int tegra_fuse_probe(struct platform_device *pdev)
- 		}
- 
- 		fuse->soc->init(fuse);
-+		tegra_fuse_print_sku_info(&tegra_sku_info);
-+		tegra_soc_device_register(chip, tegra_sku_info.platform, tegra_sku_info.revision);
- 
- 		err = tegra_fuse_add_lookups(fuse);
- 		if (err)
-@@ -343,6 +332,9 @@ u32 __init tegra_fuse_read_early(unsigned int offset)
+@@ -343,6 +330,9 @@ u32 __init tegra_fuse_read_early(unsigned int offset)
  
  int tegra_fuse_readl(unsigned long offset, u32 *value)
  {
@@ -432,7 +423,7 @@ index 74d2fedea71c..4e292ecf8d7b 100644
  	if (!fuse->dev)
  		return -EPROBE_DEFER;
  
-@@ -381,93 +373,6 @@ static void tegra_enable_fuse_clk(void __iomem *base)
+@@ -381,93 +371,6 @@ static void tegra_enable_fuse_clk(void __iomem *base)
  	writel(reg, base + 0x14);
  }
  
@@ -526,7 +517,7 @@ index 74d2fedea71c..4e292ecf8d7b 100644
  static int __init tegra_init_fuse(void)
  {
  	const struct of_device_id *match;
-@@ -573,27 +478,3 @@ static int __init tegra_init_fuse(void)
+@@ -569,27 +472,3 @@ static int __init tegra_init_fuse(void)
  	return err;
  }
  early_initcall(tegra_init_fuse);
@@ -555,7 +546,7 @@ index 74d2fedea71c..4e292ecf8d7b 100644
 -device_initcall(tegra_init_soc);
 -#endif
 diff --git a/drivers/soc/tegra/fuse/fuse-tegra30.c b/drivers/soc/tegra/fuse/fuse-tegra30.c
-index 524fa1b0cd3d..6b2da7fac571 100644
+index 524fa1b0cd3d6..6b2da7fac5718 100644
 --- a/drivers/soc/tegra/fuse/fuse-tegra30.c
 +++ b/drivers/soc/tegra/fuse/fuse-tegra30.c
 @@ -111,7 +111,6 @@ const struct tegra_fuse_soc tegra30_fuse_soc = {
@@ -614,7 +605,7 @@ index 524fa1b0cd3d..6b2da7fac571 100644
  };
  #endif
 diff --git a/drivers/soc/tegra/fuse/fuse.h b/drivers/soc/tegra/fuse/fuse.h
-index 9fee6ad6ad9e..ff30483ffb6b 100644
+index 9fee6ad6ad9e9..ff30483ffb6b5 100644
 --- a/drivers/soc/tegra/fuse/fuse.h
 +++ b/drivers/soc/tegra/fuse/fuse.h
 @@ -37,8 +37,6 @@ struct tegra_fuse_soc {
@@ -649,7 +640,7 @@ index 9fee6ad6ad9e..ff30483ffb6b 100644
  #endif
 diff --git a/drivers/soc/tegra/fuse/tegra-efuse-nvmem-helper.c b/drivers/soc/tegra/fuse/tegra-efuse-nvmem-helper.c
 new file mode 100644
-index 000000000000..862e34472f44
+index 0000000000000..862e34472f445
 --- /dev/null
 +++ b/drivers/soc/tegra/fuse/tegra-efuse-nvmem-helper.c
 @@ -0,0 +1,58 @@
@@ -713,7 +704,7 @@ index 000000000000..862e34472f44
 +module_platform_driver(tegra_efuse_nvmem_helper_driver);
 diff --git a/drivers/soc/tegra/tegra-soc.c b/drivers/soc/tegra/tegra-soc.c
 new file mode 100644
-index 000000000000..767b32749a10
+index 0000000000000..767b32749a10c
 --- /dev/null
 +++ b/drivers/soc/tegra/tegra-soc.c
 @@ -0,0 +1,208 @@
@@ -926,7 +917,7 @@ index 000000000000..767b32749a10
 +}
 +module_exit(tegra_soc_exit);
 diff --git a/include/soc/tegra/fuse.h b/include/soc/tegra/fuse.h
-index 5a112763457a..85353f7c3a33 100644
+index 5a112763457aa..85353f7c3a33b 100644
 --- a/include/soc/tegra/fuse.h
 +++ b/include/soc/tegra/fuse.h
 @@ -122,7 +122,7 @@ static inline int tegra194_miscreg_mask_serror(void)

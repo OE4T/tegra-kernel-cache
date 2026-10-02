@@ -21,7 +21,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I5c025bc6eb4cba271ffcaefd228ac5735888ff2a
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 225471bb0d69..99b948f0c1f6 100644
+index 225471bb0d698..99b948f0c1f63 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -1979,11 +1979,11 @@ static int tegra_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,

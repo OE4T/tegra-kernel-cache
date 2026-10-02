@@ -25,7 +25,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 APS-Inflight: svcenomis <svcenomis@nvidia.com>
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index 589f91b24b44..cf4c7cf6b757 100644
+index 589f91b24b442..cf4c7cf6b7571 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -4681,6 +4681,7 @@ static const char * const tegra234_reset_sources[] = {

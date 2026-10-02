@@ -41,7 +41,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit e6d96073af681780820c94079b978474a8a44413)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index f3760a3b3026..407fa840814c 100644
+index f3760a3b3026d..407fa840814c3 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -28,6 +28,7 @@

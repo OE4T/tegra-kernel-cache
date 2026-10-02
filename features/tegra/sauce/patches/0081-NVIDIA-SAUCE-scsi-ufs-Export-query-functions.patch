@@ -14,7 +14,7 @@ Signed-off-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2914025
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index eb7bff38f76b..e4ed6fa96f21 100644
+index eb7bff38f76b3..e4ed6fa96f212 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
 @@ -3531,6 +3531,7 @@ int ufshcd_query_attr(struct ufs_hba *hba, enum query_opcode opcode,

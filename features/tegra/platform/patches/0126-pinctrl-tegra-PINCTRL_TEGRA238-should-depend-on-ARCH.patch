@@ -16,7 +16,7 @@ Signed-off-by: Linus Walleij <linusw@kernel.org>
 (cherry picked from commit 5f899621d34e2fd79229622805a659b13b63c98f)
 
 diff --git a/drivers/pinctrl/tegra/Kconfig b/drivers/pinctrl/tegra/Kconfig
-index 54263b4554c0..4fa7295ae449 100644
+index 54263b4554c07..4fa7295ae4499 100644
 --- a/drivers/pinctrl/tegra/Kconfig
 +++ b/drivers/pinctrl/tegra/Kconfig
 @@ -38,6 +38,7 @@ config PINCTRL_TEGRA234

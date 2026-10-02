@@ -13,7 +13,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit fa11e1cb2b77946c56e690e431193e64a1e06bda)
 
 diff --git a/sound/soc/tegra/tegra_asoc_machine.c b/sound/soc/tegra/tegra_asoc_machine.c
-index 62f896772731..02aab4f2389e 100644
+index 62f8967727319..02aab4f2389e8 100644
 --- a/sound/soc/tegra/tegra_asoc_machine.c
 +++ b/sound/soc/tegra/tegra_asoc_machine.c
 @@ -413,7 +413,8 @@ static int tegra_machine_register_codec(struct device *dev, const char *name)

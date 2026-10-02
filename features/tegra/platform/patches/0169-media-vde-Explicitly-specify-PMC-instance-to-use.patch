@@ -11,7 +11,7 @@ Acked-by: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
 
 diff --git a/drivers/media/platform/nvidia/tegra-vde/vde.c b/drivers/media/platform/nvidia/tegra-vde/vde.c
-index 3232392c60e2..de58d34ed2be 100644
+index 3232392c60e20..de58d34ed2be7 100644
 --- a/drivers/media/platform/nvidia/tegra-vde/vde.c
 +++ b/drivers/media/platform/nvidia/tegra-vde/vde.c
 @@ -161,7 +161,8 @@ static __maybe_unused int tegra_vde_runtime_suspend(struct device *dev)
@@ -57,7 +57,7 @@ index 3232392c60e2..de58d34ed2be 100644
  	if (irq < 0)
  		return irq;
 diff --git a/drivers/media/platform/nvidia/tegra-vde/vde.h b/drivers/media/platform/nvidia/tegra-vde/vde.h
-index b2890484b7c3..abac0221d6e4 100644
+index b2890484b7c34..abac0221d6e4b 100644
 --- a/drivers/media/platform/nvidia/tegra-vde/vde.h
 +++ b/drivers/media/platform/nvidia/tegra-vde/vde.h
 @@ -107,6 +107,7 @@ struct tegra_vde {

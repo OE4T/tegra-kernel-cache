@@ -13,7 +13,7 @@ Reported-by: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
 
 diff --git a/drivers/memory/tegra/tegra234.c b/drivers/memory/tegra/tegra234.c
-index 9fbd34d4abe0..982476b67d5a 100644
+index 9fbd34d4abe04..982476b67d5af 100644
 --- a/drivers/memory/tegra/tegra234.c
 +++ b/drivers/memory/tegra/tegra234.c
 @@ -1106,10 +1106,8 @@ static int tegra234_mc_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,

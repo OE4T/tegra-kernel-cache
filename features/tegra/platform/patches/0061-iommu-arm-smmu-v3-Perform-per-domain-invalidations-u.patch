@@ -21,7 +21,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-index 006d8159622d..4cd60d3c450a 100644
+index 006d8159622d1..4cd60d3c450ac 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
 @@ -133,15 +133,6 @@ void arm_smmu_make_sva_cd(struct arm_smmu_cd *target,
@@ -83,7 +83,7 @@ index 006d8159622d..4cd60d3c450a 100644
  	/*
  	 * Notice that the arm_smmu_mm_arch_invalidate_secondary_tlbs op can
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 4638e3dcf23e..b01263796aad 100644
+index 57120195f333a..d0eb3a46a5de0 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -1289,16 +1289,6 @@ struct arm_smmu_invs *arm_smmu_invs_purge(struct arm_smmu_invs *invs)
@@ -319,7 +319,7 @@ index 4638e3dcf23e..b01263796aad 100644
  
  static phys_addr_t
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index a72bbe87f6ab..c54b95d05a9d 100644
+index a72bbe87f6ab7..c54b95d05a9dc 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -1086,13 +1086,6 @@ int arm_smmu_set_pasid(struct arm_smmu_master *master,

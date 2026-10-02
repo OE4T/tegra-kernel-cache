@@ -22,7 +22,7 @@ Reviewed-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 (cherry picked from commit e9a584694b502653b5e024fd5f0043dad13acaab)
 
 diff --git a/drivers/pci/doe.c b/drivers/pci/doe.c
-index aae9a8a00406..3d521f4b0b34 100644
+index aae9a8a00406e..3d521f4b0b349 100644
 --- a/drivers/pci/doe.c
 +++ b/drivers/pci/doe.c
 @@ -27,7 +27,7 @@

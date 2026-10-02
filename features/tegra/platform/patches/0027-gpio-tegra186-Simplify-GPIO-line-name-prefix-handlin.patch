@@ -16,7 +16,7 @@ Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 (cherry picked from commit 2423e336d94868f0d2fcd81a87b90c5ea59736e0)
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index 9c874f07be75..f04cc240b5ec 100644
+index 9c874f07be755..f04cc240b5ec5 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -942,12 +942,8 @@ static int tegra186_gpio_probe(struct platform_device *pdev)

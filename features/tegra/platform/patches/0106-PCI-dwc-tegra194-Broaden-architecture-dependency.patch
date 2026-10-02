@@ -25,7 +25,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I96cd3f53e12ee67630c60a2edc8a9f6203dde11f
 
 diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-index 349d4657393c..8375373322e4 100644
+index 349d4657393c9..8375373322e4b 100644
 --- a/drivers/pci/controller/dwc/Kconfig
 +++ b/drivers/pci/controller/dwc/Kconfig
 @@ -228,7 +228,7 @@ config PCIE_TEGRA194

@@ -20,7 +20,7 @@ Link: https://lore.kernel.org/r/20260507221145.62183-2-sauravsc@amazon.com
 (cherry picked from commit 57cf4e8d6a57dc2ef5810f4852a23ba4c71b74bb)
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 8b7b0e508ce5..c094d319ba20 100644
+index 8b7b0e508ce57..c094d319ba203 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -1666,8 +1666,10 @@ static int tegra_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[],

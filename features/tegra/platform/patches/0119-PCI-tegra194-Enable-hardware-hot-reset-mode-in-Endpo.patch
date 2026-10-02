@@ -23,7 +23,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I241ac17248a8e487dfb974a270467082754d66b2
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index c1f1f6a93092..3fcbca0d883a 100644
+index c1f1f6a930922..3fcbca0d883aa 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -1796,6 +1796,8 @@ static void pex_ep_event_pex_rst_deassert(struct tegra_pcie_dw *pcie)

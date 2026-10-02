@@ -15,7 +15,7 @@ Link: https://patch.msgid.link/20251217154529.377586-1-nirmoyd@nvidia.com
 (cherry picked from commit eeb95c07d5fcaafb1829d5307ce4290cf1dc3190)
 
 diff --git a/drivers/usb/host/ehci-pci.c b/drivers/usb/host/ehci-pci.c
-index 889dc4426271..bd3a63555594 100644
+index 889dc44262711..bd3a635555942 100644
 --- a/drivers/usb/host/ehci-pci.c
 +++ b/drivers/usb/host/ehci-pci.c
 @@ -21,7 +21,6 @@ static const char hcd_name[] = "ehci-pci";
@@ -27,7 +27,7 @@ index 889dc4426271..bd3a63555594 100644
  
  /*-------------------------------------------------------------------------*/
 diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-index 03b7c0380f71..2b6692a5005f 100644
+index 03b7c0380f71c..2b6692a5005f5 100644
 --- a/include/linux/pci_ids.h
 +++ b/include/linux/pci_ids.h
 @@ -2583,6 +2583,8 @@

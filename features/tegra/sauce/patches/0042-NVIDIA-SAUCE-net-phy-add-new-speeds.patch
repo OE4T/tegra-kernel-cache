@@ -19,7 +19,7 @@ Tested-by: Satish Seelamsetti <sseelamsetti@nvidia.com>
 Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 
 diff --git a/drivers/net/phy/swphy.c b/drivers/net/phy/swphy.c
-index 5380f952e846..6a986c8f7ff8 100644
+index 5380f952e846e..6a986c8f7ff8d 100644
 --- a/drivers/net/phy/swphy.c
 +++ b/drivers/net/phy/swphy.c
 @@ -8,7 +8,7 @@

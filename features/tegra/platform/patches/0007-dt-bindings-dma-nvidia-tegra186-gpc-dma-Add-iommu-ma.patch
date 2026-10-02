@@ -18,7 +18,7 @@ Acked-by: Rob Herring (Arm) <robh@kernel.org>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml b/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
-index 64f1e9d9896d..bc093c783d98 100644
+index 64f1e9d9896df..bc093c783d986 100644
 --- a/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
 +++ b/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
 @@ -14,6 +14,7 @@ description: |

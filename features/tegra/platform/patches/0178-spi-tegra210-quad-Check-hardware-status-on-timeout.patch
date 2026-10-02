@@ -22,10 +22,10 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 380fd29d57abe6679d87ec56babe65ddc5873a37)
 
 diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index b38815db9810..f425d62e0c27 100644
+index 369af166c5045..b49d524f9eff2 100644
 --- a/drivers/spi/spi-tegra210-quad.c
 +++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1051,6 +1051,49 @@ static void tegra_qspi_transfer_end(struct spi_device *spi)
+@@ -1058,6 +1058,49 @@ static void tegra_qspi_transfer_end(struct spi_device *spi)
  	tegra_qspi_writel(tqspi, tqspi->def_command1_reg, QSPI_COMMAND1);
  }
  
@@ -75,7 +75,7 @@ index b38815db9810..f425d62e0c27 100644
  static u32 tegra_qspi_cmd_config(bool is_ddr, u8 bus_width, u8 len)
  {
  	u32 cmd_config = 0;
-@@ -1181,20 +1224,28 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
+@@ -1188,20 +1231,28 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
  					QSPI_DMA_TIMEOUT);
  
  			if (WARN_ON_ONCE(ret == 0)) {
@@ -118,7 +118,7 @@ index b38815db9810..f425d62e0c27 100644
  			}
  
  			if (tqspi->tx_status ||  tqspi->rx_status) {
-@@ -1290,14 +1341,23 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
+@@ -1297,14 +1348,23 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
  		ret = wait_for_completion_timeout(&tqspi->xfer_completion,
  						  QSPI_DMA_TIMEOUT);
  		if (WARN_ON(ret == 0)) {

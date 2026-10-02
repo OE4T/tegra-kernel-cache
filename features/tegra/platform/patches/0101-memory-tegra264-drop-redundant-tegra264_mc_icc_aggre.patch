@@ -16,7 +16,7 @@ Reported-by: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
 
 diff --git a/drivers/memory/tegra/tegra264.c b/drivers/memory/tegra/tegra264.c
-index b8d6c4ce4836..790349295dcc 100644
+index b8d6c4ce48369..790349295dcc1 100644
 --- a/drivers/memory/tegra/tegra264.c
 +++ b/drivers/memory/tegra/tegra264.c
 @@ -799,21 +799,6 @@ static int tegra264_mc_icc_set(struct icc_node *src, struct icc_node *dst)

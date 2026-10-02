@@ -18,7 +18,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit 4f42beeb9796e24e8009c46d1a2d676803e5ab24)
 
 diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra186.c
-index 91d56165605f..579d058da220 100644
+index 91d56165605f6..579d058da220c 100644
 --- a/drivers/memory/tegra/tegra186.c
 +++ b/drivers/memory/tegra/tegra186.c
 @@ -154,7 +154,7 @@ static int tegra186_mc_probe_device(struct tegra_mc *mc, struct device *dev)
@@ -40,7 +40,7 @@ index 91d56165605f..579d058da220 100644
  
  const struct tegra_mc_ops tegra186_mc_ops = {
 diff --git a/include/soc/tegra/mc.h b/include/soc/tegra/mc.h
-index e6da035d1306..25d465d70493 100644
+index e6da035d1306d..25d465d704938 100644
 --- a/include/soc/tegra/mc.h
 +++ b/include/soc/tegra/mc.h
 @@ -164,7 +164,7 @@ struct tegra_mc_ops {

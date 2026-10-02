@@ -17,7 +17,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index ef8f365a6ee3..191e258abd0c 100644
+index ef8f365a6ee3d..191e258abd0c4 100644
 --- a/drivers/net/phy/realtek/realtek_main.c
 +++ b/drivers/net/phy/realtek/realtek_main.c
 @@ -161,6 +161,9 @@

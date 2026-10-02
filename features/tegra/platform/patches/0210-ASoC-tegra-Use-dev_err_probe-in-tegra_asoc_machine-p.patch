@@ -13,7 +13,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit b015ef4eaeff76466a359b3f53175fc11502fd8f)
 
 diff --git a/sound/soc/tegra/tegra_asoc_machine.c b/sound/soc/tegra/tegra_asoc_machine.c
-index 02aab4f2389e..9d05c5faa13b 100644
+index 02aab4f2389e8..9d05c5faa13b3 100644
 --- a/sound/soc/tegra/tegra_asoc_machine.c
 +++ b/sound/soc/tegra/tegra_asoc_machine.c
 @@ -591,16 +591,14 @@ int tegra_asoc_machine_probe(struct platform_device *pdev)

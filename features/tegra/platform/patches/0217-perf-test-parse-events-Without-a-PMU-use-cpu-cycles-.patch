@@ -17,7 +17,7 @@ Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 (cherry picked from commit 2e6dc3b9334cd0d404591009b3d9957edcf2f6cf)
 
 diff --git a/tools/perf/tests/parse-events.c b/tools/perf/tests/parse-events.c
-index 30e5cf124bda..ff1a2d6edc4a 100644
+index 30e5cf124bda6..ff1a2d6edc4aa 100644
 --- a/tools/perf/tests/parse-events.c
 +++ b/tools/perf/tests/parse-events.c
 @@ -585,9 +585,10 @@ static int test__checkevent_pmu(struct evlist *evlist)

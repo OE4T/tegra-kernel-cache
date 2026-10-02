@@ -13,7 +13,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit 36df0ef3b4187c69c271af7a1d56f7abb788655e)
 
 diff --git a/drivers/bus/tegra-aconnect.c b/drivers/bus/tegra-aconnect.c
-index 90e3b0a10816..9b2b227332b2 100644
+index 90e3b0a108161..9b2b227332b22 100644
 --- a/drivers/bus/tegra-aconnect.c
 +++ b/drivers/bus/tegra-aconnect.c
 @@ -32,16 +32,14 @@ static int tegra_aconnect_probe(struct platform_device *pdev)

@@ -11,7 +11,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit f59dbd0c9388321336b0f5c57644fd8b0ee94aa9)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index 407fa840814c..2f283fc1c6c5 100644
+index 407fa840814c3..2f283fc1c6c56 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -3192,6 +3192,7 @@ static void wke_clear_wake_status(struct tegra_pmc *pmc)

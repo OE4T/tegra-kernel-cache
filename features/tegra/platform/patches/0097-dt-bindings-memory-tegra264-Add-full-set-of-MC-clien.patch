@@ -13,7 +13,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit 16868fd4b7ecf241b74123e1bb23fd08d05a2e09)
 
 diff --git a/include/dt-bindings/memory/nvidia,tegra264.h b/include/dt-bindings/memory/nvidia,tegra264.h
-index 521405c01f84..c65403a76413 100644
+index 521405c01f84c..c65403a764134 100644
 --- a/include/dt-bindings/memory/nvidia,tegra264.h
 +++ b/include/dt-bindings/memory/nvidia,tegra264.h
 @@ -58,24 +58,108 @@

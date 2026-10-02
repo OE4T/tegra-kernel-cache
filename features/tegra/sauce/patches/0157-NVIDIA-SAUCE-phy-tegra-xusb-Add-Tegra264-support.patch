@@ -16,7 +16,7 @@ Signed-off-by: Sing-Han Chen <singhanc@nvidia.com>
 Signed-off-by: Bodla Rakesh Babu <rbodla@nvidia.com>
 
 diff --git a/drivers/phy/tegra/Makefile b/drivers/phy/tegra/Makefile
-index eeeea72de117..33a695d4ed59 100644
+index eeeea72de1177..33a695d4ed59a 100644
 --- a/drivers/phy/tegra/Makefile
 +++ b/drivers/phy/tegra/Makefile
 @@ -8,4 +8,5 @@ phy-tegra-xusb-$(CONFIG_ARCH_TEGRA_210_SOC) += xusb-tegra210.o
@@ -26,7 +26,7 @@ index eeeea72de117..33a695d4ed59 100644
 +phy-tegra-xusb-$(CONFIG_ARCH_TEGRA_264_SOC) += xusb-tegra186.o
  obj-$(CONFIG_PHY_TEGRA194_P2U) += phy-tegra194-p2u.o
 diff --git a/drivers/phy/tegra/xusb-tegra186.c b/drivers/phy/tegra/xusb-tegra186.c
-index 291ae416a413..32186e0af611 100644
+index 291ae416a4134..32186e0af611e 100644
 --- a/drivers/phy/tegra/xusb-tegra186.c
 +++ b/drivers/phy/tegra/xusb-tegra186.c
 @@ -1731,7 +1731,8 @@ EXPORT_SYMBOL_GPL(tegra186_xusb_padctl_soc);
@@ -70,7 +70,7 @@ index 291ae416a413..32186e0af611 100644
  
  MODULE_AUTHOR("JC Kuo <jckuo@nvidia.com>");
 diff --git a/drivers/phy/tegra/xusb.c b/drivers/phy/tegra/xusb.c
-index e85341bdd549..6f699e09f54c 100644
+index e85341bdd5492..6f699e09f54c6 100644
 --- a/drivers/phy/tegra/xusb.c
 +++ b/drivers/phy/tegra/xusb.c
 @@ -77,6 +77,12 @@ static const struct of_device_id tegra_xusb_padctl_of_match[] = {
@@ -87,7 +87,7 @@ index e85341bdd549..6f699e09f54c 100644
  	{ }
  };
 diff --git a/drivers/phy/tegra/xusb.h b/drivers/phy/tegra/xusb.h
-index 7e7774ef2668..09cb98c273ce 100644
+index 7e7774ef2668a..09cb98c273ce6 100644
 --- a/drivers/phy/tegra/xusb.h
 +++ b/drivers/phy/tegra/xusb.h
 @@ -519,5 +519,8 @@ extern const struct tegra_xusb_padctl_soc tegra194_xusb_padctl_soc;

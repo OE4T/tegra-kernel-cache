@@ -13,7 +13,7 @@ Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
 Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
 diff --git a/Documentation/devicetree/bindings/pwm/nvidia,tegra20-pwm.yaml b/Documentation/devicetree/bindings/pwm/nvidia,tegra20-pwm.yaml
-index 41cea4979132..cb2f36e7b5d6 100644
+index 41cea4979132f..cb2f36e7b5d67 100644
 --- a/Documentation/devicetree/bindings/pwm/nvidia,tegra20-pwm.yaml
 +++ b/Documentation/devicetree/bindings/pwm/nvidia,tegra20-pwm.yaml
 @@ -16,6 +16,7 @@ properties:

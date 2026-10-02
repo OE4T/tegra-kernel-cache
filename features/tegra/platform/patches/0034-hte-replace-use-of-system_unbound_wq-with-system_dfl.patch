@@ -30,7 +30,7 @@ Signed-off-by: Dipen Patel <dipenp@nvidia.com>
 (cherry picked from commit 52bc3daed226a01f2b4895792a55e23f7c6be509)
 
 diff --git a/drivers/hte/hte.c b/drivers/hte/hte.c
-index 23a6eeb8c506..e2804636f2bd 100644
+index 23a6eeb8c506c..e2804636f2bd9 100644
 --- a/drivers/hte/hte.c
 +++ b/drivers/hte/hte.c
 @@ -826,7 +826,7 @@ int hte_push_ts_ns(const struct hte_chip *chip, u32 xlated_id,

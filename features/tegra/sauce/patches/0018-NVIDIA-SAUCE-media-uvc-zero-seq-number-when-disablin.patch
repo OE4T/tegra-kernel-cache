@@ -42,7 +42,7 @@ Tested-by: Henry Lin <henryl@nvidia.com>
 (cherry picked from commit 4ca5cf37519ac003e2fb53fdc945f83fb5582996)
 
 diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 9629e17cc5eb..4227f0302ba7 100644
+index 9629e17cc5eb7..4227f0302ba74 100644
 --- a/drivers/media/usb/uvc/uvc_video.c
 +++ b/drivers/media/usb/uvc/uvc_video.c
 @@ -2,6 +2,7 @@

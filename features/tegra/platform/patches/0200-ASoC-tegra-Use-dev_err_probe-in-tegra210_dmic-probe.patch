@@ -12,7 +12,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit ca069c3403ec4ffd1cfbc9a5b274bd9e799a0281)
 
 diff --git a/sound/soc/tegra/tegra210_dmic.c b/sound/soc/tegra/tegra210_dmic.c
-index 07079f2bf173..aa37caee3469 100644
+index 07079f2bf173f..aa37caee34692 100644
 --- a/sound/soc/tegra/tegra210_dmic.c
 +++ b/sound/soc/tegra/tegra210_dmic.c
 @@ -507,10 +507,9 @@ static int tegra210_dmic_probe(struct platform_device *pdev)

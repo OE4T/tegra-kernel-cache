@@ -26,7 +26,7 @@ Link: https://patch.msgid.link/20260312130229.2282001-15-cassel@kernel.org
 (cherry picked from commit f51644eb40a73677fcd0c92d8174eddde5d0be0e)
 
 diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
-index aaaee1b492c8..ab9107222e00 100644
+index aaaee1b492c81..ab9107222e002 100644
 --- a/include/linux/pci-epc.h
 +++ b/include/linux/pci-epc.h
 @@ -200,6 +200,30 @@ enum pci_epc_bar_type {

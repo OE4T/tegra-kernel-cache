@@ -20,7 +20,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I25f445593e0a37b3991cb726012cbe6089d0c916
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index e8c2e0df8953..a031b032ce05 100644
+index e8c2e0df8953f..a031b032ce051 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -85,6 +85,7 @@

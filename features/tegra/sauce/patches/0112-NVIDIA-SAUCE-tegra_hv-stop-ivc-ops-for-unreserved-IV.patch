@@ -23,7 +23,7 @@ Reviewed-by: svc-mobile-coverity <svc-mobile-coverity@nvidia.com>
 (cherry picked from commit 23803b31af948055dc98a6a87d89abe725350a85)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index c2ce088cbe96..9f38c60b1068 100644
+index c2ce088cbe964..9f38c60b1068f 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -926,6 +926,11 @@ void tegra_hv_ivc_notify(struct tegra_hv_ivc_cookie *ivck)

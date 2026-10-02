@@ -21,7 +21,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-index 80b56d1501b1..c1eb2ae2023f 100644
+index 80b56d1501b14..c1eb2ae2023ff 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
 @@ -360,6 +360,7 @@ struct iommu_domain *arm_smmu_sva_domain_alloc(struct device *dev,
@@ -33,7 +33,7 @@ index 80b56d1501b1..c1eb2ae2023f 100644
  
  	ret = xa_alloc(&arm_smmu_asid_xa, &asid, smmu_domain,
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 7246d2514808..3e3c551adf98 100644
+index c671ac2322456..1e0bc70a034bd 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -3132,6 +3132,9 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
@@ -47,7 +47,7 @@ index 7246d2514808..3e3c551adf98 100644
  
  	arm_smmu_attach_commit(&state);
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index d65bbda8aac3..026b1145b0bb 100644
+index d65bbda8aac3b..026b1145b0bb0 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -862,6 +862,7 @@ struct arm_smmu_master {

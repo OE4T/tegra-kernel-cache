@@ -33,7 +33,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
-index b254a94b2003..af3b9eec897b 100644
+index b254a94b2003d..af3b9eec897b8 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
 @@ -592,6 +592,140 @@ static void arm_smmu_v3_write_cd_test_sva_release(struct kunit *test)
@@ -186,7 +186,7 @@ index b254a94b2003..af3b9eec897b 100644
  };
  
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 3c2e6acadecc..347adc1d45ed 100644
+index e40ef98c0c57e..c75d6602e80e8 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -26,6 +26,7 @@
@@ -488,7 +488,7 @@ index 3c2e6acadecc..347adc1d45ed 100644
  	return smmu_domain;
  }
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 03e924a2725c..ce2665034374 100644
+index 03e924a2725c5..ce2665034374d 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -651,6 +651,93 @@ struct arm_smmu_cmdq_batch {

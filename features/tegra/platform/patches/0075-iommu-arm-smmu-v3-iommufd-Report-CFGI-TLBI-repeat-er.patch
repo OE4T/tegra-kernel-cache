@@ -24,7 +24,7 @@ Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-index 7cf6de10c320..0c65ff420f57 100644
+index 7cf6de10c320d..0c65ff420f57c 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
 @@ -33,6 +33,9 @@ void *arm_smmu_hw_info(struct device *dev, u32 *length,
@@ -49,7 +49,7 @@ index 7cf6de10c320..0c65ff420f57 100644
  			cur--;
  			goto out;
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index c98c1e81a804..9b65fccaaa72 100644
+index 3e4e12887840e..5b1c0e37eeeda 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -828,11 +828,16 @@ int __arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
@@ -71,7 +71,7 @@ index c98c1e81a804..9b65fccaaa72 100644
  
  	opcode = FIELD_GET(CMDQ_0_OP, cmd->data[0]);
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index ba0e2cbe1fdb..b0fe749b3320 100644
+index ba0e2cbe1fdbc..b0fe749b33209 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -1220,6 +1220,7 @@ int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
@@ -83,7 +83,7 @@ index ba0e2cbe1fdb..b0fe749b3320 100644
  #ifdef CONFIG_ARM_SMMU_V3_SVA
  bool arm_smmu_sva_supported(struct arm_smmu_device *smmu);
 diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
-index bdd20666d1eb..4f4480ae7a3f 100644
+index bdd20666d1eb1..4f4480ae7a3f2 100644
 --- a/include/uapi/linux/iommufd.h
 +++ b/include/uapi/linux/iommufd.h
 @@ -549,11 +549,22 @@ struct iommu_hw_info_vtd {

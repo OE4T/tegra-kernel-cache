@@ -23,7 +23,7 @@ Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
 (cherry picked from commit 485d868fa01e2d6522bdf851c47c532b98122cd7)
 
 diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
-index de989cef6d64..e0e742a03417 100644
+index de989cef6d649..e0e742a034171 100644
 --- a/drivers/cpufreq/tegra194-cpufreq.c
 +++ b/drivers/cpufreq/tegra194-cpufreq.c
 @@ -1,6 +1,6 @@

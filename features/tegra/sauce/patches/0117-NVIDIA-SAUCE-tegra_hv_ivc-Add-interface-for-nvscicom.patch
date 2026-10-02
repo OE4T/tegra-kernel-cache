@@ -24,7 +24,7 @@ Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
 (cherry picked from commit 7806423929bac69ba648d07058a01bd591396785)
 
 diff --git a/drivers/virt/tegra/tegra_hv_ivc.c b/drivers/virt/tegra/tegra_hv_ivc.c
-index 0a78cc2e8646..c43baee0603d 100644
+index 0a78cc2e86469..c43baee0603d8 100644
 --- a/drivers/virt/tegra/tegra_hv_ivc.c
 +++ b/drivers/virt/tegra/tegra_hv_ivc.c
 @@ -15,6 +15,7 @@
@@ -525,7 +525,7 @@ index 0a78cc2e8646..c43baee0603d 100644
  
  static int ivc_dump(struct hv_ivc *ivc)
 diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
-index 77fc7c25a7f2..2825a39930c8 100644
+index 77fc7c25a7f20..2825a39930c8c 100644
 --- a/include/soc/tegra/virt/tegra_hv.h
 +++ b/include/soc/tegra/virt/tegra_hv.h
 @@ -11,6 +11,7 @@

@@ -12,7 +12,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 884f3101d1edb2bff463a1a4bae162ab011fe73f)
 
 diff --git a/sound/soc/tegra/tegra186_asrc.c b/sound/soc/tegra/tegra186_asrc.c
-index 2e0ffb75e052..6ce7ddb788a5 100644
+index 2e0ffb75e052d..6ce7ddb788a54 100644
 --- a/sound/soc/tegra/tegra186_asrc.c
 +++ b/sound/soc/tegra/tegra186_asrc.c
 @@ -1016,10 +1016,9 @@ static int tegra186_asrc_platform_probe(struct platform_device *pdev)

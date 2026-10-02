@@ -25,10 +25,10 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 7c12f6ead4672cb08b74e6f6115eb04dca8ccfa4)
 
 diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index f425d62e0c27..1f046c1ecda7 100644
+index b49d524f9eff2..d218da904e08f 100644
 --- a/drivers/spi/spi-tegra210-quad.c
 +++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1000,7 +1000,8 @@ static int tegra_qspi_setup(struct spi_device *spi)
+@@ -1007,7 +1007,8 @@ static int tegra_qspi_setup(struct spi_device *spi)
  
  	spin_unlock_irqrestore(&tqspi->lock, flags);
  
@@ -38,7 +38,7 @@ index f425d62e0c27..1f046c1ecda7 100644
  
  	return 0;
  }
-@@ -1765,6 +1766,14 @@ static int tegra_qspi_probe(struct platform_device *pdev)
+@@ -1772,6 +1773,14 @@ static int tegra_qspi_probe(struct platform_device *pdev)
  	init_completion(&tqspi->rx_dma_complete);
  	init_completion(&tqspi->xfer_completion);
  
@@ -53,7 +53,7 @@ index f425d62e0c27..1f046c1ecda7 100644
  	pm_runtime_enable(&pdev->dev);
  	ret = pm_runtime_resume_and_get(&pdev->dev);
  	if (ret < 0) {
-@@ -1781,7 +1790,8 @@ static int tegra_qspi_probe(struct platform_device *pdev)
+@@ -1788,7 +1797,8 @@ static int tegra_qspi_probe(struct platform_device *pdev)
  	tqspi->spi_cs_timing2 = tegra_qspi_readl(tqspi, QSPI_CS_TIMING2);
  	tqspi->def_command2_reg = tegra_qspi_readl(tqspi, QSPI_COMMAND2);
  
@@ -63,7 +63,7 @@ index f425d62e0c27..1f046c1ecda7 100644
  
  	ret = request_threaded_irq(tqspi->irq, NULL,
  				   tegra_qspi_isr_thread, IRQF_ONESHOT,
-@@ -1803,6 +1813,7 @@ static int tegra_qspi_probe(struct platform_device *pdev)
+@@ -1810,6 +1820,7 @@ static int tegra_qspi_probe(struct platform_device *pdev)
  exit_free_irq:
  	free_irq(qspi_irq, tqspi);
  exit_pm_disable:
@@ -71,7 +71,7 @@ index f425d62e0c27..1f046c1ecda7 100644
  	pm_runtime_force_suspend(&pdev->dev);
  	tegra_qspi_deinit_dma(tqspi);
  	return ret;
-@@ -1815,6 +1826,7 @@ static void tegra_qspi_remove(struct platform_device *pdev)
+@@ -1822,6 +1833,7 @@ static void tegra_qspi_remove(struct platform_device *pdev)
  
  	spi_unregister_controller(host);
  	free_irq(tqspi->irq, tqspi);
@@ -79,7 +79,7 @@ index f425d62e0c27..1f046c1ecda7 100644
  	pm_runtime_force_suspend(&pdev->dev);
  	tegra_qspi_deinit_dma(tqspi);
  }
-@@ -1840,7 +1852,8 @@ static int __maybe_unused tegra_qspi_resume(struct device *dev)
+@@ -1847,7 +1859,8 @@ static int __maybe_unused tegra_qspi_resume(struct device *dev)
  
  	tegra_qspi_writel(tqspi, tqspi->command1_reg, QSPI_COMMAND1);
  	tegra_qspi_writel(tqspi, tqspi->def_command2_reg, QSPI_COMMAND2);

@@ -20,7 +20,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Prathamesh Shete <pshete@nvidia.com>
 
 diff --git a/crypto/Kconfig b/crypto/Kconfig
-index a04595f9d0ca..a6f4f086df73 100644
+index a04595f9d0ca4..a6f4f086df73f 100644
 --- a/crypto/Kconfig
 +++ b/crypto/Kconfig
 @@ -204,6 +204,12 @@ config CRYPTO_SELFTESTS_FULL
@@ -37,7 +37,7 @@ index a04595f9d0ca..a6f4f086df73 100644
  	tristate "Null algorithms"
  	select CRYPTO_ALGAPI
 diff --git a/crypto/tcrypt.c b/crypto/tcrypt.c
-index d1d88debbd71..e86d1470227c 100644
+index d1d88debbd71e..e86d1470227cc 100644
 --- a/crypto/tcrypt.c
 +++ b/crypto/tcrypt.c
 @@ -1523,8 +1523,10 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
@@ -52,7 +52,7 @@ index d1d88debbd71..e86d1470227c 100644
  
  	case 11:
 diff --git a/crypto/testmgr.c b/crypto/testmgr.c
-index 6a490aaa71b9..1a48dd9750b7 100644
+index 6a490aaa71b9a..1a48dd9750b76 100644
 --- a/crypto/testmgr.c
 +++ b/crypto/testmgr.c
 @@ -58,7 +58,7 @@ MODULE_PARM_DESC(fuzz_iterations, "number of fuzz test iterations");
@@ -159,7 +159,7 @@ index 6a490aaa71b9..1a48dd9750b7 100644
  		.alg = "ghash",
  		.test = alg_test_hash,
 diff --git a/crypto/testmgr.h b/crypto/testmgr.h
-index 268231227282..7a74ab184d29 100644
+index 2682312272824..7a74ab184d298 100644
 --- a/crypto/testmgr.h
 +++ b/crypto/testmgr.h
 @@ -7,6 +7,7 @@

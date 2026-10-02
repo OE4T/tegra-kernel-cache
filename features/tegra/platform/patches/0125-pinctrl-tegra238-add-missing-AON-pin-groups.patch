@@ -21,7 +21,7 @@ Signed-off-by: Linus Walleij <linusw@kernel.org>
 (cherry picked from commit 221bb09654714d6c52de4fc82260b5eb13f7489e)
 
 diff --git a/drivers/pinctrl/tegra/pinctrl-tegra238.c b/drivers/pinctrl/tegra/pinctrl-tegra238.c
-index c765b6b880e5..d3809594a5b5 100644
+index c765b6b880e5d..d3809594a5b5e 100644
 --- a/drivers/pinctrl/tegra/pinctrl-tegra238.c
 +++ b/drivers/pinctrl/tegra/pinctrl-tegra238.c
 @@ -1074,6 +1074,102 @@ static const unsigned int pwm7_pee1_pins[] = {

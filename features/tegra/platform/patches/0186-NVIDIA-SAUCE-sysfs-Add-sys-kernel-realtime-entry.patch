@@ -19,7 +19,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I676f210cae1ca8915c45c757635583058253050d
 
 diff --git a/kernel/ksysfs.c b/kernel/ksysfs.c
-index eefb67d9883c..20ac8a5ac27d 100644
+index eefb67d9883c2..20ac8a5ac27d7 100644
 --- a/kernel/ksysfs.c
 +++ b/kernel/ksysfs.c
 @@ -188,6 +188,15 @@ KERNEL_ATTR_RO(crash_elfcorehdr_size);

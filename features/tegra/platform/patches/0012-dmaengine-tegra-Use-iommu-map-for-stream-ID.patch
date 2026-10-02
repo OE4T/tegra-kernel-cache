@@ -19,7 +19,7 @@ Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
-index 06ed30bef368..19568aed3698 100644
+index 06ed30bef3687..19568aed36989 100644
 --- a/drivers/dma/tegra186-gpc-dma.c
 +++ b/drivers/dma/tegra186-gpc-dma.c
 @@ -15,6 +15,7 @@

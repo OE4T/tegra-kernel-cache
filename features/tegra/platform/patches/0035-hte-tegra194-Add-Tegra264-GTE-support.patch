@@ -13,7 +13,7 @@ Signed-off-by: Dipen Patel <dipenp@nvidia.com>
 (cherry picked from commit 005b25ad11717139ca5c14c9f06c2a60855c2afd)
 
 diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
-index 690eb9be30fb..4a7702b32b24 100644
+index 690eb9be30fb8..4a7702b32b24f 100644
 --- a/drivers/hte/hte-tegra194.c
 +++ b/drivers/hte/hte-tegra194.c
 @@ -20,10 +20,11 @@

@@ -60,7 +60,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit e432fa341891cd2a230f593a20b57da257c26d86)
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 9c281b4905eb..fa36558ec5fe 100644
+index 9c281b4905ebd..fa36558ec5fe6 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -2327,8 +2327,11 @@ static int tegra_i2c_probe(struct platform_device *pdev)

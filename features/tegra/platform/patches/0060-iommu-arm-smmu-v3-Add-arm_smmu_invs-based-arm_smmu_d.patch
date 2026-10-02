@@ -29,7 +29,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index b57a6fb68f3b..4638e3dcf23e 100644
+index addce171fd71b..57120195f333a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -2596,23 +2596,19 @@ static void arm_smmu_tlb_inv_context(void *cookie)
@@ -295,7 +295,7 @@ index b57a6fb68f3b..4638e3dcf23e 100644
  					 unsigned long iova, size_t granule,
  					 void *cookie)
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 9ab3a8498190..a72bbe87f6ab 100644
+index 9ab3a84981904..a72bbe87f6ab7 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -1093,6 +1093,15 @@ void arm_smmu_tlb_inv_range_asid(unsigned long iova, size_t size, int asid,

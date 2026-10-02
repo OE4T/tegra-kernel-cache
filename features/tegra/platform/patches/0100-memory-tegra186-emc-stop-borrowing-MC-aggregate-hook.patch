@@ -33,7 +33,7 @@ Fixes: 9a38cb27668e ("memory: tegra: Add interconnect support for DRAM scaling i
 Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
 
 diff --git a/drivers/memory/tegra/tegra186-emc.c b/drivers/memory/tegra/tegra186-emc.c
-index 03ebab6fbe68..f71265b303b9 100644
+index 03ebab6fbe68f..f71265b303b97 100644
 --- a/drivers/memory/tegra/tegra186-emc.c
 +++ b/drivers/memory/tegra/tegra186-emc.c
 @@ -258,15 +258,13 @@ static int tegra186_emc_icc_get_init_bw(struct icc_node *node, u32 *avg, u32 *pe

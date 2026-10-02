@@ -16,7 +16,7 @@ Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/3042024
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/lib/ubsan.c b/lib/ubsan.c
-index 456e3dd8f4ea..e0459bf113ad 100644
+index 456e3dd8f4ea8..e0459bf113ad6 100644
 --- a/lib/ubsan.c
 +++ b/lib/ubsan.c
 @@ -230,7 +230,8 @@ static void ubsan_prologue(struct source_location *loc, const char *reason)

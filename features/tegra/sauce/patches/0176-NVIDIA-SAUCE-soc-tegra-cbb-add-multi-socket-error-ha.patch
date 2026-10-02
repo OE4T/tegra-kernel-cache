@@ -15,7 +15,7 @@ Change-Id: Iae55dcf1c81c8044f245a011612b9d88212d2be0
 Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
 
 diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
-index fb26f085f691..921550996723 100644
+index fb26f085f6914..9215509967234 100644
 --- a/drivers/soc/tegra/cbb/tegra234-cbb.c
 +++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
 @@ -13,6 +13,7 @@

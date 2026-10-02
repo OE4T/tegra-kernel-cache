@@ -29,7 +29,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I5b7d75a33616f0ccdd7c995b3eb9c71d0a740de0
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index ed116c0d09b1..5e88158f7f15 100644
+index ed116c0d09b1a..5e88158f7f15b 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -44,6 +44,7 @@

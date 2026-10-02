@@ -24,7 +24,7 @@ Link: https://lore.kernel.org/r/20260507221145.62183-3-sauravsc@amazon.com
 (cherry picked from commit 30792d12842901f5276f466a960962d5bfa15cc8)
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index c094d319ba20..d5d7696518f9 100644
+index c094d319ba203..d5d7696518f93 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -589,25 +589,22 @@ static int tegra_i2c_mutex_lock(struct tegra_i2c_dev *i2c_dev)

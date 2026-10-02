@@ -29,7 +29,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 67da752ea6fb70b7a262d14b54355c4c148d4812)
 
 diff --git a/drivers/pmdomain/tegra/powergate-bpmp.c b/drivers/pmdomain/tegra/powergate-bpmp.c
-index 9f4366250bfd..53056e776491 100644
+index 9f4366250bfd4..53056e776491c 100644
 --- a/drivers/pmdomain/tegra/powergate-bpmp.c
 +++ b/drivers/pmdomain/tegra/powergate-bpmp.c
 @@ -137,6 +137,13 @@ static char *tegra_bpmp_powergate_get_name(struct tegra_bpmp *bpmp,

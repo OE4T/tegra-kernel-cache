@@ -27,7 +27,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 818ddb04bc839d09c56f93b774a457dd24533f35)
 
 diff --git a/sound/soc/tegra/tegra_codecs.c b/sound/soc/tegra/tegra_codecs.c
-index 1386412dbd6b..d9146f1d8be6 100644
+index 1386412dbd6be..d9146f1d8be6a 100644
 --- a/sound/soc/tegra/tegra_codecs.c
 +++ b/sound/soc/tegra/tegra_codecs.c
 @@ -1,5 +1,5 @@

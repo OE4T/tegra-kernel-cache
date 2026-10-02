@@ -29,7 +29,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 347adc1d45ed..73e1e491783a 100644
+index c75d6602e80e8..32e359e58fba8 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -3783,12 +3783,22 @@ static int arm_smmu_init_sid_strtab(struct arm_smmu_device *smmu, u32 sid)
@@ -112,7 +112,7 @@ index 347adc1d45ed..73e1e491783a 100644
  
  static struct iommu_device *arm_smmu_probe_device(struct device *dev)
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index ce2665034374..28a5d72a0fbf 100644
+index ce2665034374d..28a5d72a0fbf6 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -934,6 +934,14 @@ struct arm_smmu_master {

@@ -13,7 +13,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 44c1a444b030647803d900e60f5a8af31a782f0e)
 
 diff --git a/drivers/base/regmap/regcache-flat.c b/drivers/base/regmap/regcache-flat.c
-index bacb7137092f..53cc59c84e2f 100644
+index bacb7137092fa..53cc59c84e2f0 100644
 --- a/drivers/base/regmap/regcache-flat.c
 +++ b/drivers/base/regmap/regcache-flat.c
 @@ -29,7 +29,6 @@ struct regcache_flat_data {

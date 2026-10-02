@@ -48,7 +48,7 @@ Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
 (cherry picked from commit 82ecac18ee019d77d2118d4f951fe1e2ec4cac8d)
 
 diff --git a/drivers/pci/msi/msi.c b/drivers/pci/msi/msi.c
-index 7e2332869306..6ec8d44be063 100644
+index 7e23328693065..6ec8d44be0633 100644
 --- a/drivers/pci/msi/msi.c
 +++ b/drivers/pci/msi/msi.c
 @@ -117,7 +117,8 @@ void pci_msi_update_mask(struct msi_desc *desc, u32 clear, u32 set)
@@ -80,7 +80,7 @@ index 7e2332869306..6ec8d44be063 100644
  
  	/* route the table */
 diff --git a/drivers/pci/msi/msi.h b/drivers/pci/msi/msi.h
-index 0b420b319f50..cbbbf38225bf 100644
+index 0b420b319f50f..cbbbf38225bf4 100644
 --- a/drivers/pci/msi/msi.h
 +++ b/drivers/pci/msi/msi.h
 @@ -42,6 +42,8 @@ static inline void pci_msix_write_vector_ctrl(struct msi_desc *desc, u32 ctrl)

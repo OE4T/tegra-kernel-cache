@@ -23,7 +23,7 @@ Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 9d4ca9ca1705..24231017a7fe 100644
+index 140d3b840abba..4ae47a07c2738 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -920,31 +920,23 @@ int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
@@ -153,7 +153,7 @@ index 9d4ca9ca1705..24231017a7fe 100644
  }
  
  /* Should be installed after arm_smmu_install_ste_for_dev() */
-@@ -4848,7 +4851,8 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
+@@ -4850,7 +4853,8 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
  {
  	int ret;
  	u32 reg, enables;
@@ -163,7 +163,7 @@ index 9d4ca9ca1705..24231017a7fe 100644
  
  	/* Clear CR0 and sync (disables SMMU and queue processing) */
  	reg = readl_relaxed(smmu->base + ARM_SMMU_CR0);
-@@ -4895,16 +4899,19 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
+@@ -4897,16 +4901,19 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
  	}
  
  	/* Invalidate any cached configuration */

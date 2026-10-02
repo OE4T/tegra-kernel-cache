@@ -17,7 +17,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit aa245d4b56f521afa32f83799df15e80e8d79a90)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 5261bde1be76..38863277b0c6 100644
+index 5261bde1be76c..38863277b0c6d 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -517,6 +517,19 @@ static int tegra_hv_setup(struct tegra_hv_data *hvd)
@@ -41,7 +41,7 @@ index 5261bde1be76..38863277b0c6 100644
  	 *  Map IVC Trap MMIO Notification region
  	 */
 diff --git a/include/soc/tegra/virt/tegra_hv.h b/include/soc/tegra/virt/tegra_hv.h
-index c64db45e90ef..00c4fcb0e5db 100644
+index c64db45e90efd..00c4fcb0e5db0 100644
 --- a/include/soc/tegra/virt/tegra_hv.h
 +++ b/include/soc/tegra/virt/tegra_hv.h
 @@ -12,6 +12,13 @@

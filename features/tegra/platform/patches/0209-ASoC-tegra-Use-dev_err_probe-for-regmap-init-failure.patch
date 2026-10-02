@@ -13,7 +13,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 4a8fe27e122e5a1bb1896837ed47f99abaa965a0)
 
 diff --git a/sound/soc/tegra/tegra186_asrc.c b/sound/soc/tegra/tegra186_asrc.c
-index 6ce7ddb788a5..f073166db697 100644
+index 6ce7ddb788a54..f073166db697f 100644
 --- a/sound/soc/tegra/tegra186_asrc.c
 +++ b/sound/soc/tegra/tegra186_asrc.c
 @@ -989,10 +989,9 @@ static int tegra186_asrc_platform_probe(struct platform_device *pdev)
@@ -31,7 +31,7 @@ index 6ce7ddb788a5..f073166db697 100644
  	asrc->soc_data = of_device_get_match_data(&pdev->dev);
  
 diff --git a/sound/soc/tegra/tegra186_dspk.c b/sound/soc/tegra/tegra186_dspk.c
-index 8f750b853306..ef0c7ec297a6 100644
+index 8f750b8533062..ef0c7ec297a68 100644
 --- a/sound/soc/tegra/tegra186_dspk.c
 +++ b/sound/soc/tegra/tegra186_dspk.c
 @@ -505,10 +505,9 @@ static int tegra186_dspk_platform_probe(struct platform_device *pdev)
@@ -49,7 +49,7 @@ index 8f750b853306..ef0c7ec297a6 100644
  	regcache_cache_only(dspk->regmap, true);
  
 diff --git a/sound/soc/tegra/tegra210_adx.c b/sound/soc/tegra/tegra210_adx.c
-index be9d2ee74e1f..a604406c547f 100644
+index be9d2ee74e1f1..a604406c547f7 100644
 --- a/sound/soc/tegra/tegra210_adx.c
 +++ b/sound/soc/tegra/tegra210_adx.c
 @@ -697,10 +697,9 @@ static int tegra210_adx_platform_probe(struct platform_device *pdev)
@@ -67,7 +67,7 @@ index be9d2ee74e1f..a604406c547f 100644
  	regcache_cache_only(adx->regmap, true);
  
 diff --git a/sound/soc/tegra/tegra210_ahub.c b/sound/soc/tegra/tegra210_ahub.c
-index 5b7fd1e3f7a1..001f8161eea7 100644
+index 5b7fd1e3f7a14..001f8161eea7b 100644
 --- a/sound/soc/tegra/tegra210_ahub.c
 +++ b/sound/soc/tegra/tegra210_ahub.c
 @@ -2277,10 +2277,9 @@ static int tegra_ahub_probe(struct platform_device *pdev)
@@ -85,7 +85,7 @@ index 5b7fd1e3f7a1..001f8161eea7 100644
  	regcache_cache_only(ahub->regmap, true);
  
 diff --git a/sound/soc/tegra/tegra210_amx.c b/sound/soc/tegra/tegra210_amx.c
-index 09f800b452ba..1e8888edf091 100644
+index 09f800b452ba7..1e8888edf0914 100644
 --- a/sound/soc/tegra/tegra210_amx.c
 +++ b/sound/soc/tegra/tegra210_amx.c
 @@ -745,10 +745,9 @@ static int tegra210_amx_platform_probe(struct platform_device *pdev)
@@ -103,7 +103,7 @@ index 09f800b452ba..1e8888edf091 100644
  	regcache_cache_only(amx->regmap, true);
  
 diff --git a/sound/soc/tegra/tegra210_dmic.c b/sound/soc/tegra/tegra210_dmic.c
-index aa37caee3469..84c7f9e902c7 100644
+index aa37caee34692..84c7f9e902c71 100644
 --- a/sound/soc/tegra/tegra210_dmic.c
 +++ b/sound/soc/tegra/tegra210_dmic.c
 @@ -517,10 +517,9 @@ static int tegra210_dmic_probe(struct platform_device *pdev)
@@ -121,7 +121,7 @@ index aa37caee3469..84c7f9e902c7 100644
  	regcache_cache_only(dmic->regmap, true);
  
 diff --git a/sound/soc/tegra/tegra210_i2s.c b/sound/soc/tegra/tegra210_i2s.c
-index cdaecce74416..c091399d2bac 100644
+index cdaecce744160..c091399d2bac7 100644
 --- a/sound/soc/tegra/tegra210_i2s.c
 +++ b/sound/soc/tegra/tegra210_i2s.c
 @@ -1093,10 +1093,9 @@ static int tegra210_i2s_probe(struct platform_device *pdev)
@@ -139,7 +139,7 @@ index cdaecce74416..c091399d2bac 100644
  	tegra210_parse_client_convert(dev);
  
 diff --git a/sound/soc/tegra/tegra210_mixer.c b/sound/soc/tegra/tegra210_mixer.c
-index 5ef2a13b31ad..9066884daac6 100644
+index 5ef2a13b31ad1..9066884daac66 100644
 --- a/sound/soc/tegra/tegra210_mixer.c
 +++ b/sound/soc/tegra/tegra210_mixer.c
 @@ -641,10 +641,9 @@ static int tegra210_mixer_platform_probe(struct platform_device *pdev)
@@ -157,7 +157,7 @@ index 5ef2a13b31ad..9066884daac6 100644
  	regcache_cache_only(mixer->regmap, true);
  
 diff --git a/sound/soc/tegra/tegra210_mvc.c b/sound/soc/tegra/tegra210_mvc.c
-index e36c04a701e5..7c88d2656b5e 100644
+index e36c04a701e59..7c88d2656b5ee 100644
 --- a/sound/soc/tegra/tegra210_mvc.c
 +++ b/sound/soc/tegra/tegra210_mvc.c
 @@ -731,10 +731,9 @@ static int tegra210_mvc_platform_probe(struct platform_device *pdev)
@@ -175,7 +175,7 @@ index e36c04a701e5..7c88d2656b5e 100644
  	regcache_cache_only(mvc->regmap, true);
  
 diff --git a/sound/soc/tegra/tegra210_sfc.c b/sound/soc/tegra/tegra210_sfc.c
-index 30afea74e066..68bc39a65012 100644
+index 30afea74e066e..68bc39a650124 100644
 --- a/sound/soc/tegra/tegra210_sfc.c
 +++ b/sound/soc/tegra/tegra210_sfc.c
 @@ -3598,10 +3598,9 @@ static int tegra210_sfc_platform_probe(struct platform_device *pdev)

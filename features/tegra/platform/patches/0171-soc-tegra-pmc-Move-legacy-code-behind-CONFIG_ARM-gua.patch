@@ -13,7 +13,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit 8318af5dd29c819d95ec5b878e7dab6090a9ed2b)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index c829fbdb7aa8..c789f8c1035e 100644
+index c829fbdb7aa82..c789f8c1035e5 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -514,10 +514,12 @@ struct tegra_pmc {
@@ -329,7 +329,7 @@ index c829fbdb7aa8..c789f8c1035e 100644
  early_initcall(tegra_pmc_early_init);
 +#endif /* CONFIG_ARM */
 diff --git a/include/soc/tegra/pmc.h b/include/soc/tegra/pmc.h
-index 8b4bcdea849e..4bcbf19d75ac 100644
+index 8b4bcdea849e6..4bcbf19d75ace 100644
 --- a/include/soc/tegra/pmc.h
 +++ b/include/soc/tegra/pmc.h
 @@ -18,10 +18,6 @@ struct clk;

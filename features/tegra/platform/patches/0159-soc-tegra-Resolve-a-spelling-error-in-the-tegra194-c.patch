@@ -18,7 +18,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit e13c1f34aa8675363f45593e85c125e15b9a4410)
 
 diff --git a/drivers/soc/tegra/cbb/tegra194-cbb.c b/drivers/soc/tegra/cbb/tegra194-cbb.c
-index c1bdea8c853f..ab75d50cc85c 100644
+index c1bdea8c853fe..ab75d50cc85c4 100644
 --- a/drivers/soc/tegra/cbb/tegra194-cbb.c
 +++ b/drivers/soc/tegra/cbb/tegra194-cbb.c
 @@ -1836,7 +1836,7 @@ print_errlog1_2(struct seq_file *file, struct tegra194_cbb *cbb,

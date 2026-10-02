@@ -21,7 +21,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit fb1e51d564de59d55a4c008f820ab33f678c6e98)
 
 diff --git a/drivers/pci/controller/pci-host-common.c b/drivers/pci/controller/pci-host-common.c
-index 422c2c460017..730004a4421c 100644
+index 422c2c4600173..730004a4421ce 100644
 --- a/drivers/pci/controller/pci-host-common.c
 +++ b/drivers/pci/controller/pci-host-common.c
 @@ -13,7 +13,11 @@

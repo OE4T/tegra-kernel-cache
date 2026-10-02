@@ -19,7 +19,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit 35934fd08d17071c5ae0e99b95258f61f0cff763)
 
 diff --git a/drivers/memory/tegra/mc.c b/drivers/memory/tegra/mc.c
-index b736e79d6c08..627d259b6493 100644
+index b736e79d6c087..627d259b64931 100644
 --- a/drivers/memory/tegra/mc.c
 +++ b/drivers/memory/tegra/mc.c
 @@ -920,6 +920,19 @@ static void tegra_mc_num_channel_enabled(struct tegra_mc *mc)

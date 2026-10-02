@@ -14,7 +14,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 94a3a95f03154d8d4c6206950a7f6ef9a30baec6)
 
 diff --git a/drivers/base/regmap/internal.h b/drivers/base/regmap/internal.h
-index 8d19a1414d5b..1477329410ec 100644
+index 8d19a1414d5b2..1477329410ec4 100644
 --- a/drivers/base/regmap/internal.h
 +++ b/drivers/base/regmap/internal.h
 @@ -186,6 +186,7 @@ struct regcache_ops {
@@ -26,7 +26,7 @@ index 8d19a1414d5b..1477329410ec 100644
  	void (*debugfs_init)(struct regmap *map);
  #endif
 diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
-index 0392f5525cf3..319c342bf5a0 100644
+index 0392f5525cf30..319c342bf5a06 100644
 --- a/drivers/base/regmap/regcache.c
 +++ b/drivers/base/regmap/regcache.c
 @@ -222,8 +222,24 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)

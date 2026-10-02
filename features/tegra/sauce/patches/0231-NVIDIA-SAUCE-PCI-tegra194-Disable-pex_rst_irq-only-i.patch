@@ -25,7 +25,7 @@ Tested-by: Prathamesh Shete <pshete@nvidia.com>
 (cherry picked from commit 5c5d7f5605fd989b0fa5cd0b16c0b712a1bf1556)
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index bb96b14a3737..23db64b40255 100644
+index bb96b14a37372..23db64b402557 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -2526,6 +2526,16 @@ static int tegra_pcie_dw_suspend_late(struct device *dev)

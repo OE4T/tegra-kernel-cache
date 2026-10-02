@@ -16,7 +16,7 @@ Reviewed-by: Kovid Kumar <kovidk@nvidia.com>
 
 diff --git a/Documentation/devicetree/bindings/platform/tegra/tegra-epl.yaml b/Documentation/devicetree/bindings/platform/tegra/tegra-epl.yaml
 new file mode 100644
-index 000000000000..4b2686157c1c
+index 0000000000000..4b2686157c1cf
 --- /dev/null
 +++ b/Documentation/devicetree/bindings/platform/tegra/tegra-epl.yaml
 @@ -0,0 +1,123 @@

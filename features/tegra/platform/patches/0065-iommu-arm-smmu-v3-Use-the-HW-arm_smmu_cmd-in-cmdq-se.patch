@@ -19,7 +19,7 @@ Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index f0247264acd3..9d4ca9ca1705 100644
+index 8637282a24725..140d3b840abba 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -370,12 +370,12 @@ static int arm_smmu_cmdq_build_cmd(u64 *cmd, struct arm_smmu_cmdq_ent *ent)
@@ -126,7 +126,7 @@ index f0247264acd3..9d4ca9ca1705 100644
  }
  
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index c31c899a9766..15294bb1cf3a 100644
+index c31c899a97669..15294bb1cf3ae 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -644,13 +644,13 @@ struct arm_smmu_cmdq {
@@ -156,7 +156,7 @@ index c31c899a9766..15294bb1cf3a 100644
  	 * An implementation should define its own type other than the default
  	 * IOMMU_HW_INFO_TYPE_ARM_SMMUV3. And it must validate the input @type
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index d5af60f92bc0..6ca3eac24a34 100644
+index d5af60f92bc0e..6ca3eac24a343 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 @@ -394,9 +394,9 @@ static irqreturn_t tegra241_cmdqv_isr(int irq, void *devid)

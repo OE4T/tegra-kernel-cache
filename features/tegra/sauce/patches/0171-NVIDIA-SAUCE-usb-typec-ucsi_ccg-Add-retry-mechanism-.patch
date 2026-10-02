@@ -38,7 +38,7 @@ APS-Inflight: svcenomis <svcenomis@nvidia.com>
 (cherry picked from commit 983c0daa0456b2bf7498611554804fdb23f97b01)
 
 diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-index 6c1f62c78ac2..423d34acb994 100644
+index 6c1f62c78ac25..423d34acb994e 100644
 --- a/drivers/usb/typec/ucsi/ucsi_ccg.c
 +++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
 @@ -2,7 +2,7 @@

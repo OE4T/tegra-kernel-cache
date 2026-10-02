@@ -19,7 +19,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit 907ef6a1baf0ad61f64d31a3f5040feb82f48929)
 
 diff --git a/drivers/memory/tegra/Makefile b/drivers/memory/tegra/Makefile
-index 6334601e6120..7c2fca12076b 100644
+index 6334601e6120d..7c2fca12076b9 100644
 --- a/drivers/memory/tegra/Makefile
 +++ b/drivers/memory/tegra/Makefile
 @@ -10,6 +10,7 @@ tegra-mc-$(CONFIG_ARCH_TEGRA_210_SOC) += tegra210.o
@@ -31,7 +31,7 @@ index 6334601e6120..7c2fca12076b 100644
  
  obj-$(CONFIG_TEGRA_MC) += tegra-mc.o
 diff --git a/drivers/memory/tegra/mc.c b/drivers/memory/tegra/mc.c
-index 627d259b6493..d96c71c780c4 100644
+index 627d259b64931..d96c71c780c43 100644
 --- a/drivers/memory/tegra/mc.c
 +++ b/drivers/memory/tegra/mc.c
 @@ -50,6 +50,9 @@ static const struct of_device_id tegra_mc_of_match[] = {
@@ -45,7 +45,7 @@ index 627d259b6493..d96c71c780c4 100644
  	{ .compatible = "nvidia,tegra264-mc", .data = &tegra264_mc_soc },
  #endif
 diff --git a/drivers/memory/tegra/mc.h b/drivers/memory/tegra/mc.h
-index 649b54369263..e94d265d7b67 100644
+index 649b54369263a..e94d265d7b678 100644
 --- a/drivers/memory/tegra/mc.h
 +++ b/drivers/memory/tegra/mc.h
 @@ -240,6 +240,14 @@ extern const struct tegra_mc_soc tegra194_mc_soc;
@@ -72,7 +72,7 @@ index 649b54369263..e94d265d7b67 100644
  extern const struct tegra_mc_ops tegra186_mc_ops;
  #endif
 diff --git a/drivers/memory/tegra/tegra234.c b/drivers/memory/tegra/tegra234.c
-index 87b22038a5fb..9fbd34d4abe0 100644
+index 87b22038a5fbf..9fbd34d4abe04 100644
 --- a/drivers/memory/tegra/tegra234.c
 +++ b/drivers/memory/tegra/tegra234.c
 @@ -1125,7 +1125,7 @@ static int tegra234_mc_icc_get_init_bw(struct icc_node *node, u32 *avg, u32 *pea
@@ -86,7 +86,7 @@ index 87b22038a5fb..9fbd34d4abe0 100644
  	.get_bw = tegra234_mc_icc_get_init_bw,
 diff --git a/drivers/memory/tegra/tegra238.c b/drivers/memory/tegra/tegra238.c
 new file mode 100644
-index 000000000000..938c8985600e
+index 0000000000000..938c8985600e6
 --- /dev/null
 +++ b/drivers/memory/tegra/tegra238.c
 @@ -0,0 +1,391 @@

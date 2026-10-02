@@ -19,10 +19,10 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 9def2a20b428..1459d21bbac0 100644
+index 1e9874cd260cf..9648de64fe455 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -28458,3 +28458,11 @@ S:	Buried alive in reporters
+@@ -28459,3 +28459,11 @@ S:	Buried alive in reporters
  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
  F:	*
  F:	*/
@@ -35,7 +35,7 @@ index 9def2a20b428..1459d21bbac0 100644
 +F:	drivers/platform/tegra/tegra-hsierrrptinj.c
 +F:	include/linux/tegra-hsierrrptinj.h
 diff --git a/drivers/platform/tegra/Kconfig b/drivers/platform/tegra/Kconfig
-index 344bf38dea5a..2502c0ccd2f0 100644
+index 344bf38dea5a5..2502c0ccd2f06 100644
 --- a/drivers/platform/tegra/Kconfig
 +++ b/drivers/platform/tegra/Kconfig
 @@ -26,5 +26,13 @@ config TEGRA_EPL
@@ -53,7 +53,7 @@ index 344bf38dea5a..2502c0ccd2f0 100644
  
  endif # TEGRA_PLATFORM_DEVICES
 diff --git a/drivers/platform/tegra/Makefile b/drivers/platform/tegra/Makefile
-index d20e79503472..55e92006a555 100644
+index d20e795034723..55e92006a555f 100644
 --- a/drivers/platform/tegra/Makefile
 +++ b/drivers/platform/tegra/Makefile
 @@ -1,2 +1,3 @@
@@ -62,7 +62,7 @@ index d20e79503472..55e92006a555 100644
 +obj-$(CONFIG_TEGRA_HSIERRRPTINJ) += tegra-hsierrrptinj.o
 diff --git a/drivers/platform/tegra/tegra-hsierrrptinj.c b/drivers/platform/tegra/tegra-hsierrrptinj.c
 new file mode 100644
-index 000000000000..adf9dbf81175
+index 0000000000000..adf9dbf811750
 --- /dev/null
 +++ b/drivers/platform/tegra/tegra-hsierrrptinj.c
 @@ -0,0 +1,455 @@
@@ -523,7 +523,7 @@ index 000000000000..adf9dbf81175
 +MODULE_LICENSE("GPL v2");
 diff --git a/include/linux/tegra-hsierrrptinj.h b/include/linux/tegra-hsierrrptinj.h
 new file mode 100644
-index 000000000000..13b9d0c86139
+index 0000000000000..13b9d0c861399
 --- /dev/null
 +++ b/include/linux/tegra-hsierrrptinj.h
 @@ -0,0 +1,124 @@

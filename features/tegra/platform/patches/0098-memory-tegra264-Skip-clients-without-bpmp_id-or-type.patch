@@ -15,7 +15,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit c3ce114d81e39cd83f7bf9c5c46020bb7695b017)
 
 diff --git a/drivers/memory/tegra/tegra264.c b/drivers/memory/tegra/tegra264.c
-index e43ef14da1ee..e62890841725 100644
+index e43ef14da1ee7..e628908417255 100644
 --- a/drivers/memory/tegra/tegra264.c
 +++ b/drivers/memory/tegra/tegra264.c
 @@ -262,6 +262,10 @@ static int tegra264_mc_icc_set(struct icc_node *src, struct icc_node *dst)

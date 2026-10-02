@@ -31,7 +31,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I7ef92658f89e505015a52009504a9d1579a1321c
 
 diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index de09cc2a6311..76fb7a53dcf2 100644
+index de09cc2a63112..76fb7a53dcf21 100644
 --- a/drivers/pci/controller/dwc/pci-imx6.c
 +++ b/drivers/pci/controller/dwc/pci-imx6.c
 @@ -1423,18 +1423,18 @@ static int imx_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
@@ -60,7 +60,7 @@ index de09cc2a6311..76fb7a53dcf2 100644
  };
  
 diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
-index 25b8193ffbcf..ca6527ea5562 100644
+index 25b8193ffbcf1..ca6527ea5562b 100644
 --- a/drivers/pci/controller/dwc/pci-keystone.c
 +++ b/drivers/pci/controller/dwc/pci-keystone.c
 @@ -962,6 +962,18 @@ static int ks_pcie_am654_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
@@ -83,7 +83,7 @@ index 25b8193ffbcf..ca6527ea5562 100644
  	.bar[BAR_1] = { .type = BAR_RESERVED, },
  	.bar[BAR_2] = { .type = BAR_RESIZABLE, },
 diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-index 7e171526b1de..858a5599f22a 100644
+index 7e171526b1ded..858a5599f22ae 100644
 --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
 +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
 @@ -421,10 +421,10 @@ static int rcar_gen4_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
@@ -101,7 +101,7 @@ index 7e171526b1de..858a5599f22a 100644
  };
  
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 62ed63099b5c..225471bb0d69 100644
+index 62ed63099b5c4..225471bb0d698 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
 @@ -1984,10 +1984,10 @@ static const struct pci_epc_features tegra_pcie_epc_features = {
@@ -120,7 +120,7 @@ index 62ed63099b5c..225471bb0d69 100644
  };
  
 diff --git a/drivers/pci/controller/dwc/pcie-uniphier-ep.c b/drivers/pci/controller/dwc/pcie-uniphier-ep.c
-index b15c087693a7..dbdadfecd6a3 100644
+index b15c087693a73..dbdadfecd6a32 100644
 --- a/drivers/pci/controller/dwc/pcie-uniphier-ep.c
 +++ b/drivers/pci/controller/dwc/pcie-uniphier-ep.c
 @@ -426,8 +426,8 @@ static const struct uniphier_pcie_ep_soc_data uniphier_pro5_data = {

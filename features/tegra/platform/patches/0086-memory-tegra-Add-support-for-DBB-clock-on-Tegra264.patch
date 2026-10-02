@@ -20,7 +20,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit ef4d7b9975d6d87a21574f98473945c8e499a0d2)
 
 diff --git a/drivers/memory/tegra/tegra186-emc.c b/drivers/memory/tegra/tegra186-emc.c
-index dfddceecdd1a..03ebab6fbe68 100644
+index dfddceecdd1aa..03ebab6fbe68f 100644
 --- a/drivers/memory/tegra/tegra186-emc.c
 +++ b/drivers/memory/tegra/tegra186-emc.c
 @@ -22,6 +22,7 @@ struct tegra186_emc {

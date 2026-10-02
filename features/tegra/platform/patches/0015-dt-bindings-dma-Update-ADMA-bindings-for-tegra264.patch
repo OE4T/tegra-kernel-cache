@@ -25,7 +25,7 @@ Reviewed-by: Mohan kumar <mkumard@nvidia.com>
 (cherry picked from commit 4f249ddc3a5ef486d688f8067658cb00e459b607)
 
 diff --git a/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml b/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml
-index da0235e451d6..269a1f7ebdbb 100644
+index da0235e451d68..269a1f7ebdbb0 100644
 --- a/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml
 +++ b/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml
 @@ -46,7 +46,7 @@ properties:

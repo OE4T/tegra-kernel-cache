@@ -12,7 +12,7 @@ Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
-index 7df0a745e7b8..7857396e859f 100644
+index 7df0a745e7b86..7857396e859f0 100644
 --- a/drivers/dma/tegra186-gpc-dma.c
 +++ b/drivers/dma/tegra186-gpc-dma.c
 @@ -1389,10 +1389,10 @@ static int tegra_dma_probe(struct platform_device *pdev)

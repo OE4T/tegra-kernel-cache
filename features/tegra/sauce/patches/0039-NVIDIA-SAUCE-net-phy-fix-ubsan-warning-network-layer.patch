@@ -49,7 +49,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/swphy.c b/drivers/net/phy/swphy.c
-index 6e946285fa0f..5380f952e846 100644
+index 6e946285fa0f6..5380f952e846e 100644
 --- a/drivers/net/phy/swphy.c
 +++ b/drivers/net/phy/swphy.c
 @@ -54,6 +54,10 @@ static const struct swmii_regs speed[] = {

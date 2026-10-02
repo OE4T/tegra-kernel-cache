@@ -22,7 +22,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
 
 diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index b18a2d0f6984..488ba515a860 100644
+index b18a2d0f6984e..488ba515a860a 100644
 --- a/drivers/gpio/gpio-pca953x.c
 +++ b/drivers/gpio/gpio-pca953x.c
 @@ -1430,7 +1430,7 @@ static int pca953x_resume(struct device *dev)

@@ -15,7 +15,7 @@ Change-Id: I595dc746e3b45b9f40c5f4343212c37f42f0faa1
 Signed-off-by: Besar Wicaksono <bwicaksono@nvidia.com>
 
 diff --git a/Documentation/admin-guide/perf/nvidia-pmu.rst b/Documentation/admin-guide/perf/nvidia-pmu.rst
-index f538ef67e0e8..b286e9594ef3 100644
+index f538ef67e0e8f..b286e9594ef31 100644
 --- a/Documentation/admin-guide/perf/nvidia-pmu.rst
 +++ b/Documentation/admin-guide/perf/nvidia-pmu.rst
 @@ -10,6 +10,11 @@ metrics like memory bandwidth, latency, and utilization:
@@ -191,7 +191,7 @@ index f538ef67e0e8..b286e9594ef3 100644
  
  Traffic Coverage
 diff --git a/drivers/perf/arm_cspmu/nvidia_cspmu.c b/drivers/perf/arm_cspmu/nvidia_cspmu.c
-index bec9dda4e387..eee3da896fb8 100644
+index bec9dda4e3877..eee3da896fb82 100644
 --- a/drivers/perf/arm_cspmu/nvidia_cspmu.c
 +++ b/drivers/perf/arm_cspmu/nvidia_cspmu.c
 @@ -21,6 +21,16 @@

@@ -23,7 +23,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 9c7f7262bc1affb9b9acd2ec2fb1f6314d5d474c)
 
 diff --git a/drivers/base/regmap/internal.h b/drivers/base/regmap/internal.h
-index 6f31240ee4a9..8d19a1414d5b 100644
+index 6f31240ee4a9a..8d19a1414d5b2 100644
 --- a/drivers/base/regmap/internal.h
 +++ b/drivers/base/regmap/internal.h
 @@ -288,6 +288,7 @@ enum regmap_endian regmap_get_val_endian(struct device *dev,
@@ -35,7 +35,7 @@ index 6f31240ee4a9..8d19a1414d5b 100644
  extern struct regcache_ops regcache_maple_ops;
  extern struct regcache_ops regcache_flat_ops;
 diff --git a/drivers/base/regmap/regcache-flat.c b/drivers/base/regmap/regcache-flat.c
-index f36d3618b67c..86f7679175b1 100644
+index f36d3618b67c1..86f7679175b16 100644
 --- a/drivers/base/regmap/regcache-flat.c
 +++ b/drivers/base/regmap/regcache-flat.c
 @@ -6,7 +6,11 @@
@@ -199,7 +199,7 @@ index f36d3618b67c..86f7679175b1 100644
 +	.drop = regcache_flat_drop,
 +};
 diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
-index c7650fa434ad..0392f5525cf3 100644
+index c7650fa434add..0392f5525cf30 100644
 --- a/drivers/base/regmap/regcache.c
 +++ b/drivers/base/regmap/regcache.c
 @@ -16,6 +16,7 @@
@@ -211,7 +211,7 @@ index c7650fa434ad..0392f5525cf3 100644
  	&regcache_maple_ops,
  	&regcache_flat_ops,
 diff --git a/drivers/base/regmap/regmap-kunit.c b/drivers/base/regmap/regmap-kunit.c
-index 95c5bf2a78ee..f6fc5ed016da 100644
+index 95c5bf2a78eeb..f6fc5ed016da1 100644
 --- a/drivers/base/regmap/regmap-kunit.c
 +++ b/drivers/base/regmap/regmap-kunit.c
 @@ -54,6 +54,8 @@ static const char *regcache_type_name(enum regcache_type type)
@@ -286,7 +286,7 @@ index 95c5bf2a78ee..f6fc5ed016da 100644
  	{ .cache = REGCACHE_RBTREE, .val_endian = REGMAP_ENDIAN_BIG },
  	{ .cache = REGCACHE_MAPLE,  .val_endian = REGMAP_ENDIAN_LITTLE },
 diff --git a/include/linux/regmap.h b/include/linux/regmap.h
-index 55343795644b..bbb8b1b11a4f 100644
+index 55343795644b9..bbb8b1b11a4fb 100644
 --- a/include/linux/regmap.h
 +++ b/include/linux/regmap.h
 @@ -55,18 +55,23 @@ struct sdw_slave;

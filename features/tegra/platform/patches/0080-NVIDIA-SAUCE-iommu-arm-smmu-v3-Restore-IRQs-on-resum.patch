@@ -31,7 +31,7 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit bd85e3c4db26954c06cd73c9452a73a17a6d8ae5)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index c6c2e7895775..0a7f337c6665 100644
+index 0daae63a90bef..e7f2deb5e123a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -4684,10 +4684,26 @@ static void arm_smmu_setup_unique_irqs(struct arm_smmu_device *smmu)

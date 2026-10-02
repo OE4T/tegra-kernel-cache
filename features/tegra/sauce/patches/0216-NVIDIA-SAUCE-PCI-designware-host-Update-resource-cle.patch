@@ -24,7 +24,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 20778b85afde..8a36bf44cb32 100644
+index 20778b85afde5..8a36bf44cb329 100644
 --- a/drivers/pci/controller/dwc/pcie-designware-host.c
 +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
 @@ -708,6 +708,8 @@ EXPORT_SYMBOL_GPL(dw_pcie_host_init);

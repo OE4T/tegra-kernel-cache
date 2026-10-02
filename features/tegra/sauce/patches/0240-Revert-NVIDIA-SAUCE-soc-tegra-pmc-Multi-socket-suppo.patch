@@ -12,7 +12,7 @@ Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Change-Id: I6550815c14cfa0aaa5570eb4849f7aa359c63916
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index cf4c7cf6b757..11682a9f4dd9 100644
+index cf4c7cf6b7571..11682a9f4dd9c 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -3163,78 +3163,6 @@ static void tegra_pmc_reset_suspend_mode(void *data)

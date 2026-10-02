@@ -24,7 +24,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 3c3e41412b47c4e98a6ce4c43a1ca6ab259586ef)
 
 diff --git a/drivers/virt/tegra/tegra_hv.c b/drivers/virt/tegra/tegra_hv.c
-index 46f259e1cc46..5261bde1be76 100644
+index 46f259e1cc468..5261bde1be76c 100644
 --- a/drivers/virt/tegra/tegra_hv.c
 +++ b/drivers/virt/tegra/tegra_hv.c
 @@ -19,6 +19,7 @@

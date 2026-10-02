@@ -35,7 +35,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index 5a8c4a2737b8..c48d0f2fbb43 100644
+index 5a8c4a2737b86..c48d0f2fbb430 100644
 --- a/drivers/spi/spi-tegra114.c
 +++ b/drivers/spi/spi-tegra114.c
 @@ -23,6 +23,10 @@

@@ -15,7 +15,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 2333abb25c7e2ba823d2113b83a22be4c2ba63c1)
 
 diff --git a/sound/soc/tegra/tegra210_mbdrc.c b/sound/soc/tegra/tegra210_mbdrc.c
-index d9e83632703e..a8a627812116 100644
+index d9e83632703e0..a8a627812116c 100644
 --- a/sound/soc/tegra/tegra210_mbdrc.c
 +++ b/sound/soc/tegra/tegra210_mbdrc.c
 @@ -988,14 +988,14 @@ int tegra210_mbdrc_regmap_init(struct platform_device *pdev)
@@ -53,7 +53,7 @@ index d9e83632703e..a8a627812116 100644
  	regcache_cache_only(ope->mbdrc_regmap, true);
  
 diff --git a/sound/soc/tegra/tegra210_ope.c b/sound/soc/tegra/tegra210_ope.c
-index fb171bbedcab..e19cd0563082 100644
+index fb171bbedcab5..e19cd0563082e 100644
 --- a/sound/soc/tegra/tegra210_ope.c
 +++ b/sound/soc/tegra/tegra210_ope.c
 @@ -318,34 +318,28 @@ static int tegra210_ope_probe(struct platform_device *pdev)
@@ -100,7 +100,7 @@ index fb171bbedcab..e19cd0563082 100644
  	pm_runtime_enable(dev);
  
 diff --git a/sound/soc/tegra/tegra210_peq.c b/sound/soc/tegra/tegra210_peq.c
-index 1c887b49d27a..f5fbbbfca4be 100644
+index 1c887b49d27a2..f5fbbbfca4be0 100644
 --- a/sound/soc/tegra/tegra210_peq.c
 +++ b/sound/soc/tegra/tegra210_peq.c
 @@ -408,14 +408,14 @@ int tegra210_peq_regmap_init(struct platform_device *pdev)

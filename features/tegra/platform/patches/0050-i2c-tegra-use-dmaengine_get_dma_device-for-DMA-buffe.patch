@@ -29,7 +29,7 @@ Link: https://lore.kernel.org/r/20260518114013.62065-2-akhilrajeev@nvidia.com
 (cherry picked from commit 9295f238a52a566f45f9b1752bebd93b4c2d83a2)
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 59375cf4a9fa..4f560a6dd457 100644
+index 59375cf4a9fa0..4f560a6dd457e 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -709,7 +709,7 @@ static int tegra_i2c_init_dma(struct tegra_i2c_dev *i2c_dev)

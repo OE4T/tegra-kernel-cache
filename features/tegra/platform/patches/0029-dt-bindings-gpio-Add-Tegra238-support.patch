@@ -21,7 +21,7 @@ Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 (cherry picked from commit 4002ccd266b665f1097e20addbe8f3baeb2136f9)
 
 diff --git a/Documentation/devicetree/bindings/gpio/nvidia,tegra186-gpio.yaml b/Documentation/devicetree/bindings/gpio/nvidia,tegra186-gpio.yaml
-index 17748dd1015d..adeb3b3a2902 100644
+index 17748dd1015d7..adeb3b3a2902d 100644
 --- a/Documentation/devicetree/bindings/gpio/nvidia,tegra186-gpio.yaml
 +++ b/Documentation/devicetree/bindings/gpio/nvidia,tegra186-gpio.yaml
 @@ -85,6 +85,8 @@ properties:
@@ -60,7 +60,7 @@ index 17748dd1015d..adeb3b3a2902 100644
                - nvidia,tegra264-gpio-aon
 diff --git a/include/dt-bindings/gpio/nvidia,tegra238-gpio.h b/include/dt-bindings/gpio/nvidia,tegra238-gpio.h
 new file mode 100644
-index 000000000000..8a616a1df54c
+index 0000000000000..8a616a1df54c0
 --- /dev/null
 +++ b/include/dt-bindings/gpio/nvidia,tegra238-gpio.h
 @@ -0,0 +1,58 @@

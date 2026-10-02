@@ -15,10 +15,10 @@ Link: https://patch.msgid.link/20260307-quad-v1-1-f103515db501@gmail.com
 (cherry picked from commit d1008a8e29b09ea57c77ddf82d688f8c2ea6cbe8)
 
 diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 1f046c1ecda7..1f09e2f0bd97 100644
+index d218da904e08f..0175480b1f9a4 100644
 --- a/drivers/spi/spi-tegra210-quad.c
 +++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1000,7 +1000,6 @@ static int tegra_qspi_setup(struct spi_device *spi)
+@@ -1007,7 +1007,6 @@ static int tegra_qspi_setup(struct spi_device *spi)
  
  	spin_unlock_irqrestore(&tqspi->lock, flags);
  
@@ -26,7 +26,7 @@ index 1f046c1ecda7..1f09e2f0bd97 100644
  	pm_runtime_put_autosuspend(tqspi->dev);
  
  	return 0;
-@@ -1790,7 +1789,6 @@ static int tegra_qspi_probe(struct platform_device *pdev)
+@@ -1797,7 +1796,6 @@ static int tegra_qspi_probe(struct platform_device *pdev)
  	tqspi->spi_cs_timing2 = tegra_qspi_readl(tqspi, QSPI_CS_TIMING2);
  	tqspi->def_command2_reg = tegra_qspi_readl(tqspi, QSPI_COMMAND2);
  
@@ -34,7 +34,7 @@ index 1f046c1ecda7..1f09e2f0bd97 100644
  	pm_runtime_put_autosuspend(&pdev->dev);
  
  	ret = request_threaded_irq(tqspi->irq, NULL,
-@@ -1852,7 +1850,6 @@ static int __maybe_unused tegra_qspi_resume(struct device *dev)
+@@ -1859,7 +1857,6 @@ static int __maybe_unused tegra_qspi_resume(struct device *dev)
  
  	tegra_qspi_writel(tqspi, tqspi->command1_reg, QSPI_COMMAND1);
  	tegra_qspi_writel(tqspi, tqspi->def_command2_reg, QSPI_COMMAND2);

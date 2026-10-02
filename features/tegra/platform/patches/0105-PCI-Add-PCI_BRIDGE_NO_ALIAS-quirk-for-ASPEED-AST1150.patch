@@ -28,10 +28,10 @@ Link: https://patch.msgid.link/20251217154529.377586-2-nirmoyd@nvidia.com
 (cherry picked from commit 550a190494a0d3e933dd6f3b2e9c430f94a30a8c)
 
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index af58057665d9..91a9de11c9c2 100644
+index e8067ff59e2a5..f81b24953afbf 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -4469,6 +4469,16 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_BROADCOM, 0x9000,
+@@ -4472,6 +4472,16 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_BROADCOM, 0x9000,
  DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_BROADCOM, 0x9084,
  				quirk_bridge_cavm_thrx2_pcie_root);
  
@@ -49,7 +49,7 @@ index af58057665d9..91a9de11c9c2 100644
   * Intersil/Techwell TW686[4589]-based video capture cards have an empty (zero)
   * class code.  Fix it.
 diff --git a/drivers/pci/search.c b/drivers/pci/search.c
-index 53840634fbfc..b3c9e3d82201 100644
+index 53840634fbfc2..b3c9e3d82201f 100644
 --- a/drivers/pci/search.c
 +++ b/drivers/pci/search.c
 @@ -86,6 +86,8 @@ int pci_for_each_dma_alias(struct pci_dev *pdev,
@@ -62,7 +62,7 @@ index 53840634fbfc..b3c9e3d82201 100644
  					 PCI_DEVID(tmp->subordinate->number,
  						   PCI_DEVFN(0, 0)), data);
 diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 148b71af80b3..a5a6cae9f9f9 100644
+index 148b71af80b32..a5a6cae9f9f9f 100644
 --- a/include/linux/pci.h
 +++ b/include/linux/pci.h
 @@ -260,6 +260,11 @@ enum pci_dev_flags {

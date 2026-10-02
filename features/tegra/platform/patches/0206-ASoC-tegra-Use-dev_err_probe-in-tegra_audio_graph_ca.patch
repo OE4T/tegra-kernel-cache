@@ -13,7 +13,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit f7d9eb0291ef00ebfb4ff4f0bec63536c15a0071)
 
 diff --git a/sound/soc/tegra/tegra_audio_graph_card.c b/sound/soc/tegra/tegra_audio_graph_card.c
-index 94b5ab77649b..121db8ee14cc 100644
+index 94b5ab77649b3..121db8ee14cc8 100644
 --- a/sound/soc/tegra/tegra_audio_graph_card.c
 +++ b/sound/soc/tegra/tegra_audio_graph_card.c
 @@ -174,20 +174,23 @@ static int tegra_audio_graph_card_probe(struct snd_soc_card *card)

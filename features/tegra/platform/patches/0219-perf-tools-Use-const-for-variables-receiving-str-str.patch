@@ -19,7 +19,7 @@ Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 (cherry picked from commit 45718bce7daf39c618188b70a52644bb5a2f968a)
 
 diff --git a/tools/perf/tests/parse-events.c b/tools/perf/tests/parse-events.c
-index 0e5d028a97ef..a537883b2e8d 100644
+index 0e5d028a97efe..a537883b2e8d9 100644
 --- a/tools/perf/tests/parse-events.c
 +++ b/tools/perf/tests/parse-events.c
 @@ -2416,8 +2416,8 @@ static int test_events(const struct evlist_test *events, int cnt)

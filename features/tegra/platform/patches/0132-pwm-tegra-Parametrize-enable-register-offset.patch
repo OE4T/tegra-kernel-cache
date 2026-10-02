@@ -13,7 +13,7 @@ Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
 Reviewed-by: Thierry Reding <treding@nvidia.com>
 
 diff --git a/drivers/pwm/pwm-tegra.c b/drivers/pwm/pwm-tegra.c
-index 358c81cea05b..b925ef914411 100644
+index 358c81cea05bd..b925ef9144110 100644
 --- a/drivers/pwm/pwm-tegra.c
 +++ b/drivers/pwm/pwm-tegra.c
 @@ -61,6 +61,7 @@

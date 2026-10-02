@@ -15,7 +15,7 @@ Link: https://lore.kernel.org/r/20260518114013.62065-4-akhilrajeev@nvidia.com
 (cherry picked from commit 97d0a9c6e80903d342656ab8a7743a9ec50c92e1)
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 3010c4b17a9c..59375cf4a9fa 100644
+index 3010c4b17a9c9..59375cf4a9fa0 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -2114,9 +2114,9 @@ static const struct tegra_i2c_hw_feature tegra264_i2c_hw = {

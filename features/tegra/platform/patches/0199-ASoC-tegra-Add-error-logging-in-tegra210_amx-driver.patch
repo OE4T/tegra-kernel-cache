@@ -11,7 +11,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit d310c08db2d80488435e6cef2b42d09bc63f3f43)
 
 diff --git a/sound/soc/tegra/tegra210_amx.c b/sound/soc/tegra/tegra210_amx.c
-index f8b85f19c190..09f800b452ba 100644
+index f8b85f19c190b..09f800b452ba7 100644
 --- a/sound/soc/tegra/tegra210_amx.c
 +++ b/sound/soc/tegra/tegra210_amx.c
 @@ -163,6 +163,8 @@ static int tegra210_amx_set_audio_cif(struct snd_soc_dai *dai,

@@ -22,7 +22,7 @@ Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-index a52f86454f77..7cf6de10c320 100644
+index a52f86454f77d..7cf6de10c320d 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
 @@ -302,7 +302,7 @@ static int arm_vsmmu_vdevice_init(struct iommufd_vdevice *vdev)
@@ -87,7 +87,7 @@ index a52f86454f77..7cf6de10c320 100644
  		if (ret) {
  			cur--;
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 24231017a7fe..d9fae5cdc751 100644
+index 4ae47a07c2738..3975ac5161dee 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -267,9 +267,12 @@ static int queue_remove_raw(struct arm_smmu_queue *q, u64 *ent)
@@ -295,7 +295,7 @@ index 24231017a7fe..d9fae5cdc751 100644
  	arm_smmu_cmdq_issue_cmd_with_sync(inv->smmu, &hw_cmd);
  }
  
-@@ -4900,18 +4904,18 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
+@@ -4902,18 +4906,18 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
  
  	/* Invalidate any cached configuration */
  	ent.opcode = CMDQ_OP_CFGI_ALL;
@@ -318,7 +318,7 @@ index 24231017a7fe..d9fae5cdc751 100644
  
  	/* Event queue */
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 15294bb1cf3a..1be1073d0963 100644
+index 15294bb1cf3ae..1be1073d0963a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -654,7 +654,7 @@ static inline bool arm_smmu_cmdq_supports_cmd(struct arm_smmu_cmdq *cmdq,
@@ -341,7 +341,7 @@ index 15294bb1cf3a..1be1073d0963 100644
  
  #ifdef CONFIG_ARM_SMMU_V3_SVA
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 6ca3eac24a34..cc81f8fd2292 100644
+index 6ca3eac24a343..cc81f8fd2292a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 @@ -454,16 +454,16 @@ tegra241_cmdqv_get_cmdq(struct arm_smmu_device *smmu,

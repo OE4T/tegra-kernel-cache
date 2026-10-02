@@ -19,7 +19,7 @@ Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index fd90d77c21bf..83f132fff56a 100644
+index 43b3eae23e21f..b440b8d03824a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -267,53 +267,6 @@ static int queue_remove_raw(struct arm_smmu_queue *q, u64 *ent)
@@ -307,7 +307,7 @@ index fd90d77c21bf..83f132fff56a 100644
  
  /* Should be installed after arm_smmu_install_ste_for_dev() */
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index ac622857b4e5..e88c5d507cad 100644
+index ac622857b4e5d..e88c5d507cad2 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -586,6 +586,21 @@ static inline struct arm_smmu_cmd arm_smmu_make_cmd_sync(unsigned int cs,

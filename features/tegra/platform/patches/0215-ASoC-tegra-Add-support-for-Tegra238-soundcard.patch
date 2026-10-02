@@ -15,7 +15,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 1bc17c67194716f53037685b7059a22cc1a911b2)
 
 diff --git a/sound/soc/tegra/tegra_audio_graph_card.c b/sound/soc/tegra/tegra_audio_graph_card.c
-index 121db8ee14cc..b93a61db9ed0 100644
+index 121db8ee14cc8..b93a61db9ed0b 100644
 --- a/sound/soc/tegra/tegra_audio_graph_card.c
 +++ b/sound/soc/tegra/tegra_audio_graph_card.c
 @@ -234,6 +234,15 @@ static const struct tegra_audio_cdata tegra186_data = {

@@ -12,7 +12,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit e68c4244136b8e9c2a9fc3aaa4d748be83afddef)
 
 diff --git a/drivers/gpu/drm/tegra/dc.c b/drivers/gpu/drm/tegra/dc.c
-index dc69c8873693..66c9150ae4fe 100644
+index dc69c88736934..66c9150ae4fea 100644
 --- a/drivers/gpu/drm/tegra/dc.c
 +++ b/drivers/gpu/drm/tegra/dc.c
 @@ -2781,7 +2781,7 @@ static int tegra_dc_runtime_suspend(struct host1x_client *client)
@@ -56,7 +56,7 @@ index dc69c8873693..66c9150ae4fe 100644
  
  	err = tegra_dc_init_opp_table(dc);
 diff --git a/drivers/gpu/drm/tegra/dc.h b/drivers/gpu/drm/tegra/dc.h
-index 0559fa6b1bf7..10b86250e4ca 100644
+index 0559fa6b1bf70..10b86250e4ca6 100644
 --- a/drivers/gpu/drm/tegra/dc.h
 +++ b/drivers/gpu/drm/tegra/dc.h
 @@ -94,6 +94,7 @@ struct tegra_dc {
@@ -68,7 +68,7 @@ index 0559fa6b1bf7..10b86250e4ca 100644
  	struct tegra_dc_stats stats;
  	struct list_head list;
 diff --git a/drivers/gpu/drm/tegra/gr3d.c b/drivers/gpu/drm/tegra/gr3d.c
-index 388e47943d5e..1ec6ced959e4 100644
+index 388e47943d5ec..1ec6ced959e4e 100644
 --- a/drivers/gpu/drm/tegra/gr3d.c
 +++ b/drivers/gpu/drm/tegra/gr3d.c
 @@ -46,6 +46,7 @@ struct gr3d {
@@ -102,7 +102,7 @@ index 388e47943d5e..1ec6ced959e4 100644
  		 * Older device-trees don't use GENPD. In this case we should
  		 * toggle power domain manually.
 diff --git a/drivers/gpu/drm/tegra/sor.c b/drivers/gpu/drm/tegra/sor.c
-index bc7dd562cf6b..dcf3f109b644 100644
+index bc7dd562cf6b6..dcf3f109b6447 100644
 --- a/drivers/gpu/drm/tegra/sor.c
 +++ b/drivers/gpu/drm/tegra/sor.c
 @@ -421,6 +421,8 @@ struct tegra_sor {

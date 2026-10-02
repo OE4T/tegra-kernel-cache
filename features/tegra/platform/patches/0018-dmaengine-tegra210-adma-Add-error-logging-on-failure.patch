@@ -26,7 +26,7 @@ Signed-off-by: Vinod Koul <vkoul@kernel.org>
 (cherry picked from commit b55bfcc677dd58d808a53173e0574b466dc27b9f)
 
 diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index 2c4572495137..1da6c08cfa0a 100644
+index 2c4572495137a..1da6c08cfa0ae 100644
 --- a/drivers/dma/tegra210-adma.c
 +++ b/drivers/dma/tegra210-adma.c
 @@ -335,8 +335,16 @@ static int tegra_adma_request_alloc(struct tegra_adma_chan *tdc,

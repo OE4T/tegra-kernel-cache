@@ -12,7 +12,7 @@ Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 (cherry picked from commit 822878aa1737c6c9573e05c5cd501b679cf5ea1c)
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index 58e0186c701d..e015f97563c9 100644
+index 58e0186c701d1..e015f97563c99 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -1399,6 +1399,7 @@ static const struct tegra_gpio_soc tegra264_aon_soc = {

@@ -26,7 +26,7 @@ GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
-index c69262b3cc66..dc540e254480 100644
+index c69262b3cc662..dc540e2544801 100644
 --- a/drivers/mmc/host/sdhci-tegra.c
 +++ b/drivers/mmc/host/sdhci-tegra.c
 @@ -28,6 +28,7 @@
@@ -97,7 +97,7 @@ index c69262b3cc66..dc540e254480 100644
  		clk = devm_clk_get(mmc_dev(host->mmc), NULL);
  		if (IS_ERR(clk)) {
 diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
-index f0fd81409a86..a03cee8af961 100644
+index f0fd81409a86c..a03cee8af9618 100644
 --- a/drivers/mmc/host/sdhci.h
 +++ b/drivers/mmc/host/sdhci.h
 @@ -19,6 +19,8 @@

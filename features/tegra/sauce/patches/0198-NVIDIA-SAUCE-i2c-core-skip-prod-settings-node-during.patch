@@ -20,7 +20,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/i2c/i2c-core-of.c b/drivers/i2c/i2c-core-of.c
-index 30b48a428c0b..24936d8c3ebc 100644
+index 30b48a428c0be..24936d8c3ebc0 100644
 --- a/drivers/i2c/i2c-core-of.c
 +++ b/drivers/i2c/i2c-core-of.c
 @@ -97,6 +97,9 @@ void of_i2c_register_devices(struct i2c_adapter *adap)

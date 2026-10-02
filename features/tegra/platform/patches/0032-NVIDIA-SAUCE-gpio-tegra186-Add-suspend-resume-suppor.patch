@@ -21,7 +21,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit 342d475fbd30f1e16aadce938b462b2854a84b61)
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index e015f97563c9..4a3c816ceb68 100644
+index e015f97563c99..4a3c816ceb680 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -123,6 +123,13 @@ struct tegra_gpio_soc {

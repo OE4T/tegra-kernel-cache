@@ -44,7 +44,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 73e1e491783a..b57a6fb68f3b 100644
+index 32e359e58fba8..addce171fd71b 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -3148,6 +3148,121 @@ static void arm_smmu_disable_iopf(struct arm_smmu_master *master,
@@ -370,7 +370,7 @@ index 73e1e491783a..b57a6fb68f3b 100644
  
  	/*
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 28a5d72a0fbf..9ab3a8498190 100644
+index 28a5d72a0fbf6..9ab3a84981904 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 @@ -1108,6 +1108,21 @@ static inline bool arm_smmu_master_canwbs(struct arm_smmu_master *master)

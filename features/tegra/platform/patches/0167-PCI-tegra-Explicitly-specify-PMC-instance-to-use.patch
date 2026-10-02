@@ -13,7 +13,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit 5f726aeb505c9e5dde87530c78a11b88a44b9edd)
 
 diff --git a/drivers/pci/controller/pci-tegra.c b/drivers/pci/controller/pci-tegra.c
-index 942ddfca3bf6..3ee91b25b136 100644
+index 942ddfca3bf6b..3ee91b25b136f 100644
 --- a/drivers/pci/controller/pci-tegra.c
 +++ b/drivers/pci/controller/pci-tegra.c
 @@ -340,6 +340,8 @@ struct tegra_pcie {

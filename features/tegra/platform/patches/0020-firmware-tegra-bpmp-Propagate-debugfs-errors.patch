@@ -14,7 +14,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit 7ba53a3d1c4dae0124b2c141ae551ab9d9d7f1f9)
 
 diff --git a/drivers/firmware/tegra/bpmp-debugfs.c b/drivers/firmware/tegra/bpmp-debugfs.c
-index 4221fed70ad4..29037e2b3158 100644
+index 4221fed70ad48..29037e2b31585 100644
 --- a/drivers/firmware/tegra/bpmp-debugfs.c
 +++ b/drivers/firmware/tegra/bpmp-debugfs.c
 @@ -468,7 +468,7 @@ static int bpmp_populate_debugfs_inband(struct tegra_bpmp *bpmp,

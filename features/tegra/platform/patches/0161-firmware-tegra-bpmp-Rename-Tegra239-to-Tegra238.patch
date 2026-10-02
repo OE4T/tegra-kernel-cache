@@ -11,7 +11,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit d921f8d3b955ba09d321c612fc485b9e9ac438c0)
 
 diff --git a/include/soc/tegra/bpmp-abi.h b/include/soc/tegra/bpmp-abi.h
-index dc0789c20333..39bb3f87e28d 100644
+index dc0789c20333a..39bb3f87e28d4 100644
 --- a/include/soc/tegra/bpmp-abi.h
 +++ b/include/soc/tegra/bpmp-abi.h
 @@ -1020,9 +1020,9 @@ struct cmd_i2c_xfer_request {

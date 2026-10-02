@@ -12,7 +12,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit 70f752ebb08c85a5ea19471a5aaf26263e53dcb0)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index 750fe29f4cf5..9cdbd8ba94be 100644
+index 750fe29f4cf59..9cdbd8ba94be0 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -957,30 +957,122 @@ static int tegra_genpd_power_off(struct generic_pm_domain *domain)
@@ -288,7 +288,7 @@ index 750fe29f4cf5..9cdbd8ba94be 100644
  				return err;
  			break;
 diff --git a/include/soc/tegra/pmc.h b/include/soc/tegra/pmc.h
-index c545875d0ff1..1fd21be02577 100644
+index c545875d0ff18..1fd21be025778 100644
 --- a/include/soc/tegra/pmc.h
 +++ b/include/soc/tegra/pmc.h
 @@ -16,6 +16,7 @@

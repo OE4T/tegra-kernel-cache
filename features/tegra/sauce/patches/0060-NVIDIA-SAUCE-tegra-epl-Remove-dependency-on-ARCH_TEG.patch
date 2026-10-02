@@ -17,7 +17,7 @@ Tested-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/platform/tegra/Kconfig b/drivers/platform/tegra/Kconfig
-index d8f93678d183..404281dc1e6e 100644
+index d8f93678d183e..404281dc1e6eb 100644
 --- a/drivers/platform/tegra/Kconfig
 +++ b/drivers/platform/tegra/Kconfig
 @@ -17,7 +17,7 @@ if TEGRA_PLATFORM_DEVICES

@@ -15,7 +15,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit ec0e4da5d679f9da1cc198927951f70fdf28f001)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index f2282d4fc860..63825882b69d 100644
+index f2282d4fc860d..63825882b69d1 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -1005,7 +1005,7 @@ static struct tegra_pmc *tegra_pmc_get(struct device *dev)

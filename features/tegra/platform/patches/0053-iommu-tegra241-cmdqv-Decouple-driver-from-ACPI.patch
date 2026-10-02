@@ -15,7 +15,7 @@ Signed-off-by: Will Deacon <will@kernel.org>
 (cherry picked from commit eb20758f86723bb94d30747fca7b65ed2e6846b8)
 
 diff --git a/drivers/iommu/arm/Kconfig b/drivers/iommu/arm/Kconfig
-index ef42bbe07dbe..5fac08b89dee 100644
+index ef42bbe07dbef..5fac08b89deea 100644
 --- a/drivers/iommu/arm/Kconfig
 +++ b/drivers/iommu/arm/Kconfig
 @@ -121,7 +121,6 @@ config ARM_SMMU_V3_KUNIT_TEST
@@ -27,10 +27,10 @@ index ef42bbe07dbe..5fac08b89dee 100644
  	  Support for NVIDIA CMDQ-Virtualization extension for ARM SMMUv3. The
  	  CMDQ-V extension is similar to v3.3 ECMDQ for multi command queues
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index b677390e95bb..4e599d6ebdb6 100644
+index 3d796ff6c2c62..17fbc4a24abb8 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -4641,10 +4641,11 @@ static void acpi_smmu_dsdt_probe_tegra241_cmdqv(struct acpi_iort_node *node,
+@@ -4643,10 +4643,11 @@ static void acpi_smmu_dsdt_probe_tegra241_cmdqv(struct acpi_iort_node *node,
  	adev = acpi_dev_get_first_match_dev("NVDA200C", uid, -1);
  	if (adev) {
  		/* Tegra241 CMDQV driver is responsible for put_device() */
@@ -44,7 +44,7 @@ index b677390e95bb..4e599d6ebdb6 100644
  	kfree(uid);
  }
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 2b55a221c35a..d5af60f92bc0 100644
+index 2b55a221c35a6..d5af60f92bc0e 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 @@ -3,17 +3,15 @@

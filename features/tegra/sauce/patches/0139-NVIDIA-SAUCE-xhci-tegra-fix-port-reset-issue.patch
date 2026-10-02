@@ -33,7 +33,7 @@ Reviewed-by: HaoTien Hsu <haotienh@nvidia.com>
 (cherry picked from commit 2313d1badb3c649c772874966fef1ed3a3da84f8)
 
 diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index 6b6bba97385b..5d5e115ec5ef 100644
+index 6b6bba97385bf..5d5e115ec5ef7 100644
 --- a/drivers/usb/host/xhci-tegra.c
 +++ b/drivers/usb/host/xhci-tegra.c
 @@ -2915,6 +2915,26 @@ static void tegra_xhci_disable_phy_sleepwalk(struct tegra_xusb *tegra)

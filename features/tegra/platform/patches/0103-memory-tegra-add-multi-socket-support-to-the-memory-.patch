@@ -26,7 +26,7 @@ that socket's local BPMP.
 Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
 
 diff --git a/drivers/memory/tegra/mc.c b/drivers/memory/tegra/mc.c
-index d96c71c780c4..d6321af51d57 100644
+index d96c71c780c43..d6321af51d575 100644
 --- a/drivers/memory/tegra/mc.c
 +++ b/drivers/memory/tegra/mc.c
 @@ -3,6 +3,7 @@
@@ -138,7 +138,7 @@ index d96c71c780c4..d6321af51d57 100644
  	if (mc->soc->ops && mc->soc->ops->probe) {
  		err = mc->soc->ops->probe(mc);
 diff --git a/drivers/memory/tegra/mc.h b/drivers/memory/tegra/mc.h
-index e94d265d7b67..01499292dd5f 100644
+index e94d265d7b678..01499292dd5f6 100644
 --- a/drivers/memory/tegra/mc.h
 +++ b/drivers/memory/tegra/mc.h
 @@ -8,6 +8,7 @@
@@ -193,7 +193,7 @@ index e94d265d7b67..01499292dd5f 100644
  			      unsigned long offset)
  {
 diff --git a/drivers/memory/tegra/tegra186-emc.c b/drivers/memory/tegra/tegra186-emc.c
-index f71265b303b9..e25f485e136e 100644
+index f71265b303b97..e25f485e136e3 100644
 --- a/drivers/memory/tegra/tegra186-emc.c
 +++ b/drivers/memory/tegra/tegra186-emc.c
 @@ -3,16 +3,22 @@

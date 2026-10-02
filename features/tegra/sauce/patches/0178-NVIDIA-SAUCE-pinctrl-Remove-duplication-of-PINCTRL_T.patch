@@ -13,7 +13,7 @@ Change-Id: Ied9488116bfd50e4c12e627271d624a7f88d33b3
 Signed-off-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/soc/tegra/Kconfig b/drivers/soc/tegra/Kconfig
-index 40d3ee2cb7de..c858e3747b87 100644
+index 40d3ee2cb7de5..c858e3747b871 100644
 --- a/drivers/soc/tegra/Kconfig
 +++ b/drivers/soc/tegra/Kconfig
 @@ -144,6 +144,7 @@ config ARCH_TEGRA_264_SOC

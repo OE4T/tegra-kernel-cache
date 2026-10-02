@@ -17,7 +17,7 @@ Reviewed-by: Prathamesh Shete <pshete@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
-index d7b7cae72790..da33dd765179 100644
+index d7b7cae727906..da33dd765179d 100644
 --- a/drivers/platform/tegra/tegra-epl.c
 +++ b/drivers/platform/tegra/tegra-epl.c
 @@ -78,6 +78,8 @@ static DEFINE_MUTEX(hs_state_mutex);

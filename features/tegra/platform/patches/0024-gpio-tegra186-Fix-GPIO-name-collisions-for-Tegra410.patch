@@ -31,7 +31,7 @@ Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 (cherry picked from commit 67f9b828d4e5e47caf3472a399c25c3c0ddc824a)
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index 83ecdc876985..b1498b59a921 100644
+index 83ecdc8769856..b1498b59a9211 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -109,6 +109,7 @@ struct tegra_gpio_soc {

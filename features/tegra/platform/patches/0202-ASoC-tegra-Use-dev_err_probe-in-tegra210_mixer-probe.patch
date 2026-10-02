@@ -12,7 +12,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 3d027d4b93b9423d106d85cc82a084032fd2635d)
 
 diff --git a/sound/soc/tegra/tegra210_mixer.c b/sound/soc/tegra/tegra210_mixer.c
-index 29e654f54f8b..5ef2a13b31ad 100644
+index 29e654f54f8be..5ef2a13b31ad1 100644
 --- a/sound/soc/tegra/tegra210_mixer.c
 +++ b/sound/soc/tegra/tegra210_mixer.c
 @@ -651,10 +651,9 @@ static int tegra210_mixer_platform_probe(struct platform_device *pdev)

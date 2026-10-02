@@ -12,7 +12,7 @@ Change-Id: I25ada0e24a7c773df6a21778fed9fc633f497c29
 Signed-off-by: Besar Wicaksono <bwicaksono@nvidia.com>
 
 diff --git a/drivers/perf/arm_cspmu/arm_cspmu.c b/drivers/perf/arm_cspmu/arm_cspmu.c
-index e0d4293f06f9..00bdf6452512 100644
+index e0d4293f06f93..00bdf6452512e 100644
 --- a/drivers/perf/arm_cspmu/arm_cspmu.c
 +++ b/drivers/perf/arm_cspmu/arm_cspmu.c
 @@ -40,6 +40,75 @@
@@ -146,7 +146,7 @@ index e0d4293f06f9..00bdf6452512 100644
  		DEFAULT_IMPL_OP(get_event_attrs),
  		DEFAULT_IMPL_OP(get_format_attrs),
 diff --git a/drivers/perf/arm_cspmu/arm_cspmu.h b/drivers/perf/arm_cspmu/arm_cspmu.h
-index 19684b76bd96..779dd2d6aa26 100644
+index 19684b76bd969..779dd2d6aa26b 100644
 --- a/drivers/perf/arm_cspmu/arm_cspmu.h
 +++ b/drivers/perf/arm_cspmu/arm_cspmu.h
 @@ -115,8 +115,15 @@

@@ -21,7 +21,7 @@ Link: https://lore.kernel.org/r/20260324055843.549808-2-kkartik@nvidia.com
 (cherry picked from commit 4eeb19aaff5580da0b2d0c1897e1dbd016755499)
 
 diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 1ada54581e38..5d404d12ff19 100644
+index 1ada54581e383..5d404d12ff192 100644
 --- a/drivers/i2c/busses/i2c-tegra.c
 +++ b/drivers/i2c/busses/i2c-tegra.c
 @@ -171,6 +171,18 @@ enum msg_end_type {

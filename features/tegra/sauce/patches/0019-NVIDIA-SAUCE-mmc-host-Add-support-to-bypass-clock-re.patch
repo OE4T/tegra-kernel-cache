@@ -15,7 +15,7 @@ Tested-by: Laxman Dewangan <ldewangan@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
-index 820ce4dae58b..c69262b3cc66 100644
+index 820ce4dae58ba..c69262b3cc662 100644
 --- a/drivers/mmc/host/sdhci-tegra.c
 +++ b/drivers/mmc/host/sdhci-tegra.c
 @@ -183,6 +183,7 @@ struct sdhci_tegra {

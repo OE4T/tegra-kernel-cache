@@ -22,7 +22,7 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit 2545b16e3ea049a266ec8b0e509d4e093b26b906)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index 37a6f56b1631..b4d0e0443b2f 100644
+index 37a6f56b1631c..b4d0e0443b2f7 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
 @@ -1207,7 +1207,7 @@ static int tegra_pmc_restart_handler(struct sys_off_data *data)

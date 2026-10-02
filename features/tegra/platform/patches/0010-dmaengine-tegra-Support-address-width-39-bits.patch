@@ -20,7 +20,7 @@ Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 
 diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
-index ac7b4c37b6af..c88bcb0e1d9f 100644
+index ac7b4c37b6aff..c88bcb0e1d9f9 100644
 --- a/drivers/dma/tegra186-gpc-dma.c
 +++ b/drivers/dma/tegra186-gpc-dma.c
 @@ -146,6 +146,7 @@ struct tegra_dma_channel;

@@ -18,7 +18,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit bf7cf25d4245fe49c71eba0e3b09b6260a336999)
 
 diff --git a/Documentation/devicetree/bindings/memory-controllers/nvidia,tegra186-mc.yaml b/Documentation/devicetree/bindings/memory-controllers/nvidia,tegra186-mc.yaml
-index b901f1b3e0fc..edf613af49ec 100644
+index b901f1b3e0fc3..edf613af49ec6 100644
 --- a/Documentation/devicetree/bindings/memory-controllers/nvidia,tegra186-mc.yaml
 +++ b/Documentation/devicetree/bindings/memory-controllers/nvidia,tegra186-mc.yaml
 @@ -32,6 +32,7 @@ properties:
@@ -68,7 +68,7 @@ index b901f1b3e0fc..edf613af49ec 100644
          compatible:
 diff --git a/include/dt-bindings/memory/nvidia,tegra238-mc.h b/include/dt-bindings/memory/nvidia,tegra238-mc.h
 new file mode 100644
-index 000000000000..be24c0eb3f15
+index 0000000000000..be24c0eb3f15e
 --- /dev/null
 +++ b/include/dt-bindings/memory/nvidia,tegra238-mc.h
 @@ -0,0 +1,74 @@

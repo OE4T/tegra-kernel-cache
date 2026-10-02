@@ -21,10 +21,10 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 6022eacdda8b0b06a2e1d4122e5268099b62ff5d)
 
 diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 83def82fe48c..b38815db9810 100644
+index 543f13503df3d..369af166c5045 100644
 --- a/drivers/spi/spi-tegra210-quad.c
 +++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1022,17 +1022,22 @@ static void tegra_qspi_dump_regs(struct tegra_qspi *tqspi)
+@@ -1029,17 +1029,22 @@ static void tegra_qspi_dump_regs(struct tegra_qspi *tqspi)
  		tegra_qspi_readl(tqspi, QSPI_FIFO_STATUS));
  }
  
@@ -51,7 +51,7 @@ index 83def82fe48c..b38815db9810 100644
  static void tegra_qspi_transfer_end(struct spi_device *spi)
  {
  	struct tegra_qspi *tqspi = spi_controller_get_devdata(spi->controller);
-@@ -1077,6 +1082,30 @@ static u32 tegra_qspi_addr_config(bool is_ddr, u8 bus_width, u8 len)
+@@ -1084,6 +1089,30 @@ static u32 tegra_qspi_addr_config(bool is_ddr, u8 bus_width, u8 len)
  	return addr_config;
  }
  
@@ -82,7 +82,7 @@ index 83def82fe48c..b38815db9810 100644
  static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
  					struct spi_message *msg)
  {
-@@ -1084,7 +1113,7 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
+@@ -1091,7 +1120,7 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
  	struct spi_transfer *xfer;
  	struct spi_device *spi = msg->spi;
  	u8 transfer_phase = 0;
@@ -91,7 +91,7 @@ index 83def82fe48c..b38815db9810 100644
  	int ret = 0;
  	u32 address_value = 0;
  	u32 cmd_config = 0, addr_config = 0;
-@@ -1154,39 +1183,16 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
+@@ -1161,39 +1190,16 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
  			if (WARN_ON_ONCE(ret == 0)) {
  				dev_err_ratelimited(tqspi->dev,
  						    "QSPI Transfer failed with timeout\n");
@@ -137,7 +137,7 @@ index 83def82fe48c..b38815db9810 100644
  				ret = -EIO;
  				goto exit;
  			}
-@@ -1285,12 +1291,10 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
+@@ -1292,12 +1298,10 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
  						  QSPI_DMA_TIMEOUT);
  		if (WARN_ON(ret == 0)) {
  			dev_err(tqspi->dev, "transfer timeout\n");

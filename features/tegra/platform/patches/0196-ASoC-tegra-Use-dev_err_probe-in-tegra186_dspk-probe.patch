@@ -12,7 +12,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 6205ca05227f26721b8d5920d976ecae6f8ce83e)
 
 diff --git a/sound/soc/tegra/tegra186_dspk.c b/sound/soc/tegra/tegra186_dspk.c
-index 4e8348b3177f..8f750b853306 100644
+index 4e8348b3177fd..8f750b8533062 100644
 --- a/sound/soc/tegra/tegra186_dspk.c
 +++ b/sound/soc/tegra/tegra186_dspk.c
 @@ -496,10 +496,9 @@ static int tegra186_dspk_platform_probe(struct platform_device *pdev)

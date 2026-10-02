@@ -31,7 +31,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 17c772f4d0c1d3d466b6a25ff11f3c3fc6d6a5ec)
 
 diff --git a/drivers/pinctrl/tegra/pinctrl-tegra.c b/drivers/pinctrl/tegra/pinctrl-tegra.c
-index 0cb7a705a524..2282a96af025 100644
+index 0cb7a705a5243..2282a96af025c 100644
 --- a/drivers/pinctrl/tegra/pinctrl-tegra.c
 +++ b/drivers/pinctrl/tegra/pinctrl-tegra.c
 @@ -23,6 +23,7 @@

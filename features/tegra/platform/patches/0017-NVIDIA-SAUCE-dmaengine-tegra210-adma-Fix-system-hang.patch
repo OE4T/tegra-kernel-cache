@@ -27,7 +27,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 (cherry picked from commit 52261efad6438661c49c2d22f63745830a50d674)
 
 diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index e2ddf24d3744..2c4572495137 100644
+index e2ddf24d3744f..2c4572495137a 100644
 --- a/drivers/dma/tegra210-adma.c
 +++ b/drivers/dma/tegra210-adma.c
 @@ -512,17 +512,17 @@ static irqreturn_t tegra_adma_isr(int irq, void *dev_id)
@@ -116,7 +116,7 @@ index e2ddf24d3744..2c4572495137 100644
  		tdc->vc.desc_free = tegra_adma_desc_free;
  		tdc->tdma = tdma;
 diff --git a/drivers/dma/virt-dma.c b/drivers/dma/virt-dma.c
-index 7961172a780d..b3fe59629533 100644
+index 7961172a780dd..b3fe59629533f 100644
 --- a/drivers/dma/virt-dma.c
 +++ b/drivers/dma/virt-dma.c
 @@ -23,11 +23,11 @@ dma_cookie_t vchan_tx_submit(struct dma_async_tx_descriptor *tx)
@@ -173,7 +173,7 @@ index 7961172a780d..b3fe59629533 100644
  	INIT_LIST_HEAD(&vc->desc_submitted);
  	INIT_LIST_HEAD(&vc->desc_issued);
 diff --git a/drivers/dma/virt-dma.h b/drivers/dma/virt-dma.h
-index 59d9eabc8b67..534d6a84952b 100644
+index 59d9eabc8b674..534d6a84952b5 100644
 --- a/drivers/dma/virt-dma.h
 +++ b/drivers/dma/virt-dma.h
 @@ -34,13 +34,75 @@ struct virt_dma_chan {

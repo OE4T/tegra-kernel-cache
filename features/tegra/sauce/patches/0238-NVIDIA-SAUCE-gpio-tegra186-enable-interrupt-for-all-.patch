@@ -12,7 +12,7 @@ Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 Reviewed-on: https://git-master.nvidia.com/r/c/linux-stable/+/2892801
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index d2c7ffd3c071..8dc2b964819d 100644
+index d2c7ffd3c071f..8dc2b964819da 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
 @@ -1008,27 +1008,8 @@ static int tegra186_gpio_probe(struct platform_device *pdev)

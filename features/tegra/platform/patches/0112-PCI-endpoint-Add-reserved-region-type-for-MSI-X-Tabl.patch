@@ -16,7 +16,7 @@ Link: https://patch.msgid.link/20260324080857.916263-2-mmaddireddy@nvidia.com
 (cherry picked from commit 5f352433ea39171e19fbb3a7e18d983510176854)
 
 diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
-index 66cf46f159b3..073c9900dfe6 100644
+index 66cf46f159b3e..073c9900dfe6e 100644
 --- a/include/linux/pci-epc.h
 +++ b/include/linux/pci-epc.h
 @@ -211,6 +211,8 @@ enum pci_epc_bar_type {

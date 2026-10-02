@@ -32,7 +32,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit a6534e367f5cd0f1c3f0a479f39b354218a1ef98)
 
 diff --git a/drivers/platform/tegra/tegra-epl.c b/drivers/platform/tegra/tegra-epl.c
-index 5c0bfec6bce1..4dee455d2f58 100644
+index 5c0bfec6bce14..4dee455d2f58c 100644
 --- a/drivers/platform/tegra/tegra-epl.c
 +++ b/drivers/platform/tegra/tegra-epl.c
 @@ -12,6 +12,10 @@

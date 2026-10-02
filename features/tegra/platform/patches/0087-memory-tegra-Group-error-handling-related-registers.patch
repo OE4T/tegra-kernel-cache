@@ -16,7 +16,7 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 (cherry picked from commit b8a177f18df1b439aac708da2d8bd9fcd68bb1eb)
 
 diff --git a/drivers/memory/tegra/mc.c b/drivers/memory/tegra/mc.c
-index c29df29920f4..40b2b803f800 100644
+index c29df29920f46..40b2b803f800c 100644
 --- a/drivers/memory/tegra/mc.c
 +++ b/drivers/memory/tegra/mc.c
 @@ -1,6 +1,6 @@
@@ -112,7 +112,7 @@ index c29df29920f4..40b2b803f800 100644
  		mc->num_channels = mc->soc->num_channels;
  		return;
 diff --git a/drivers/memory/tegra/mc.h b/drivers/memory/tegra/mc.h
-index 1d97cf4d3a94..bbe3e2690c64 100644
+index 1d97cf4d3a944..bbe3e2690c647 100644
 --- a/drivers/memory/tegra/mc.h
 +++ b/drivers/memory/tegra/mc.h
 @@ -1,6 +1,6 @@
@@ -153,7 +153,7 @@ index 1d97cf4d3a94..bbe3e2690c64 100644
  #define MC_INT_DECERR_ROUTE_SANITY			BIT(20)
  #define MC_INT_DECERR_GENERALIZED_CARVEOUT		BIT(17)
 diff --git a/drivers/memory/tegra/tegra114.c b/drivers/memory/tegra/tegra114.c
-index 41350570c815..ea7e4c7bb5f8 100644
+index 41350570c815c..ea7e4c7bb5f83 100644
 --- a/drivers/memory/tegra/tegra114.c
 +++ b/drivers/memory/tegra/tegra114.c
 @@ -1,6 +1,6 @@
@@ -171,7 +171,7 @@ index 41350570c815..ea7e4c7bb5f8 100644
 +	.regs = &tegra20_mc_regs,
  };
 diff --git a/drivers/memory/tegra/tegra124.c b/drivers/memory/tegra/tegra124.c
-index 9d7393e19f12..c5529f79fbb4 100644
+index 9d7393e19f125..c5529f79fbb42 100644
 --- a/drivers/memory/tegra/tegra124.c
 +++ b/drivers/memory/tegra/tegra124.c
 @@ -1,6 +1,6 @@
@@ -198,7 +198,7 @@ index 9d7393e19f12..c5529f79fbb4 100644
  };
  #endif /* CONFIG_ARCH_TEGRA_132_SOC */
 diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra186.c
-index aee11457bf8e..51e2dd628fb4 100644
+index aee11457bf8e0..51e2dd628fb47 100644
 --- a/drivers/memory/tegra/tegra186.c
 +++ b/drivers/memory/tegra/tegra186.c
 @@ -1,6 +1,6 @@
@@ -217,7 +217,7 @@ index aee11457bf8e..51e2dd628fb4 100644
  };
  #endif
 diff --git a/drivers/memory/tegra/tegra194.c b/drivers/memory/tegra/tegra194.c
-index 26035ac3a1eb..5b7ff2dd6812 100644
+index 26035ac3a1eb5..5b7ff2dd68122 100644
 --- a/drivers/memory/tegra/tegra194.c
 +++ b/drivers/memory/tegra/tegra194.c
 @@ -1,6 +1,6 @@
@@ -235,7 +235,7 @@ index 26035ac3a1eb..5b7ff2dd6812 100644
 +	.regs = &tegra20_mc_regs,
  };
 diff --git a/drivers/memory/tegra/tegra20.c b/drivers/memory/tegra/tegra20.c
-index a3022e715dee..227c3336974d 100644
+index a3022e715deef..227c3336974de 100644
 --- a/drivers/memory/tegra/tegra20.c
 +++ b/drivers/memory/tegra/tegra20.c
 @@ -1,6 +1,6 @@
@@ -253,7 +253,7 @@ index a3022e715dee..227c3336974d 100644
 +	.regs = &tegra20_mc_regs,
  };
 diff --git a/drivers/memory/tegra/tegra210.c b/drivers/memory/tegra/tegra210.c
-index 3c2949c16fde..e166b33848e9 100644
+index 3c2949c16fdef..e166b33848e95 100644
 --- a/drivers/memory/tegra/tegra210.c
 +++ b/drivers/memory/tegra/tegra210.c
 @@ -1,6 +1,6 @@
@@ -271,7 +271,7 @@ index 3c2949c16fde..e166b33848e9 100644
 +	.regs = &tegra20_mc_regs,
  };
 diff --git a/drivers/memory/tegra/tegra234.c b/drivers/memory/tegra/tegra234.c
-index 5f57cea48b62..512d054d7592 100644
+index 5f57cea48b629..512d054d75924 100644
 --- a/drivers/memory/tegra/tegra234.c
 +++ b/drivers/memory/tegra/tegra234.c
 @@ -1,6 +1,6 @@
@@ -289,7 +289,7 @@ index 5f57cea48b62..512d054d7592 100644
 +	.regs = &tegra20_mc_regs,
  };
 diff --git a/drivers/memory/tegra/tegra30.c b/drivers/memory/tegra/tegra30.c
-index d3e685c8431f..3f3c7d996b49 100644
+index d3e685c8431ff..3f3c7d996b49b 100644
 --- a/drivers/memory/tegra/tegra30.c
 +++ b/drivers/memory/tegra/tegra30.c
 @@ -1,6 +1,6 @@
@@ -307,7 +307,7 @@ index d3e685c8431f..3f3c7d996b49 100644
 +	.regs = &tegra20_mc_regs,
  };
 diff --git a/include/soc/tegra/mc.h b/include/soc/tegra/mc.h
-index 6ee4c59db620..372f47e824d5 100644
+index 6ee4c59db6201..372f47e824d53 100644
 --- a/include/soc/tegra/mc.h
 +++ b/include/soc/tegra/mc.h
 @@ -1,6 +1,6 @@
