@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Narayan Reddy <narayanr@nvidia.com>
 Date: Wed, 13 Apr 2022 07:15:18 +0000
-Subject: [PATCH 031/241] NVIDIA: SAUCE: net: phy: aqr: add phy_mode support
+Subject: [PATCH 031/240] NVIDIA: SAUCE: net: phy: aqr: add phy_mode support
 
 provide phy_mode support in PHY DT.
 read phy_mode from DT and apply the
@@ -22,7 +22,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 3f8d2a614690c..56752e0d277fa 100644
+index 4323f2e443d30..4d2166d727a27 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -142,6 +142,9 @@

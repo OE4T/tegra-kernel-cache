@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Date: Thu, 22 Jan 2026 03:15:18 +0000
+Subject: [PATCH 165/240] NVIDIA: SAUCE: tegra_hv_nvsci: include tegra_hv_ivc.h
+ header file
+
+new tegra_hv_ivc.h header file has been added due to
+tegra_hv.c driver refactoring. so use tegra_hv_ivc.h
+file instead of older hv-ivc.h file.
+
+Jira ESLC-8959
+
+Change-Id: I79558a5c01675a4d1fa7d1ee2ac63f0484252cb7
+Signed-off-by: Manish Bhardwaj <mbhardwaj@nvidia.com>
+Reviewed-on: https://git-master.nvidia.com/r/c/3rdparty/canonical/linux-noble/+/3533375
+Reviewed-by: Suresh Venkatachalam <skathirampat@nvidia.com>
+Reviewed-by: Sandeep Trasi <strasi@nvidia.com>
+GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
+Reviewed-by: svcacv <svcacv@nvidia.com>
+(cherry picked from commit 3b03016b582ce399fb639a5cd9928bc76935520f)
+
+diff --git a/include/soc/tegra/virt/tegra_hv_nvscicom.h b/include/soc/tegra/virt/tegra_hv_nvscicom.h
+index 92bcb910f8343..71e8ba502edc5 100644
+--- a/include/soc/tegra/virt/tegra_hv_nvscicom.h
++++ b/include/soc/tegra/virt/tegra_hv_nvscicom.h
+@@ -6,7 +6,7 @@
+ 
+ #include <linux/of.h>
+ #include <soc/tegra/nvscicom_kernel_api.h>
+-#include <soc/tegra/virt/hv-ivc.h>
++#include <soc/tegra/virt/tegra_hv_ivc.h>
+ 
+ /**
+  * tegra_hv_nvscicom_reserve - Reserve an NvSciCom IVC queue for use
+-- 
+2.43.0
+

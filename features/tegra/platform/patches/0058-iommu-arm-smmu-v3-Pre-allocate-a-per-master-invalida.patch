@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:20 -0700
-Subject: [PATCH 058/219] iommu/arm-smmu-v3: Pre-allocate a per-master
+Subject: [PATCH 058/218] iommu/arm-smmu-v3: Pre-allocate a per-master
  invalidation array
 
 When a master is attached from an old domain to a new domain, it needs to
@@ -29,10 +29,10 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index c75d6602e80e8..32e359e58fba8 100644
+index 37b9fd62cf930..18f4878ac6c76 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3783,12 +3783,22 @@ static int arm_smmu_init_sid_strtab(struct arm_smmu_device *smmu, u32 sid)
+@@ -3789,12 +3789,22 @@ static int arm_smmu_init_sid_strtab(struct arm_smmu_device *smmu, u32 sid)
  	return 0;
  }
  
@@ -55,7 +55,7 @@ index c75d6602e80e8..32e359e58fba8 100644
  
  	master->streams = kcalloc(fwspec->num_ids, sizeof(*master->streams),
  				  GFP_KERNEL);
-@@ -3796,14 +3806,35 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
+@@ -3802,14 +3812,35 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
  		return -ENOMEM;
  	master->num_streams = fwspec->num_ids;
  
@@ -95,7 +95,7 @@ index c75d6602e80e8..32e359e58fba8 100644
  
  		ret = arm_smmu_init_sid_strtab(smmu, sid);
  		if (ret)
-@@ -3833,6 +3864,7 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
+@@ -3839,6 +3870,7 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
  		for (i--; i >= 0; i--)
  			rb_erase(&master->streams[i].node, &smmu->streams);
  		kfree(master->streams);
@@ -103,7 +103,7 @@ index c75d6602e80e8..32e359e58fba8 100644
  	}
  	mutex_unlock(&smmu->streams_mutex);
  
-@@ -3854,6 +3886,7 @@ static void arm_smmu_remove_master(struct arm_smmu_master *master)
+@@ -3860,6 +3892,7 @@ static void arm_smmu_remove_master(struct arm_smmu_master *master)
  	mutex_unlock(&smmu->streams_mutex);
  
  	kfree(master->streams);

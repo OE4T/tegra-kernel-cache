@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Revanth Kumar Uppala <ruppala@nvidia.com>
 Date: Tue, 20 Sep 2022 12:33:12 +0530
-Subject: [PATCH 034/241] NVIDIA: SAUCE: net: phy: aqr113c: Read WOL status
+Subject: [PATCH 034/240] NVIDIA: SAUCE: net: phy: aqr113c: Read WOL status
  register.
 
 Issue: In case of WOL disable, WOL status
@@ -20,7 +20,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 96aee6a22b5f3..f1f1a9d632465 100644
+index b828dd12f9c2f..825deeb902098 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -56,6 +56,8 @@
@@ -32,7 +32,7 @@ index 96aee6a22b5f3..f1f1a9d632465 100644
  #define MDIO_AN_VEND_PROV			0xc400
  #define MDIO_AN_VEND_PROV_1000BASET_FULL	BIT(15)
  #define MDIO_AN_VEND_PROV_1000BASET_HALF	BIT(14)
-@@ -1461,13 +1463,13 @@ static void aqr113c_get_wol(struct phy_device *phydev, struct ethtool_wolinfo *w
+@@ -1464,13 +1466,13 @@ static void aqr113c_get_wol(struct phy_device *phydev, struct ethtool_wolinfo *w
  {
  	u16 val;
  

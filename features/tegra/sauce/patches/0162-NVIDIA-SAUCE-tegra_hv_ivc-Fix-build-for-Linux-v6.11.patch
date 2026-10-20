@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jon Hunter <jonathanh@nvidia.com>
+Date: Wed, 4 Feb 2026 15:00:52 +0000
+Subject: [PATCH 162/240] NVIDIA: SAUCE: tegra_hv_ivc: Fix build for Linux
+ v6.11
+
+In Linux v6.11, the 'platform_driver' structure 'remove' callback was
+updated to return void instead of 'int'. Update the Tegra HV IVC driver
+as necessary to fix this.
+
+Change-Id: I678f900916d786ef262fe40e4b0aeedd1847358a
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+
+diff --git a/drivers/virt/tegra/tegra_hv_ivc.c b/drivers/virt/tegra/tegra_hv_ivc.c
+index b6155fc48a6f5..ede79e3ad3fe6 100644
+--- a/drivers/virt/tegra/tegra_hv_ivc.c
++++ b/drivers/virt/tegra/tegra_hv_ivc.c
+@@ -1138,17 +1138,16 @@ static int tegra_hv_ivc_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int tegra_hv_ivc_remove(struct platform_device *pdev)
++static void tegra_hv_ivc_remove(struct platform_device *pdev)
+ {
+ 	if (!is_tegra_hypervisor_mode())
+-		return 0;
++		return;
+ 
+ 	tegra_hv_ivc_cleanup(tegra_hv_data);
+ 	kfree(tegra_hv_data);
+ 	tegra_hv_data = NULL;
+ 
+ 	INFO("Tegra Hypervisor IVC driver removed\n");
+-	return 0;
+ }
+ 
+ static const struct of_device_id tegra_hv_ivc_match[] = {
+-- 
+2.43.0
+

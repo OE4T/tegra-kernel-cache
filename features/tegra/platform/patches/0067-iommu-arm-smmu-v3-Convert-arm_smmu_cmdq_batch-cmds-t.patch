@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:43 -0300
-Subject: [PATCH 067/219] iommu/arm-smmu-v3: Convert arm_smmu_cmdq_batch cmds
+Subject: [PATCH 067/218] iommu/arm-smmu-v3: Convert arm_smmu_cmdq_batch cmds
  to struct arm_smmu_cmd
 
 Convert the batch's type to also get the remaining helper functions to
@@ -22,10 +22,10 @@ Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-index a52f86454f77d..7cf6de10c320d 100644
+index 7afb574140399..2fca6a5c01ba1 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-@@ -302,7 +302,7 @@ static int arm_vsmmu_vdevice_init(struct iommufd_vdevice *vdev)
+@@ -303,7 +303,7 @@ static int arm_vsmmu_vdevice_init(struct iommufd_vdevice *vdev)
  /* This is basically iommu_viommu_arm_smmuv3_invalidate in u64 for conversion */
  struct arm_vsmmu_invalidation_cmd {
  	union {
@@ -34,7 +34,7 @@ index a52f86454f77d..7cf6de10c320d 100644
  		struct iommu_viommu_arm_smmuv3_invalidate ucmd;
  	};
  };
-@@ -318,32 +318,32 @@ static int arm_vsmmu_convert_user_cmd(struct arm_vsmmu *vsmmu,
+@@ -319,32 +319,32 @@ static int arm_vsmmu_convert_user_cmd(struct arm_vsmmu *vsmmu,
  				      struct arm_vsmmu_invalidation_cmd *cmd)
  {
  	/* Commands are le64 stored in u64 */
@@ -77,7 +77,7 @@ index a52f86454f77d..7cf6de10c320d 100644
  		break;
  	}
  	default:
-@@ -388,7 +388,7 @@ int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
+@@ -389,7 +389,7 @@ int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
  			continue;
  
  		/* FIXME always uses the main cmdq rather than trying to group by type */
@@ -87,7 +87,7 @@ index a52f86454f77d..7cf6de10c320d 100644
  		if (ret) {
  			cur--;
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 4ae47a07c2738..3975ac5161dee 100644
+index 46dd72f7db108..fa0f74fc82c1b 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -267,9 +267,12 @@ static int queue_remove_raw(struct arm_smmu_queue *q, u64 *ent)
@@ -295,7 +295,7 @@ index 4ae47a07c2738..3975ac5161dee 100644
  	arm_smmu_cmdq_issue_cmd_with_sync(inv->smmu, &hw_cmd);
  }
  
-@@ -4902,18 +4906,18 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
+@@ -4911,18 +4915,18 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
  
  	/* Invalidate any cached configuration */
  	ent.opcode = CMDQ_OP_CFGI_ALL;
@@ -341,7 +341,7 @@ index 15294bb1cf3ae..1be1073d0963a 100644
  
  #ifdef CONFIG_ARM_SMMU_V3_SVA
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 6ca3eac24a343..cc81f8fd2292a 100644
+index a05c436bb90a9..d1592e8c8d00a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 @@ -454,16 +454,16 @@ tegra241_cmdqv_get_cmdq(struct arm_smmu_device *smmu,

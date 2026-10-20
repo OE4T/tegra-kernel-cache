@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Wed, 19 Feb 2025 17:24:37 +0000
-Subject: [PATCH 079/219] NVIDIA: SAUCE: iommu/arm-smmu-v3: Retain prod and
+Subject: [PATCH 079/218] NVIDIA: SAUCE: iommu/arm-smmu-v3: Retain prod and
  cons after resume
 
 Set PROD and CONS registers of VCMDQs with retained values from
@@ -17,7 +17,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 75436e3f13e4a01b75b0ac4156adf94cdff09696)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index cc81f8fd2292a..25c6d4fd94af0 100644
+index d1592e8c8d00a..4452834747e3a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 @@ -512,6 +512,8 @@ static int tegra241_vcmdq_hw_init(struct tegra241_vcmdq *vcmdq)

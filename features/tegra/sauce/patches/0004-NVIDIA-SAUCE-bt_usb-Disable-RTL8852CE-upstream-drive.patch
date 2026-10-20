@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Shobek Attupurath <sattupurath@nvidia.com>
 Date: Tue, 5 Nov 2024 02:24:38 +0000
-Subject: [PATCH 004/241] NVIDIA: SAUCE: bt_usb: Disable RTL8852CE upstream
+Subject: [PATCH 004/240] NVIDIA: SAUCE: bt_usb: Disable RTL8852CE upstream
  driver
 
 Disable RTL8852CE upstream bluetooth driver detection to
@@ -19,10 +19,10 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit 4fd847e5fc26bf6386537abf11ed797162418cb4)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 1c7f676b50427..9e32d239573b0 100644
+index b962f9e21c17a..17a9c5daa478b 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -578,8 +578,7 @@ static const struct usb_device_id quirks_table[] = {
+@@ -580,8 +580,7 @@ static const struct usb_device_id quirks_table[] = {
  						     BTUSB_WIDEBAND_SPEECH },
  	{ USB_DEVICE(0x13d3, 0x3587), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 13 Jan 2026 05:49:32 +0000
-Subject: [PATCH 053/219] iommu/tegra241-cmdqv: Decouple driver from ACPI
+Subject: [PATCH 053/218] iommu/tegra241-cmdqv: Decouple driver from ACPI
 
 A platform device is created by acpi_create_platform_device() per CMDQV's
 adev. That means there is no point in going through _CRS of ACPI.
@@ -27,10 +27,10 @@ index ef42bbe07dbef..5fac08b89deea 100644
  	  Support for NVIDIA CMDQ-Virtualization extension for ARM SMMUv3. The
  	  CMDQ-V extension is similar to v3.3 ECMDQ for multi command queues
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 3d796ff6c2c62..17fbc4a24abb8 100644
+index 2c237ca4a3837..33294bb4de022 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -4643,10 +4643,11 @@ static void acpi_smmu_dsdt_probe_tegra241_cmdqv(struct acpi_iort_node *node,
+@@ -4652,10 +4652,11 @@ static void acpi_smmu_dsdt_probe_tegra241_cmdqv(struct acpi_iort_node *node,
  	adev = acpi_dev_get_first_match_dev("NVDA200C", uid, -1);
  	if (adev) {
  		/* Tegra241 CMDQV driver is responsible for put_device() */
@@ -44,7 +44,7 @@ index 3d796ff6c2c62..17fbc4a24abb8 100644
  	kfree(uid);
  }
 diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 2b55a221c35a6..d5af60f92bc0e 100644
+index fdbd487848e64..3652ba0686adb 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
 @@ -3,17 +3,15 @@
@@ -136,15 +136,14 @@ index 2b55a221c35a6..d5af60f92bc0e 100644
  static int tegra241_cmdqv_init_structures(struct arm_smmu_device *smmu)
  {
  	struct tegra241_cmdqv *cmdqv =
-@@ -1107,18 +1042,23 @@ __tegra241_cmdqv_probe(struct arm_smmu_device *smmu, struct resource *res,
+@@ -1118,17 +1053,22 @@ static int __tegra241_cmdqv_probe(struct arm_smmu_device **smmu,
  
  struct arm_smmu_device *tegra241_cmdqv_probe(struct arm_smmu_device *smmu)
  {
-+	struct platform_device *pdev = to_platform_device(smmu->impl_dev);
- 	struct arm_smmu_device *new_smmu;
 -	struct resource *res = NULL;
++	struct platform_device *pdev = to_platform_device(smmu->impl_dev);
 +	struct resource *res;
- 	int irq;
+ 	int irq, ret;
  
 -	if (!smmu->dev->of_node)
 -		res = tegra241_cmdqv_find_acpi_resource(smmu->impl_dev, &irq);
@@ -155,16 +154,16 @@ index 2b55a221c35a6..d5af60f92bc0e 100644
  		goto out_fallback;
 +	}
  
--	new_smmu = __tegra241_cmdqv_probe(smmu, res, irq);
+-	ret = __tegra241_cmdqv_probe(&smmu, res, irq);
 -	kfree(res);
 +	irq = platform_get_irq_optional(pdev, 0);
 +	if (irq <= 0)
 +		dev_warn(&pdev->dev,
 +			 "no interrupt. errors will not be reported\n");
  
-+	new_smmu = __tegra241_cmdqv_probe(smmu, res, irq);
- 	if (new_smmu)
- 		return new_smmu;
++	ret = __tegra241_cmdqv_probe(&smmu, res, irq);
+ 	if (!ret)
+ 		return smmu;
  
 -- 
 2.43.0

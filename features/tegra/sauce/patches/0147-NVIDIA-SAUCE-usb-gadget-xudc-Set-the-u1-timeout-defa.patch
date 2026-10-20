@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Wayne Chang <waynec@nvidia.com>
+Date: Fri, 22 Sep 2023 19:45:51 +0800
+Subject: [PATCH 147/240] NVIDIA: SAUCE: usb: gadget: xudc: Set the u1 timeout
+ default value to 0xff
+
+The default value of u1 timeout shall be set to 0xff
+
+http://nvbugs/4213219
+http://nvbugs/4753858
+
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Change-Id: I750f5a96530167662479d62349b520f665d8bdb7
+(cherry picked from commit 29af4fd969ee53e1e7e3b128be386106172d1b4b)
+
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index 73497ac46a95c..01567a9f2eb93 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -2335,8 +2335,10 @@ static int tegra_xudc_ep0_set_feature(struct tegra_xudc *xudc,
+ 			val = xudc_readl(xudc, PORTPM);
+ 			if ((feature == USB_DEVICE_U1_ENABLE) &&
+ 			     xudc->soc->u1_enable) {
+-				if (set)
++				if (set) {
+ 					val |= PORTPM_U1E;
++					val |= PORTPM_U1TIMEOUT_MASK;
++				}
+ 				else
+ 					val &= ~PORTPM_U1E;
+ 			}
+-- 
+2.43.0
+

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Sun, 26 Jul 2026 08:19:03 +0000
-Subject: [PATCH 075/219] iommu/arm-smmu-v3-iommufd: Report CFGI/TLBI-repeat
+Subject: [PATCH 075/218] iommu/arm-smmu-v3-iommufd: Report CFGI/TLBI-repeat
  erratum
 
 A guest with access to VCMDQ generates its own invalidation commands
@@ -24,7 +24,7 @@ Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-index 7cf6de10c320d..0c65ff420f57c 100644
+index 2fca6a5c01ba1..0b68e13351ff9 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
 @@ -33,6 +33,9 @@ void *arm_smmu_hw_info(struct device *dev, u32 *length,
@@ -37,7 +37,7 @@ index 7cf6de10c320d..0c65ff420f57c 100644
  	*length = sizeof(*info);
  	*type = IOMMU_HW_INFO_TYPE_ARM_SMMUV3;
  
-@@ -388,8 +391,8 @@ int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
+@@ -389,8 +392,8 @@ int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
  			continue;
  
  		/* FIXME always uses the main cmdq rather than trying to group by type */
@@ -49,7 +49,7 @@ index 7cf6de10c320d..0c65ff420f57c 100644
  			cur--;
  			goto out;
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 3e4e12887840e..5b1c0e37eeeda 100644
+index e4dadec2382ff..66d51933925a2 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -828,11 +828,16 @@ int __arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Sat, 21 Mar 2026 15:50:41 -0700
-Subject: [PATCH 063/219] iommu/arm-smmu-v3: Fix typos introduced by
+Subject: [PATCH 063/218] iommu/arm-smmu-v3: Fix typos introduced by
  arm_smmu_invs
 
 These are introduced by separate commits, so not submitting with a "Fixes"
@@ -12,7 +12,7 @@ Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 6d5858de275ff..8637282a24725 100644
+index 0ccfbb85a85c7..d09f03af21b05 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -1128,7 +1128,7 @@ static inline int arm_smmu_invs_iter_next_cmp(struct arm_smmu_invs *invs_l,

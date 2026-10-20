@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Pohsun Su <pohsuns@nvidia.com>
 Date: Tue, 2 Apr 2024 16:12:25 +0000
-Subject: [PATCH 043/241] NVIDIA: SAUCE: net: phy: aquantia: Poll for valid FW
+Subject: [PATCH 043/240] NVIDIA: SAUCE: net: phy: aquantia: Poll for valid FW
  ID.
 
 Firmware ID will be shown as 0xFFFF if firmware is not yet loaded.
@@ -35,10 +35,10 @@ index 666755125df6c..2861dc467ae1b 100644
  #define VEND1_GLOBAL_MAILBOX_INTERFACE1			0x0200
  #define VEND1_GLOBAL_MAILBOX_INTERFACE1_EXECUTE		BIT(15)
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 6785862fa2d89..e956d29b6493b 100644
+index 550c61f0e7d3e..b80fafe2469f2 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
-@@ -830,7 +830,9 @@ int aqr_wait_reset_complete(struct phy_device *phydev)
+@@ -833,7 +833,9 @@ int aqr_wait_reset_complete(struct phy_device *phydev)
  {
  	int ret, val;
  

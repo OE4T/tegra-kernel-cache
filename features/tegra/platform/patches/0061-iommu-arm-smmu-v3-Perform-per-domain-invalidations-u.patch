@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:23 -0700
-Subject: [PATCH 061/219] iommu/arm-smmu-v3: Perform per-domain invalidations
+Subject: [PATCH 061/218] iommu/arm-smmu-v3: Perform per-domain invalidations
  using arm_smmu_invs
 
 Replace the old invalidation functions with arm_smmu_domain_inv_range() in
@@ -83,7 +83,7 @@ index 006d8159622d1..4cd60d3c450ac 100644
  	/*
  	 * Notice that the arm_smmu_mm_arch_invalidate_secondary_tlbs op can
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 57120195f333a..d0eb3a46a5de0 100644
+index b483c4c51c903..8eacd3893cfea 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -1289,16 +1289,6 @@ struct arm_smmu_invs *arm_smmu_invs_purge(struct arm_smmu_invs *invs)
@@ -305,7 +305,7 @@ index 57120195f333a..d0eb3a46a5de0 100644
  }
  
  static const struct iommu_flush_ops arm_smmu_flush_ops = {
-@@ -4195,9 +4054,9 @@ static void arm_smmu_iotlb_sync(struct iommu_domain *domain,
+@@ -4201,9 +4060,9 @@ static void arm_smmu_iotlb_sync(struct iommu_domain *domain,
  	if (!gather->pgsize)
  		return;
  

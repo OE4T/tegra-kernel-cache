@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Narayan Reddy <narayanr@nvidia.com>
 Date: Sun, 24 Oct 2021 02:28:06 +0530
-Subject: [PATCH 030/241] NVIDIA: SAUCE: net: phy: aqr113c: Enable Wake on boot
+Subject: [PATCH 030/240] NVIDIA: SAUCE: net: phy: aqr113c: Enable Wake on boot
  configuration.
 
 Enable wake on boot configuration. This feature
@@ -20,7 +20,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index a69bb0a16638e..3f8d2a614690c 100644
+index 0591f24787f61..4323f2e443d30 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -5,6 +5,7 @@
@@ -106,7 +106,7 @@ index a69bb0a16638e..3f8d2a614690c 100644
  		if (ret < 0)
  			return IRQ_NONE;
  		/* restart auto-negotiation */
-@@ -805,7 +837,29 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
+@@ -808,7 +840,29 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
  {
  	struct aqr107_priv *priv = phydev->priv;
  	u32 led_idx;
@@ -137,7 +137,7 @@ index a69bb0a16638e..3f8d2a614690c 100644
  
  	/* Advertize flow control */
  	linkmode_set_bit(SUPPORTED_Pause, phydev->supported);
-@@ -827,30 +881,29 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
+@@ -830,30 +884,29 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
  	if (err < 0)
  		return err;
  
@@ -189,7 +189,7 @@ index a69bb0a16638e..3f8d2a614690c 100644
  	}
  
  	ret = aqr107_set_downshift(phydev, MDIO_AN_VEND_PROV_DOWNSHIFT_DFLT);
-@@ -1228,6 +1281,131 @@ static int aqr107_probe(struct phy_device *phydev)
+@@ -1231,6 +1284,131 @@ static int aqr107_probe(struct phy_device *phydev)
  	return aqr_hwmon_probe(phydev);
  }
  
@@ -321,7 +321,7 @@ index a69bb0a16638e..3f8d2a614690c 100644
  
  static struct phy_driver aqr_driver[] = {
  {
-@@ -1373,6 +1551,8 @@ static struct phy_driver aqr_driver[] = {
+@@ -1376,6 +1554,8 @@ static struct phy_driver aqr_driver[] = {
  	.led_polarity_set = aqr_phy_led_polarity_set,
  	.inband_caps	= aqr_gen2_inband_caps,
  	.config_inband	= aqr_gen2_config_inband,

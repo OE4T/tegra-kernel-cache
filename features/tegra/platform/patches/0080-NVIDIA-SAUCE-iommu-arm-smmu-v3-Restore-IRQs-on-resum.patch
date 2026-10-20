@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Fri, 21 Nov 2025 08:31:36 +0000
-Subject: [PATCH 080/219] NVIDIA: SAUCE: iommu/arm-smmu-v3: Restore IRQs on
+Subject: [PATCH 080/218] NVIDIA: SAUCE: iommu/arm-smmu-v3: Restore IRQs on
  resume
 
 The ARM SMMU v3 driver was not restoring interrupt configuration after
@@ -31,10 +31,10 @@ Reviewed-by: svcacv <svcacv@nvidia.com>
 (cherry picked from commit bd85e3c4db26954c06cd73c9452a73a17a6d8ae5)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 0daae63a90bef..e7f2deb5e123a 100644
+index 8d2d17e92d1b6..a6e706624eeb8 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -4684,10 +4684,26 @@ static void arm_smmu_setup_unique_irqs(struct arm_smmu_device *smmu)
+@@ -4693,10 +4693,26 @@ static void arm_smmu_setup_unique_irqs(struct arm_smmu_device *smmu)
  	}
  }
  
@@ -62,7 +62,7 @@ index 0daae63a90bef..e7f2deb5e123a 100644
  
  	/* Disable IRQs first */
  	ret = arm_smmu_write_reg_sync(smmu, 0, ARM_SMMU_IRQ_CTRL,
-@@ -4713,16 +4729,7 @@ static int arm_smmu_setup_irqs(struct arm_smmu_device *smmu)
+@@ -4722,16 +4738,7 @@ static int arm_smmu_setup_irqs(struct arm_smmu_device *smmu)
  	} else
  		arm_smmu_setup_unique_irqs(smmu);
  
@@ -80,7 +80,7 @@ index 0daae63a90bef..e7f2deb5e123a 100644
  }
  
  static int arm_smmu_device_disable(struct arm_smmu_device *smmu)
-@@ -5574,9 +5581,18 @@ static void arm_smmu_driver_unregister(struct platform_driver *drv)
+@@ -5583,9 +5590,18 @@ static void arm_smmu_driver_unregister(struct platform_driver *drv)
  static int __maybe_unused arm_smmu_runtime_resume(struct device *dev)
  {
  	struct arm_smmu_device *smmu = dev_get_drvdata(dev);

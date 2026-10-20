@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Wed, 13 May 2026 20:57:45 -0300
-Subject: [PATCH 069/219] iommu/arm-smmu-v3: Directly encode simple commands
+Subject: [PATCH 069/218] iommu/arm-smmu-v3: Directly encode simple commands
 
 Add make functions to build commands for
 
@@ -34,7 +34,7 @@ Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 01d5ba2518fe8..f7aec3767c3c5 100644
+index b6d574a8fcd64..b7b9271671591 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -276,23 +276,6 @@ static int arm_smmu_cmdq_build_cmd(struct arm_smmu_cmd *cmd_out,
@@ -336,7 +336,7 @@ index 01d5ba2518fe8..f7aec3767c3c5 100644
  }
  
  /* Should be installed after arm_smmu_install_ste_for_dev() */
-@@ -4854,8 +4795,6 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
+@@ -4863,8 +4804,6 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
  {
  	int ret;
  	u32 reg, enables;
@@ -345,7 +345,7 @@ index 01d5ba2518fe8..f7aec3767c3c5 100644
  
  	/* Clear CR0 and sync (disables SMMU and queue processing) */
  	reg = readl_relaxed(smmu->base + ARM_SMMU_CR0);
-@@ -4902,20 +4841,16 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
+@@ -4911,20 +4850,16 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
  	}
  
  	/* Invalidate any cached configuration */

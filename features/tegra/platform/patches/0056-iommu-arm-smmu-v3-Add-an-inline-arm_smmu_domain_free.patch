@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:18 -0700
-Subject: [PATCH 056/219] iommu/arm-smmu-v3: Add an inline
+Subject: [PATCH 056/218] iommu/arm-smmu-v3: Add an inline
  arm_smmu_domain_free()
 
 There will be a bit more things to free than smmu_domain itself. So keep a
@@ -37,7 +37,7 @@ index c1eb2ae2023ff..006d8159622d1 100644
  	return ERR_PTR(ret);
  }
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 1e0bc70a034bd..e40ef98c0c57e 100644
+index 2120957a03a7d..ea9189f21fa0a 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -2560,7 +2560,7 @@ static void arm_smmu_domain_free_paging(struct iommu_domain *domain)
@@ -49,7 +49,7 @@ index 1e0bc70a034bd..e40ef98c0c57e 100644
  }
  
  static int arm_smmu_domain_finalise_s1(struct arm_smmu_device *smmu,
-@@ -3421,7 +3421,7 @@ arm_smmu_domain_alloc_paging_flags(struct device *dev, u32 flags,
+@@ -3427,7 +3427,7 @@ arm_smmu_domain_alloc_paging_flags(struct device *dev, u32 flags,
  	return &smmu_domain->domain;
  
  err_free:

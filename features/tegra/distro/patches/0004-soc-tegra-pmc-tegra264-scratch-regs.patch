@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kurt Kiefer <kkiefer@nvidia.com>
-Date: Tue, 15 Jul 2026 00:00:00 +0000
+Date: Wed, 15 Jul 2026 00:00:00 +0000
 Subject: [PATCH] soc/tegra: pmc: Add Tegra264 scratch register offsets
 
 The linux-noble commit f26de42a861ec (Idb9534ea, gerrit 3456564) added
@@ -15,16 +15,13 @@ Upstream-Status: Backport [tegra264-pmc.c hunk of linux-noble
   f26de42a861ec (Idb9534ea, gerrit 3456564) dropped in linux-stable
   5f33ed96ac440; offsets folded into tegra264_pmc_regs in pmc.c]
 Signed-off-by: Kurt Kiefer <kkiefer@nvidia.com>
----
- drivers/soc/tegra/pmc.c | 2 ++
- 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index 0000000000000..1111111111111 100644
+index 11682a9f4dd9c..d4c57e5ec9517 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
-@@ -4538,6 +4538,8 @@ static const struct tegra_pmc_regs tegra264_pmc_regs = {
- 	.scratch0 = 0x684,
+@@ -4870,6 +4870,8 @@ static const struct tegra_pmc_regs tegra264_pmc_regs = {
+ 	.rst_level_mask = 0x3,
  	.aowake_mask_w = 0x200,
  	.aowake_status_w = 0x410,
 +	.scratch_l0_1_0 = 0x67c,
@@ -32,5 +29,6 @@ index 0000000000000..1111111111111 100644
  	.aowake_status_r = 0x610,
  	.aowake_tier2_routing = 0x660,
  	.aowake_sw_status_w = 0x624,
---
+-- 
 2.43.0
+

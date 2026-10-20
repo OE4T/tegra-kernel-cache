@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Revanth Kumar Uppala <ruppala@nvidia.com>
 Date: Wed, 12 Oct 2022 12:04:24 +0530
-Subject: [PATCH 036/241] NVIDIA: SAUCE: net: phy: aqr113c: Handling Duplicate
+Subject: [PATCH 036/240] NVIDIA: SAUCE: net: phy: aqr113c: Handling Duplicate
  WOL setting
 
 Return Success on Duplicate WOL setting
@@ -16,10 +16,10 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index f1f1a9d632465..1143efd50a91f 100644
+index 825deeb902098..e72fa6bb450c0 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
-@@ -1433,7 +1433,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
+@@ -1436,7 +1436,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
  
  		/* restart auto-negotiation */
  		genphy_c45_restart_aneg(phydev);
@@ -28,7 +28,7 @@ index f1f1a9d632465..1143efd50a91f 100644
  	} else {
  		/* Disable the WoL enable bit */
  		val = phy_read_mmd(phydev, MDIO_MMD_AN, MDIO_AN_RESVD_VEND_PROV);
-@@ -1475,6 +1475,12 @@ static void aqr113c_get_wol(struct phy_device *phydev, struct ethtool_wolinfo *w
+@@ -1478,6 +1478,12 @@ static void aqr113c_get_wol(struct phy_device *phydev, struct ethtool_wolinfo *w
  
  static int aqr113c_set_wol(struct phy_device *phydev, struct ethtool_wolinfo *wol)
  {
