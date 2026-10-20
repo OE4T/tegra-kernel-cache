@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:22 -0700
-Subject: [PATCH 060/219] iommu/arm-smmu-v3: Add arm_smmu_invs based
+Subject: [PATCH 060/218] iommu/arm-smmu-v3: Add arm_smmu_invs based
  arm_smmu_domain_inv_range()
 
 Each smmu_domain now has an arm_smmu_invs that specifies the invalidation
@@ -29,7 +29,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index addce171fd71b..57120195f333a 100644
+index f687cd27143b8..b483c4c51c903 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -2596,23 +2596,19 @@ static void arm_smmu_tlb_inv_context(void *cookie)

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Shobek Attupurath <sattupurath@nvidia.com>
 Date: Wed, 8 Jan 2025 23:53:31 +0000
-Subject: [PATCH 005/241] NVIDIA: SAUCE: bluetooth: usb: disable 8822CE modules
+Subject: [PATCH 005/240] NVIDIA: SAUCE: bluetooth: usb: disable 8822CE modules
 
 Disable Azurewave 8822CE modules from generic driver to use
 Realtek 8822CE BT driver
@@ -17,10 +17,10 @@ Reviewed-by: Revanth Kumar Uppala <ruppala@nvidia.com>
 (cherry picked from commit f672a3817b827a131011dac4ed5ae6f6904eef90)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 9e32d239573b0..90047044f2cfb 100644
+index 17a9c5daa478b..195a3dda5ad22 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -529,12 +529,10 @@ static const struct usb_device_id quirks_table[] = {
+@@ -531,12 +531,10 @@ static const struct usb_device_id quirks_table[] = {
  	/* Realtek 8822CE Bluetooth devices */
  	{ USB_DEVICE(0x0bda, 0xb00c), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Suresh Mangipudi <smangipudi@nvidia.com>
 Date: Wed, 7 Oct 2020 07:19:01 -0700
-Subject: [PATCH 003/241] NVIDIA: SAUCE: bluetooth: usb: Blacklist 8822CE
+Subject: [PATCH 003/240] NVIDIA: SAUCE: bluetooth: usb: Blacklist 8822CE
  modules
 
 commit bafaa50aff2d8f547b05ef3eebd87fe71146c729 ("Black list 8822CE module
@@ -20,10 +20,10 @@ Reviewed-by: Bitan Biswas <bbiswas@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index c496f746fafa4..1c7f676b50427 100644
+index 59fff918fd2de..b962f9e21c17a 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -866,8 +866,8 @@ static const struct usb_device_id quirks_table[] = {
+@@ -868,8 +868,8 @@ static const struct usb_device_id quirks_table[] = {
  						     BTUSB_WIDEBAND_SPEECH },
  	{ USB_DEVICE(0x13d3, 0x3548), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },

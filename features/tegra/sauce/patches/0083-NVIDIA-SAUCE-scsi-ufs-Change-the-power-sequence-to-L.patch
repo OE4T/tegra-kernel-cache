@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mallikarjun Kasoju <mkasoju@nvidia.com>
 Date: Fri, 16 Aug 2024 09:22:55 +0000
-Subject: [PATCH 083/241] NVIDIA: SAUCE: scsi: ufs: Change the power sequence
+Subject: [PATCH 083/240] NVIDIA: SAUCE: scsi: ufs: Change the power sequence
  to LSx1->LSx2->HSx2
 
 Change the power sequence to LSx1->LSx2->HSx2
@@ -15,10 +15,10 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index e4ed6fa96f212..ba9a72d17bd2e 100644
+index 413ad97b9e111..5bc7aae8722ba 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -4694,7 +4694,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
+@@ -4706,7 +4706,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
  	 * - PA_TXGEAR, PA_ACTIVETXDATALANES, PA_TXTERMINATION,
  	 * - PA_HSSERIES
  	 */
@@ -46,7 +46,7 @@ index e4ed6fa96f212..ba9a72d17bd2e 100644
  	if (pwr_mode->pwr_rx == FASTAUTO_MODE ||
  			pwr_mode->pwr_rx == FAST_MODE)
  		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_RXTERMINATION), true);
-@@ -4746,23 +4766,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
+@@ -4758,23 +4778,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,
  		return ret;
  	}
  
@@ -89,7 +89,7 @@ index e4ed6fa96f212..ba9a72d17bd2e 100644
  
  /**
 diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index 17fe07dac6a7e..0da0a0ed68040 100644
+index a829db5510808..241fee3a328bb 100644
 --- a/include/ufs/ufshcd.h
 +++ b/include/ufs/ufshcd.h
 @@ -695,6 +695,11 @@ enum ufshcd_quirks {

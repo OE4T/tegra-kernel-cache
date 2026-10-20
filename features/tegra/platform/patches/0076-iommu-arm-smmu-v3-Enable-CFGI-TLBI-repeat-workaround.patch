@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ashish Mhetre <amhetre@nvidia.com>
 Date: Sun, 26 Jul 2026 08:19:04 +0000
-Subject: [PATCH 076/219] iommu/arm-smmu-v3: Enable CFGI/TLBI-repeat workaround
+Subject: [PATCH 076/218] iommu/arm-smmu-v3: Enable CFGI/TLBI-repeat workaround
  on Tegra264
 
 Nvidia Tegra264 SMMU is affected by an erratum where a TLB entry can
@@ -28,10 +28,10 @@ Signed-off-by: Will Deacon <will@kernel.org>
 Change-Id: Ie88aff0f5c27f5223a3d6201928c2a9106b1358a
 
 diff --git a/Documentation/arch/arm64/silicon-errata.rst b/Documentation/arch/arm64/silicon-errata.rst
-index 1c5accd6dec49..5e1539ca40306 100644
+index 75c6ba532c20c..82f3e2f20cee7 100644
 --- a/Documentation/arch/arm64/silicon-errata.rst
 +++ b/Documentation/arch/arm64/silicon-errata.rst
-@@ -292,6 +292,8 @@ stable kernels.
+@@ -294,6 +294,8 @@ stable kernels.
  +----------------+-----------------+-----------------+-----------------------------+
  | NVIDIA         | T241 GICv3/4.x  | T241-FABRIC-4   | N/A                         |
  +----------------+-----------------+-----------------+-----------------------------+
@@ -41,10 +41,10 @@ index 1c5accd6dec49..5e1539ca40306 100644
  | Freescale/NXP  | LS2080A/LS1043A | A-008585        | FSL_ERRATUM_A008585         |
  +----------------+-----------------+-----------------+-----------------------------+
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 5b1c0e37eeeda..1c39c82f59521 100644
+index 66d51933925a2..39beb44d461c1 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -5326,8 +5326,10 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
+@@ -5335,8 +5335,10 @@ static int arm_smmu_device_dt_probe(struct platform_device *pdev,
  	if (of_dma_is_coherent(dev->of_node))
  		smmu->features |= ARM_SMMU_FEAT_COHERENCY;
  

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Narayan Reddy <narayanr@nvidia.com>
 Date: Tue, 7 Sep 2021 00:16:03 +0530
-Subject: [PATCH 028/241] NVIDIA: SAUCE: net: phy: enable pause in realtek and
+Subject: [PATCH 028/240] NVIDIA: SAUCE: net: phy: enable pause in realtek and
  aquantia PHY
 
 Enable flow control support in aquantia and
@@ -18,7 +18,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 6b7009e6d4ffa..d71758eb67e6b 100644
+index 883fce665b3f2..817d5111dbbfe 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -35,6 +35,9 @@
@@ -31,7 +31,7 @@ index 6b7009e6d4ffa..d71758eb67e6b 100644
  #define MDIO_PHYXS_VEND_PROV2			0xc441
  #define MDIO_PHYXS_VEND_PROV2_USX_AN		BIT(3)
  
-@@ -802,6 +805,16 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
+@@ -805,6 +808,16 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
  	u32 led_idx;
  	int ret;
  

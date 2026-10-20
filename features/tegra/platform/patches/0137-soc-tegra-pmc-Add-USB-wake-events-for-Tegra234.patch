@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Haotien Hsu <haotienh@nvidia.com>
 Date: Mon, 11 Aug 2025 15:45:57 +0800
-Subject: [PATCH 137/219] soc/tegra: pmc: Add USB wake events for Tegra234
+Subject: [PATCH 137/218] soc/tegra: pmc: Add USB wake events for Tegra234
 
 Add USB wake events for Tegra234 so that system can be woken up from
 suspend when USB devices hot-plug/unplug event is detected.
@@ -11,10 +11,10 @@ Signed-off-by: Thierry Reding <treding@nvidia.com>
 (cherry picked from commit dd03d34d6d8e7a3f62450fb7a1408d86fb35487c)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index af65cc409694f..f3760a3b3026d 100644
+index a9b1100ec34d3..407fa840814c3 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
-@@ -4225,6 +4225,13 @@ static const struct tegra_wake_event tegra234_wake_events[] = {
+@@ -4269,6 +4269,13 @@ static const struct tegra_wake_event tegra234_wake_events[] = {
  	TEGRA_WAKE_GPIO("power", 29, 1, TEGRA234_AON_GPIO(EE, 4)),
  	TEGRA_WAKE_GPIO("mgbe", 56, 0, TEGRA234_MAIN_GPIO(Y, 3)),
  	TEGRA_WAKE_IRQ("rtc", 73, 10),

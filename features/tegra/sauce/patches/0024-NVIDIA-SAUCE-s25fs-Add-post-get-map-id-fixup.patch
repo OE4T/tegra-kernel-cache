@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vishwaroop A <va@nvidia.com>
 Date: Tue, 14 May 2024 09:31:00 +0000
-Subject: [PATCH 024/241] NVIDIA: SAUCE: s25fs: Add post-get-map-id fixup
+Subject: [PATCH 024/240] NVIDIA: SAUCE: s25fs: Add post-get-map-id fixup
 
 Add a post-get-map-id fixup for S25FS512S flash devices. The fixup
 reads the values of the CR3V and CR1V registers and determines the map ID
@@ -27,7 +27,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 19dc13faf9fd9..96788c1c9fe86 100644
+index 037407fc2e113..d839e30219b5c 100644
 --- a/drivers/mtd/spi-nor/core.c
 +++ b/drivers/mtd/spi-nor/core.c
 @@ -2523,6 +2523,35 @@ int spi_nor_post_bfpt_fixups(struct spi_nor *nor,

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nirmoy Das <nirmoyd@nvidia.com>
 Date: Wed, 17 Dec 2025 07:45:29 -0800
-Subject: [PATCH 105/219] PCI: Add PCI_BRIDGE_NO_ALIAS quirk for ASPEED AST1150
+Subject: [PATCH 105/218] PCI: Add PCI_BRIDGE_NO_ALIAS quirk for ASPEED AST1150
 
 ASPEED BMC controllers have VGA and USB functions behind a PCIe-to-PCI
 bridge that causes them to share the same StreamID:
@@ -49,7 +49,7 @@ index e8067ff59e2a5..f81b24953afbf 100644
   * Intersil/Techwell TW686[4589]-based video capture cards have an empty (zero)
   * class code.  Fix it.
 diff --git a/drivers/pci/search.c b/drivers/pci/search.c
-index 53840634fbfc2..b3c9e3d82201f 100644
+index 705ab725321a8..7fd7b78c8a2da 100644
 --- a/drivers/pci/search.c
 +++ b/drivers/pci/search.c
 @@ -86,6 +86,8 @@ int pci_for_each_dma_alias(struct pci_dev *pdev,
@@ -62,7 +62,7 @@ index 53840634fbfc2..b3c9e3d82201f 100644
  					 PCI_DEVID(tmp->subordinate->number,
  						   PCI_DEVFN(0, 0)), data);
 diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 148b71af80b32..a5a6cae9f9f9f 100644
+index 95c77e2a1d1f5..ea11e1153be6f 100644
 --- a/include/linux/pci.h
 +++ b/include/linux/pci.h
 @@ -260,6 +260,11 @@ enum pci_dev_flags {

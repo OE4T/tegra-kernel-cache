@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Narayan Reddy <narayanr@nvidia.com>
 Date: Wed, 22 Sep 2021 05:06:38 +0530
-Subject: [PATCH 029/241] NVIDIA: SAUCE: net: phy: aquantia: Enable MAC
+Subject: [PATCH 029/240] NVIDIA: SAUCE: net: phy: aquantia: Enable MAC
  Controlled EEE
 
 Enable MAC Controlled EEE to support EEE from
@@ -18,7 +18,7 @@ Reviewed-by: Abhilash G <abhilashg@nvidia.com>
 Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index d71758eb67e6b..a69bb0a16638e 100644
+index 817d5111dbbfe..0591f24787f61 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -121,6 +121,8 @@
@@ -30,7 +30,7 @@ index d71758eb67e6b..a69bb0a16638e 100644
  static int aqr107_get_sset_count(struct phy_device *phydev)
  {
  	return AQR107_SGMII_STAT_SZ;
-@@ -812,8 +814,18 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
+@@ -815,8 +817,18 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
  
  	/* Configure flow control */
  	ret = phy_read_mmd(phydev, MDIO_MMD_AN, 0x10);

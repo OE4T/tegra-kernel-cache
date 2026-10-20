@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:19 -0700
-Subject: [PATCH 057/219] iommu/arm-smmu-v3: Introduce a per-domain
+Subject: [PATCH 057/218] iommu/arm-smmu-v3: Introduce a per-domain
  arm_smmu_invs array
 
 Create a new data structure to hold an array of invalidations that need to
@@ -186,7 +186,7 @@ index b254a94b2003d..af3b9eec897b8 100644
  };
  
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index e40ef98c0c57e..c75d6602e80e8 100644
+index ea9189f21fa0a..37b9fd62cf930 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -26,6 +26,7 @@

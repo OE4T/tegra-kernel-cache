@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:17 -0700
-Subject: [PATCH 055/219] iommu/arm-smmu-v3: Explicitly set smmu_domain->stage
+Subject: [PATCH 055/218] iommu/arm-smmu-v3: Explicitly set smmu_domain->stage
  for SVA
 
 Both the ARM_SMMU_DOMAIN_S1 case and the SVA case use ASID, requiring ASID
@@ -33,10 +33,10 @@ index 80b56d1501b14..c1eb2ae2023ff 100644
  
  	ret = xa_alloc(&arm_smmu_asid_xa, &asid, smmu_domain,
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index c671ac2322456..1e0bc70a034bd 100644
+index e0de38d601c98..2120957a03a7d 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3132,6 +3132,9 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+@@ -3133,6 +3133,9 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev,
  		arm_smmu_install_ste_for_dev(master, &target);
  		arm_smmu_clear_cd(master, IOMMU_NO_PASID);
  		break;

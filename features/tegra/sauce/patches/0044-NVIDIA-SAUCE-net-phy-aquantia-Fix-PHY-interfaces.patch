@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Mon, 14 Oct 2024 12:34:18 +0100
-Subject: [PATCH 044/241] NVIDIA: SAUCE: net: phy: aquantia: Fix PHY interfaces
+Subject: [PATCH 044/240] NVIDIA: SAUCE: net: phy: aquantia: Fix PHY interfaces
 
 In Linux v6.1, commit 7de26bf144f6 ("net: phy: aquantia: Add some
 additional phy interfaces") added support for additional PHY interfaces
@@ -20,10 +20,10 @@ Reviewed-by: Revanth Kumar Uppala <ruppala@nvidia.com>
 (cherry picked from commit 65b5dbebef09b42543c3e74da4f63a18fc2b3e8a)
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index e956d29b6493b..2ae16db806da5 100644
+index b80fafe2469f2..7461ada2ac2f5 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
-@@ -918,11 +918,15 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
+@@ -921,11 +921,15 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
  
  	/* Check that the PHY interface type is compatible */
  	if (phydev->interface != PHY_INTERFACE_MODE_SGMII &&

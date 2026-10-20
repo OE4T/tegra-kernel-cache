@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: ruppala <ruppala@nvidia.com>
 Date: Thu, 18 Aug 2022 06:38:08 +0000
-Subject: [PATCH 033/241] NVIDIA: SAUCE: net: phy: aqr113c: poll for TX ready
+Subject: [PATCH 033/240] NVIDIA: SAUCE: net: phy: aqr113c: poll for TX ready
  at PHY system side
 
 Issue: In case of Interface down and up, TX/RX
@@ -33,7 +33,7 @@ index 31427ee343e36..89655b6e40048 100644
  
  #if IS_REACHABLE(CONFIG_HWMON)
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 7ee9eb6cbc4bb..96aee6a22b5f3 100644
+index 0dfec83652e1b..b828dd12f9c2f 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -54,6 +54,7 @@
@@ -60,7 +60,7 @@ index 7ee9eb6cbc4bb..96aee6a22b5f3 100644
  		return genphy_c45_restart_aneg(phydev);
  	}
  
-@@ -1352,6 +1355,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
+@@ -1355,6 +1358,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
  {
  	u16 val;
  	int ret = 0;
@@ -68,7 +68,7 @@ index 7ee9eb6cbc4bb..96aee6a22b5f3 100644
  
  	if (enable) {
  		/* Disables all advertised speeds except for the WoL
-@@ -1427,6 +1431,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
+@@ -1430,6 +1434,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
  
  		/* restart auto-negotiation */
  		genphy_c45_restart_aneg(phydev);
@@ -76,7 +76,7 @@ index 7ee9eb6cbc4bb..96aee6a22b5f3 100644
  	} else {
  		/* Disable the WoL enable bit */
  		val = phy_read_mmd(phydev, MDIO_MMD_AN, MDIO_AN_RESVD_VEND_PROV);
-@@ -1447,6 +1452,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
+@@ -1450,6 +1455,7 @@ static int aqr113c_wol_settings(struct phy_device *phydev, bool enable)
  
  		/* restart auto-negotiation */
  		genphy_c45_restart_aneg(phydev);

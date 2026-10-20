@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: David Yu <davyu@nvidia.com>
 Date: Fri, 8 Oct 2021 02:29:25 +0000
-Subject: [PATCH 038/241] NVIDIA: SAUCE: net: phy: fix data corruption
+Subject: [PATCH 038/240] NVIDIA: SAUCE: net: phy: fix data corruption
 
 Data corruption is happening in aqr107_config_init().
 It's accessing address offset across struct phy_device boundary.
@@ -21,10 +21,10 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 Tested-by: Abhilash G <abhilashg@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index d492d5b99f9ac..922fd352d2c3b 100644
+index a9521edace3b1..1af3151deca76 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
-@@ -934,8 +934,8 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
+@@ -937,8 +937,8 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
  	}
  
  	/* Advertize flow control */

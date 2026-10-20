@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Bhadram Varka <vbhadram@nvidia.com>
 Date: Fri, 18 Nov 2022 11:31:45 +0530
-Subject: [PATCH 037/241] NVIDIA: SAUCE: net: phy: aqr113c: skip PHY low power
+Subject: [PATCH 037/240] NVIDIA: SAUCE: net: phy: aqr113c: skip PHY low power
  mode
 
 Issue: Uncorrectable Errors are observed when the MGBE1
@@ -35,10 +35,10 @@ index 89655b6e40048..666755125df6c 100644
  
  #if IS_REACHABLE(CONFIG_HWMON)
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 1143efd50a91f..d492d5b99f9ac 100644
+index e72fa6bb450c0..a9521edace3b1 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
-@@ -1223,8 +1223,12 @@ static int aqr_gen2_get_rate_matching(struct phy_device *phydev,
+@@ -1226,8 +1226,12 @@ static int aqr_gen2_get_rate_matching(struct phy_device *phydev,
  
  static int aqr_gen1_suspend(struct phy_device *phydev)
  {
@@ -51,7 +51,7 @@ index 1143efd50a91f..d492d5b99f9ac 100644
  	err = phy_set_bits_mmd(phydev, MDIO_MMD_VEND1, MDIO_CTRL1,
  			       MDIO_CTRL1_LPOWER);
  	if (err)
-@@ -1235,8 +1239,12 @@ static int aqr_gen1_suspend(struct phy_device *phydev)
+@@ -1238,8 +1242,12 @@ static int aqr_gen1_suspend(struct phy_device *phydev)
  
  static int aqr_gen1_resume(struct phy_device *phydev)
  {
@@ -64,7 +64,7 @@ index 1143efd50a91f..d492d5b99f9ac 100644
  	err = phy_clear_bits_mmd(phydev, MDIO_MMD_VEND1, MDIO_CTRL1,
  				 MDIO_CTRL1_LPOWER);
  	if (err)
-@@ -1339,6 +1347,8 @@ static int aqr_gen2_config_inband(struct phy_device *phydev, unsigned int modes)
+@@ -1342,6 +1350,8 @@ static int aqr_gen2_config_inband(struct phy_device *phydev, unsigned int modes)
  
  static int aqr107_probe(struct phy_device *phydev)
  {
@@ -73,7 +73,7 @@ index 1143efd50a91f..d492d5b99f9ac 100644
  	int ret;
  
  	phydev->priv = devm_kzalloc(&phydev->mdio.dev,
-@@ -1350,6 +1360,12 @@ static int aqr107_probe(struct phy_device *phydev)
+@@ -1353,6 +1363,12 @@ static int aqr107_probe(struct phy_device *phydev)
  	if (ret)
  		return ret;
  

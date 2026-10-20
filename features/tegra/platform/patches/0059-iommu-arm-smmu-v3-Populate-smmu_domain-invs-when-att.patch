@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nicolin Chen <nicolinc@nvidia.com>
 Date: Tue, 17 Mar 2026 00:59:21 -0700
-Subject: [PATCH 059/219] iommu/arm-smmu-v3: Populate smmu_domain->invs when
+Subject: [PATCH 059/218] iommu/arm-smmu-v3: Populate smmu_domain->invs when
  attaching masters
 
 Update the invs array with the invalidations required by each domain type
@@ -44,7 +44,7 @@ Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 32e359e58fba8..addce171fd71b 100644
+index 18f4878ac6c76..f687cd27143b8 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 @@ -3148,6 +3148,121 @@ static void arm_smmu_disable_iopf(struct arm_smmu_master *master,
@@ -349,7 +349,7 @@ index 32e359e58fba8..addce171fd71b 100644
  	master->ats_enabled = state->ats_enabled;
  }
  
-@@ -3517,12 +3770,19 @@ static int arm_smmu_blocking_set_dev_pasid(struct iommu_domain *new_domain,
+@@ -3518,12 +3771,19 @@ static int arm_smmu_blocking_set_dev_pasid(struct iommu_domain *new_domain,
  {
  	struct arm_smmu_domain *smmu_domain = to_smmu_domain(old_domain);
  	struct arm_smmu_master *master = dev_iommu_priv_get(dev);

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Narayan Reddy <narayanr@nvidia.com>
 Date: Tue, 19 Sep 2023 18:03:22 +0000
-Subject: [PATCH 041/241] NVIDIA: SAUCE: aquantia: issue PHY reset during phy
+Subject: [PATCH 041/240] NVIDIA: SAUCE: aquantia: issue PHY reset during phy
  init
 
 issue: The AQR113C is not able to pick up 50MHz Xtal as clock
@@ -25,7 +25,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: Gerrit_Virtual_Submit <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 922fd352d2c3b..6785862fa2d89 100644
+index 1af3151deca76..550c61f0e7d3e 100644
 --- a/drivers/net/phy/aquantia/aquantia_main.c
 +++ b/drivers/net/phy/aquantia/aquantia_main.c
 @@ -5,7 +5,7 @@
@@ -47,7 +47,7 @@ index 922fd352d2c3b..6785862fa2d89 100644
  /* Sleep and timeout for checking if the Processor-Intensive
   * MDIO operation is finished
   */
-@@ -923,6 +926,11 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
+@@ -926,6 +929,11 @@ static int aqr_gen1_config_init(struct phy_device *phydev)
  	WARN(phydev->interface == PHY_INTERFACE_MODE_XGMII,
  	     "Your devicetree is out of date, please update it. The AQR107 family doesn't support XGMII, maybe you mean USXGMII.\n");
  
