@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Wed, 25 Mar 2026 10:14:36 +0000
-Subject: [PATCH 204/218] ASoC: tegra: Use dev_err_probe() in
+Subject: [PATCH 203/217] ASoC: tegra: Use dev_err_probe() in
  tegra_asoc_machine probe
 
 Log errors in the Tegra ASoC machine driver probe path using

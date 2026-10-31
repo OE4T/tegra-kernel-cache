@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sander Vanheule <sander@svanheule.net>
 Date: Wed, 29 Oct 2025 09:12:48 +0100
-Subject: [PATCH 187/218] regmap: warn users about uninitialized flat cache
+Subject: [PATCH 187/217] regmap: warn users about uninitialized flat cache
 
 The standard flat cache did not contain any validity info, so the cache
 was always considered to be entirely valid. Multiple mechanisms exist to

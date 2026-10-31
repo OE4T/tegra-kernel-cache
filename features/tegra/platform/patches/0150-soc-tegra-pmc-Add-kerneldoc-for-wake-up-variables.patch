@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Wed, 25 Mar 2026 19:25:53 +0000
-Subject: [PATCH 150/218] soc/tegra: pmc: Add kerneldoc for wake-up variables
+Subject: [PATCH 150/217] soc/tegra: pmc: Add kerneldoc for wake-up variables
 
 Commit e6d96073af68 ("soc/tegra: pmc: Fix unsafe generic_handle_irq()
 call") added the variables 'wake_work' and 'wake_status' to the

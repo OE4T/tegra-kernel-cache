@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vishwaroop A <va@nvidia.com>
 Date: Tue, 28 Oct 2025 15:57:03 +0000
-Subject: [PATCH 177/218] spi: tegra210-quad: Check hardware status on timeout
+Subject: [PATCH 177/217] spi: tegra210-quad: Check hardware status on timeout
 
 Under high system load, QSPI interrupts can be delayed or blocked on the
 target CPU, causing wait_for_completion_timeout() to report failure even

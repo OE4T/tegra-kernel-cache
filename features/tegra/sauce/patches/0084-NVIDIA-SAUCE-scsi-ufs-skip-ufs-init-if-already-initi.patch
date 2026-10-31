@@ -14,7 +14,7 @@ GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 (cherry picked from commit c3c1db5b1103af75f0fb704ba2043c30a8c4a61c)
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 5bc7aae8722ba..ec8a1e64c6e94 100644
+index beaf6d92802c3..7593810bca21b 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
 @@ -4687,6 +4687,11 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,

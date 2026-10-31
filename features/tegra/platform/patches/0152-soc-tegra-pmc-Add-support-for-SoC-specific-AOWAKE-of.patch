@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Wed, 25 Mar 2026 19:25:55 +0000
-Subject: [PATCH 152/218] soc/tegra: pmc: Add support for SoC specific AOWAKE
+Subject: [PATCH 152/217] soc/tegra: pmc: Add support for SoC specific AOWAKE
  offsets
 
 For Tegra264, some of the AOWAKE registers have different register

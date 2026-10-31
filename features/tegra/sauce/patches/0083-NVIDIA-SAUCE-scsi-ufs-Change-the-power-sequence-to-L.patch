@@ -15,7 +15,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 413ad97b9e111..5bc7aae8722ba 100644
+index bf567920cc3da..beaf6d92802c3 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
 @@ -4706,7 +4706,27 @@ static int ufshcd_change_power_mode(struct ufs_hba *hba,

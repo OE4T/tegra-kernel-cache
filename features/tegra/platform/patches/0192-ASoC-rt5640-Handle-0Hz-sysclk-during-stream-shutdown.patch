@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Mon, 6 Apr 2026 09:05:47 +0000
-Subject: [PATCH 193/218] ASoC: rt5640: Handle 0Hz sysclk during stream
+Subject: [PATCH 192/217] ASoC: rt5640: Handle 0Hz sysclk during stream
  shutdown
 
 Commit 2458adb8f92a ("SoC: simple-card-utils: set 0Hz to sysclk when

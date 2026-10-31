@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Wed, 15 Jul 2026 12:10:37 +0100
-Subject: [PATCH 174/218] soc/tegra: pmc: Don't register sys-off handler for
+Subject: [PATCH 174/217] soc/tegra: pmc: Don't register sys-off handler for
  multi-socket devices
 
 The kernel does not permit a device to register multiple sys-off

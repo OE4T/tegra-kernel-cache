@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Mon, 3 Feb 2025 16:30:24 +0100
-Subject: [PATCH 166/218] PCI: tegra: Explicitly specify PMC instance to use
+Subject: [PATCH 166/217] PCI: tegra: Explicitly specify PMC instance to use
 
 Currently the kernel relies on a global variable to reference the PMC
 context. Use an explicit lookup for the PMC and pass that to the public

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Wed, 25 Mar 2026 19:25:59 +0000
-Subject: [PATCH 156/218] soc/tegra: pmc: Rename has_impl_33v_pwr flag
+Subject: [PATCH 156/217] soc/tegra: pmc: Rename has_impl_33v_pwr flag
 
 The flag 'has_impl_33v_pwr' is now only used to determine if we need to
 set the write-enable bit before we can set the bit to select if 3.3V IO

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Fri, 23 Jan 2026 15:23:44 +0530
-Subject: [PATCH 191/218] regmap: Add reg_default_cb callback for flat cache
+Subject: [PATCH 190/217] regmap: Add reg_default_cb callback for flat cache
  defaults
 
 Commit e062bdfdd6ad ("regmap: warn users about uninitialized flat cache")
@@ -70,10 +70,10 @@ index 53cc59c84e2f0..c924817e19b1c 100644
  }
  
 diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
-index 319c342bf5a06..31bdbf37dbed5 100644
+index 492b9ff46fd17..27d0e670b8c7b 100644
 --- a/drivers/base/regmap/regcache.c
 +++ b/drivers/base/regmap/regcache.c
-@@ -223,7 +223,8 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
+@@ -221,7 +221,8 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
  			goto err_free;
  	}
  

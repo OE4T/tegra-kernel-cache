@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Fri, 22 May 2026 16:58:24 +0100
-Subject: [PATCH 171/218] soc/tegra: pmc: Populate powergate debugfs only when
+Subject: [PATCH 171/217] soc/tegra: pmc: Populate powergate debugfs only when
  needed
 
 The 'powergate' debugfs node is used to show the state of the powergates

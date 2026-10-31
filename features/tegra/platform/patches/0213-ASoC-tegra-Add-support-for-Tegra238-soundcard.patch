@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Tue, 3 Mar 2026 15:32:49 +0530
-Subject: [PATCH 214/218] ASoC: tegra: Add support for Tegra238 soundcard
+Subject: [PATCH 213/217] ASoC: tegra: Add support for Tegra238 soundcard
 
 Tegra238 platforms use different clock rates for plla and
 plla_out0 clocks. Add Tegra238 support in the Tegra

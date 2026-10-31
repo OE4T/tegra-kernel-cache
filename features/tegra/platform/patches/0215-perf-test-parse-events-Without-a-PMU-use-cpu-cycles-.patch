@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ian Rogers <irogers@google.com>
 Date: Sun, 5 Oct 2025 11:24:25 -0700
-Subject: [PATCH 216/218] perf test parse-events: Without a PMU use cpu-cycles
+Subject: [PATCH 215/217] perf test parse-events: Without a PMU use cpu-cycles
  rather than cycles
 
 Without a PMU perf matches an event against any PMU with the

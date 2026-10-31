@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
 Date: Thu, 21 May 2026 15:48:48 +0200
-Subject: [PATCH 172/218] soc/tegra: pmc: Restrict power-off handler to Nexus 7
+Subject: [PATCH 172/217] soc/tegra: pmc: Restrict power-off handler to Nexus 7
 
 The Tegra PMC power-off handler exists solely to reboot the Nexus 7 into
 a special bootloader mode when a USB cable is connected, so that the

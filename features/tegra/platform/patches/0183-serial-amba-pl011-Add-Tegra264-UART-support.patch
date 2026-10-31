@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik Rajput <kkartik@nvidia.com>
 Date: Wed, 25 Feb 2026 12:29:13 +0530
-Subject: [PATCH 183/218] serial: amba-pl011: Add Tegra264 UART support
+Subject: [PATCH 183/217] serial: amba-pl011: Add Tegra264 UART support
 
 Add support for the NVIDIA Tegra264 UART controller, which is derived
 from the AMBA PL011 design.

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Wed, 25 Mar 2026 19:25:57 +0000
-Subject: [PATCH 154/218] soc/tegra: pmc: Add Tegra264 wake events
+Subject: [PATCH 154/217] soc/tegra: pmc: Add Tegra264 wake events
 
 Populate the various wake events for the Tegra264 device.
 

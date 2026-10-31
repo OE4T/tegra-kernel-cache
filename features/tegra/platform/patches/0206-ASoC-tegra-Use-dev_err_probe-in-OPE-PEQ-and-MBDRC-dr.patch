@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Wed, 1 Apr 2026 11:24:58 +0000
-Subject: [PATCH 207/218] ASoC: tegra: Use dev_err_probe() in OPE, PEQ and
+Subject: [PATCH 206/217] ASoC: tegra: Use dev_err_probe() in OPE, PEQ and
  MBDRC drivers
 
 Log errors in the Tegra210 OPE, PEQ and MBDRC probe paths using

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Thu, 26 Feb 2026 16:09:32 +0100
-Subject: [PATCH 175/218] soc/tegra: Add Tegra238 Kconfig symbol
+Subject: [PATCH 175/217] soc/tegra: Add Tegra238 Kconfig symbol
 
 The NVIDIA Tegra238 SoC is an upcoming new chip. Add a Kconfig symbol to
 allow fine-grained selection of support code for this chip.

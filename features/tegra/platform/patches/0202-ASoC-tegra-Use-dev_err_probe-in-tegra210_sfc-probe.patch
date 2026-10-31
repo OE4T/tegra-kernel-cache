@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Wed, 25 Mar 2026 10:14:35 +0000
-Subject: [PATCH 203/218] ASoC: tegra: Use dev_err_probe() in tegra210_sfc
+Subject: [PATCH 202/217] ASoC: tegra: Use dev_err_probe() in tegra210_sfc
  probe
 
 Log errors in the Tegra210 SFC probe path using dev_err_probe().

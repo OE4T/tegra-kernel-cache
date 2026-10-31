@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Wed, 25 Mar 2026 19:26:00 +0000
-Subject: [PATCH 157/218] soc/tegra: pmc: Add IO pads for Tegra264
+Subject: [PATCH 157/217] soc/tegra: pmc: Add IO pads for Tegra264
 
 Populate the IO pads and pins for Tegra264. Tegra264 has internal 1.8V
 and 0.6V regulators that must be enabled when selecting the 1.8V mode

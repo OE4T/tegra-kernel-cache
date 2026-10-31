@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Mon, 18 May 2026 10:14:20 +0000
-Subject: [PATCH 173/218] soc/tegra: pmc: Add Tegra238 support
+Subject: [PATCH 173/217] soc/tegra: pmc: Add Tegra238 support
 
 The Tegra238 PMC is largely similar to that found on earlier chips, but
 not completely compatible. Add support for the PMC on Tegra238.
