@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik Rajput <kkartik@nvidia.com>
 Date: Wed, 25 Feb 2026 12:29:12 +0530
-Subject: [PATCH 182/218] serial: amba-pl011: Introduce set_uartclk_rate vendor
+Subject: [PATCH 182/217] serial: amba-pl011: Introduce set_uartclk_rate vendor
  flag
 
 The NVIDIA Tegra264 UART relies on configuring the UART clock rate

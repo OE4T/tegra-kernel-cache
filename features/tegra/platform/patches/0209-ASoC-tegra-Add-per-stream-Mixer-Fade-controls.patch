@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Wed, 6 May 2026 10:20:32 +0000
-Subject: [PATCH 210/218] ASoC: tegra: Add per-stream Mixer Fade controls
+Subject: [PATCH 209/217] ASoC: tegra: Add per-stream Mixer Fade controls
 
 Add per-stream fade controls for the Tegra mixer to allow
 independently configuring target gain and fade duration for each of

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Fri, 23 Jan 2026 15:23:45 +0530
-Subject: [PATCH 192/218] ASoC: tegra: set reg_default_cb callback
+Subject: [PATCH 191/217] ASoC: tegra: set reg_default_cb callback
 
 Set reg_default_cb so REGCACHE_FLAT can supply zero defaults without
 large reg_defaults tables, simplifying cache initialization for

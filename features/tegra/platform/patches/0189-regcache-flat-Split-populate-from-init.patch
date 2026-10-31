@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Date: Fri, 31 Oct 2025 09:03:19 +0100
-Subject: [PATCH 190/218] regcache: flat: Split ->populate() from ->init()
+Subject: [PATCH 189/217] regcache: flat: Split ->populate() from ->init()
 
 Split ->populate() implementation from ->init() code.
 This decoupling will help for the further changes.

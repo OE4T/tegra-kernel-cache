@@ -18,7 +18,7 @@ Tested-by: Petlozu Pravareshwar <petlozup@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index a28597b6b80d6..5a8c4a2737b86 100644
+index b696c34d83de3..d734327f66122 100644
 --- a/drivers/spi/spi-tegra114.c
 +++ b/drivers/spi/spi-tegra114.c
 @@ -57,6 +57,7 @@
@@ -48,7 +48,7 @@ index a28597b6b80d6..5a8c4a2737b86 100644
  
  		/* GPIO based chip select control */
  		if (spi_get_csgpiod(spi, 0))
-@@ -1340,6 +1344,8 @@ static int tegra_spi_probe(struct platform_device *pdev)
+@@ -1347,6 +1351,8 @@ static int tegra_spi_probe(struct platform_device *pdev)
  		goto exit_free_host;
  	}
  
@@ -57,7 +57,7 @@ index a28597b6b80d6..5a8c4a2737b86 100644
  	tspi->base = devm_platform_get_and_ioremap_resource(pdev, 0, &r);
  	if (IS_ERR(tspi->base)) {
  		ret = PTR_ERR(tspi->base);
-@@ -1399,6 +1405,8 @@ static int tegra_spi_probe(struct platform_device *pdev)
+@@ -1406,6 +1412,8 @@ static int tegra_spi_probe(struct platform_device *pdev)
  	reset_control_assert(tspi->rst);
  	udelay(2);
  	reset_control_deassert(tspi->rst);

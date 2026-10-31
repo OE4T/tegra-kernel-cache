@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Mon, 3 Feb 2025 14:51:18 +0100
-Subject: [PATCH 144/218] soc/tegra: pmc: Use PMC context embedded in
+Subject: [PATCH 144/217] soc/tegra: pmc: Use PMC context embedded in
  powergates
 
 The powergates exposed by the PMC have a pointer to the PMC context

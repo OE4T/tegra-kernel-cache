@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sumit Gupta <sumitg@nvidia.com>
 Date: Wed, 25 Mar 2026 18:27:26 +0530
-Subject: [PATCH 159/218] soc/tegra: cbb: Add support for CBB fabrics in
+Subject: [PATCH 159/217] soc/tegra: cbb: Add support for CBB fabrics in
  Tegra238
 
 Add support for CBB 2.0 based fabrics in Tegra238 SoC using DT.

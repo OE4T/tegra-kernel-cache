@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Felix Gu <ustc.gu@gmail.com>
 Date: Sat, 7 Mar 2026 15:24:45 +0800
-Subject: [PATCH 179/218] spi: tegra210-quad: Remove redundant
+Subject: [PATCH 179/217] spi: tegra210-quad: Remove redundant
  pm_runtime_mark_last_busy() calls
 
 pm_runtime_put_autosuspend() already internally updates the last_busy

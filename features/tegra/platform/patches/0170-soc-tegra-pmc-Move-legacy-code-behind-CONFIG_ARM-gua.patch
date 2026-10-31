@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Tue, 4 Feb 2025 19:04:51 +0100
-Subject: [PATCH 170/218] soc/tegra: pmc: Move legacy code behind CONFIG_ARM
+Subject: [PATCH 170/217] soc/tegra: pmc: Move legacy code behind CONFIG_ARM
  guard
 
 None of this legacy code is needed on 64-bit ARM devices, so it can be

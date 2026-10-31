@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Wed, 1 Apr 2026 11:24:57 +0000
-Subject: [PATCH 206/218] ASoC: tegra: Add error logging in tegra210_admaif
+Subject: [PATCH 205/217] ASoC: tegra: Add error logging in tegra210_admaif
  driver
 
 Log errors in the Tegra210 ADMAIF probe and runtime callback paths.

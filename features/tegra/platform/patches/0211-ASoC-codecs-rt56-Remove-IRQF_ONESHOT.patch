@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 23 Jan 2026 12:36:58 +0100
-Subject: [PATCH 212/218] ASoC: codecs: rt56*: Remove IRQF_ONESHOT
+Subject: [PATCH 211/217] ASoC: codecs: rt56*: Remove IRQF_ONESHOT
 
 Passing IRQF_ONESHOT ensures that the interrupt source is masked until
 the secondary (threaded) handler is done. If only a primary handler is

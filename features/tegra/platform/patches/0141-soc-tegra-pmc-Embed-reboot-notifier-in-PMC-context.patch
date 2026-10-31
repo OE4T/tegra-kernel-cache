@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Mon, 3 Feb 2025 14:38:24 +0100
-Subject: [PATCH 141/218] soc/tegra: pmc: Embed reboot notifier in PMC context
+Subject: [PATCH 141/217] soc/tegra: pmc: Embed reboot notifier in PMC context
 
 Instead of relying on a global variable to track the PMC context, embed
 the reboot notifier into the PMC context so that the latter can be

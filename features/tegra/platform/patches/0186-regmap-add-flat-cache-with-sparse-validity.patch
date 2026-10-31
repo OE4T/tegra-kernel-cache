@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sander Vanheule <sander@svanheule.net>
 Date: Wed, 29 Oct 2025 09:12:47 +0100
-Subject: [PATCH 186/218] regmap: add flat cache with sparse validity
+Subject: [PATCH 186/217] regmap: add flat cache with sparse validity
 
 The flat regcache will always assume the data in the cache is valid.
 Since the cache is preferred over hardware access, this may shadow the
@@ -23,10 +23,10 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 (cherry picked from commit 9c7f7262bc1affb9b9acd2ec2fb1f6314d5d474c)
 
 diff --git a/drivers/base/regmap/internal.h b/drivers/base/regmap/internal.h
-index 6f31240ee4a9a..8d19a1414d5b2 100644
+index 6efed02c21c5f..1477329410ec4 100644
 --- a/drivers/base/regmap/internal.h
 +++ b/drivers/base/regmap/internal.h
-@@ -288,6 +288,7 @@ enum regmap_endian regmap_get_val_endian(struct device *dev,
+@@ -289,6 +289,7 @@ enum regmap_endian regmap_get_val_endian(struct device *dev,
  					 const struct regmap_bus *bus,
  					 const struct regmap_config *config);
  
@@ -199,7 +199,7 @@ index f36d3618b67c1..86f7679175b16 100644
 +	.drop = regcache_flat_drop,
 +};
 diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
-index c7650fa434add..0392f5525cf30 100644
+index 57757adad1f56..492b9ff46fd17 100644
 --- a/drivers/base/regmap/regcache.c
 +++ b/drivers/base/regmap/regcache.c
 @@ -16,6 +16,7 @@

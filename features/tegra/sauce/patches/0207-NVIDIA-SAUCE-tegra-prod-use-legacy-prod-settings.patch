@@ -35,7 +35,7 @@ Reviewed-by: Laxman Dewangan <ldewangan@nvidia.com>
 GVS: buildbot_gerritrpt <buildbot_gerritrpt@nvidia.com>
 
 diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index 5a8c4a2737b86..c48d0f2fbb430 100644
+index d734327f66122..aad9e5c633720 100644
 --- a/drivers/spi/spi-tegra114.c
 +++ b/drivers/spi/spi-tegra114.c
 @@ -23,6 +23,10 @@
@@ -148,7 +148,7 @@ index 5a8c4a2737b86..c48d0f2fbb430 100644
  
  	} else {
  		command1 = tspi->command1_reg;
-@@ -1335,6 +1396,15 @@ static int tegra_spi_probe(struct platform_device *pdev)
+@@ -1342,6 +1403,15 @@ static int tegra_spi_probe(struct platform_device *pdev)
  
  	tspi->host = host;
  	tspi->dev = &pdev->dev;
@@ -164,7 +164,7 @@ index 5a8c4a2737b86..c48d0f2fbb430 100644
  	spin_lock_init(&tspi->lock);
  
  	tspi->soc_data = of_device_get_match_data(&pdev->dev);
-@@ -1405,6 +1475,11 @@ static int tegra_spi_probe(struct platform_device *pdev)
+@@ -1412,6 +1482,11 @@ static int tegra_spi_probe(struct platform_device *pdev)
  	reset_control_assert(tspi->rst);
  	udelay(2);
  	reset_control_deassert(tspi->rst);
@@ -176,7 +176,7 @@ index 5a8c4a2737b86..c48d0f2fbb430 100644
  	tspi->def_command1_reg  = tegra_spi_readl(tspi, SPI_COMMAND1);
  	tspi->def_command1_reg |= SPI_CS_SEL(tspi->def_chip_select);
  	tspi->def_command1_reg  = SPI_M_S;
-@@ -1412,7 +1487,6 @@ static int tegra_spi_probe(struct platform_device *pdev)
+@@ -1419,7 +1494,6 @@ static int tegra_spi_probe(struct platform_device *pdev)
  	tspi->spi_cs_timing1 = tegra_spi_readl(tspi, SPI_CS_TIMING1);
  	tspi->spi_cs_timing2 = tegra_spi_readl(tspi, SPI_CS_TIMING2);
  	tspi->def_command2_reg = tegra_spi_readl(tspi, SPI_COMMAND2);

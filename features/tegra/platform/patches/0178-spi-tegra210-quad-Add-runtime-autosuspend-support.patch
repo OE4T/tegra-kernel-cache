@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vishwaroop A <va@nvidia.com>
 Date: Tue, 24 Feb 2026 09:24:52 +0000
-Subject: [PATCH 178/218] spi: tegra210-quad: Add runtime autosuspend support
+Subject: [PATCH 178/217] spi: tegra210-quad: Add runtime autosuspend support
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

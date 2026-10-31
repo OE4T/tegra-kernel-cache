@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Vishwaroop A <va@nvidia.com>
 Date: Tue, 28 Oct 2025 15:57:02 +0000
-Subject: [PATCH 176/218] spi: tegra210-quad: Refactor error handling into
+Subject: [PATCH 176/217] spi: tegra210-quad: Refactor error handling into
  helper functions
 
 Extract common cleanup code into dedicated helper functions to simplify

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Mon, 3 Feb 2025 14:27:21 +0100
-Subject: [PATCH 139/218] soc/tegra: pmc: Pass struct tegra_pmc to
+Subject: [PATCH 139/217] soc/tegra: pmc: Pass struct tegra_pmc to
  tegra_powergate_state()
 
 By using the generic read_poll_timeout() instead of readx_poll_timeout()

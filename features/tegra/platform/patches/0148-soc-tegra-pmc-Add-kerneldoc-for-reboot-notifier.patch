@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Wed, 25 Mar 2026 19:25:51 +0000
-Subject: [PATCH 148/218] soc/tegra: pmc: Add kerneldoc for reboot notifier
+Subject: [PATCH 148/217] soc/tegra: pmc: Add kerneldoc for reboot notifier
 
 Commit 48b7f802fb78 ("soc/tegra: pmc: Embed reboot notifier in PMC
 context") added the reboot_notifier structure to the PMC SoC structure

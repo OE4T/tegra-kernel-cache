@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kartik Rajput <kkartik@nvidia.com>
 Date: Wed, 25 Feb 2026 12:29:14 +0530
-Subject: [PATCH 184/218] serial: amba-pl011: Respect DMA controller's
+Subject: [PATCH 184/217] serial: amba-pl011: Respect DMA controller's
  copy_align requirement
 
 Some DMA controllers require transfer lengths to be aligned to a

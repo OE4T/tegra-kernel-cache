@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Mon, 3 Feb 2025 14:55:03 +0100
-Subject: [PATCH 146/218] soc/tegra: pmc: Do not rely on global variable
+Subject: [PATCH 146/217] soc/tegra: pmc: Do not rely on global variable
 
 The reset action for changing the suspend mode back on failure can take
 a context-specific data argument that can be set to the PMC context in

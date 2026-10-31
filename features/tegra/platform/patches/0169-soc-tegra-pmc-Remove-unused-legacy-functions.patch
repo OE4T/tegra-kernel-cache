@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Tue, 4 Feb 2025 19:45:19 +0100
-Subject: [PATCH 169/218] soc/tegra: pmc: Remove unused legacy functions
+Subject: [PATCH 169/217] soc/tegra: pmc: Remove unused legacy functions
 
 All callers of these functions have been replaced by their variants
 taking a PMC context as an input, so they are no longer used and can be

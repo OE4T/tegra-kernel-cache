@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Breno Leitao <leitao@debian.org>
 Date: Wed, 8 Apr 2026 06:45:43 -0700
-Subject: [PATCH 180/218] spi: tegra210-quad: Fix false positive WARN on
+Subject: [PATCH 180/217] spi: tegra210-quad: Fix false positive WARN on
  interrupt timeout with transfer complete
 
 The WARN_ON_ONCE/WARN_ON fired unconditionally on any completion

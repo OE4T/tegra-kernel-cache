@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Thu, 26 Mar 2026 14:58:48 +0100
-Subject: [PATCH 161/218] soc/tegra: Update BPMP ABI header
+Subject: [PATCH 161/217] soc/tegra: Update BPMP ABI header
 
 This update primarily adds various new commands and MRQs for Tegra264,
 but also contains a few new annotations and fixes.

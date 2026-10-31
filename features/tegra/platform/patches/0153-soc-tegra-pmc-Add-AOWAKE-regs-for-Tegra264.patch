@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jon Hunter <jonathanh@nvidia.com>
 Date: Wed, 25 Mar 2026 19:25:56 +0000
-Subject: [PATCH 153/218] soc/tegra: pmc: Add AOWAKE regs for Tegra264
+Subject: [PATCH 153/217] soc/tegra: pmc: Add AOWAKE regs for Tegra264
 
 Populate the AOWAKE register offsets for Tegra264.
 

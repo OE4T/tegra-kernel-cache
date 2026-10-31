@@ -2,7 +2,7 @@ From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Bruno=20Sobreira=20Fran=C3=A7a?=
  <brunofrancadevsec@gmail.com>
 Date: Fri, 24 Oct 2025 01:35:14 +0000
-Subject: [PATCH 158/218] soc/tegra: Resolve a spelling error in the
+Subject: [PATCH 158/217] soc/tegra: Resolve a spelling error in the
  tegra194-cbb.c
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

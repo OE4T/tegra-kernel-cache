@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sheetal <sheetal@nvidia.com>
 Date: Wed, 1 Apr 2026 11:25:00 +0000
-Subject: [PATCH 209/218] ASoC: tegra: Use dev_err_probe() in
+Subject: [PATCH 208/217] ASoC: tegra: Use dev_err_probe() in
  tegra_asoc_machine probe
 
 Use dev_err_probe() for clock errors in the tegra_asoc_machine

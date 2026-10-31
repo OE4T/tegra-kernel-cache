@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Mon, 3 Feb 2025 14:41:45 +0100
-Subject: [PATCH 142/218] soc/tegra: pmc: Pass PMC context via sys-off callback
+Subject: [PATCH 142/217] soc/tegra: pmc: Pass PMC context via sys-off callback
  data
 
 To avoid relying on global variables, use the sys-off callback data to

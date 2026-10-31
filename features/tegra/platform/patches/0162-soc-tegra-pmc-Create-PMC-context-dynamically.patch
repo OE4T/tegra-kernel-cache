@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Mon, 3 Feb 2025 18:12:58 +0100
-Subject: [PATCH 162/218] soc/tegra: pmc: Create PMC context dynamically
+Subject: [PATCH 162/217] soc/tegra: pmc: Create PMC context dynamically
 
 For legacy purposes, an early PMC context is needed to support certain
 drivers and functionalities. However, when the PMC driver is probed in

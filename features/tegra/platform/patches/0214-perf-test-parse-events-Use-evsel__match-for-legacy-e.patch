@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ian Rogers <irogers@google.com>
 Date: Sun, 5 Oct 2025 11:24:24 -0700
-Subject: [PATCH 215/218] perf test parse-events: Use evsel__match for legacy
+Subject: [PATCH 214/217] perf test parse-events: Use evsel__match for legacy
  events
 
 Switch from the test's assert_hw/test_config to the common

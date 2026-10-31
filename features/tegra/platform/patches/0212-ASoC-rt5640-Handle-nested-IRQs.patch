@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Anupama Kunkulagunta <akunkulagunt@nvidia.com>
 Date: Thu, 7 May 2026 09:44:31 +0000
-Subject: [PATCH 213/218] ASoC: rt5640: Handle nested IRQs
+Subject: [PATCH 212/217] ASoC: rt5640: Handle nested IRQs
 
 On some Tegra platforms, the RT5640 codec interrupt line
 is connected via a GPIO controller that operates as a

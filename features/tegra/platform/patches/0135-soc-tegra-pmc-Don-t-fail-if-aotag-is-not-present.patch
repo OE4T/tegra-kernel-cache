@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Prathamesh Shete <pshete@nvidia.com>
 Date: Fri, 14 Nov 2025 16:17:11 +0000
-Subject: [PATCH 135/218] soc/tegra: pmc: Don't fail if "aotag" is not present
+Subject: [PATCH 135/217] soc/tegra: pmc: Don't fail if "aotag" is not present
 
 The "aotog" is an optional aperture, so if that aperture is not defined
 for a given device, then initialise the 'aotag' pointer to NULL instead

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thierry Reding <treding@nvidia.com>
 Date: Mon, 3 Feb 2025 14:33:09 +0100
-Subject: [PATCH 140/218] soc/tegra: pmc: Store PMC context in clocks
+Subject: [PATCH 140/217] soc/tegra: pmc: Store PMC context in clocks
 
 Clocks exposed by the PMC need to reference the PMC context for register
 programming. Store a reference to the context in the data structure for

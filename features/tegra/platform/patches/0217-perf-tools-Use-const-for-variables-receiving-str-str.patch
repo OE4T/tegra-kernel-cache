@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Arnaldo Carvalho de Melo <acme@kernel.org>
 Date: Thu, 11 Dec 2025 19:17:55 -0300
-Subject: [PATCH 218/218] perf tools: Use const for variables receiving
+Subject: [PATCH 217/217] perf tools: Use const for variables receiving
  str{str,r?chr}() returns
 
 Newer glibc versions return const char for str{str,chr}() where the
